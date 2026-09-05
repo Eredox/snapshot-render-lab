@@ -93,7 +93,7 @@ export const platformMenu: NavGroup[] = [
     items: features.map((f) => ({
       label: f.navLabel,
       to: f.path,
-      description: f.summary.split(",")[0],
+      description: f.summary.split(",")[0] as string,
       ...(f.availability !== "Available now" && { badge: f.availability }),
     })),
   },
