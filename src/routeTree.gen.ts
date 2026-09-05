@@ -10,33 +10,556 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
+import { Route as R404RouteImport } from './routes/404'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BookDemoRouteImport } from './routes/book-demo'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as FrameworksRouteImport } from './routes/frameworks'
+import { Route as IndustriesRouteImport } from './routes/industries'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PlatformRouteImport } from './routes/platform'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as RequestQuoteRouteImport } from './routes/request-quote'
+import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
+import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as StartRouteImport } from './routes/start'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as TrustRouteImport } from './routes/trust'
+import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
+import { Route as FeaturesFrameworkManagementRouteImport } from './routes/features.framework-management'
+import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
+import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
+import { Route as ResourcesCaseStudiesRouteImport } from './routes/resources.case-studies'
+import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
+import { Route as ResourcesGuidesRouteImport } from './routes/resources.guides'
+import { Route as ResourcesProductUpdatesRouteImport } from './routes/resources.product-updates'
+import { Route as ResourcesWebinarsRouteImport } from './routes/resources.webinars'
+import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
+import { Route as ResourcesBlogSlugRouteImport } from './routes/resources.blog.$slug'
+import { Route as ResourcesCaseStudiesSlugRouteImport } from './routes/resources.case-studies.$slug'
+import { Route as ResourcesGuidesSlugRouteImport } from './routes/resources.guides.$slug'
+import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.webinars.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDemoRoute = BookDemoRouteImport.update({
+  id: '/book-demo',
+  path: '/book-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrameworksRoute = FrameworksRouteImport.update({
+  id: '/frameworks',
+  path: '/frameworks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesRoute = IndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlatformRoute = PlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestQuoteRoute = RequestQuoteRouteImport.update({
+  id: '/request-quote',
+  path: '/request-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResponsibleAiRoute = ResponsibleAiRouteImport.update({
+  id: '/responsible-ai',
+  path: '/responsible-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrustRoute = TrustRouteImport.update({
+  id: '/trust',
+  path: '/trust',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FeaturesRoute,
+} as any)
+const FeaturesFrameworkManagementRoute =
+  FeaturesFrameworkManagementRouteImport.update({
+    id: '/framework-management',
+    path: '/framework-management',
+    getParentRoute: () => FeaturesRoute,
+  } as any)
+const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FrameworksRoute,
+} as any)
+const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => IndustriesRoute,
+} as any)
+const LegalSlugRoute = LegalSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LegalRoute,
+} as any)
+const ResourcesBlogRoute = ResourcesBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesCaseStudiesRoute = ResourcesCaseStudiesRouteImport.update({
+  id: '/case-studies',
+  path: '/case-studies',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesFaqRoute = ResourcesFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesGuidesRoute = ResourcesGuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesProductUpdatesRoute = ResourcesProductUpdatesRouteImport.update({
+  id: '/product-updates',
+  path: '/product-updates',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesWebinarsRoute = ResourcesWebinarsRouteImport.update({
+  id: '/webinars',
+  path: '/webinars',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SolutionsRoute,
+} as any)
+const ResourcesBlogSlugRoute = ResourcesBlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesBlogRoute,
+} as any)
+const ResourcesCaseStudiesSlugRoute =
+  ResourcesCaseStudiesSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => ResourcesCaseStudiesRoute,
+  } as any)
+const ResourcesGuidesSlugRoute = ResourcesGuidesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesGuidesRoute,
+} as any)
+const ResourcesWebinarsSlugRoute = ResourcesWebinarsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesWebinarsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/404': typeof R404Route
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
+  '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/partners': typeof PartnersRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
+  '/resources': typeof ResourcesRouteWithChildren
+  '/responsible-ai': typeof ResponsibleAiRoute
+  '/security': typeof SecurityRoute
+  '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
+  '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/404': typeof R404Route
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
+  '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/partners': typeof PartnersRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
+  '/resources': typeof ResourcesRouteWithChildren
+  '/responsible-ai': typeof ResponsibleAiRoute
+  '/security': typeof SecurityRoute
+  '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
+  '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
+  '/404': typeof R404Route
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
+  '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
+  '/partners': typeof PartnersRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
+  '/resources': typeof ResourcesRouteWithChildren
+  '/responsible-ai': typeof ResponsibleAiRoute
+  '/security': typeof SecurityRoute
+  '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
+  '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
+  '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$'
+    | '/404'
+    | '/about'
+    | '/book-demo'
+    | '/compare'
+    | '/contact'
+    | '/customers'
+    | '/features'
+    | '/frameworks'
+    | '/industries'
+    | '/integrations'
+    | '/legal'
+    | '/partners'
+    | '/platform'
+    | '/pricing'
+    | '/request-quote'
+    | '/resources'
+    | '/responsible-ai'
+    | '/security'
+    | '/solutions'
+    | '/start'
+    | '/status'
+    | '/support'
+    | '/testimonials'
+    | '/trust'
+    | '/features/$slug'
+    | '/features/framework-management'
+    | '/frameworks/$slug'
+    | '/industries/$slug'
+    | '/legal/$slug'
+    | '/resources/blog'
+    | '/resources/case-studies'
+    | '/resources/faq'
+    | '/resources/guides'
+    | '/resources/product-updates'
+    | '/resources/webinars'
+    | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$'
+    | '/404'
+    | '/about'
+    | '/book-demo'
+    | '/compare'
+    | '/contact'
+    | '/customers'
+    | '/features'
+    | '/frameworks'
+    | '/industries'
+    | '/integrations'
+    | '/legal'
+    | '/partners'
+    | '/platform'
+    | '/pricing'
+    | '/request-quote'
+    | '/resources'
+    | '/responsible-ai'
+    | '/security'
+    | '/solutions'
+    | '/start'
+    | '/status'
+    | '/support'
+    | '/testimonials'
+    | '/trust'
+    | '/features/$slug'
+    | '/features/framework-management'
+    | '/frameworks/$slug'
+    | '/industries/$slug'
+    | '/legal/$slug'
+    | '/resources/blog'
+    | '/resources/case-studies'
+    | '/resources/faq'
+    | '/resources/guides'
+    | '/resources/product-updates'
+    | '/resources/webinars'
+    | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/$'
+    | '/404'
+    | '/about'
+    | '/book-demo'
+    | '/compare'
+    | '/contact'
+    | '/customers'
+    | '/features'
+    | '/frameworks'
+    | '/industries'
+    | '/integrations'
+    | '/legal'
+    | '/partners'
+    | '/platform'
+    | '/pricing'
+    | '/request-quote'
+    | '/resources'
+    | '/responsible-ai'
+    | '/security'
+    | '/solutions'
+    | '/start'
+    | '/status'
+    | '/support'
+    | '/testimonials'
+    | '/trust'
+    | '/features/$slug'
+    | '/features/framework-management'
+    | '/frameworks/$slug'
+    | '/industries/$slug'
+    | '/legal/$slug'
+    | '/resources/blog'
+    | '/resources/case-studies'
+    | '/resources/faq'
+    | '/resources/guides'
+    | '/resources/product-updates'
+    | '/resources/webinars'
+    | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
+  R404Route: typeof R404Route
+  AboutRoute: typeof AboutRoute
+  BookDemoRoute: typeof BookDemoRoute
+  CompareRoute: typeof CompareRoute
+  ContactRoute: typeof ContactRoute
+  CustomersRoute: typeof CustomersRoute
+  FeaturesRoute: typeof FeaturesRouteWithChildren
+  FrameworksRoute: typeof FrameworksRouteWithChildren
+  IndustriesRoute: typeof IndustriesRouteWithChildren
+  IntegrationsRoute: typeof IntegrationsRoute
+  LegalRoute: typeof LegalRouteWithChildren
+  PartnersRoute: typeof PartnersRoute
+  PlatformRoute: typeof PlatformRoute
+  PricingRoute: typeof PricingRoute
+  RequestQuoteRoute: typeof RequestQuoteRoute
+  ResourcesRoute: typeof ResourcesRouteWithChildren
+  ResponsibleAiRoute: typeof ResponsibleAiRoute
+  SecurityRoute: typeof SecurityRoute
+  SolutionsRoute: typeof SolutionsRouteWithChildren
+  StartRoute: typeof StartRoute
+  StatusRoute: typeof StatusRoute
+  SupportRoute: typeof SupportRoute
+  TestimonialsRoute: typeof TestimonialsRoute
+  TrustRoute: typeof TrustRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +571,451 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-demo': {
+      id: '/book-demo'
+      path: '/book-demo'
+      fullPath: '/book-demo'
+      preLoaderRoute: typeof BookDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/frameworks': {
+      id: '/frameworks'
+      path: '/frameworks'
+      fullPath: '/frameworks'
+      preLoaderRoute: typeof FrameworksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries': {
+      id: '/industries'
+      path: '/industries'
+      fullPath: '/industries'
+      preLoaderRoute: typeof IndustriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/platform': {
+      id: '/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof PlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request-quote': {
+      id: '/request-quote'
+      path: '/request-quote'
+      fullPath: '/request-quote'
+      preLoaderRoute: typeof RequestQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/responsible-ai': {
+      id: '/responsible-ai'
+      path: '/responsible-ai'
+      fullPath: '/responsible-ai'
+      preLoaderRoute: typeof ResponsibleAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trust': {
+      id: '/trust'
+      path: '/trust'
+      fullPath: '/trust'
+      preLoaderRoute: typeof TrustRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/$slug': {
+      id: '/features/$slug'
+      path: '/$slug'
+      fullPath: '/features/$slug'
+      preLoaderRoute: typeof FeaturesSlugRouteImport
+      parentRoute: typeof FeaturesRoute
+    }
+    '/features/framework-management': {
+      id: '/features/framework-management'
+      path: '/framework-management'
+      fullPath: '/features/framework-management'
+      preLoaderRoute: typeof FeaturesFrameworkManagementRouteImport
+      parentRoute: typeof FeaturesRoute
+    }
+    '/frameworks/$slug': {
+      id: '/frameworks/$slug'
+      path: '/$slug'
+      fullPath: '/frameworks/$slug'
+      preLoaderRoute: typeof FrameworksSlugRouteImport
+      parentRoute: typeof FrameworksRoute
+    }
+    '/industries/$slug': {
+      id: '/industries/$slug'
+      path: '/$slug'
+      fullPath: '/industries/$slug'
+      preLoaderRoute: typeof IndustriesSlugRouteImport
+      parentRoute: typeof IndustriesRoute
+    }
+    '/legal/$slug': {
+      id: '/legal/$slug'
+      path: '/$slug'
+      fullPath: '/legal/$slug'
+      preLoaderRoute: typeof LegalSlugRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/resources/blog': {
+      id: '/resources/blog'
+      path: '/blog'
+      fullPath: '/resources/blog'
+      preLoaderRoute: typeof ResourcesBlogRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/case-studies': {
+      id: '/resources/case-studies'
+      path: '/case-studies'
+      fullPath: '/resources/case-studies'
+      preLoaderRoute: typeof ResourcesCaseStudiesRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/faq': {
+      id: '/resources/faq'
+      path: '/faq'
+      fullPath: '/resources/faq'
+      preLoaderRoute: typeof ResourcesFaqRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/guides': {
+      id: '/resources/guides'
+      path: '/guides'
+      fullPath: '/resources/guides'
+      preLoaderRoute: typeof ResourcesGuidesRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/product-updates': {
+      id: '/resources/product-updates'
+      path: '/product-updates'
+      fullPath: '/resources/product-updates'
+      preLoaderRoute: typeof ResourcesProductUpdatesRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/webinars': {
+      id: '/resources/webinars'
+      path: '/webinars'
+      fullPath: '/resources/webinars'
+      preLoaderRoute: typeof ResourcesWebinarsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/solutions/$slug': {
+      id: '/solutions/$slug'
+      path: '/$slug'
+      fullPath: '/solutions/$slug'
+      preLoaderRoute: typeof SolutionsSlugRouteImport
+      parentRoute: typeof SolutionsRoute
+    }
+    '/resources/blog/$slug': {
+      id: '/resources/blog/$slug'
+      path: '/$slug'
+      fullPath: '/resources/blog/$slug'
+      preLoaderRoute: typeof ResourcesBlogSlugRouteImport
+      parentRoute: typeof ResourcesBlogRoute
+    }
+    '/resources/case-studies/$slug': {
+      id: '/resources/case-studies/$slug'
+      path: '/$slug'
+      fullPath: '/resources/case-studies/$slug'
+      preLoaderRoute: typeof ResourcesCaseStudiesSlugRouteImport
+      parentRoute: typeof ResourcesCaseStudiesRoute
+    }
+    '/resources/guides/$slug': {
+      id: '/resources/guides/$slug'
+      path: '/$slug'
+      fullPath: '/resources/guides/$slug'
+      preLoaderRoute: typeof ResourcesGuidesSlugRouteImport
+      parentRoute: typeof ResourcesGuidesRoute
+    }
+    '/resources/webinars/$slug': {
+      id: '/resources/webinars/$slug'
+      path: '/$slug'
+      fullPath: '/resources/webinars/$slug'
+      preLoaderRoute: typeof ResourcesWebinarsSlugRouteImport
+      parentRoute: typeof ResourcesWebinarsRoute
+    }
   }
 }
 
+interface FeaturesRouteChildren {
+  FeaturesSlugRoute: typeof FeaturesSlugRoute
+  FeaturesFrameworkManagementRoute: typeof FeaturesFrameworkManagementRoute
+}
+
+const FeaturesRouteChildren: FeaturesRouteChildren = {
+  FeaturesSlugRoute: FeaturesSlugRoute,
+  FeaturesFrameworkManagementRoute: FeaturesFrameworkManagementRoute,
+}
+
+const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
+  FeaturesRouteChildren,
+)
+
+interface FrameworksRouteChildren {
+  FrameworksSlugRoute: typeof FrameworksSlugRoute
+}
+
+const FrameworksRouteChildren: FrameworksRouteChildren = {
+  FrameworksSlugRoute: FrameworksSlugRoute,
+}
+
+const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
+  FrameworksRouteChildren,
+)
+
+interface IndustriesRouteChildren {
+  IndustriesSlugRoute: typeof IndustriesSlugRoute
+}
+
+const IndustriesRouteChildren: IndustriesRouteChildren = {
+  IndustriesSlugRoute: IndustriesSlugRoute,
+}
+
+const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
+  IndustriesRouteChildren,
+)
+
+interface LegalRouteChildren {
+  LegalSlugRoute: typeof LegalSlugRoute
+}
+
+const LegalRouteChildren: LegalRouteChildren = {
+  LegalSlugRoute: LegalSlugRoute,
+}
+
+const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
+
+interface ResourcesBlogRouteChildren {
+  ResourcesBlogSlugRoute: typeof ResourcesBlogSlugRoute
+}
+
+const ResourcesBlogRouteChildren: ResourcesBlogRouteChildren = {
+  ResourcesBlogSlugRoute: ResourcesBlogSlugRoute,
+}
+
+const ResourcesBlogRouteWithChildren = ResourcesBlogRoute._addFileChildren(
+  ResourcesBlogRouteChildren,
+)
+
+interface ResourcesCaseStudiesRouteChildren {
+  ResourcesCaseStudiesSlugRoute: typeof ResourcesCaseStudiesSlugRoute
+}
+
+const ResourcesCaseStudiesRouteChildren: ResourcesCaseStudiesRouteChildren = {
+  ResourcesCaseStudiesSlugRoute: ResourcesCaseStudiesSlugRoute,
+}
+
+const ResourcesCaseStudiesRouteWithChildren =
+  ResourcesCaseStudiesRoute._addFileChildren(ResourcesCaseStudiesRouteChildren)
+
+interface ResourcesGuidesRouteChildren {
+  ResourcesGuidesSlugRoute: typeof ResourcesGuidesSlugRoute
+}
+
+const ResourcesGuidesRouteChildren: ResourcesGuidesRouteChildren = {
+  ResourcesGuidesSlugRoute: ResourcesGuidesSlugRoute,
+}
+
+const ResourcesGuidesRouteWithChildren = ResourcesGuidesRoute._addFileChildren(
+  ResourcesGuidesRouteChildren,
+)
+
+interface ResourcesWebinarsRouteChildren {
+  ResourcesWebinarsSlugRoute: typeof ResourcesWebinarsSlugRoute
+}
+
+const ResourcesWebinarsRouteChildren: ResourcesWebinarsRouteChildren = {
+  ResourcesWebinarsSlugRoute: ResourcesWebinarsSlugRoute,
+}
+
+const ResourcesWebinarsRouteWithChildren =
+  ResourcesWebinarsRoute._addFileChildren(ResourcesWebinarsRouteChildren)
+
+interface ResourcesRouteChildren {
+  ResourcesBlogRoute: typeof ResourcesBlogRouteWithChildren
+  ResourcesCaseStudiesRoute: typeof ResourcesCaseStudiesRouteWithChildren
+  ResourcesFaqRoute: typeof ResourcesFaqRoute
+  ResourcesGuidesRoute: typeof ResourcesGuidesRouteWithChildren
+  ResourcesProductUpdatesRoute: typeof ResourcesProductUpdatesRoute
+  ResourcesWebinarsRoute: typeof ResourcesWebinarsRouteWithChildren
+}
+
+const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesBlogRoute: ResourcesBlogRouteWithChildren,
+  ResourcesCaseStudiesRoute: ResourcesCaseStudiesRouteWithChildren,
+  ResourcesFaqRoute: ResourcesFaqRoute,
+  ResourcesGuidesRoute: ResourcesGuidesRouteWithChildren,
+  ResourcesProductUpdatesRoute: ResourcesProductUpdatesRoute,
+  ResourcesWebinarsRoute: ResourcesWebinarsRouteWithChildren,
+}
+
+const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
+  ResourcesRouteChildren,
+)
+
+interface SolutionsRouteChildren {
+  SolutionsSlugRoute: typeof SolutionsSlugRoute
+}
+
+const SolutionsRouteChildren: SolutionsRouteChildren = {
+  SolutionsSlugRoute: SolutionsSlugRoute,
+}
+
+const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
+  SolutionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
+  R404Route: R404Route,
+  AboutRoute: AboutRoute,
+  BookDemoRoute: BookDemoRoute,
+  CompareRoute: CompareRoute,
+  ContactRoute: ContactRoute,
+  CustomersRoute: CustomersRoute,
+  FeaturesRoute: FeaturesRouteWithChildren,
+  FrameworksRoute: FrameworksRouteWithChildren,
+  IndustriesRoute: IndustriesRouteWithChildren,
+  IntegrationsRoute: IntegrationsRoute,
+  LegalRoute: LegalRouteWithChildren,
+  PartnersRoute: PartnersRoute,
+  PlatformRoute: PlatformRoute,
+  PricingRoute: PricingRoute,
+  RequestQuoteRoute: RequestQuoteRoute,
+  ResourcesRoute: ResourcesRouteWithChildren,
+  ResponsibleAiRoute: ResponsibleAiRoute,
+  SecurityRoute: SecurityRoute,
+  SolutionsRoute: SolutionsRouteWithChildren,
+  StartRoute: StartRoute,
+  StatusRoute: StatusRoute,
+  SupportRoute: SupportRoute,
+  TestimonialsRoute: TestimonialsRoute,
+  TrustRoute: TrustRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

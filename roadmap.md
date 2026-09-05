@@ -14,12 +14,13 @@
 ## Phase 1 — foundation (done)
 - Design system, site config, data files, SEO helpers, primitives, header, footer, cookie consent, hero visual, homepage.
 
-## Phase 2 — complete every route (this pass)
+## Phase 2 — complete every route (done)
 - Core: /platform /features /integrations /pricing /security /responsible-ai /trust /about /support /contact /book-demo /start /status /404 + catch-all
 - Features: 10 detail pages via `/features/$slug`
-- Frameworks: /frameworks + 7 detail pages via `/frameworks/$slug` (filters, search, availability)
+- Frameworks: /frameworks + 7 detail pages via `/frameworks/$slug`
 - Solutions: /solutions + 7 detail pages via `/solutions/$slug`
-- Resources: /resources /resources/faq /resources/guides /resources/product-updates /resources/$slug
+- Resources: /resources /resources/faq /resources/guides /resources/product-updates /resources/case-studies /resources/webinars + detail routes
 - Legal: /legal + 7 documents via `/legal/$slug`
-- Forms: contact, book-demo, start free (client-side validation, no false success)
-- Route-integrity test over the navigation registry
+- Forms: contact, book-demo, request-quote, start free (client-side validation, no false success)
+- Route-integrity test in `src/routes/__tests__/route-integrity.test.ts` passes
+- TypeScript and latest build OK

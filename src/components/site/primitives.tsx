@@ -153,7 +153,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {item.label}
               </span>
             ) : (
-              <Link to={item.to} className="hover:text-primary hover:underline">
+              <Link to={item.to as any} className="hover:text-primary hover:underline">
                 {item.label}
               </Link>
             )}
@@ -200,19 +200,21 @@ export function PageHero({
 export function RelatedLinks({
   title = "Related pages",
   items,
+  className,
 }: {
   title?: string;
   items: { label: string; to: string; description?: string }[];
+  className?: string;
 }) {
   if (items.length === 0) return null;
   return (
-    <div>
+    <div className={className}>
       <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">{title}</h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <Link
             key={item.to}
-            to={item.to}
+            to={item.to as any}
             className="group rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-soft"
           >
             <span className="flex items-center justify-between gap-2 font-medium group-hover:text-primary">

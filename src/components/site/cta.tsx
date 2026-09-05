@@ -44,7 +44,7 @@ export function CtaLink({
   }
 
   return (
-    <Link to={to} className={classes}>
+    <Link to={to as any} className={classes}>
       {children}
     </Link>
   );
@@ -71,10 +71,10 @@ export function ConversionCta({
             <p className="mt-6 text-sm text-ink-foreground/60">{site.humanStatement}</p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink to={primary.to} variant="primary">
+            <CtaLink to={primary.to as any} variant="primary">
               {primary.label}
             </CtaLink>
-            <CtaLink to={secondary.to} variant="inverted">
+            <CtaLink to={secondary.to as any} variant="inverted">
               {secondary.label}
             </CtaLink>
           </div>

@@ -58,9 +58,8 @@ export function Header() {
               entry.kind === "link" ? (
                 <Link
                   key={entry.to}
-                  to={entry.to}
+                  to={entry.to as any}
                   className="rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-surface"
-                  activeProps={{ className: "text-primary" }}
                 >
                   {entry.label}
                 </Link>
@@ -100,7 +99,7 @@ export function Header() {
                               {group.items.map((item) => (
                                 <li key={item.to}>
                                   <Link
-                                    to={item.to}
+                                    to={item.to as any}
                                     onClick={() => setOpenId(null)}
                                     className="block rounded-lg px-2 py-2 hover:bg-surface"
                                   >
@@ -201,7 +200,7 @@ export function Header() {
                             <ul>
                               {group.items.map((item) => (
                                 <li key={item.to}>
-                                  <Link to={item.to} className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface">
+                                  <Link to={item.to as any} className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface">
                                     {item.label}
                                     {item.badge ? (
                                       <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-[0.625rem] text-secondary-foreground">
@@ -229,7 +228,7 @@ export function Header() {
                 Book a demo
               </CtaLink>
               {externalNav.map((item) => (
-                <CtaLink key={item.to} to={item.to} variant="ghost" external>
+                <CtaLink key={item.to} to={item.to as any} variant="ghost" external>
                   {item.label}
                 </CtaLink>
               ))}

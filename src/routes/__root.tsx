@@ -11,24 +11,26 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { CookieConsent } from "@/components/site/CookieConsent";
+import { site } from "@/config/site";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+    <div className="flex min-h-[70vh] flex-col items-center justify-center bg-background px-4 text-center">
+      <span className="eyebrow text-4xl font-bold md:text-6xl">404</span>
+      <h1 className="mt-4 text-2xl font-semibold">Page not found</h1>
+      <p className="mt-3 max-w-md text-muted-foreground">
+        The page you were looking for does not exist or has moved. Try the navigation or return home.
+      </p>
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <Link to="/" className="inline-flex min-h-11 items-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+          Go home
+        </Link>
+        <Link to="/contact" className="inline-flex min-h-11 items-center rounded-lg border border-border-strong px-5 text-sm font-medium hover:bg-surface">
+          Contact us
+        </Link>
       </div>
     </div>
   );
@@ -42,11 +44,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page did not load</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -60,12 +60,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Try again
           </button>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Go home
-          </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -77,21 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: `${site.productName} — ${site.tagline}` },
+      { name: "description", content: site.tagline },
+      { name: "author", content: site.company },
+      { property: "og:title", content: `${site.productName} — ${site.tagline}` },
+      { property: "og:description", content: site.tagline },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: site.productName },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@Eredox" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preload", href: "/fonts/cirqua.woff2", as: "font", type: "font/woff2", crossorigin: "anonymous" },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +118,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
+        Skip to main content
+      </a>
+      <Header />
+      <main id="main-content">
+        <Outlet />
+      </main>
+      <Footer />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }
