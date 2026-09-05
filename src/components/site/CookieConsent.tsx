@@ -70,7 +70,7 @@ export function CookieConsent() {
             <p className="mt-2 text-sm text-muted-foreground">
               Necessary cookies keep this site working. Analytics and marketing cookies stay switched off until you
               choose to enable them, and no non-essential provider is loaded before consent. See the{" "}
-              <Link to="/legal/cookies" className="text-primary underline">
+              <Link to={"/legal/cookies" as any} className="text-primary underline">
                 Cookie Policy
               </Link>
               .
