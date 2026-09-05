@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
+import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+
+const typeName = "Product update";
 
 export const Route = createFileRoute("/resources/blog")({
   head: () => ({
@@ -18,10 +20,10 @@ export const Route = createFileRoute("/resources/blog")({
 });
 
 function BlogIndex() {
-  const posts = resources.filter((r) => r.type === "blog");
+  const posts = resources.filter((r) => r.type === typeName);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Resources"
         title="Blog"
@@ -36,10 +38,10 @@ function BlogIndex() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <Card key={post.slug} interactive>
-              {post.date ? <p className="text-xs text-muted-foreground">{post.date}</p> : null}
+              {post.published ? <p className="text-xs text-muted-foreground">{post.published}</p> : null}
               <h2 className="mt-2 text-lg font-semibold">{post.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{post.summary}</p>
-              <Link to={`/resources/blog/${post.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/resources/blog/${post.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read article <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
@@ -48,6 +50,6 @@ function BlogIndex() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
