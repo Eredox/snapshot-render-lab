@@ -32,7 +32,11 @@ import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
 import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
 import { Route as ResourcesGuidesRouteImport } from './routes/resources.guides'
+import { Route as ResourcesWebinarsRouteImport } from './routes/resources.webinars'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
+import { Route as ResourcesBlogSlugRouteImport } from './routes/resources.blog.$slug'
+import { Route as ResourcesGuidesSlugRouteImport } from './routes/resources.guides.$slug'
+import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.webinars.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -149,10 +153,30 @@ const ResourcesGuidesRoute = ResourcesGuidesRouteImport.update({
   path: '/guides',
   getParentRoute: () => ResourcesRoute,
 } as any)
+const ResourcesWebinarsRoute = ResourcesWebinarsRouteImport.update({
+  id: '/webinars',
+  path: '/webinars',
+  getParentRoute: () => ResourcesRoute,
+} as any)
 const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => SolutionsRoute,
+} as any)
+const ResourcesBlogSlugRoute = ResourcesBlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesBlogRoute,
+} as any)
+const ResourcesGuidesSlugRoute = ResourcesGuidesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesGuidesRoute,
+} as any)
+const ResourcesWebinarsSlugRoute = ResourcesWebinarsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ResourcesWebinarsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -176,10 +200,14 @@ export interface FileRoutesByFullPath {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
-  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
-  '/resources/guides': typeof ResourcesGuidesRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -202,10 +230,14 @@ export interface FileRoutesByTo {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
-  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
-  '/resources/guides': typeof ResourcesGuidesRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -229,10 +261,14 @@ export interface FileRoutesById {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
-  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
-  '/resources/guides': typeof ResourcesGuidesRoute
+  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
+  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -260,7 +296,11 @@ export interface FileRouteTypes {
     | '/resources/blog'
     | '/resources/faq'
     | '/resources/guides'
+    | '/resources/webinars'
     | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -286,7 +326,11 @@ export interface FileRouteTypes {
     | '/resources/blog'
     | '/resources/faq'
     | '/resources/guides'
+    | '/resources/webinars'
     | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
   id:
     | '__root__'
     | '/'
@@ -312,7 +356,11 @@ export interface FileRouteTypes {
     | '/resources/blog'
     | '/resources/faq'
     | '/resources/guides'
+    | '/resources/webinars'
     | '/solutions/$slug'
+    | '/resources/blog/$slug'
+    | '/resources/guides/$slug'
+    | '/resources/webinars/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -498,12 +546,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesGuidesRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/resources/webinars': {
+      id: '/resources/webinars'
+      path: '/webinars'
+      fullPath: '/resources/webinars'
+      preLoaderRoute: typeof ResourcesWebinarsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/solutions/$slug': {
       id: '/solutions/$slug'
       path: '/$slug'
       fullPath: '/solutions/$slug'
       preLoaderRoute: typeof SolutionsSlugRouteImport
       parentRoute: typeof SolutionsRoute
+    }
+    '/resources/blog/$slug': {
+      id: '/resources/blog/$slug'
+      path: '/$slug'
+      fullPath: '/resources/blog/$slug'
+      preLoaderRoute: typeof ResourcesBlogSlugRouteImport
+      parentRoute: typeof ResourcesBlogRoute
+    }
+    '/resources/guides/$slug': {
+      id: '/resources/guides/$slug'
+      path: '/$slug'
+      fullPath: '/resources/guides/$slug'
+      preLoaderRoute: typeof ResourcesGuidesSlugRouteImport
+      parentRoute: typeof ResourcesGuidesRoute
+    }
+    '/resources/webinars/$slug': {
+      id: '/resources/webinars/$slug'
+      path: '/$slug'
+      fullPath: '/resources/webinars/$slug'
+      preLoaderRoute: typeof ResourcesWebinarsSlugRouteImport
+      parentRoute: typeof ResourcesWebinarsRoute
     }
   }
 }
@@ -544,16 +620,53 @@ const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
   IndustriesRouteChildren,
 )
 
+interface ResourcesBlogRouteChildren {
+  ResourcesBlogSlugRoute: typeof ResourcesBlogSlugRoute
+}
+
+const ResourcesBlogRouteChildren: ResourcesBlogRouteChildren = {
+  ResourcesBlogSlugRoute: ResourcesBlogSlugRoute,
+}
+
+const ResourcesBlogRouteWithChildren = ResourcesBlogRoute._addFileChildren(
+  ResourcesBlogRouteChildren,
+)
+
+interface ResourcesGuidesRouteChildren {
+  ResourcesGuidesSlugRoute: typeof ResourcesGuidesSlugRoute
+}
+
+const ResourcesGuidesRouteChildren: ResourcesGuidesRouteChildren = {
+  ResourcesGuidesSlugRoute: ResourcesGuidesSlugRoute,
+}
+
+const ResourcesGuidesRouteWithChildren = ResourcesGuidesRoute._addFileChildren(
+  ResourcesGuidesRouteChildren,
+)
+
+interface ResourcesWebinarsRouteChildren {
+  ResourcesWebinarsSlugRoute: typeof ResourcesWebinarsSlugRoute
+}
+
+const ResourcesWebinarsRouteChildren: ResourcesWebinarsRouteChildren = {
+  ResourcesWebinarsSlugRoute: ResourcesWebinarsSlugRoute,
+}
+
+const ResourcesWebinarsRouteWithChildren =
+  ResourcesWebinarsRoute._addFileChildren(ResourcesWebinarsRouteChildren)
+
 interface ResourcesRouteChildren {
-  ResourcesBlogRoute: typeof ResourcesBlogRoute
+  ResourcesBlogRoute: typeof ResourcesBlogRouteWithChildren
   ResourcesFaqRoute: typeof ResourcesFaqRoute
-  ResourcesGuidesRoute: typeof ResourcesGuidesRoute
+  ResourcesGuidesRoute: typeof ResourcesGuidesRouteWithChildren
+  ResourcesWebinarsRoute: typeof ResourcesWebinarsRouteWithChildren
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
-  ResourcesBlogRoute: ResourcesBlogRoute,
+  ResourcesBlogRoute: ResourcesBlogRouteWithChildren,
   ResourcesFaqRoute: ResourcesFaqRoute,
-  ResourcesGuidesRoute: ResourcesGuidesRoute,
+  ResourcesGuidesRoute: ResourcesGuidesRouteWithChildren,
+  ResourcesWebinarsRoute: ResourcesWebinarsRouteWithChildren,
 }
 
 const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
