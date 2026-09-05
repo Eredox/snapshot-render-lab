@@ -60,7 +60,7 @@ function IndustriesPage() {
             <Card key={ind.slug} interactive>
               <h2 className="text-lg font-semibold">{ind.name}</h2>
               <p className="mt-3 text-sm text-muted-foreground">{ind.summary}</p>
-              <Link to={`/industries/${ind.slug}`} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/industries/${ind.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
