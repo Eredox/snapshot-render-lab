@@ -60,6 +60,39 @@ function ContactPage() {
         </div>
       </Section>
 
+      <Section tone="surface">
+        <SectionHeading title="What to include in your message" />
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <Card>
+            <h3 className="font-semibold">Evaluating NOVA</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Tell us which frameworks you are working towards and your rough timeline, and we can walk you through
+              what is available today.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="font-semibold">Pricing and procurement</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              For a formal quote, use the{" "}
+              <Link to="/request-quote" className="text-primary underline">
+                quote request form
+              </Link>
+              . All pricing is indicative and subject to Eredox approval.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="font-semibold">Partnerships</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Consultants and auditors interested in working with NOVA can read the{" "}
+              <Link to="/partners" className="text-primary underline">
+                partners page
+              </Link>{" "}
+              first, then reach out here.
+            </p>
+          </Card>
+        </div>
+      </Section>
+
       <ConversionCta />
     </>
   );
