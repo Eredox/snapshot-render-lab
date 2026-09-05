@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PlatformRouteImport } from './routes/platform'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const PlatformRoute = PlatformRouteImport.update({
   path: '/platform',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/features': typeof FeaturesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/features': typeof FeaturesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
 export interface FileRoutesById {
@@ -61,20 +69,33 @@ export interface FileRoutesById {
   '/features': typeof FeaturesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/features' | '/integrations' | '/platform' | '/features/$slug'
+    | '/'
+    | '/features'
+    | '/integrations'
+    | '/platform'
+    | '/pricing'
+    | '/features/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/features' | '/integrations' | '/platform' | '/features/$slug'
+  to:
+    | '/'
+    | '/features'
+    | '/integrations'
+    | '/platform'
+    | '/pricing'
+    | '/features/$slug'
   id:
     | '__root__'
     | '/'
     | '/features'
     | '/integrations'
     | '/platform'
+    | '/pricing'
     | '/features/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -83,6 +104,7 @@ export interface RootRouteChildren {
   FeaturesRoute: typeof FeaturesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
   PlatformRoute: typeof PlatformRoute
+  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -115,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features/$slug': {
       id: '/features/$slug'
       path: '/$slug'
@@ -142,6 +171,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesRoute: FeaturesRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
   PlatformRoute: PlatformRoute,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
