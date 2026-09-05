@@ -22,5 +22,7 @@
 - Resources: /resources /resources/faq /resources/guides /resources/product-updates /resources/case-studies /resources/webinars + detail routes
 - Legal: /legal + 7 documents via `/legal/$slug`
 - Forms: contact, book-demo, request-quote, start free (client-side validation, no false success)
-- Route-integrity test in `src/routes/__tests__/route-integrity.test.ts` passes
+- /roadmap page driven by `src/data/roadmap.ts` (derived from features + frameworks availability)
+- About and Contact pages fleshed out (company, product direction, enquiry guidance)
+- Route-integrity test in `src/routes/__tests__/route-integrity.test.ts` passes (vitest)
 - TypeScript and latest build OK
