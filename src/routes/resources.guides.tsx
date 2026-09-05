@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
+import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+
+const typeName = "Guide";
 
 export const Route = createFileRoute("/resources/guides")({
   head: () => ({
@@ -18,10 +20,10 @@ export const Route = createFileRoute("/resources/guides")({
 });
 
 function GuidesIndex() {
-  const guides = resources.filter((r) => r.type === "guide");
+  const guides = resources.filter((r) => r.type === typeName);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Resources"
         title="Guides"
@@ -37,8 +39,9 @@ function GuidesIndex() {
           {guides.map((guide) => (
             <Card key={guide.slug} interactive>
               <h2 className="text-lg font-semibold">{guide.title}</h2>
+              {guide.readingTime ? <p className="mt-1 text-xs text-muted-foreground">{guide.readingTime}</p> : null}
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{guide.summary}</p>
-              <Link to={`/resources/guides/${guide.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/resources/guides/${guide.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read guide <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
@@ -47,6 +50,6 @@ function GuidesIndex() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
