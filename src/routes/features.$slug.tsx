@@ -138,7 +138,7 @@ function FeatureDetail() {
                   <ul className="mt-2 space-y-1">
                     {feature.relatedFrameworks.map((slug) => (
                       <li key={slug}>
-                        <Link to={`/frameworks/${slug}`} className="text-primary hover:underline">
+                        <Link to={`/frameworks/${slug}` as any} className="text-primary hover:underline">
                           {slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
                         </Link>
                       </li>
