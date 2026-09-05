@@ -228,7 +228,7 @@ export function Header() {
                 Book a demo
               </CtaLink>
               {externalNav.map((item) => (
-                <CtaLink key={item.to} to={item.to} variant="ghost" external>
+                <CtaLink key={item.to} to={item.to as any} variant="ghost" external>
                   {item.label}
                 </CtaLink>
               ))}
