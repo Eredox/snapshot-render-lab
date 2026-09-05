@@ -32,7 +32,7 @@ function RoadmapPage() {
         const entries = roadmapEntries.filter((e) => e.status === status);
         if (!entries.length) return null;
         return (
-          <Section key={status} tone={i % 2 === 1 ? "surface" : undefined}>
+          <Section key={status} {...(i % 2 === 1 ? { tone: "surface" as const } : {})}>
             <SectionHeading title={status} description={`${entries.length} items`} />
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {entries.map((e) => (
