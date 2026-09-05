@@ -92,7 +92,7 @@ function FrameworksPage() {
               ))}
             </ul>
             <div className="mt-6">
-              <Link to="/features/reporting" className="text-primary underline">
+              <Link to="/features" className="text-primary underline">
                 Learn about reporting
               </Link>
             </div>
