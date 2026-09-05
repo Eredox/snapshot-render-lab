@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as FrameworksRouteImport } from './routes/frameworks'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrameworksRoute = FrameworksRouteImport.update({
+  id: '/frameworks',
+  path: '/frameworks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntegrationsRoute = IntegrationsRouteImport.update({
@@ -62,6 +68,7 @@ const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRoute
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRoute
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/frameworks': typeof FrameworksRoute
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/features'
+    | '/frameworks'
     | '/integrations'
     | '/platform'
     | '/pricing'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/features'
+    | '/frameworks'
     | '/integrations'
     | '/platform'
     | '/pricing'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/features'
+    | '/frameworks'
     | '/integrations'
     | '/platform'
     | '/pricing'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
+  FrameworksRoute: typeof FrameworksRoute
   IntegrationsRoute: typeof IntegrationsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
@@ -147,6 +160,13 @@ declare module '@tanstack/react-router' {
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/frameworks': {
+      id: '/frameworks'
+      path: '/frameworks'
+      fullPath: '/frameworks'
+      preLoaderRoute: typeof FrameworksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/integrations': {
@@ -209,6 +229,7 @@ const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
+  FrameworksRoute: FrameworksRoute,
   IntegrationsRoute: IntegrationsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
