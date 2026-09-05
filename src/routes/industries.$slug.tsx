@@ -160,7 +160,7 @@ function IndustryDetail() {
             <Card key={f.slug} interactive>
               <h3 className="font-semibold">{f.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{f.description}</p>
-              <Link to={`/frameworks/${f.slug}`} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/frameworks/${f.slug}` as any} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
