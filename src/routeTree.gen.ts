@@ -20,6 +20,7 @@ import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
+import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +77,11 @@ const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => FrameworksRoute,
 } as any)
+const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SolutionsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -86,9 +92,10 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
-  '/solutions': typeof SolutionsRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -99,9 +106,10 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
-  '/solutions': typeof SolutionsRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -113,9 +121,10 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
-  '/solutions': typeof SolutionsRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/solutions/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/solutions/$slug'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/solutions/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -168,7 +180,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   SecurityRoute: typeof SecurityRoute
-  SolutionsRoute: typeof SolutionsRoute
+  SolutionsRoute: typeof SolutionsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrameworksSlugRouteImport
       parentRoute: typeof FrameworksRoute
     }
+    '/solutions/$slug': {
+      id: '/solutions/$slug'
+      path: '/$slug'
+      fullPath: '/solutions/$slug'
+      preLoaderRoute: typeof SolutionsSlugRouteImport
+      parentRoute: typeof SolutionsRoute
+    }
   }
 }
 
@@ -277,6 +296,18 @@ const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
   FrameworksRouteChildren,
 )
 
+interface SolutionsRouteChildren {
+  SolutionsSlugRoute: typeof SolutionsSlugRoute
+}
+
+const SolutionsRouteChildren: SolutionsRouteChildren = {
+  SolutionsSlugRoute: SolutionsSlugRoute,
+}
+
+const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
+  SolutionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
@@ -286,7 +317,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ResponsibleAiRoute: ResponsibleAiRoute,
   SecurityRoute: SecurityRoute,
-  SolutionsRoute: SolutionsRoute,
+  SolutionsRoute: SolutionsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
