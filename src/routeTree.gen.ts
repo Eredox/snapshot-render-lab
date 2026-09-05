@@ -14,6 +14,7 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 
@@ -42,6 +43,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResponsibleAiRoute = ResponsibleAiRouteImport.update({
+  id: '/responsible-ai',
+  path: '/responsible-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SecurityRoute = SecurityRouteImport.update({
   id: '/security',
   path: '/security',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/integrations'
     | '/platform'
     | '/pricing'
+    | '/responsible-ai'
     | '/security'
     | '/features/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/integrations'
     | '/platform'
     | '/pricing'
+    | '/responsible-ai'
     | '/security'
     | '/features/$slug'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/integrations'
     | '/platform'
     | '/pricing'
+    | '/responsible-ai'
     | '/security'
     | '/features/$slug'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   IntegrationsRoute: typeof IntegrationsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
+  ResponsibleAiRoute: typeof ResponsibleAiRoute
   SecurityRoute: typeof SecurityRoute
 }
 
@@ -157,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/responsible-ai': {
+      id: '/responsible-ai'
+      path: '/responsible-ai'
+      fullPath: '/responsible-ai'
+      preLoaderRoute: typeof ResponsibleAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/security': {
       id: '/security'
       path: '/security'
@@ -192,6 +212,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntegrationsRoute: IntegrationsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
+  ResponsibleAiRoute: ResponsibleAiRoute,
   SecurityRoute: SecurityRoute,
 }
 export const routeTree = rootRouteImport
