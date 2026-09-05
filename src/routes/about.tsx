@@ -80,6 +80,52 @@ function AboutPage() {
       </Section>
 
       <Section>
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div>
+            <SectionHeading eyebrow="How we work" title="A product built alongside its users" />
+            <p className="mt-4 text-muted-foreground">
+              NOVA evolves through direct work with compliance teams, security leads, consultants and auditors.
+              Feedback from real programmes shapes what we build next, and our public roadmap shows what is
+              available, partly available and planned.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Where NOVA uses AI, it does so to prepare, suggest and summarise under human oversight.{" "}
+              {site.humanStatement}
+            </p>
+          </div>
+          <div className="space-y-5">
+            <Card>
+              <h3 className="text-lg font-semibold">Company</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {site.company}, based in Australia, building compliance software for organisations that want evidence-led
+                readiness rather than checkbox theatre.
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-lg font-semibold">Product direction</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                See what is available today and what is planned on the{" "}
+                <Link to="/roadmap" className="text-primary underline">
+                  public roadmap
+                </Link>
+                .
+              </p>
+            </Card>
+            <Card>
+              <h3 className="text-lg font-semibold">Talk to us</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Questions about fit, pricing or a demo?{" "}
+                <Link to="/contact" className="text-primary underline">
+                  Contact the team
+                </Link>
+                .
+              </p>
+            </Card>
+          </div>
+        </div>
+      </Section>
+
+      <Section tone="surface">
         <SectionHeading title="What we do not do" />
         <FeatureList
           className="mt-6"

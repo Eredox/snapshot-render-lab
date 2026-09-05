@@ -28,6 +28,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
@@ -145,6 +146,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const ResponsibleAiRoute = ResponsibleAiRouteImport.update({
   id: '/responsible-ai',
   path: '/responsible-ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SecurityRoute = SecurityRouteImport.update({
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
+  '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
+  '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
+  '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/resources'
     | '/responsible-ai'
+    | '/roadmap'
     | '/security'
     | '/solutions'
     | '/start'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/resources'
     | '/responsible-ai'
+    | '/roadmap'
     | '/security'
     | '/solutions'
     | '/start'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/request-quote'
     | '/resources'
     | '/responsible-ai'
+    | '/roadmap'
     | '/security'
     | '/solutions'
     | '/start'
@@ -553,6 +565,7 @@ export interface RootRouteChildren {
   RequestQuoteRoute: typeof RequestQuoteRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   ResponsibleAiRoute: typeof ResponsibleAiRoute
+  RoadmapRoute: typeof RoadmapRoute
   SecurityRoute: typeof SecurityRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   StartRoute: typeof StartRoute
@@ -695,6 +708,13 @@ declare module '@tanstack/react-router' {
       path: '/responsible-ai'
       fullPath: '/responsible-ai'
       preLoaderRoute: typeof ResponsibleAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/security': {
@@ -1009,6 +1029,7 @@ const rootRouteChildren: RootRouteChildren = {
   RequestQuoteRoute: RequestQuoteRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   ResponsibleAiRoute: ResponsibleAiRoute,
+  RoadmapRoute: RoadmapRoute,
   SecurityRoute: SecurityRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   StartRoute: StartRoute,
