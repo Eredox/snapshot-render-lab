@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
+import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+
+const typeName = "Explainer";
 
 export const Route = createFileRoute("/resources/case-studies")({
   head: () => ({
@@ -18,10 +20,10 @@ export const Route = createFileRoute("/resources/case-studies")({
 });
 
 function CaseStudiesPage() {
-  const studies = resources.filter((r) => r.type === "case-study");
+  const studies = resources.filter((r) => r.type === typeName);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Resources"
         title="Case studies"
@@ -37,8 +39,9 @@ function CaseStudiesPage() {
           {studies.map((study) => (
             <Card key={study.slug} interactive>
               <h2 className="text-lg font-semibold">{study.title}</h2>
+              {study.published ? <p className="mt-1 text-xs text-muted-foreground">{study.published}</p> : null}
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{study.summary}</p>
-              <Link to={`/resources/case-studies/${study.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/resources/case-studies/${study.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read case study <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
@@ -47,6 +50,6 @@ function CaseStudiesPage() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
