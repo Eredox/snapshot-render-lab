@@ -4,9 +4,11 @@ import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+const typeName = "Explainer";
+
 export const Route = createFileRoute("/resources/case-studies/$slug")({
   loader: ({ params }) => {
-    const study = resources.find((r) => r.type === "case-study" && r.slug === params.slug);
+    const study = resources.find((r) => r.type === typeName && r.slug === params.slug);
     if (!study) throw notFound();
     return { study };
   },
@@ -40,21 +42,21 @@ export const Route = createFileRoute("/resources/case-studies/$slug")({
 
 function StudyNotFound() {
   return (
-    <>
+    <main>
       <PageHero eyebrow="Case studies" title="Case study not found" description="That case study does not exist." breadcrumbs={[{ label: "Case studies", to: "/resources/case-studies" }]} />
       <Section>
         <Link to="/resources/case-studies" className="text-primary underline">Back to case studies</Link>
       </Section>
-    </>
+    </main>
   );
 }
 
 function StudyDetail() {
   const { study } = Route.useLoaderData();
-  const related = resources.filter((r) => r.type === "case-study" && r.slug !== study.slug).slice(0, 3);
+  const related = resources.filter((r) => r.type === typeName && r.slug !== study.slug).slice(0, 3);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Case studies"
         title={study.title}
@@ -69,9 +71,24 @@ function StudyDetail() {
       <Section>
         <div className="mx-auto max-w-3xl">
           <Card>
-            <div className="prose prose-sm max-w-none">
-              {study.content?.split("\n\n").map((para, i) => (
-                <p key={i} className="text-muted-foreground">{para}</p>
+            {study.published ? <p className="text-sm text-muted-foreground">{study.published}</p> : null}
+            <div className="mt-4 space-y-8">
+              {study.sections?.map((section) => (
+                <section key={section.heading}>
+                  <h2 className="text-xl font-semibold">{section.heading}</h2>
+                  <div className="mt-3 space-y-3">
+                    {section.paragraphs.map((para, i) => (
+                      <p key={i} className="text-muted-foreground">{para}</p>
+                    ))}
+                  </div>
+                  {section.points?.length ? (
+                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      {section.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </section>
               ))}
             </div>
           </Card>
@@ -84,6 +101,6 @@ function StudyDetail() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
