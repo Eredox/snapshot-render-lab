@@ -41,7 +41,7 @@ const benefits = [
 ];
 
 function PartnersPage() {
-  const partnerSolutions = solutions.filter((s) => s.audience === "Partner");
+  const partnerSolutions = solutions.filter((s) => (s.audience as string) === "Partner");
 
   return (
     <>
