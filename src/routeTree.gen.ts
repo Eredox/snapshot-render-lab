@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as FrameworksRouteImport } from './routes/frameworks'
+import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
@@ -24,6 +27,7 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
+import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -46,6 +50,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
@@ -56,9 +65,19 @@ const FrameworksRoute = FrameworksRouteImport.update({
   path: '/frameworks',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndustriesRoute = IndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IntegrationsRoute = IntegrationsRouteImport.update({
   id: '/integrations',
   path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -101,6 +120,11 @@ const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => FrameworksRoute,
 } as any)
+const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => IndustriesRoute,
+} as any)
 const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -112,9 +136,12 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
@@ -123,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -130,9 +158,12 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
@@ -141,6 +172,7 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesById {
@@ -149,9 +181,12 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
+  '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
@@ -160,6 +195,7 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
+  '/industries/$slug': typeof IndustriesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRouteTypes {
@@ -169,9 +205,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/book-demo'
     | '/contact'
+    | '/customers'
     | '/features'
     | '/frameworks'
+    | '/industries'
     | '/integrations'
+    | '/partners'
     | '/platform'
     | '/pricing'
     | '/responsible-ai'
@@ -180,6 +219,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/industries/$slug'
     | '/solutions/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,9 +227,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/book-demo'
     | '/contact'
+    | '/customers'
     | '/features'
     | '/frameworks'
+    | '/industries'
     | '/integrations'
+    | '/partners'
     | '/platform'
     | '/pricing'
     | '/responsible-ai'
@@ -198,6 +241,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/industries/$slug'
     | '/solutions/$slug'
   id:
     | '__root__'
@@ -205,9 +249,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/book-demo'
     | '/contact'
+    | '/customers'
     | '/features'
     | '/frameworks'
+    | '/industries'
     | '/integrations'
+    | '/partners'
     | '/platform'
     | '/pricing'
     | '/responsible-ai'
@@ -216,6 +263,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
+    | '/industries/$slug'
     | '/solutions/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -224,9 +272,12 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BookDemoRoute: typeof BookDemoRoute
   ContactRoute: typeof ContactRoute
+  CustomersRoute: typeof CustomersRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
   FrameworksRoute: typeof FrameworksRouteWithChildren
+  IndustriesRoute: typeof IndustriesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
+  PartnersRoute: typeof PartnersRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   ResponsibleAiRoute: typeof ResponsibleAiRoute
@@ -265,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
@@ -279,11 +337,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrameworksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/industries': {
+      id: '/industries'
+      path: '/industries'
+      fullPath: '/industries'
+      preLoaderRoute: typeof IndustriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/integrations': {
       id: '/integrations'
       path: '/integrations'
       fullPath: '/integrations'
       preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -342,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrameworksSlugRouteImport
       parentRoute: typeof FrameworksRoute
     }
+    '/industries/$slug': {
+      id: '/industries/$slug'
+      path: '/$slug'
+      fullPath: '/industries/$slug'
+      preLoaderRoute: typeof IndustriesSlugRouteImport
+      parentRoute: typeof IndustriesRoute
+    }
     '/solutions/$slug': {
       id: '/solutions/$slug'
       path: '/$slug'
@@ -376,6 +455,18 @@ const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
   FrameworksRouteChildren,
 )
 
+interface IndustriesRouteChildren {
+  IndustriesSlugRoute: typeof IndustriesSlugRoute
+}
+
+const IndustriesRouteChildren: IndustriesRouteChildren = {
+  IndustriesSlugRoute: IndustriesSlugRoute,
+}
+
+const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
+  IndustriesRouteChildren,
+)
+
 interface SolutionsRouteChildren {
   SolutionsSlugRoute: typeof SolutionsSlugRoute
 }
@@ -393,9 +484,12 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BookDemoRoute: BookDemoRoute,
   ContactRoute: ContactRoute,
+  CustomersRoute: CustomersRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
   FrameworksRoute: FrameworksRouteWithChildren,
+  IndustriesRoute: IndustriesRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
+  PartnersRoute: PartnersRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   ResponsibleAiRoute: ResponsibleAiRoute,
