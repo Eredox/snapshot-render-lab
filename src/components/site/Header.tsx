@@ -200,7 +200,7 @@ export function Header() {
                             <ul>
                               {group.items.map((item) => (
                                 <li key={item.to}>
-                                  <Link to={item.to} className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface">
+                                  <Link to={item.to as any} className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface">
                                     {item.label}
                                     {item.badge ? (
                                       <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-[0.625rem] text-secondary-foreground">
