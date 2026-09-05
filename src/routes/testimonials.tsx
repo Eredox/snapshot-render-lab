@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Quote } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { resources } from "@/data/resources";
+import { testimonials } from "@/data/testimonials";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/testimonials")({
@@ -18,10 +18,8 @@ export const Route = createFileRoute("/testimonials")({
 });
 
 function TestimonialsPage() {
-  const testimonials = resources.filter((r) => r.type === "testimonial");
-
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Customers"
         title="What customers say"
@@ -34,9 +32,10 @@ function TestimonialsPage() {
           {testimonials.map((t) => (
             <Card key={t.slug}>
               <Quote aria-hidden="true" className="h-6 w-6 text-primary" />
-              <blockquote className="mt-3 text-lg font-medium">{t.content}</blockquote>
+              <blockquote className="mt-3 text-lg font-medium">{t.quote}</blockquote>
               <p className="mt-4 text-sm font-semibold">{t.author}</p>
-              {t.role ? <p className="text-sm text-muted-foreground">{t.role}</p> : null}
+              <p className="text-sm text-muted-foreground">{t.role}</p>
+              <p className="mt-2 text-xs text-muted-foreground">{t.context}</p>
             </Card>
           ))}
         </div>
@@ -54,6 +53,6 @@ function TestimonialsPage() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
