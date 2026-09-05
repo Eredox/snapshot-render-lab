@@ -43,6 +43,7 @@ export const staticRoutes = [
   "/pricing",
   "/request-quote",
   "/resources",
+  "/roadmap",
   "/resources/blog",
   "/resources/case-studies",
   "/resources/faq",
@@ -158,6 +159,7 @@ export const footerColumns: NavGroup[] = [
       { label: "Frameworks", to: "/frameworks" },
       { label: "Solutions", to: "/solutions" },
       { label: "Pricing", to: "/pricing" },
+      { label: "Roadmap", to: "/roadmap" },
     ],
   },
   {
