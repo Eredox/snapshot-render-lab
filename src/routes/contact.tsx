@@ -53,7 +53,7 @@ function ContactPage() {
             </Card>
             <Card>
               <h2 className="text-lg font-semibold">Office</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{site.companyName}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{site.company}</p>
               <p className="text-sm text-muted-foreground">Australia</p>
             </Card>
           </div>
