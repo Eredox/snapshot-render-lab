@@ -1,13 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { Section, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+const typeName = "Product update";
+
 export const Route = createFileRoute("/resources/blog/$slug")({
   loader: ({ params }) => {
-    const post = resources.find((r) => r.type === "blog" && r.slug === params.slug);
+    const post = resources.find((r) => r.type === typeName && r.slug === params.slug);
     if (!post) throw notFound();
     return { post };
   },
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/resources/blog/$slug")({
     }
     return {
       ...pageMeta({
-        title: `${post.title} — NOVA Compliance Blog`,
+        title: `${post.title} — NOVA Compliance`,
         description: post.summary,
         path: `/resources/blog/${post.slug}`,
       }),
@@ -41,21 +42,21 @@ export const Route = createFileRoute("/resources/blog/$slug")({
 
 function PostNotFound() {
   return (
-    <>
+    <main>
       <PageHero eyebrow="Blog" title="Article not found" description="That article does not exist." breadcrumbs={[{ label: "Blog", to: "/resources/blog" }]} />
       <Section>
         <Link to="/resources/blog" className="text-primary underline">Back to blog</Link>
       </Section>
-    </>
+    </main>
   );
 }
 
 function PostDetail() {
   const { post } = Route.useLoaderData();
-  const related = resources.filter((r) => r.type === "blog" && r.slug !== post.slug).slice(0, 3);
+  const related = resources.filter((r) => r.type === typeName && r.slug !== post.slug).slice(0, 3);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Blog"
         title={post.title}
@@ -70,10 +71,25 @@ function PostDetail() {
       <Section>
         <div className="mx-auto max-w-3xl">
           <Card>
-            {post.date ? <p className="text-sm text-muted-foreground">{post.date}</p> : null}
-            <div className="prose prose-sm mt-4 max-w-none">
-              {post.content?.split("\n\n").map((para, i) => (
-                <p key={i} className="text-muted-foreground">{para}</p>
+            {post.published ? <p className="text-sm text-muted-foreground">{post.published}</p> : null}
+            {post.readingTime ? <p className="text-sm text-muted-foreground">{post.readingTime}</p> : null}
+            <div className="mt-4 space-y-8">
+              {post.sections?.map((section) => (
+                <section key={section.heading}>
+                  <h2 className="text-xl font-semibold">{section.heading}</h2>
+                  <div className="mt-3 space-y-3">
+                    {section.paragraphs.map((para, i) => (
+                      <p key={i} className="text-muted-foreground">{para}</p>
+                    ))}
+                  </div>
+                  {section.points?.length ? (
+                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      {section.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </section>
               ))}
             </div>
           </Card>
@@ -86,6 +102,6 @@ function PostDetail() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
