@@ -74,7 +74,7 @@ function PricingPage() {
                 ) : (
                   <>
                     <span className="text-3xl font-semibold">
-                      ${billing === "monthly" ? p.monthly : p.annual}
+                      ${billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
                     </span>
                     <span className="text-muted-foreground">/month</span>
                   </>
