@@ -20,7 +20,7 @@ export const Route = createFileRoute("/solutions")({
 function SolutionsPage() {
   const orgSolutions = solutions.filter((s) => s.audience === "Organisation");
   const roleSolutions = solutions.filter((s) => s.audience === "Role");
-  const partnerSolutions = solutions.filter((s) => s.audience === "Partner");
+  const partnerSolutions = solutions.filter((s) => (s.audience as string) === "Partner");
 
   return (
     <>
