@@ -2,8 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { resources, resourceTypes } from "@/data/resources";
+import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+
+const typeMeta: Record<string, { label: string; path: string }> = {
+  "Guide": { label: "Guides", path: "/resources/guides" },
+  "Product update": { label: "Product updates", path: "/resources/product-updates" },
+  "Explainer": { label: "Explainers", path: "/resources/case-studies" },
+};
 
 export const Route = createFileRoute("/resources")({
   head: () => ({
@@ -18,10 +24,8 @@ export const Route = createFileRoute("/resources")({
 });
 
 function ResourcesPage() {
-  const byType = (type: string) => resources.filter((r) => r.type === type);
-
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Resources"
         title="Learn and reference"
@@ -32,15 +36,24 @@ function ResourcesPage() {
       <Section>
         <SectionHeading title="Browse by topic" />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {resourceTypes.map((type) => (
-            <Card key={type.slug} interactive>
-              <h2 className="text-lg font-semibold">{type.label}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{type.description}</p>
-              <Link to={type.path} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+          {Object.entries(typeMeta).map(([type, meta]) => (
+            <Card key={type} interactive>
+              <h2 className="text-lg font-semibold">{meta.label}</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {resources.filter((r) => r.type === type).length} item{resources.filter((r) => r.type === type).length === 1 ? "" : "s"}
+              </p>
+              <Link to={meta.path as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Browse <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
           ))}
+          <Card interactive>
+            <h2 className="text-lg font-semibold">FAQ</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Common questions about NOVA.</p>
+            <Link to="/resources/faq" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              Browse <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            </Link>
+          </Card>
         </div>
       </Section>
 
@@ -52,7 +65,7 @@ function ResourcesPage() {
               <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{r.type}</p>
               <h3 className="mt-2 font-semibold">{r.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{r.summary}</p>
-              <Link to={`/resources/${resourceTypes.find((t) => t.slug === r.type)?.path.replace("/resources/", "")}/${r.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`${typeMeta[r.type].path}/${r.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
@@ -61,6 +74,6 @@ function ResourcesPage() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
