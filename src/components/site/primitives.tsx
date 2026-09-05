@@ -153,7 +153,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {item.label}
               </span>
             ) : (
-              <Link to={item.to} className="hover:text-primary hover:underline">
+              <Link to={item.to as any} className="hover:text-primary hover:underline">
                 {item.label}
               </Link>
             )}
