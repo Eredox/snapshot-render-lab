@@ -92,7 +92,7 @@ export const frameworksMenu: NavItem[] = [
     label: f.name,
     to: `/frameworks/${f.slug}`,
     description: f.jurisdictions.join(" · "),
-    badge: f.availability === "Planned" ? "Planned" : undefined,
+    ...(f.availability === "Planned" && { badge: "Planned" }),
   })),
 ];
 
