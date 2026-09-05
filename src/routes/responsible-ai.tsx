@@ -102,7 +102,7 @@ function ResponsibleAIPage() {
           before it becomes part of the governed record. Audit history shows who reviewed the output and when.
         </p>
         <div className="mt-6">
-          <Link to="/features/ai-assistant" className="text-primary underline">
+          <Link to={"/features/ai-assistant" as any} className="text-primary underline">
             Read more about the AI Assistant capability
           </Link>
         </div>
