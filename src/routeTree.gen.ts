@@ -26,15 +26,19 @@ import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
+import { Route as ResourcesCaseStudiesRouteImport } from './routes/resources.case-studies'
 import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
 import { Route as ResourcesGuidesRouteImport } from './routes/resources.guides'
 import { Route as ResourcesWebinarsRouteImport } from './routes/resources.webinars'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 import { Route as ResourcesBlogSlugRouteImport } from './routes/resources.blog.$slug'
+import { Route as ResourcesCaseStudiesSlugRouteImport } from './routes/resources.case-studies.$slug'
 import { Route as ResourcesGuidesSlugRouteImport } from './routes/resources.guides.$slug'
 import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.webinars.$slug'
 
@@ -123,6 +127,16 @@ const StartRoute = StartRouteImport.update({
   path: '/start',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestimonialsRoute = TestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -141,6 +155,11 @@ const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
 const ResourcesBlogRoute = ResourcesBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesCaseStudiesRoute = ResourcesCaseStudiesRouteImport.update({
+  id: '/case-studies',
+  path: '/case-studies',
   getParentRoute: () => ResourcesRoute,
 } as any)
 const ResourcesFaqRoute = ResourcesFaqRouteImport.update({
@@ -168,6 +187,12 @@ const ResourcesBlogSlugRoute = ResourcesBlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ResourcesBlogRoute,
 } as any)
+const ResourcesCaseStudiesSlugRoute =
+  ResourcesCaseStudiesSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => ResourcesCaseStudiesRoute,
+  } as any)
 const ResourcesGuidesSlugRoute = ResourcesGuidesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -197,15 +222,19 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/testimonials': typeof TestimonialsRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/guides': typeof ResourcesGuidesRouteWithChildren
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
@@ -227,15 +256,19 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/testimonials': typeof TestimonialsRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/guides': typeof ResourcesGuidesRouteWithChildren
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
@@ -258,15 +291,19 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
+  '/status': typeof StatusRoute
+  '/testimonials': typeof TestimonialsRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
+  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/guides': typeof ResourcesGuidesRouteWithChildren
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
+  '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
 }
@@ -290,15 +327,19 @@ export interface FileRouteTypes {
     | '/security'
     | '/solutions'
     | '/start'
+    | '/status'
+    | '/testimonials'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/resources/blog'
+    | '/resources/case-studies'
     | '/resources/faq'
     | '/resources/guides'
     | '/resources/webinars'
     | '/solutions/$slug'
     | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -320,15 +361,19 @@ export interface FileRouteTypes {
     | '/security'
     | '/solutions'
     | '/start'
+    | '/status'
+    | '/testimonials'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/resources/blog'
+    | '/resources/case-studies'
     | '/resources/faq'
     | '/resources/guides'
     | '/resources/webinars'
     | '/solutions/$slug'
     | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
   id:
@@ -350,15 +395,19 @@ export interface FileRouteTypes {
     | '/security'
     | '/solutions'
     | '/start'
+    | '/status'
+    | '/testimonials'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/resources/blog'
+    | '/resources/case-studies'
     | '/resources/faq'
     | '/resources/guides'
     | '/resources/webinars'
     | '/solutions/$slug'
     | '/resources/blog/$slug'
+    | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
   fileRoutesById: FileRoutesById
@@ -381,6 +430,8 @@ export interface RootRouteChildren {
   SecurityRoute: typeof SecurityRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   StartRoute: typeof StartRoute
+  StatusRoute: typeof StatusRoute
+  TestimonialsRoute: typeof TestimonialsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -504,6 +555,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/testimonials': {
+      id: '/testimonials'
+      path: '/testimonials'
+      fullPath: '/testimonials'
+      preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features/$slug': {
       id: '/features/$slug'
       path: '/$slug'
@@ -530,6 +595,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/resources/blog'
       preLoaderRoute: typeof ResourcesBlogRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/case-studies': {
+      id: '/resources/case-studies'
+      path: '/case-studies'
+      fullPath: '/resources/case-studies'
+      preLoaderRoute: typeof ResourcesCaseStudiesRouteImport
       parentRoute: typeof ResourcesRoute
     }
     '/resources/faq': {
@@ -566,6 +638,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/resources/blog/$slug'
       preLoaderRoute: typeof ResourcesBlogSlugRouteImport
       parentRoute: typeof ResourcesBlogRoute
+    }
+    '/resources/case-studies/$slug': {
+      id: '/resources/case-studies/$slug'
+      path: '/$slug'
+      fullPath: '/resources/case-studies/$slug'
+      preLoaderRoute: typeof ResourcesCaseStudiesSlugRouteImport
+      parentRoute: typeof ResourcesCaseStudiesRoute
     }
     '/resources/guides/$slug': {
       id: '/resources/guides/$slug'
@@ -632,6 +711,17 @@ const ResourcesBlogRouteWithChildren = ResourcesBlogRoute._addFileChildren(
   ResourcesBlogRouteChildren,
 )
 
+interface ResourcesCaseStudiesRouteChildren {
+  ResourcesCaseStudiesSlugRoute: typeof ResourcesCaseStudiesSlugRoute
+}
+
+const ResourcesCaseStudiesRouteChildren: ResourcesCaseStudiesRouteChildren = {
+  ResourcesCaseStudiesSlugRoute: ResourcesCaseStudiesSlugRoute,
+}
+
+const ResourcesCaseStudiesRouteWithChildren =
+  ResourcesCaseStudiesRoute._addFileChildren(ResourcesCaseStudiesRouteChildren)
+
 interface ResourcesGuidesRouteChildren {
   ResourcesGuidesSlugRoute: typeof ResourcesGuidesSlugRoute
 }
@@ -657,6 +747,7 @@ const ResourcesWebinarsRouteWithChildren =
 
 interface ResourcesRouteChildren {
   ResourcesBlogRoute: typeof ResourcesBlogRouteWithChildren
+  ResourcesCaseStudiesRoute: typeof ResourcesCaseStudiesRouteWithChildren
   ResourcesFaqRoute: typeof ResourcesFaqRoute
   ResourcesGuidesRoute: typeof ResourcesGuidesRouteWithChildren
   ResourcesWebinarsRoute: typeof ResourcesWebinarsRouteWithChildren
@@ -664,6 +755,7 @@ interface ResourcesRouteChildren {
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesBlogRoute: ResourcesBlogRouteWithChildren,
+  ResourcesCaseStudiesRoute: ResourcesCaseStudiesRouteWithChildren,
   ResourcesFaqRoute: ResourcesFaqRoute,
   ResourcesGuidesRoute: ResourcesGuidesRouteWithChildren,
   ResourcesWebinarsRoute: ResourcesWebinarsRouteWithChildren,
@@ -703,6 +795,8 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityRoute: SecurityRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   StartRoute: StartRoute,
+  StatusRoute: StatusRoute,
+  TestimonialsRoute: TestimonialsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
