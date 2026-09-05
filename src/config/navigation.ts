@@ -81,7 +81,7 @@ export const platformMenu: NavGroup[] = [
       label: f.navLabel,
       to: f.path,
       description: f.summary.split(",")[0],
-      badge: f.availability === "Available now" ? undefined : f.availability,
+      ...(f.availability !== "Available now" && { badge: f.availability }),
     })),
   },
 ];
