@@ -58,9 +58,8 @@ export function Header() {
               entry.kind === "link" ? (
                 <Link
                   key={entry.to}
-                  to={entry.to}
+                  to={entry.to as any}
                   className="rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-surface"
-                  activeProps={{ className: "text-primary" }}
                 >
                   {entry.label}
                 </Link>
