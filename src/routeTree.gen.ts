@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as FeaturesRouteImport } from './routes/features'
@@ -21,6 +22,7 @@ import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
@@ -28,6 +30,7 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
+import { Route as TrustRouteImport } from './routes/trust'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
@@ -55,6 +58,11 @@ const AboutRoute = AboutRouteImport.update({
 const BookDemoRoute = BookDemoRouteImport.update({
   id: '/book-demo',
   path: '/book-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -102,6 +110,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RequestQuoteRoute = RequestQuoteRouteImport.update({
+  id: '/request-quote',
+  path: '/request-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -135,6 +148,11 @@ const StatusRoute = StatusRouteImport.update({
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrustRoute = TrustRouteImport.update({
+  id: '/trust',
+  path: '/trust',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
@@ -208,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
@@ -217,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
@@ -224,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
@@ -242,6 +263,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
@@ -251,6 +273,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
@@ -258,6 +281,7 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
@@ -277,6 +301,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
@@ -286,6 +311,7 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
@@ -293,6 +319,7 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/testimonials': typeof TestimonialsRoute
+  '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
@@ -313,6 +340,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-demo'
+    | '/compare'
     | '/contact'
     | '/customers'
     | '/features'
@@ -322,6 +350,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/request-quote'
     | '/resources'
     | '/responsible-ai'
     | '/security'
@@ -329,6 +358,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/status'
     | '/testimonials'
+    | '/trust'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
@@ -347,6 +377,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-demo'
+    | '/compare'
     | '/contact'
     | '/customers'
     | '/features'
@@ -356,6 +387,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/request-quote'
     | '/resources'
     | '/responsible-ai'
     | '/security'
@@ -363,6 +395,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/status'
     | '/testimonials'
+    | '/trust'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
@@ -381,6 +414,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-demo'
+    | '/compare'
     | '/contact'
     | '/customers'
     | '/features'
@@ -390,6 +424,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/request-quote'
     | '/resources'
     | '/responsible-ai'
     | '/security'
@@ -397,6 +432,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/status'
     | '/testimonials'
+    | '/trust'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
@@ -416,6 +452,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BookDemoRoute: typeof BookDemoRoute
+  CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CustomersRoute: typeof CustomersRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
@@ -425,6 +462,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
+  RequestQuoteRoute: typeof RequestQuoteRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   SecurityRoute: typeof SecurityRoute
@@ -432,6 +470,7 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   StatusRoute: typeof StatusRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  TrustRoute: typeof TrustRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -455,6 +494,13 @@ declare module '@tanstack/react-router' {
       path: '/book-demo'
       fullPath: '/book-demo'
       preLoaderRoute: typeof BookDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -520,6 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/request-quote': {
+      id: '/request-quote'
+      path: '/request-quote'
+      fullPath: '/request-quote'
+      preLoaderRoute: typeof RequestQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -567,6 +620,13 @@ declare module '@tanstack/react-router' {
       path: '/testimonials'
       fullPath: '/testimonials'
       preLoaderRoute: typeof TestimonialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trust': {
+      id: '/trust'
+      path: '/trust'
+      fullPath: '/trust'
+      preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features/$slug': {
@@ -781,6 +841,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BookDemoRoute: BookDemoRoute,
+  CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CustomersRoute: CustomersRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
@@ -790,6 +851,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
+  RequestQuoteRoute: RequestQuoteRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   ResponsibleAiRoute: ResponsibleAiRoute,
   SecurityRoute: SecurityRoute,
@@ -797,6 +859,7 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   StatusRoute: StatusRoute,
   TestimonialsRoute: TestimonialsRoute,
+  TrustRoute: TrustRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
