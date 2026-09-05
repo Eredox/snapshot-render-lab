@@ -44,7 +44,7 @@ export function CtaLink({
   }
 
   return (
-    <Link to={to} className={classes}>
+    <Link to={to as any} className={classes}>
       {children}
     </Link>
   );
