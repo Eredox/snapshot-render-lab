@@ -90,7 +90,7 @@ function PartnersPage() {
               <Card key={s.slug} interactive>
                 <h3 className="font-semibold">{s.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{s.summary}</p>
-                <Link to={s.path} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                <Link to={s.path as any} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                   Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Card>
