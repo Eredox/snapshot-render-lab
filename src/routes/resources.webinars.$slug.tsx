@@ -4,9 +4,11 @@ import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+const typeName = "Guide";
+
 export const Route = createFileRoute("/resources/webinars/$slug")({
   loader: ({ params }) => {
-    const webinar = resources.find((r) => r.type === "webinar" && r.slug === params.slug);
+    const webinar = resources.find((r) => r.type === typeName && r.slug === params.slug);
     if (!webinar) throw notFound();
     return { webinar };
   },
@@ -40,21 +42,21 @@ export const Route = createFileRoute("/resources/webinars/$slug")({
 
 function WebinarNotFound() {
   return (
-    <>
+    <main>
       <PageHero eyebrow="Webinars" title="Webinar not found" description="That webinar does not exist." breadcrumbs={[{ label: "Webinars", to: "/resources/webinars" }]} />
       <Section>
         <Link to="/resources/webinars" className="text-primary underline">Back to webinars</Link>
       </Section>
-    </>
+    </main>
   );
 }
 
 function WebinarDetail() {
   const { webinar } = Route.useLoaderData();
-  const related = resources.filter((r) => r.type === "webinar" && r.slug !== webinar.slug).slice(0, 3);
+  const related = resources.filter((r) => r.type === typeName && r.slug !== webinar.slug).slice(0, 3);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Webinars"
         title={webinar.title}
@@ -69,13 +71,28 @@ function WebinarDetail() {
       <Section>
         <div className="mx-auto max-w-3xl">
           <Card>
-            {webinar.date ? <p className="text-sm text-muted-foreground">{webinar.date}</p> : null}
-            <div className="prose prose-sm mt-4 max-w-none">
-              {webinar.content?.split("\n\n").map((para, i) => (
-                <p key={i} className="text-muted-foreground">{para}</p>
+            {webinar.published ? <p className="text-sm text-muted-foreground">{webinar.published}</p> : null}
+            {webinar.readingTime ? <p className="text-sm text-muted-foreground">{webinar.readingTime}</p> : null}
+            <div className="mt-4 space-y-8">
+              {webinar.sections?.map((section) => (
+                <section key={section.heading}>
+                  <h2 className="text-xl font-semibold">{section.heading}</h2>
+                  <div className="mt-3 space-y-3">
+                    {section.paragraphs.map((para, i) => (
+                      <p key={i} className="text-muted-foreground">{para}</p>
+                    ))}
+                  </div>
+                  {section.points?.length ? (
+                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      {section.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </section>
               ))}
             </div>
-            <p className="mt-6 text-sm text-muted-foreground">Registration or replay access is managed through Eredox.</p>
+            <p className="mt-8 text-sm text-muted-foreground">Registration or replay access is managed through Eredox.</p>
           </Card>
           <RelatedLinks
             className="mt-8"
@@ -86,6 +103,6 @@ function WebinarDetail() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
