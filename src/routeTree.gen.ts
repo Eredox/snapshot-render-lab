@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -38,12 +44,14 @@ const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
@@ -51,20 +59,29 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
+  '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/features/$slug': typeof FeaturesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/features' | '/platform' | '/features/$slug'
+  fullPaths:
+    '/' | '/features' | '/integrations' | '/platform' | '/features/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/features' | '/platform' | '/features/$slug'
-  id: '__root__' | '/' | '/features' | '/platform' | '/features/$slug'
+  to: '/' | '/features' | '/integrations' | '/platform' | '/features/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/features'
+    | '/integrations'
+    | '/platform'
+    | '/features/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
+  IntegrationsRoute: typeof IntegrationsRoute
   PlatformRoute: typeof PlatformRoute
 }
 
@@ -82,6 +99,13 @@ declare module '@tanstack/react-router' {
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -116,6 +140,7 @@ const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
+  IntegrationsRoute: IntegrationsRoute,
   PlatformRoute: PlatformRoute,
 }
 export const routeTree = rootRouteImport
