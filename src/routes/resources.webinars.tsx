@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Play } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
+import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { resources } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+
+const typeName = "Guide";
 
 export const Route = createFileRoute("/resources/webinars")({
   head: () => ({
@@ -18,10 +20,10 @@ export const Route = createFileRoute("/resources/webinars")({
 });
 
 function WebinarsPage() {
-  const webinars = resources.filter((r) => r.type === "webinar");
+  const webinars = resources.filter((r) => r.type === typeName);
 
   return (
-    <>
+    <main>
       <PageHero
         eyebrow="Resources"
         title="Webinars"
@@ -40,9 +42,9 @@ function WebinarsPage() {
                 <Play aria-hidden="true" className="h-5 w-5 text-primary" />
               </div>
               <h2 className="mt-4 text-lg font-semibold">{w.title}</h2>
+              {w.published ? <p className="mt-1 text-xs text-muted-foreground">{w.published}</p> : null}
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{w.summary}</p>
-              {w.date ? <p className="mt-3 text-xs text-muted-foreground">{w.date}</p> : null}
-              <Link to={`/resources/webinars/${w.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/resources/webinars/${w.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Watch <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
@@ -51,6 +53,6 @@ function WebinarsPage() {
       </Section>
 
       <ConversionCta />
-    </>
+    </main>
   );
 }
