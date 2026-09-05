@@ -18,6 +18,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
+import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,40 +65,48 @@ const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => FeaturesRoute,
 } as any)
+const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FrameworksRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
-  '/frameworks': typeof FrameworksRoute
+  '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
-  '/frameworks': typeof FrameworksRoute
+  '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/features': typeof FeaturesRouteWithChildren
-  '/frameworks': typeof FrameworksRoute
+  '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/frameworks/$slug': typeof FrameworksSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/features/$slug'
+    | '/frameworks/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/features/$slug'
+    | '/frameworks/$slug'
   id:
     | '__root__'
     | '/'
@@ -133,12 +144,13 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/features/$slug'
+    | '/frameworks/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
-  FrameworksRoute: typeof FrameworksRoute
+  FrameworksRoute: typeof FrameworksRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
@@ -211,6 +223,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesSlugRouteImport
       parentRoute: typeof FeaturesRoute
     }
+    '/frameworks/$slug': {
+      id: '/frameworks/$slug'
+      path: '/$slug'
+      fullPath: '/frameworks/$slug'
+      preLoaderRoute: typeof FrameworksSlugRouteImport
+      parentRoute: typeof FrameworksRoute
+    }
   }
 }
 
@@ -226,10 +245,22 @@ const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
   FeaturesRouteChildren,
 )
 
+interface FrameworksRouteChildren {
+  FrameworksSlugRoute: typeof FrameworksSlugRoute
+}
+
+const FrameworksRouteChildren: FrameworksRouteChildren = {
+  FrameworksSlugRoute: FrameworksSlugRoute,
+}
+
+const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
+  FrameworksRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
-  FrameworksRoute: FrameworksRoute,
+  FrameworksRoute: FrameworksRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
