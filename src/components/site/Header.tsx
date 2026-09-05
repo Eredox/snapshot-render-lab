@@ -99,7 +99,7 @@ export function Header() {
                               {group.items.map((item) => (
                                 <li key={item.to}>
                                   <Link
-                                    to={item.to}
+                                    to={item.to as any}
                                     onClick={() => setOpenId(null)}
                                     className="block rounded-lg px-2 py-2 hover:bg-surface"
                                   >
