@@ -21,6 +21,7 @@ import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -28,6 +29,9 @@ import { Route as StartRouteImport } from './routes/start'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
+import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
+import { Route as ResourcesGuidesRouteImport } from './routes/resources.guides'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -90,6 +94,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResponsibleAiRoute = ResponsibleAiRouteImport.update({
   id: '/responsible-ai',
   path: '/responsible-ai',
@@ -125,6 +134,21 @@ const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => IndustriesRoute,
 } as any)
+const ResourcesBlogRoute = ResourcesBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesFaqRoute = ResourcesFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesGuidesRoute = ResourcesGuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => ResourcesRoute,
+} as any)
 const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -144,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
@@ -151,6 +176,9 @@ export interface FileRoutesByFullPath {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -166,6 +194,7 @@ export interface FileRoutesByTo {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
@@ -173,6 +202,9 @@ export interface FileRoutesByTo {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesById {
@@ -189,6 +221,7 @@ export interface FileRoutesById {
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
@@ -196,6 +229,9 @@ export interface FileRoutesById {
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/resources/blog': typeof ResourcesBlogRoute
+  '/resources/faq': typeof ResourcesFaqRoute
+  '/resources/guides': typeof ResourcesGuidesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRouteTypes {
@@ -213,6 +249,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/resources'
     | '/responsible-ai'
     | '/security'
     | '/solutions'
@@ -220,6 +257,9 @@ export interface FileRouteTypes {
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/resources/blog'
+    | '/resources/faq'
+    | '/resources/guides'
     | '/solutions/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -235,6 +275,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/resources'
     | '/responsible-ai'
     | '/security'
     | '/solutions'
@@ -242,6 +283,9 @@ export interface FileRouteTypes {
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/resources/blog'
+    | '/resources/faq'
+    | '/resources/guides'
     | '/solutions/$slug'
   id:
     | '__root__'
@@ -257,6 +301,7 @@ export interface FileRouteTypes {
     | '/partners'
     | '/platform'
     | '/pricing'
+    | '/resources'
     | '/responsible-ai'
     | '/security'
     | '/solutions'
@@ -264,6 +309,9 @@ export interface FileRouteTypes {
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/resources/blog'
+    | '/resources/faq'
+    | '/resources/guides'
     | '/solutions/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -280,6 +328,7 @@ export interface RootRouteChildren {
   PartnersRoute: typeof PartnersRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
+  ResourcesRoute: typeof ResourcesRouteWithChildren
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   SecurityRoute: typeof SecurityRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
@@ -372,6 +421,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/responsible-ai': {
       id: '/responsible-ai'
       path: '/responsible-ai'
@@ -421,6 +477,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesSlugRouteImport
       parentRoute: typeof IndustriesRoute
     }
+    '/resources/blog': {
+      id: '/resources/blog'
+      path: '/blog'
+      fullPath: '/resources/blog'
+      preLoaderRoute: typeof ResourcesBlogRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/faq': {
+      id: '/resources/faq'
+      path: '/faq'
+      fullPath: '/resources/faq'
+      preLoaderRoute: typeof ResourcesFaqRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/guides': {
+      id: '/resources/guides'
+      path: '/guides'
+      fullPath: '/resources/guides'
+      preLoaderRoute: typeof ResourcesGuidesRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/solutions/$slug': {
       id: '/solutions/$slug'
       path: '/$slug'
@@ -467,6 +544,22 @@ const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
   IndustriesRouteChildren,
 )
 
+interface ResourcesRouteChildren {
+  ResourcesBlogRoute: typeof ResourcesBlogRoute
+  ResourcesFaqRoute: typeof ResourcesFaqRoute
+  ResourcesGuidesRoute: typeof ResourcesGuidesRoute
+}
+
+const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesBlogRoute: ResourcesBlogRoute,
+  ResourcesFaqRoute: ResourcesFaqRoute,
+  ResourcesGuidesRoute: ResourcesGuidesRoute,
+}
+
+const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
+  ResourcesRouteChildren,
+)
+
 interface SolutionsRouteChildren {
   SolutionsSlugRoute: typeof SolutionsSlugRoute
 }
@@ -492,6 +585,7 @@ const rootRouteChildren: RootRouteChildren = {
   PartnersRoute: PartnersRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
+  ResourcesRoute: ResourcesRouteWithChildren,
   ResponsibleAiRoute: ResponsibleAiRoute,
   SecurityRoute: SecurityRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
