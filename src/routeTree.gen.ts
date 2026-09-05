@@ -19,6 +19,7 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as FrameworksRouteImport } from './routes/frameworks'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -32,8 +33,10 @@ import { Route as StatusRouteImport } from './routes/status'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TrustRouteImport } from './routes/trust'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
+import { Route as FeaturesFrameworkManagementRouteImport } from './routes/features.framework-management'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
 import { Route as ResourcesCaseStudiesRouteImport } from './routes/resources.case-studies'
 import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
@@ -93,6 +96,11 @@ const IndustriesRoute = IndustriesRouteImport.update({
 const IntegrationsRoute = IntegrationsRouteImport.update({
   id: '/integrations',
   path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnersRoute = PartnersRouteImport.update({
@@ -160,6 +168,12 @@ const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => FeaturesRoute,
 } as any)
+const FeaturesFrameworkManagementRoute =
+  FeaturesFrameworkManagementRouteImport.update({
+    id: '/framework-management',
+    path: '/framework-management',
+    getParentRoute: () => FeaturesRoute,
+  } as any)
 const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -169,6 +183,11 @@ const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => IndustriesRoute,
+} as any)
+const LegalSlugRoute = LegalSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LegalRoute,
 } as any)
 const ResourcesBlogRoute = ResourcesBlogRouteImport.update({
   id: '/blog',
@@ -233,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/frameworks': typeof FrameworksRouteWithChildren
   '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -246,8 +266,10 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
@@ -270,6 +292,7 @@ export interface FileRoutesByTo {
   '/frameworks': typeof FrameworksRouteWithChildren
   '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -283,8 +306,10 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
@@ -308,6 +333,7 @@ export interface FileRoutesById {
   '/frameworks': typeof FrameworksRouteWithChildren
   '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
+  '/legal': typeof LegalRouteWithChildren
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -321,8 +347,10 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
+  '/legal/$slug': typeof LegalSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
@@ -347,6 +375,7 @@ export interface FileRouteTypes {
     | '/frameworks'
     | '/industries'
     | '/integrations'
+    | '/legal'
     | '/partners'
     | '/platform'
     | '/pricing'
@@ -360,8 +389,10 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/trust'
     | '/features/$slug'
+    | '/features/framework-management'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/legal/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/faq'
@@ -384,6 +415,7 @@ export interface FileRouteTypes {
     | '/frameworks'
     | '/industries'
     | '/integrations'
+    | '/legal'
     | '/partners'
     | '/platform'
     | '/pricing'
@@ -397,8 +429,10 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/trust'
     | '/features/$slug'
+    | '/features/framework-management'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/legal/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/faq'
@@ -421,6 +455,7 @@ export interface FileRouteTypes {
     | '/frameworks'
     | '/industries'
     | '/integrations'
+    | '/legal'
     | '/partners'
     | '/platform'
     | '/pricing'
@@ -434,8 +469,10 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/trust'
     | '/features/$slug'
+    | '/features/framework-management'
     | '/frameworks/$slug'
     | '/industries/$slug'
+    | '/legal/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/faq'
@@ -459,6 +496,7 @@ export interface RootRouteChildren {
   FrameworksRoute: typeof FrameworksRouteWithChildren
   IndustriesRoute: typeof IndustriesRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
+  LegalRoute: typeof LegalRouteWithChildren
   PartnersRoute: typeof PartnersRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
@@ -543,6 +581,13 @@ declare module '@tanstack/react-router' {
       path: '/integrations'
       fullPath: '/integrations'
       preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partners': {
@@ -636,6 +681,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesSlugRouteImport
       parentRoute: typeof FeaturesRoute
     }
+    '/features/framework-management': {
+      id: '/features/framework-management'
+      path: '/framework-management'
+      fullPath: '/features/framework-management'
+      preLoaderRoute: typeof FeaturesFrameworkManagementRouteImport
+      parentRoute: typeof FeaturesRoute
+    }
     '/frameworks/$slug': {
       id: '/frameworks/$slug'
       path: '/$slug'
@@ -649,6 +701,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/industries/$slug'
       preLoaderRoute: typeof IndustriesSlugRouteImport
       parentRoute: typeof IndustriesRoute
+    }
+    '/legal/$slug': {
+      id: '/legal/$slug'
+      path: '/$slug'
+      fullPath: '/legal/$slug'
+      preLoaderRoute: typeof LegalSlugRouteImport
+      parentRoute: typeof LegalRoute
     }
     '/resources/blog': {
       id: '/resources/blog'
@@ -725,10 +784,12 @@ declare module '@tanstack/react-router' {
 
 interface FeaturesRouteChildren {
   FeaturesSlugRoute: typeof FeaturesSlugRoute
+  FeaturesFrameworkManagementRoute: typeof FeaturesFrameworkManagementRoute
 }
 
 const FeaturesRouteChildren: FeaturesRouteChildren = {
   FeaturesSlugRoute: FeaturesSlugRoute,
+  FeaturesFrameworkManagementRoute: FeaturesFrameworkManagementRoute,
 }
 
 const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
@@ -758,6 +819,16 @@ const IndustriesRouteChildren: IndustriesRouteChildren = {
 const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
   IndustriesRouteChildren,
 )
+
+interface LegalRouteChildren {
+  LegalSlugRoute: typeof LegalSlugRoute
+}
+
+const LegalRouteChildren: LegalRouteChildren = {
+  LegalSlugRoute: LegalSlugRoute,
+}
+
+const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
 interface ResourcesBlogRouteChildren {
   ResourcesBlogSlugRoute: typeof ResourcesBlogSlugRoute
@@ -848,6 +919,7 @@ const rootRouteChildren: RootRouteChildren = {
   FrameworksRoute: FrameworksRouteWithChildren,
   IndustriesRoute: IndustriesRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
+  LegalRoute: LegalRouteWithChildren,
   PartnersRoute: PartnersRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
