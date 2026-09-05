@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BookDemoRouteImport } from './routes/book-demo'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as FrameworksRouteImport } from './routes/frameworks'
 import { Route as IntegrationsRouteImport } from './routes/integrations'
@@ -18,6 +21,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as StartRouteImport } from './routes/start'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
@@ -25,6 +29,21 @@ import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDemoRoute = BookDemoRouteImport.update({
+  id: '/book-demo',
+  path: '/book-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -67,6 +86,11 @@ const SolutionsRoute = SolutionsRouteImport.update({
   path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -85,6 +109,9 @@ const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -93,12 +120,16 @@ export interface FileRoutesByFullPath {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -107,6 +138,7 @@ export interface FileRoutesByTo {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -114,6 +146,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
   '/features': typeof FeaturesRouteWithChildren
   '/frameworks': typeof FrameworksRouteWithChildren
   '/integrations': typeof IntegrationsRoute
@@ -122,6 +157,7 @@ export interface FileRoutesById {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/security': typeof SecurityRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/start': typeof StartRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -130,6 +166,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/book-demo'
+    | '/contact'
     | '/features'
     | '/frameworks'
     | '/integrations'
@@ -138,12 +177,16 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/solutions'
+    | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/solutions/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/book-demo'
+    | '/contact'
     | '/features'
     | '/frameworks'
     | '/integrations'
@@ -152,12 +195,16 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/solutions'
+    | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/solutions/$slug'
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/book-demo'
+    | '/contact'
     | '/features'
     | '/frameworks'
     | '/integrations'
@@ -166,6 +213,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/security'
     | '/solutions'
+    | '/start'
     | '/features/$slug'
     | '/frameworks/$slug'
     | '/solutions/$slug'
@@ -173,6 +221,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BookDemoRoute: typeof BookDemoRoute
+  ContactRoute: typeof ContactRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
   FrameworksRoute: typeof FrameworksRouteWithChildren
   IntegrationsRoute: typeof IntegrationsRoute
@@ -181,6 +232,7 @@ export interface RootRouteChildren {
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   SecurityRoute: typeof SecurityRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
+  StartRoute: typeof StartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -190,6 +242,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-demo': {
+      id: '/book-demo'
+      path: '/book-demo'
+      fullPath: '/book-demo'
+      preLoaderRoute: typeof BookDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -246,6 +319,13 @@ declare module '@tanstack/react-router' {
       path: '/solutions'
       fullPath: '/solutions'
       preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features/$slug': {
@@ -310,6 +390,9 @@ const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BookDemoRoute: BookDemoRoute,
+  ContactRoute: ContactRoute,
   FeaturesRoute: FeaturesRouteWithChildren,
   FrameworksRoute: FrameworksRouteWithChildren,
   IntegrationsRoute: IntegrationsRoute,
@@ -318,6 +401,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResponsibleAiRoute: ResponsibleAiRoute,
   SecurityRoute: SecurityRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
+  StartRoute: StartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
