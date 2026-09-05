@@ -179,7 +179,7 @@ function Index() {
                     </div>
                     <p className="mt-1 text-sm text-muted-foreground">{f.description}</p>
                   </div>
-                  <Link to={`/frameworks/${f.slug}`} className="shrink-0 text-sm font-medium text-primary hover:underline">
+                  <Link to={`/frameworks/${f.slug}` as any} className="shrink-0 text-sm font-medium text-primary hover:underline">
                     View
                   </Link>
                 </div>
