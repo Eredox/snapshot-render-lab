@@ -47,7 +47,7 @@ function FrameworksPage() {
                 <AvailabilityBadge value={f.availability} />
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-              <Link to={`/frameworks/${f.slug}`} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
