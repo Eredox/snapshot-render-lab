@@ -65,7 +65,7 @@ function ResourcesPage() {
               <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{r.type}</p>
               <h3 className="mt-2 font-semibold">{r.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{r.summary}</p>
-              <Link to={`${typeMeta[r.type].path}/${r.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+              <Link to={`${typeMeta[r.type as keyof typeof typeMeta].path}/${r.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                 Read <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </Card>
