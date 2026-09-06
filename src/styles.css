@@ -7,9 +7,9 @@
 /*
  * NOVA Compliance design system.
  *
- * Eredox palette: green #3D9970 (primary/trust/action), orange #FF851B
- * (restrained accent), black #0B0B0B (authority), warm off-white #F7F8F6,
- * light neutral grey #E8ECEA, dark slate #39443F (secondary text).
+ * Eredox palette: deep navy (authority), electric blue (primary/trust/action),
+ * teal (restrained accent), white and cool off-white surfaces,
+ * cool light grey borders, slate blue secondary text.
  *
  * Typography: Roboto for all site text. Cirqua is reserved for the
  * NOVA/Eredox wordmark only — drop `cirqua.woff2` into `public/fonts/`
@@ -324,5 +324,64 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* Eredox hero scene */
+@keyframes eredox-feed {
+  0% {
+    opacity: 0;
+    transform: translate3d(-120%, var(--feed-y, 0px), 0) scale(0.85);
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.55);
+  }
+}
+
+@keyframes eredox-emerge {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+  18% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--emerge-x, 120%), var(--emerge-y, 0px), 0) scale(1.05);
+  }
+}
+
+@keyframes eredox-sweep {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(520%);
+    opacity: 0;
+  }
+}
+
+@keyframes eredox-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.8;
   }
 }
