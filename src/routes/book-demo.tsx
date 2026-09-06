@@ -1,14 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { ContactForm } from "@/components/site/ContactForm";
+import { BookingForm } from "@/components/site/BookingForm";
+import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/book-demo")({
   head: () => ({
     ...pageMeta({
       title: "Book a demo — NOVA Compliance",
-      description: "Schedule a demo of NOVA Compliance. See how frameworks, evidence and readiness reporting connect in one workspace.",
+      description:
+        "Book a 30-minute demo of NOVA Compliance. Pick a date and time, and see how frameworks, evidence and readiness reporting connect in one workspace.",
       path: "/book-demo",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Book a demo", to: "/book-demo" }]))],
@@ -25,12 +27,14 @@ const demoTopics = [
 ];
 
 function BookDemoPage() {
+  const search = useSearch({ strict: false }) as { framework?: string };
+  const framework = typeof search.framework === "string" ? search.framework : "";
   return (
     <>
       <PageHero
         eyebrow="Demo"
         title="Book a demo"
-        description="A 30-minute walkthrough tailored to your compliance programme. No commitment required."
+        description="A 30-minute walkthrough tailored to your compliance programme. Choose a date and time that suits you — we will confirm by email."
         breadcrumbs={[{ label: "Book a demo", to: "/book-demo" }]}
       />
 
@@ -40,13 +44,16 @@ function BookDemoPage() {
             <SectionHeading title="What we will cover" />
             <FeatureList className="mt-6" items={demoTopics} />
             <p className="mt-6 text-sm text-muted-foreground">
-              We will use the information you provide to prepare relevant examples. Demos are run by the Eredox team.
+              Tell us the framework you care about and we will prepare relevant examples. Demos are run by the Eredox team.
             </p>
+            <p className="mt-4 text-sm text-muted-foreground">{site.humanStatement}</p>
           </div>
           <Card>
-            <h2 className="text-lg font-semibold">Request a demo</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Use the form below and we will be in touch to confirm a time.</p>
-            <ContactForm className="mt-6" />
+            <h2 className="text-lg font-semibold">Choose your demo time</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Pick a preferred date and time below and we will confirm the booking by email.
+            </p>
+            <BookingForm className="mt-6" defaultFramework={framework} />
           </Card>
         </div>
       </Section>

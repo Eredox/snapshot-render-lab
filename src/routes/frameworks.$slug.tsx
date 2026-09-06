@@ -323,7 +323,7 @@ function FrameworkDetail() {
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to="/start">Start free</CtaLink>
-          <CtaLink to="/book-demo" variant="outline">
+          <CtaLink to={`/book-demo?framework=${encodeURIComponent(framework.name)}`} variant="outline">
             Book a demo
           </CtaLink>
         </div>
