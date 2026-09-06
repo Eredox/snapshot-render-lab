@@ -155,6 +155,92 @@ function FrameworkDetail() {
         </div>
       </Section>
 
+      {detail ? (
+        <>
+          <Section tone="surface">
+            <SectionHeading eyebrow="Structure" title={detail.structure.label} description={detail.structure.intro} />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {detail.structure.items.map((item) => (
+                <Card key={item.code}>
+                  <span className="eyebrow">{item.code}</span>
+                  <h3 className="mt-2 font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
+                </Card>
+              ))}
+            </div>
+          </Section>
+
+          {detail.maturity ? (
+            <Section>
+              <SectionHeading eyebrow="Assessment" title={detail.maturity.label} description={detail.maturity.intro} />
+              <ol className="mt-8 space-y-4">
+                {detail.maturity.levels.map((level, i) => (
+                  <li key={level.name} className="flex gap-4 rounded-2xl border border-border bg-card p-5">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold">{i}</span>
+                    <div>
+                      <h3 className="font-semibold">{level.name}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">{level.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </Section>
+          ) : null}
+
+          <Section tone={detail.maturity ? "surface" : "default"}>
+            <SectionHeading eyebrow="Evidence" title="Typical evidence held in NOVA" description={detail.evidence.intro} />
+            <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card">
+              <table className="w-full text-left text-sm">
+                <thead className="border-b border-border text-muted-foreground">
+                  <tr>
+                    <th scope="col" className="px-5 py-3 font-medium">Artefact</th>
+                    <th scope="col" className="px-5 py-3 font-medium">Typical source</th>
+                    <th scope="col" className="px-5 py-3 font-medium">Expected cadence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail.evidence.rows.map((row) => (
+                    <tr key={row.artefact} className="border-b border-border last:border-0">
+                      <td className="px-5 py-3 font-medium">{row.artefact}</td>
+                      <td className="px-5 py-3 text-muted-foreground">{row.source}</td>
+                      <td className="px-5 py-3 text-muted-foreground">{row.cadence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Disclaimer className="mt-6">{site.humanStatement}</Disclaimer>
+          </Section>
+
+          <Section>
+            <SectionHeading eyebrow="How it runs" title={`Working through ${framework.name} in NOVA`} />
+            <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {detail.journey.map((step, i) => (
+                <li key={step.phase}>
+                  <Card>
+                    <span className="eyebrow">Step {i + 1}</span>
+                    <h3 className="mt-2 font-semibold">{step.phase}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
+                  </Card>
+                </li>
+              ))}
+            </ol>
+          </Section>
+
+          <Section tone="surface">
+            <SectionHeading eyebrow="Questions" title={`${framework.shortName} questions we are asked`} />
+            <dl className="mt-8 grid gap-5 md:grid-cols-2">
+              {detail.faqs.map((faq) => (
+                <div key={faq.question} className="rounded-2xl border border-border bg-card p-6">
+                  <dt className="font-semibold">{faq.question}</dt>
+                  <dd className="mt-2 text-sm text-muted-foreground">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </Section>
+        </>
+      ) : null}
+
       {relatedFeatures.length > 0 ? (
         <Section tone="surface">
           <RelatedLinks
