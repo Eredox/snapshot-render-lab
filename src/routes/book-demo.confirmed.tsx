@@ -48,7 +48,7 @@ function formatDate(iso: string) {
 function googleCalendarUrl(date: string, timeSlot: string, framework: string) {
   if (!date || !timeSlot) return null;
   const start = `${date.replace(/-/g, "")}T${timeSlot.replace(":", "")}00`;
-  const [h, m] = timeSlot.split(":").map(Number);
+  const [h = 0, m = 0] = timeSlot.split(":").map(Number);
   const endMinutes = h * 60 + m + 30;
   const end = `${date.replace(/-/g, "")}T${String(Math.floor(endMinutes / 60)).padStart(2, "0")}${String(endMinutes % 60).padStart(2, "0")}00`;
   const params = new URLSearchParams({
