@@ -26,3 +26,7 @@
 - About and Contact pages fleshed out (company, product direction, enquiry guidance)
 - Route-integrity test in `src/routes/__tests__/route-integrity.test.ts` passes (vitest)
 - TypeScript and latest build OK
+
+## Current
+- Booking flow: form must navigate to /book-demo/confirmed showing the slot (in progress)
+- Hero: rebuild with realistic computer + same feeding motion as reference image-3.png
