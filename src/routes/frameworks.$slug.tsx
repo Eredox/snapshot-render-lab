@@ -251,6 +251,82 @@ function FrameworkDetail() {
         </Section>
       ) : null}
 
+      <Section>
+        <SectionHeading
+          eyebrow="Pricing"
+          title={`Plans that cover ${framework.shortName}`}
+          description="Plans are subscription entitlements on one workspace, so you can start with a single framework and widen scope later."
+        />
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {planShortlist.map((plan) => (
+            <Card key={plan.slug} className={plan.highlight ? "border-primary" : undefined}>
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="font-semibold">{plan.name}</h3>
+                {plan.highlight ? <span className="eyebrow text-primary">Most chosen</span> : null}
+              </div>
+              <p className="mt-3 text-2xl font-semibold">
+                {plan.quoteOnly || plan.monthly === null ? (
+                  "On request"
+                ) : (
+                  <>
+                    {currency} ${plan.monthly}
+                    <span className="text-sm font-normal text-muted-foreground"> /month</span>
+                  </>
+                )}
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">{plan.summary}</p>
+              <FeatureList items={plan.includes.slice(0, 4)} className="mt-4" />
+              <Link to="/pricing" className="mt-5 inline-flex text-sm font-medium text-primary hover:underline">
+                Compare plans
+              </Link>
+            </Card>
+          ))}
+        </div>
+        <Disclaimer className="mt-6">{site.pricingApprovalNote}</Disclaimer>
+      </Section>
+
+      <Section tone="surface">
+        <SectionHeading
+          eyebrow="Getting started"
+          title={`How to start with ${framework.shortName}`}
+          description="Four steps from an empty workspace to a reviewable readiness position."
+        />
+        <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {gettingStarted.map((step, i) => (
+            <li key={step.title}>
+              <Card>
+                <span className="eyebrow">Step {i + 1}</span>
+                <h3 className="mt-2 font-semibold">{step.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
+              </Card>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <CtaLink to="/start">Start free</CtaLink>
+          <CtaLink to="/book-demo" variant="secondary">
+            Book a demo
+          </CtaLink>
+        </div>
+        <Disclaimer className="mt-6">{site.humanStatement}</Disclaimer>
+      </Section>
+
+      <Section>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-start">
+          <div>
+            <SectionHeading
+              eyebrow="Talk to us"
+              title={`Ask about ${framework.name}`}
+              description="Tell us your scope, timeline and any assessment date you are working to. We will reply with what NOVA covers and what remains with your independent assessor."
+            />
+            <Disclaimer className="mt-6">{site.frameworkDisclaimer}</Disclaimer>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <ContactForm defaultMessage={`I would like to discuss ${framework.name} readiness in NOVA. `} />
+          </div>
+        </div>
+      </Section>
+
       <ConversionCta />
     </main>
   );
