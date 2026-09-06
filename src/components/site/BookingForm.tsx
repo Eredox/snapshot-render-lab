@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { formsConfig } from "@/config/site";
 import { frameworks } from "@/data/frameworks";
 
@@ -9,6 +10,7 @@ const inputClass =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary";
 
 export function BookingForm({ className, defaultFramework = "" }: { className?: string; defaultFramework?: string }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -19,35 +21,38 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
     timeSlot: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [key]: e.target.value });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     if (formsConfig.endpoint) {
-      fetch(formsConfig.endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "demo-booking", ...form }),
-      }).catch(() => undefined);
+      try {
+        await fetch(formsConfig.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "demo-booking", ...form }),
+        });
+      } catch {
+        // Delivery is best-effort; the confirmation page still shows the slot.
+      }
     }
-    setSubmitted(true);
+    navigate({
+      to: "/book-demo/confirmed",
+      search: {
+        name: form.name,
+        email: form.email,
+        company: form.company,
+        framework: form.framework,
+        teamSize: form.teamSize,
+        date: form.date,
+        timeSlot: form.timeSlot,
+      },
+    });
   };
-
-  if (submitted) {
-    return (
-      <div className={`rounded-xl border border-border bg-card p-6 ${className ?? ""}`}>
-        <p className="font-medium">Demo request received</p>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {formsConfig.endpoint
-            ? `We will confirm your preferred time — ${form.date} at ${form.timeSlot} — by email shortly.`
-            : `Bookings are not yet connected. Please email ${formsConfig.fallbackEmail} with your preferred time and we will confirm.`}
-        </p>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className={`space-y-4 ${className ?? ""}`}>
