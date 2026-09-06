@@ -23,15 +23,18 @@ const confirmationSearchSchema = z.object({
 
 export const Route = createFileRoute("/book-demo/confirmed")({
   validateSearch: (search: Record<string, unknown>) => confirmationSearchSchema.parse(search),
-  head: () => ({
-    ...pageMeta({
+  head: () => {
+    const base = pageMeta({
       title: "Demo booking received — NOVA Compliance",
       description: "Your NOVA Compliance demo booking has been received. Review your preferred slot and what happens next.",
       path: "/book-demo/confirmed",
-    }),
-    meta: [{ name: "robots", content: "noindex" }],
-    scripts: [ldScript(breadcrumbSchema([{ label: "Book a demo", to: "/book-demo" }]))],
-  }),
+    });
+    return {
+      ...base,
+      meta: [...base.meta, { name: "robots", content: "noindex" }],
+      scripts: [ldScript(breadcrumbSchema([{ label: "Book a demo", to: "/book-demo" }]))],
+    };
+  },
   component: BookingConfirmedPage,
 });
 
