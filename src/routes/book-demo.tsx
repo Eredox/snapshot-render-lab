@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { BookingForm } from "@/components/site/BookingForm";
@@ -27,7 +27,8 @@ const demoTopics = [
 ];
 
 function BookDemoPage() {
-  const { framework } = Route.useSearch();
+  const search = useSearch({ strict: false }) as { framework?: string };
+  const framework = typeof search.framework === "string" ? search.framework : "";
   return (
     <>
       <PageHero
