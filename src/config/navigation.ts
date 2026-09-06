@@ -30,6 +30,7 @@ export const staticRoutes = [
   "/",
   "/about",
   "/book-demo",
+  "/book-demo/confirmed",
   "/compare",
   "/contact",
   "/customers",
