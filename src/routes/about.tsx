@@ -53,6 +53,18 @@ function AboutPage() {
         breadcrumbs={[{ label: "About", to: "/about" }]}
       />
 
+      <Section tone="ink">
+        <SectionHeading
+          inverted
+          eyebrow="The Eredox suite"
+          title="One company, one standard: trust you can prove"
+          description="Eredox builds software for organisations that treat trust as an operating discipline, not a marketing claim. NOVA Compliance is the suite's compliance workspace — where frameworks, controls, evidence and reporting come together so teams can build trust, prove compliance and move forward."
+        />
+        <p className="mt-6 max-w-3xl text-ink-foreground/75">
+          {site.ownership} Everything we ship follows the same rule: {site.humanStatement}
+        </p>
+      </Section>
+
       <Section>
         <SectionHeading title="Why we built NOVA" />
         <p className="mt-4 text-lg text-muted-foreground">

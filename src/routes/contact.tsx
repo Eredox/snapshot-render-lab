@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Calendar, Mail, ShieldQuestion } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { ContactForm } from "@/components/site/ContactForm";
-import { site } from "@/config/site";
+import { formsConfig, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
