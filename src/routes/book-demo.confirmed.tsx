@@ -40,9 +40,10 @@ export const Route = createFileRoute("/book-demo/confirmed")({
 
 function formatDate(iso: string) {
   if (!iso) return "";
-  const d = new Date(`${iso}T00:00:00+10:00`);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const [y, m, d] = iso.split("-").map(Number);
+  const date = new Date(y ?? 0, (m ?? 1) - 1, d ?? 1);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 }
 
 function googleCalendarUrl(date: string, timeSlot: string, framework: string) {

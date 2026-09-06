@@ -41,7 +41,6 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
       }
     }
     try {
-      console.log("booking-navigate-start", form);
       await navigate({
         to: "/book-demo/confirmed",
         search: {
@@ -54,9 +53,7 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
           timeSlot: form.timeSlot,
         },
       });
-      console.log("booking-navigate-resolved");
-    } catch (err) {
-      console.error("booking-navigate-failed", err);
+    } catch {
       setSubmitting(false);
     }
   };
