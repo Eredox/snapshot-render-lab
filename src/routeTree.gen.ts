@@ -36,6 +36,7 @@ import { Route as StatusRouteImport } from './routes/status'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TrustRouteImport } from './routes/trust'
+import { Route as BookDemoIndexRouteImport } from './routes/book-demo.index'
 import { Route as BookDemoConfirmedRouteImport } from './routes/book-demo.confirmed'
 import { Route as FeaturesIndexRouteImport } from './routes/features.index'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
@@ -198,6 +199,11 @@ const TrustRoute = TrustRouteImport.update({
   id: '/trust',
   path: '/trust',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BookDemoIndexRoute = BookDemoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BookDemoRoute,
 } as any)
 const BookDemoConfirmedRoute = BookDemoConfirmedRouteImport.update({
   id: '/confirmed',
@@ -379,6 +385,7 @@ export interface FileRoutesByFullPath {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo/': typeof BookDemoIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/frameworks/': typeof FrameworksIndexRoute
   '/industries/': typeof IndustriesIndexRoute
@@ -399,7 +406,6 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
-  '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
@@ -425,6 +431,7 @@ export interface FileRoutesByTo {
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo': typeof BookDemoIndexRoute
   '/features': typeof FeaturesIndexRoute
   '/frameworks': typeof FrameworksIndexRoute
   '/industries': typeof IndustriesIndexRoute
@@ -482,6 +489,7 @@ export interface FileRoutesById {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo/': typeof BookDemoIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/frameworks/': typeof FrameworksIndexRoute
   '/industries/': typeof IndustriesIndexRoute
@@ -540,6 +548,7 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/book-demo/'
     | '/features/'
     | '/frameworks/'
     | '/industries/'
@@ -560,7 +569,6 @@ export interface FileRouteTypes {
     | '/$'
     | '/404'
     | '/about'
-    | '/book-demo'
     | '/compare'
     | '/contact'
     | '/customers'
@@ -586,6 +594,7 @@ export interface FileRouteTypes {
     | '/resources/faq'
     | '/resources/product-updates'
     | '/solutions/$slug'
+    | '/book-demo'
     | '/features'
     | '/frameworks'
     | '/industries'
@@ -642,6 +651,7 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/book-demo/'
     | '/features/'
     | '/frameworks/'
     | '/industries/'
@@ -879,6 +889,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book-demo/': {
+      id: '/book-demo/'
+      path: '/'
+      fullPath: '/book-demo/'
+      preLoaderRoute: typeof BookDemoIndexRouteImport
+      parentRoute: typeof BookDemoRoute
+    }
     '/book-demo/confirmed': {
       id: '/book-demo/confirmed'
       path: '/confirmed'
@@ -1073,10 +1090,12 @@ declare module '@tanstack/react-router' {
 
 interface BookDemoRouteChildren {
   BookDemoConfirmedRoute: typeof BookDemoConfirmedRoute
+  BookDemoIndexRoute: typeof BookDemoIndexRoute
 }
 
 const BookDemoRouteChildren: BookDemoRouteChildren = {
   BookDemoConfirmedRoute: BookDemoConfirmedRoute,
+  BookDemoIndexRoute: BookDemoIndexRoute,
 }
 
 const BookDemoRouteWithChildren = BookDemoRoute._addFileChildren(
