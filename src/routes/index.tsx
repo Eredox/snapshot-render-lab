@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Section, SectionHeading, Card, FeatureList, AvailabilityBadge } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { EredoxHero } from "@/components/site/EredoxHero";
