@@ -58,6 +58,7 @@ function FrameworkNotFound() {
 function FrameworkDetail() {
   const { framework } = Route.useLoaderData();
   const relatedFeatures = features.filter((f) => f.relatedFrameworks?.includes(framework.slug));
+  const detail = getFrameworkDetail(framework.slug);
 
   return (
     <main>
