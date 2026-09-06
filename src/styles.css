@@ -159,6 +159,7 @@
   --feature-3: oklch(0.95 0.04 250);  /* soft blue */
   --feature-4: oklch(0.94 0.05 300); /* soft purple */
   --feature-5: oklch(0.95 0.045 25);  /* soft coral */
+  --feature-6: oklch(0.95 0.05 170);  /* soft turquoise */
 }
 
 
@@ -206,6 +207,7 @@
   --feature-3: oklch(0.29 0.05 250); /* muted blue */
   --feature-4: oklch(0.28 0.05 300); /* muted purple */
   --feature-5: oklch(0.29 0.05 25);  /* muted coral */
+  --feature-6: oklch(0.28 0.05 170); /* muted turquoise */
 }
 
 
