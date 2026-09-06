@@ -7,7 +7,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/book-demo")({
   validateSearch: (search: Record<string, unknown>) => ({
-    framework: typeof search.framework === "string" ? search.framework : "",
+    framework: typeof search.framework === "string" ? search.framework : undefined,
   }),
   head: () => ({
     ...pageMeta({
