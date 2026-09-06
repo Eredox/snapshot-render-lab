@@ -30,6 +30,7 @@ const demoTopics = [
 ];
 
 function BookDemoPage() {
+  const { framework } = Route.useSearch();
   return (
     <>
       <PageHero
@@ -54,7 +55,7 @@ function BookDemoPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Pick a preferred date and time below and we will confirm the booking by email.
             </p>
-            <BookingForm className="mt-6" />
+            <BookingForm className="mt-6" defaultFramework={framework} />
           </Card>
         </div>
       </Section>
