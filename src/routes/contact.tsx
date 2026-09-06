@@ -36,20 +36,46 @@ function ContactPage() {
           </div>
           <div className="space-y-6">
             <Card>
-              <h2 className="text-lg font-semibold">Sales and demos</h2>
+              <div className="flex items-center gap-2">
+                <Mail className="size-5 text-primary" aria-hidden />
+                <h2 className="text-lg font-semibold">Email</h2>
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Prefer email? Write to{" "}
+                <a href={`mailto:${formsConfig.fallbackEmail}`} className="text-primary underline">
+                  {formsConfig.fallbackEmail}
+                </a>{" "}
+                and include your organisation and the frameworks you are working towards.
+              </p>
+            </Card>
+            <Card>
+              <div className="flex items-center gap-2">
+                <Calendar className="size-5 text-primary" aria-hidden />
+                <h2 className="text-lg font-semibold">Sales and demos</h2>
+              </div>
               <p className="mt-2 text-sm text-muted-foreground">
                 Want to see NOVA in action?{" "}
                 <Link to="/book-demo" className="text-primary underline">
                   Book a demo
                 </Link>{" "}
-                or use the form and we will arrange a time.
+                or use the form and we will arrange a time. Ready to begin?{" "}
+                <Link to="/start" className="text-primary underline">
+                  Start here
+                </Link>
+                .
               </p>
             </Card>
             <Card>
-              <h2 className="text-lg font-semibold">Support</h2>
+              <div className="flex items-center gap-2">
+                <ShieldQuestion className="size-5 text-primary" aria-hidden />
+                <h2 className="text-lg font-semibold">Support</h2>
+              </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                Existing customers can reach support through the channel provided in their onboarding. If you cannot
-                access it, use this form.
+                Existing customers can reach support through the channel provided in their onboarding, or via the{" "}
+                <Link to="/support" className="text-primary underline">
+                  support page
+                </Link>
+                . If you cannot access either, use this form.
               </p>
             </Card>
             <Card>
