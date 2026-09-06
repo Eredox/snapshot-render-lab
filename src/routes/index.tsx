@@ -28,11 +28,11 @@ export const Route = createFileRoute("/")({
 });
 
 const outcomes = [
-  "Understand what is ready and what needs work across every activated framework",
-  "Stop duplicating evidence for every separate assessment or questionnaire",
-  "Trace every readiness claim back to reviewed evidence and accountable owners",
-  "Publish approved assurance content without exposing confidential artefacts",
-  "Keep risk, policies, assets and controls in one coherent programme record",
+  { text: "Understand what is ready and what needs work across every activated framework", bg: "bg-feature-1" as const },
+  { text: "Stop duplicating evidence for every separate assessment or questionnaire", bg: "bg-feature-2" as const },
+  { text: "Trace every readiness claim back to reviewed evidence and accountable owners", bg: "bg-feature-3" as const },
+  { text: "Publish approved assurance content without exposing confidential artefacts", bg: "bg-feature-4" as const },
+  { text: "Keep risk, policies, assets and controls in one coherent programme record", bg: "bg-feature-5" as const },
 ];
 
 const pillars = [
