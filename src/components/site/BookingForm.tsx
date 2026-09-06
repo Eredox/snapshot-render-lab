@@ -40,18 +40,23 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
         // Delivery is best-effort; the confirmation page still shows the slot.
       }
     }
-    navigate({
-      to: "/book-demo/confirmed",
-      search: {
-        name: form.name,
-        email: form.email,
-        company: form.company,
-        framework: form.framework,
-        teamSize: form.teamSize,
-        date: form.date,
-        timeSlot: form.timeSlot,
-      },
-    });
+    try {
+      await navigate({
+        to: "/book-demo/confirmed",
+        search: {
+          name: form.name,
+          email: form.email,
+          company: form.company,
+          framework: form.framework,
+          teamSize: form.teamSize,
+          date: form.date,
+          timeSlot: form.timeSlot,
+        },
+      });
+    } catch (err) {
+      console.error("booking-navigate-failed", err);
+      setSubmitting(false);
+    }
   };
 
   return (
