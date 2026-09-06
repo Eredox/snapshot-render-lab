@@ -304,7 +304,7 @@ function FrameworkDetail() {
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to="/start">Start free</CtaLink>
-          <CtaLink to="/book-demo" variant="secondary">
+          <CtaLink to="/book-demo" variant="outline">
             Book a demo
           </CtaLink>
         </div>
