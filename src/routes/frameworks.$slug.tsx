@@ -60,6 +60,25 @@ function FrameworkDetail() {
   const { framework } = Route.useLoaderData();
   const relatedFeatures = features.filter((f) => f.relatedFrameworks?.includes(framework.slug));
   const detail = getFrameworkDetail(framework.slug);
+  const planShortlist = plans.filter((p) => ["launch", "growth", "professional", "enterprise"].includes(p.slug));
+  const gettingStarted = [
+    {
+      title: "Activate the framework",
+      body: `Create the workspace and activate ${framework.shortName} so its requirements load into your control set.`,
+    },
+    {
+      title: "Assign control ownership",
+      body: "Give each control a named owner and a review cadence, so accountability is recorded rather than assumed.",
+    },
+    {
+      title: "Map and validate evidence",
+      body: "Attach evidence to the requirements it supports and have a reviewer confirm it is current and sufficient.",
+    },
+    {
+      title: "Review readiness",
+      body: "Track gaps and readiness reporting, then decide with your assessor when the programme is ready for external review.",
+    },
+  ];
 
   return (
     <main>
