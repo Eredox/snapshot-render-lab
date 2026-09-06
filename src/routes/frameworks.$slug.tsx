@@ -278,7 +278,7 @@ function FrameworkDetail() {
         />
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {planShortlist.map((plan) => (
-            <Card key={plan.slug} className={plan.highlight ? "border-primary" : undefined}>
+            <Card key={plan.slug} {...(plan.highlight ? { className: "border-primary" } : {})}>
               <div className="flex items-center justify-between gap-2">
                 <h3 className="font-semibold">{plan.name}</h3>
                 {plan.highlight ? <span className="eyebrow text-primary">Most chosen</span> : null}
