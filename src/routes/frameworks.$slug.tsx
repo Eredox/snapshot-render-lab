@@ -1,9 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Check } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks, Disclaimer, FeatureList } from "@/components/site/primitives";
-import { ConversionCta } from "@/components/site/cta";
-import { frameworks, getFramework } from "@/data/frameworks";
+import { ConversionCta, CtaLink } from "@/components/site/cta";
+import { ContactForm } from "@/components/site/ContactForm";
+import { getFramework } from "@/data/frameworks";
 import { getFrameworkDetail } from "@/data/framework-detail";
+import { plans, currency } from "@/data/pricing";
 import { features } from "@/data/features";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
