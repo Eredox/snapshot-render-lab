@@ -36,21 +36,31 @@ import { Route as StatusRouteImport } from './routes/status'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TrustRouteImport } from './routes/trust'
+import { Route as FeaturesIndexRouteImport } from './routes/features.index'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FeaturesFrameworkManagementRouteImport } from './routes/features.framework-management'
+import { Route as FrameworksIndexRouteImport } from './routes/frameworks.index'
 import { Route as FrameworksSlugRouteImport } from './routes/frameworks.$slug'
+import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
+import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
 import { Route as ResourcesCaseStudiesRouteImport } from './routes/resources.case-studies'
 import { Route as ResourcesFaqRouteImport } from './routes/resources.faq'
 import { Route as ResourcesGuidesRouteImport } from './routes/resources.guides'
 import { Route as ResourcesProductUpdatesRouteImport } from './routes/resources.product-updates'
 import { Route as ResourcesWebinarsRouteImport } from './routes/resources.webinars'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
+import { Route as ResourcesBlogIndexRouteImport } from './routes/resources.blog.index'
 import { Route as ResourcesBlogSlugRouteImport } from './routes/resources.blog.$slug'
+import { Route as ResourcesCaseStudiesIndexRouteImport } from './routes/resources.case-studies.index'
 import { Route as ResourcesCaseStudiesSlugRouteImport } from './routes/resources.case-studies.$slug'
+import { Route as ResourcesGuidesIndexRouteImport } from './routes/resources.guides.index'
 import { Route as ResourcesGuidesSlugRouteImport } from './routes/resources.guides.$slug'
+import { Route as ResourcesWebinarsIndexRouteImport } from './routes/resources.webinars.index'
 import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.webinars.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -188,6 +198,11 @@ const TrustRoute = TrustRouteImport.update({
   path: '/trust',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesIndexRoute = FeaturesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FeaturesRoute,
+} as any)
 const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -199,20 +214,40 @@ const FeaturesFrameworkManagementRoute =
     path: '/framework-management',
     getParentRoute: () => FeaturesRoute,
   } as any)
+const FrameworksIndexRoute = FrameworksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FrameworksRoute,
+} as any)
 const FrameworksSlugRoute = FrameworksSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => FrameworksRoute,
+} as any)
+const IndustriesIndexRoute = IndustriesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => IndustriesRoute,
 } as any)
 const IndustriesSlugRoute = IndustriesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => IndustriesRoute,
 } as any)
+const LegalIndexRoute = LegalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LegalRoute,
+} as any)
 const LegalSlugRoute = LegalSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => LegalRoute,
+} as any)
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourcesRoute,
 } as any)
 const ResourcesBlogRoute = ResourcesBlogRouteImport.update({
   id: '/blog',
@@ -244,26 +279,52 @@ const ResourcesWebinarsRoute = ResourcesWebinarsRouteImport.update({
   path: '/webinars',
   getParentRoute: () => ResourcesRoute,
 } as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SolutionsRoute,
+} as any)
 const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => SolutionsRoute,
+} as any)
+const ResourcesBlogIndexRoute = ResourcesBlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourcesBlogRoute,
 } as any)
 const ResourcesBlogSlugRoute = ResourcesBlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ResourcesBlogRoute,
 } as any)
+const ResourcesCaseStudiesIndexRoute =
+  ResourcesCaseStudiesIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ResourcesCaseStudiesRoute,
+  } as any)
 const ResourcesCaseStudiesSlugRoute =
   ResourcesCaseStudiesSlugRouteImport.update({
     id: '/$slug',
     path: '/$slug',
     getParentRoute: () => ResourcesCaseStudiesRoute,
   } as any)
+const ResourcesGuidesIndexRoute = ResourcesGuidesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourcesGuidesRoute,
+} as any)
 const ResourcesGuidesSlugRoute = ResourcesGuidesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ResourcesGuidesRoute,
+} as any)
+const ResourcesWebinarsIndexRoute = ResourcesWebinarsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourcesWebinarsRoute,
 } as any)
 const ResourcesWebinarsSlugRoute = ResourcesWebinarsSlugRouteImport.update({
   id: '/$slug',
@@ -311,10 +372,20 @@ export interface FileRoutesByFullPath {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/features/': typeof FeaturesIndexRoute
+  '/frameworks/': typeof FrameworksIndexRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/legal/': typeof LegalIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
+  '/resources/blog/': typeof ResourcesBlogIndexRoute
+  '/resources/case-studies/': typeof ResourcesCaseStudiesIndexRoute
+  '/resources/guides/': typeof ResourcesGuidesIndexRoute
+  '/resources/webinars/': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -325,20 +396,14 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
-  '/features': typeof FeaturesRouteWithChildren
-  '/frameworks': typeof FrameworksRouteWithChildren
-  '/industries': typeof IndustriesRouteWithChildren
   '/integrations': typeof IntegrationsRoute
-  '/legal': typeof LegalRouteWithChildren
   '/partners': typeof PartnersRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/request-quote': typeof RequestQuoteRoute
-  '/resources': typeof ResourcesRouteWithChildren
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
-  '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
@@ -349,17 +414,23 @@ export interface FileRoutesByTo {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
-  '/resources/blog': typeof ResourcesBlogRouteWithChildren
-  '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
-  '/resources/guides': typeof ResourcesGuidesRouteWithChildren
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
-  '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/features': typeof FeaturesIndexRoute
+  '/frameworks': typeof FrameworksIndexRoute
+  '/industries': typeof IndustriesIndexRoute
+  '/legal': typeof LegalIndexRoute
+  '/resources': typeof ResourcesIndexRoute
+  '/solutions': typeof SolutionsIndexRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
+  '/resources/blog': typeof ResourcesBlogIndexRoute
+  '/resources/case-studies': typeof ResourcesCaseStudiesIndexRoute
+  '/resources/guides': typeof ResourcesGuidesIndexRoute
+  '/resources/webinars': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -402,10 +473,20 @@ export interface FileRoutesById {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/features/': typeof FeaturesIndexRoute
+  '/frameworks/': typeof FrameworksIndexRoute
+  '/industries/': typeof IndustriesIndexRoute
+  '/legal/': typeof LegalIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
+  '/resources/blog/': typeof ResourcesBlogIndexRoute
+  '/resources/case-studies/': typeof ResourcesCaseStudiesIndexRoute
+  '/resources/guides/': typeof ResourcesGuidesIndexRoute
+  '/resources/webinars/': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -449,10 +530,20 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/features/'
+    | '/frameworks/'
+    | '/industries/'
+    | '/legal/'
+    | '/resources/'
+    | '/solutions/'
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
+    | '/resources/blog/'
+    | '/resources/case-studies/'
+    | '/resources/guides/'
+    | '/resources/webinars/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -463,20 +554,14 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/customers'
-    | '/features'
-    | '/frameworks'
-    | '/industries'
     | '/integrations'
-    | '/legal'
     | '/partners'
     | '/platform'
     | '/pricing'
     | '/request-quote'
-    | '/resources'
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
-    | '/solutions'
     | '/start'
     | '/status'
     | '/support'
@@ -487,17 +572,23 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
-    | '/resources/blog'
-    | '/resources/case-studies'
     | '/resources/faq'
-    | '/resources/guides'
     | '/resources/product-updates'
-    | '/resources/webinars'
     | '/solutions/$slug'
+    | '/features'
+    | '/frameworks'
+    | '/industries'
+    | '/legal'
+    | '/resources'
+    | '/solutions'
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
+    | '/resources/blog'
+    | '/resources/case-studies'
+    | '/resources/guides'
+    | '/resources/webinars'
   id:
     | '__root__'
     | '/'
@@ -539,10 +630,20 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/features/'
+    | '/frameworks/'
+    | '/industries/'
+    | '/legal/'
+    | '/resources/'
+    | '/solutions/'
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
     | '/resources/webinars/$slug'
+    | '/resources/blog/'
+    | '/resources/case-studies/'
+    | '/resources/guides/'
+    | '/resources/webinars/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -766,6 +867,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features/': {
+      id: '/features/'
+      path: '/'
+      fullPath: '/features/'
+      preLoaderRoute: typeof FeaturesIndexRouteImport
+      parentRoute: typeof FeaturesRoute
+    }
     '/features/$slug': {
       id: '/features/$slug'
       path: '/$slug'
@@ -780,12 +888,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesFrameworkManagementRouteImport
       parentRoute: typeof FeaturesRoute
     }
+    '/frameworks/': {
+      id: '/frameworks/'
+      path: '/'
+      fullPath: '/frameworks/'
+      preLoaderRoute: typeof FrameworksIndexRouteImport
+      parentRoute: typeof FrameworksRoute
+    }
     '/frameworks/$slug': {
       id: '/frameworks/$slug'
       path: '/$slug'
       fullPath: '/frameworks/$slug'
       preLoaderRoute: typeof FrameworksSlugRouteImport
       parentRoute: typeof FrameworksRoute
+    }
+    '/industries/': {
+      id: '/industries/'
+      path: '/'
+      fullPath: '/industries/'
+      preLoaderRoute: typeof IndustriesIndexRouteImport
+      parentRoute: typeof IndustriesRoute
     }
     '/industries/$slug': {
       id: '/industries/$slug'
@@ -794,12 +916,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesSlugRouteImport
       parentRoute: typeof IndustriesRoute
     }
+    '/legal/': {
+      id: '/legal/'
+      path: '/'
+      fullPath: '/legal/'
+      preLoaderRoute: typeof LegalIndexRouteImport
+      parentRoute: typeof LegalRoute
+    }
     '/legal/$slug': {
       id: '/legal/$slug'
       path: '/$slug'
       fullPath: '/legal/$slug'
       preLoaderRoute: typeof LegalSlugRouteImport
       parentRoute: typeof LegalRoute
+    }
+    '/resources/': {
+      id: '/resources/'
+      path: '/'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof ResourcesRoute
     }
     '/resources/blog': {
       id: '/resources/blog'
@@ -843,12 +979,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesWebinarsRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof SolutionsRoute
+    }
     '/solutions/$slug': {
       id: '/solutions/$slug'
       path: '/$slug'
       fullPath: '/solutions/$slug'
       preLoaderRoute: typeof SolutionsSlugRouteImport
       parentRoute: typeof SolutionsRoute
+    }
+    '/resources/blog/': {
+      id: '/resources/blog/'
+      path: '/'
+      fullPath: '/resources/blog/'
+      preLoaderRoute: typeof ResourcesBlogIndexRouteImport
+      parentRoute: typeof ResourcesBlogRoute
     }
     '/resources/blog/$slug': {
       id: '/resources/blog/$slug'
@@ -857,6 +1007,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesBlogSlugRouteImport
       parentRoute: typeof ResourcesBlogRoute
     }
+    '/resources/case-studies/': {
+      id: '/resources/case-studies/'
+      path: '/'
+      fullPath: '/resources/case-studies/'
+      preLoaderRoute: typeof ResourcesCaseStudiesIndexRouteImport
+      parentRoute: typeof ResourcesCaseStudiesRoute
+    }
     '/resources/case-studies/$slug': {
       id: '/resources/case-studies/$slug'
       path: '/$slug'
@@ -864,12 +1021,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesCaseStudiesSlugRouteImport
       parentRoute: typeof ResourcesCaseStudiesRoute
     }
+    '/resources/guides/': {
+      id: '/resources/guides/'
+      path: '/'
+      fullPath: '/resources/guides/'
+      preLoaderRoute: typeof ResourcesGuidesIndexRouteImport
+      parentRoute: typeof ResourcesGuidesRoute
+    }
     '/resources/guides/$slug': {
       id: '/resources/guides/$slug'
       path: '/$slug'
       fullPath: '/resources/guides/$slug'
       preLoaderRoute: typeof ResourcesGuidesSlugRouteImport
       parentRoute: typeof ResourcesGuidesRoute
+    }
+    '/resources/webinars/': {
+      id: '/resources/webinars/'
+      path: '/'
+      fullPath: '/resources/webinars/'
+      preLoaderRoute: typeof ResourcesWebinarsIndexRouteImport
+      parentRoute: typeof ResourcesWebinarsRoute
     }
     '/resources/webinars/$slug': {
       id: '/resources/webinars/$slug'
@@ -884,11 +1055,13 @@ declare module '@tanstack/react-router' {
 interface FeaturesRouteChildren {
   FeaturesSlugRoute: typeof FeaturesSlugRoute
   FeaturesFrameworkManagementRoute: typeof FeaturesFrameworkManagementRoute
+  FeaturesIndexRoute: typeof FeaturesIndexRoute
 }
 
 const FeaturesRouteChildren: FeaturesRouteChildren = {
   FeaturesSlugRoute: FeaturesSlugRoute,
   FeaturesFrameworkManagementRoute: FeaturesFrameworkManagementRoute,
+  FeaturesIndexRoute: FeaturesIndexRoute,
 }
 
 const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
@@ -897,10 +1070,12 @@ const FeaturesRouteWithChildren = FeaturesRoute._addFileChildren(
 
 interface FrameworksRouteChildren {
   FrameworksSlugRoute: typeof FrameworksSlugRoute
+  FrameworksIndexRoute: typeof FrameworksIndexRoute
 }
 
 const FrameworksRouteChildren: FrameworksRouteChildren = {
   FrameworksSlugRoute: FrameworksSlugRoute,
+  FrameworksIndexRoute: FrameworksIndexRoute,
 }
 
 const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
@@ -909,10 +1084,12 @@ const FrameworksRouteWithChildren = FrameworksRoute._addFileChildren(
 
 interface IndustriesRouteChildren {
   IndustriesSlugRoute: typeof IndustriesSlugRoute
+  IndustriesIndexRoute: typeof IndustriesIndexRoute
 }
 
 const IndustriesRouteChildren: IndustriesRouteChildren = {
   IndustriesSlugRoute: IndustriesSlugRoute,
+  IndustriesIndexRoute: IndustriesIndexRoute,
 }
 
 const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
@@ -921,20 +1098,24 @@ const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
 
 interface LegalRouteChildren {
   LegalSlugRoute: typeof LegalSlugRoute
+  LegalIndexRoute: typeof LegalIndexRoute
 }
 
 const LegalRouteChildren: LegalRouteChildren = {
   LegalSlugRoute: LegalSlugRoute,
+  LegalIndexRoute: LegalIndexRoute,
 }
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
 interface ResourcesBlogRouteChildren {
   ResourcesBlogSlugRoute: typeof ResourcesBlogSlugRoute
+  ResourcesBlogIndexRoute: typeof ResourcesBlogIndexRoute
 }
 
 const ResourcesBlogRouteChildren: ResourcesBlogRouteChildren = {
   ResourcesBlogSlugRoute: ResourcesBlogSlugRoute,
+  ResourcesBlogIndexRoute: ResourcesBlogIndexRoute,
 }
 
 const ResourcesBlogRouteWithChildren = ResourcesBlogRoute._addFileChildren(
@@ -943,10 +1124,12 @@ const ResourcesBlogRouteWithChildren = ResourcesBlogRoute._addFileChildren(
 
 interface ResourcesCaseStudiesRouteChildren {
   ResourcesCaseStudiesSlugRoute: typeof ResourcesCaseStudiesSlugRoute
+  ResourcesCaseStudiesIndexRoute: typeof ResourcesCaseStudiesIndexRoute
 }
 
 const ResourcesCaseStudiesRouteChildren: ResourcesCaseStudiesRouteChildren = {
   ResourcesCaseStudiesSlugRoute: ResourcesCaseStudiesSlugRoute,
+  ResourcesCaseStudiesIndexRoute: ResourcesCaseStudiesIndexRoute,
 }
 
 const ResourcesCaseStudiesRouteWithChildren =
@@ -954,10 +1137,12 @@ const ResourcesCaseStudiesRouteWithChildren =
 
 interface ResourcesGuidesRouteChildren {
   ResourcesGuidesSlugRoute: typeof ResourcesGuidesSlugRoute
+  ResourcesGuidesIndexRoute: typeof ResourcesGuidesIndexRoute
 }
 
 const ResourcesGuidesRouteChildren: ResourcesGuidesRouteChildren = {
   ResourcesGuidesSlugRoute: ResourcesGuidesSlugRoute,
+  ResourcesGuidesIndexRoute: ResourcesGuidesIndexRoute,
 }
 
 const ResourcesGuidesRouteWithChildren = ResourcesGuidesRoute._addFileChildren(
@@ -966,10 +1151,12 @@ const ResourcesGuidesRouteWithChildren = ResourcesGuidesRoute._addFileChildren(
 
 interface ResourcesWebinarsRouteChildren {
   ResourcesWebinarsSlugRoute: typeof ResourcesWebinarsSlugRoute
+  ResourcesWebinarsIndexRoute: typeof ResourcesWebinarsIndexRoute
 }
 
 const ResourcesWebinarsRouteChildren: ResourcesWebinarsRouteChildren = {
   ResourcesWebinarsSlugRoute: ResourcesWebinarsSlugRoute,
+  ResourcesWebinarsIndexRoute: ResourcesWebinarsIndexRoute,
 }
 
 const ResourcesWebinarsRouteWithChildren =
@@ -982,6 +1169,7 @@ interface ResourcesRouteChildren {
   ResourcesGuidesRoute: typeof ResourcesGuidesRouteWithChildren
   ResourcesProductUpdatesRoute: typeof ResourcesProductUpdatesRoute
   ResourcesWebinarsRoute: typeof ResourcesWebinarsRouteWithChildren
+  ResourcesIndexRoute: typeof ResourcesIndexRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
@@ -991,6 +1179,7 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesGuidesRoute: ResourcesGuidesRouteWithChildren,
   ResourcesProductUpdatesRoute: ResourcesProductUpdatesRoute,
   ResourcesWebinarsRoute: ResourcesWebinarsRouteWithChildren,
+  ResourcesIndexRoute: ResourcesIndexRoute,
 }
 
 const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
@@ -999,10 +1188,12 @@ const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
 
 interface SolutionsRouteChildren {
   SolutionsSlugRoute: typeof SolutionsSlugRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 const SolutionsRouteChildren: SolutionsRouteChildren = {
   SolutionsSlugRoute: SolutionsSlugRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
 }
 
 const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
