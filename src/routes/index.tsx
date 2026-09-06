@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Section, SectionHeading, Card, FeatureList, AvailabilityBadge } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { EredoxHero } from "@/components/site/EredoxHero";
@@ -27,11 +28,11 @@ export const Route = createFileRoute("/")({
 });
 
 const outcomes = [
-  "Understand what is ready and what needs work across every activated framework",
-  "Stop duplicating evidence for every separate assessment or questionnaire",
-  "Trace every readiness claim back to reviewed evidence and accountable owners",
-  "Publish approved assurance content without exposing confidential artefacts",
-  "Keep risk, policies, assets and controls in one coherent programme record",
+  { text: "Understand what is ready and what needs work across every activated framework", bg: "bg-feature-1" as const },
+  { text: "Stop duplicating evidence for every separate assessment or questionnaire", bg: "bg-feature-2" as const },
+  { text: "Trace every readiness claim back to reviewed evidence and accountable owners", bg: "bg-feature-3" as const },
+  { text: "Publish approved assurance content without exposing confidential artefacts", bg: "bg-feature-4" as const },
+  { text: "Keep risk, policies, assets and controls in one coherent programme record", bg: "bg-feature-5" as const },
 ];
 
 const pillars = [
@@ -107,9 +108,9 @@ function Index() {
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {outcomes.map((o) => (
-            <Card key={o} className="flex items-start gap-3">
+            <Card key={o.text} className={cn("flex items-start gap-3", o.bg)}>
               <Check aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <p className="text-sm text-muted-foreground">{o}</p>
+              <p className="text-sm text-foreground/80">{o.text}</p>
             </Card>
           ))}
         </div>
