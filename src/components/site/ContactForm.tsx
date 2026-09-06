@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { formsConfig } from "@/config/site";
 
-export function ContactForm({ className }: { className?: string }) {
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+export function ContactForm({ className, defaultMessage = "" }: { className?: string; defaultMessage?: string }) {
+  const [form, setForm] = useState({ name: "", email: "", company: "", message: defaultMessage });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
