@@ -87,6 +87,8 @@
   --color-feature-3: var(--feature-3);
   --color-feature-4: var(--feature-4);
   --color-feature-5: var(--feature-5);
+  --color-feature-6: var(--feature-6);
+
 
   --shadow-soft: 0 1px 2px oklch(0.2 0.02 150 / 0.05), 0 6px 18px oklch(0.2 0.02 150 / 0.06);
   --shadow-lift: 0 2px 6px oklch(0.2 0.02 150 / 0.07), 0 18px 40px oklch(0.2 0.02 150 / 0.1);
@@ -157,6 +159,7 @@
   --feature-3: oklch(0.95 0.04 250);  /* soft blue */
   --feature-4: oklch(0.94 0.05 300); /* soft purple */
   --feature-5: oklch(0.95 0.045 25);  /* soft coral */
+  --feature-6: oklch(0.95 0.05 170);  /* soft turquoise */
 }
 
 
@@ -204,6 +207,7 @@
   --feature-3: oklch(0.29 0.05 250); /* muted blue */
   --feature-4: oklch(0.28 0.05 300); /* muted purple */
   --feature-5: oklch(0.29 0.05 25);  /* muted coral */
+  --feature-6: oklch(0.28 0.05 170); /* muted turquoise */
 }
 
 

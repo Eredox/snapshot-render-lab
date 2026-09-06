@@ -33,6 +33,7 @@ const outcomes = [
   { text: "Trace every readiness claim back to reviewed evidence and accountable owners", bg: "bg-feature-3" as const },
   { text: "Publish approved assurance content without exposing confidential artefacts", bg: "bg-feature-4" as const },
   { text: "Keep risk, policies, assets and controls in one coherent programme record", bg: "bg-feature-5" as const },
+  { text: "Track reviewer sign-off, exceptions and scope changes in one audit trail", bg: "bg-feature-6" as const },
 ];
 
 const pillars = [
