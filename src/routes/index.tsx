@@ -108,9 +108,9 @@ function Index() {
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {outcomes.map((o) => (
-            <Card key={o} className="flex items-start gap-3">
+            <Card key={o.text} className={cn("flex items-start gap-3", o.bg)}>
               <Check aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              <p className="text-sm text-muted-foreground">{o}</p>
+              <p className="text-sm text-foreground/80">{o.text}</p>
             </Card>
           ))}
         </div>
