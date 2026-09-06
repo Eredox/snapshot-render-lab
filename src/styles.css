@@ -7,9 +7,9 @@
 /*
  * NOVA Compliance design system.
  *
- * Eredox palette: green #3D9970 (primary/trust/action), orange #FF851B
- * (restrained accent), black #0B0B0B (authority), warm off-white #F7F8F6,
- * light neutral grey #E8ECEA, dark slate #39443F (secondary text).
+ * Eredox palette: deep navy (authority), electric blue (primary/trust/action),
+ * teal (restrained accent), white and cool off-white surfaces,
+ * cool light grey borders, slate blue secondary text.
  *
  * Typography: Roboto for all site text. Cirqua is reserved for the
  * NOVA/Eredox wordmark only — drop `cirqua.woff2` into `public/fonts/`
@@ -91,101 +91,101 @@
   --radius: 0.5rem;
 
   --background: oklch(1 0 0);
-  --foreground: oklch(0.19 0.008 150);
+  --foreground: oklch(0.24 0.045 265);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.19 0.008 150);
+  --card-foreground: oklch(0.24 0.045 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.19 0.008 150);
+  --popover-foreground: oklch(0.24 0.045 265);
 
-  /* Eredox green #3D9970 */
-  --primary: oklch(0.6 0.093 160.5);
+  /* Eredox electric blue */
+  --primary: oklch(0.55 0.2 262);
   --primary-foreground: oklch(1 0 0);
-  --primary-soft: oklch(0.95 0.026 160.5);
+  --primary-soft: oklch(0.95 0.03 262);
 
-  /* Eredox orange #FF851B */
-  --ember: oklch(0.75 0.171 56);
-  --ember-foreground: oklch(0.19 0.008 150);
-  --ember-soft: oklch(0.96 0.038 66);
+  /* Teal accent */
+  --ember: oklch(0.72 0.115 187);
+  --ember-foreground: oklch(0.21 0.055 265);
+  --ember-soft: oklch(0.95 0.035 187);
 
-  /* Eredox black #0B0B0B */
-  --ink: oklch(0.15 0 0);
-  --ink-foreground: oklch(0.98 0.003 150);
+  /* Deep navy */
+  --ink: oklch(0.21 0.055 265);
+  --ink-foreground: oklch(0.98 0.005 260);
 
-  /* Warm off-white #F7F8F6 and light neutral grey #E8ECEA */
-  --surface: oklch(0.978 0.004 130);
-  --surface-strong: oklch(0.935 0.007 160);
+  --surface: oklch(0.976 0.005 260);
+  --surface-strong: oklch(0.935 0.012 260);
 
-  --secondary: oklch(0.94 0.006 160);
-  --secondary-foreground: oklch(0.28 0.014 158);
-  --muted: oklch(0.96 0.004 150);
-  /* Dark slate #39443F */
-  --muted-foreground: oklch(0.44 0.015 158);
-  --accent: oklch(0.95 0.026 160.5);
-  --accent-foreground: oklch(0.32 0.05 160.5);
+  --secondary: oklch(0.945 0.01 260);
+  --secondary-foreground: oklch(0.3 0.04 265);
+  --muted: oklch(0.962 0.006 260);
+  --muted-foreground: oklch(0.47 0.03 265);
+  --accent: oklch(0.95 0.03 262);
+  --accent-foreground: oklch(0.35 0.09 262);
 
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.915 0.007 160);
-  --border-strong: oklch(0.85 0.01 160);
-  --input: oklch(0.88 0.008 160);
-  --ring: oklch(0.6 0.093 160.5);
+  --border: oklch(0.915 0.01 260);
+  --border-strong: oklch(0.85 0.016 260);
+  --input: oklch(0.88 0.014 260);
+  --ring: oklch(0.55 0.2 262);
 
-  --chart-1: oklch(0.6 0.093 160.5);
-  --chart-2: oklch(0.75 0.171 56);
-  --chart-3: oklch(0.44 0.015 158);
-  --chart-4: oklch(0.72 0.06 160.5);
-  --chart-5: oklch(0.32 0.03 158);
+  --chart-1: oklch(0.55 0.2 262);
+  --chart-2: oklch(0.72 0.115 187);
+  --chart-3: oklch(0.47 0.03 265);
+  --chart-4: oklch(0.7 0.12 262);
+  --chart-5: oklch(0.35 0.07 265);
 
-  --sidebar: oklch(0.978 0.004 130);
-  --sidebar-foreground: oklch(0.19 0.008 150);
-  --sidebar-primary: oklch(0.6 0.093 160.5);
+  --sidebar: oklch(0.976 0.005 260);
+  --sidebar-foreground: oklch(0.24 0.045 265);
+  --sidebar-primary: oklch(0.55 0.2 262);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.95 0.026 160.5);
-  --sidebar-accent-foreground: oklch(0.32 0.05 160.5);
-  --sidebar-border: oklch(0.915 0.007 160);
-  --sidebar-ring: oklch(0.6 0.093 160.5);
+  --sidebar-accent: oklch(0.95 0.03 262);
+  --sidebar-accent-foreground: oklch(0.35 0.09 262);
+  --sidebar-border: oklch(0.915 0.01 260);
+  --sidebar-ring: oklch(0.55 0.2 262);
 }
 
+
 .dark {
-  --background: oklch(0.15 0 0);
-  --foreground: oklch(0.97 0.003 150);
-  --card: oklch(0.19 0.005 158);
-  --card-foreground: oklch(0.97 0.003 150);
-  --popover: oklch(0.19 0.005 158);
-  --popover-foreground: oklch(0.97 0.003 150);
-  --primary: oklch(0.68 0.098 160.5);
-  --primary-foreground: oklch(0.15 0 0);
-  --primary-soft: oklch(0.28 0.04 160.5);
-  --ember: oklch(0.78 0.16 56);
-  --ember-foreground: oklch(0.15 0 0);
-  --ember-soft: oklch(0.3 0.06 56);
-  --ink: oklch(0.12 0 0);
-  --ink-foreground: oklch(0.97 0.003 150);
-  --surface: oklch(0.19 0.005 158);
-  --surface-strong: oklch(0.24 0.008 158);
-  --secondary: oklch(0.25 0.008 158);
-  --secondary-foreground: oklch(0.97 0.003 150);
-  --muted: oklch(0.25 0.008 158);
-  --muted-foreground: oklch(0.72 0.012 158);
-  --accent: oklch(0.28 0.04 160.5);
-  --accent-foreground: oklch(0.9 0.04 160.5);
+  --background: oklch(0.18 0.045 265);
+  --foreground: oklch(0.97 0.005 260);
+  --card: oklch(0.22 0.05 265);
+  --card-foreground: oklch(0.97 0.005 260);
+  --popover: oklch(0.22 0.05 265);
+  --popover-foreground: oklch(0.97 0.005 260);
+  --primary: oklch(0.68 0.17 262);
+  --primary-foreground: oklch(0.16 0.045 265);
+  --primary-soft: oklch(0.3 0.08 262);
+  --ember: oklch(0.78 0.11 187);
+  --ember-foreground: oklch(0.16 0.045 265);
+  --ember-soft: oklch(0.3 0.06 187);
+  --ink: oklch(0.15 0.04 265);
+  --ink-foreground: oklch(0.97 0.005 260);
+  --surface: oklch(0.22 0.05 265);
+  --surface-strong: oklch(0.26 0.05 265);
+  --secondary: oklch(0.27 0.05 265);
+  --secondary-foreground: oklch(0.97 0.005 260);
+  --muted: oklch(0.27 0.05 265);
+  --muted-foreground: oklch(0.75 0.02 260);
+  --accent: oklch(0.3 0.08 262);
+  --accent-foreground: oklch(0.9 0.06 262);
   --destructive: oklch(0.62 0.19 27);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(1 0 0 / 12%);
   --border-strong: oklch(1 0 0 / 22%);
   --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.68 0.098 160.5);
-  --sidebar: oklch(0.19 0.005 158);
-  --sidebar-foreground: oklch(0.97 0.003 150);
-  --sidebar-primary: oklch(0.68 0.098 160.5);
-  --sidebar-primary-foreground: oklch(0.15 0 0);
-  --sidebar-accent: oklch(0.28 0.04 160.5);
-  --sidebar-accent-foreground: oklch(0.9 0.04 160.5);
+  --ring: oklch(0.68 0.17 262);
+  --sidebar: oklch(0.22 0.05 265);
+  --sidebar-foreground: oklch(0.97 0.005 260);
+  --sidebar-primary: oklch(0.68 0.17 262);
+  --sidebar-primary-foreground: oklch(0.16 0.045 265);
+  --sidebar-accent: oklch(0.3 0.08 262);
+  --sidebar-accent-foreground: oklch(0.9 0.06 262);
   --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: oklch(0.68 0.098 160.5);
+  --sidebar-ring: oklch(0.68 0.17 262);
 }
+
 
 @layer base {
   * {
@@ -324,5 +324,64 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* Eredox hero scene */
+@keyframes eredox-feed {
+  0% {
+    opacity: 0;
+    transform: translate3d(-120%, var(--feed-y, 0px), 0) scale(0.85);
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.55);
+  }
+}
+
+@keyframes eredox-emerge {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+  18% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--emerge-x, 120%), var(--emerge-y, 0px), 0) scale(1.05);
+  }
+}
+
+@keyframes eredox-sweep {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(520%);
+    opacity: 0;
+  }
+}
+
+@keyframes eredox-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.8;
   }
 }

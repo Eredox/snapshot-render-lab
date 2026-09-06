@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
 import { Section, SectionHeading, Card, FeatureList, AvailabilityBadge } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
-import { HeroVisual } from "@/components/site/HeroVisual";
+import { EredoxHero } from "@/components/site/EredoxHero";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
+
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
 import { features } from "@/data/features";
 import { solutions } from "@/data/solutions";
@@ -77,27 +78,8 @@ function Index() {
   return (
     <>
       {/* Hero */}
-      <Section className="bg-surface" id="overview">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p className="eyebrow">Compliance management that stays governed</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl">
-              Evidence-led compliance for growing organisations
-            </h1>
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground">{site.tagline}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <CtaLink to="/start">Start free</CtaLink>
-              <CtaLink to="/book-demo" variant="outline">
-                Book a demo
-              </CtaLink>
-            </div>
-            <p className="mt-4 text-xs text-muted-foreground">{site.humanStatement}</p>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-lift md:p-6">
-            <HeroVisual />
-          </div>
-        </div>
-      </Section>
+      <EredoxHero />
+
 
       {/* Trust bar */}
       <Section tone="ink" className="py-10">
