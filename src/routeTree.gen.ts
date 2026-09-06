@@ -36,6 +36,8 @@ import { Route as StatusRouteImport } from './routes/status'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as TrustRouteImport } from './routes/trust'
+import { Route as BookDemoIndexRouteImport } from './routes/book-demo.index'
+import { Route as BookDemoConfirmedRouteImport } from './routes/book-demo.confirmed'
 import { Route as FeaturesIndexRouteImport } from './routes/features.index'
 import { Route as FeaturesSlugRouteImport } from './routes/features.$slug'
 import { Route as FeaturesFrameworkManagementRouteImport } from './routes/features.framework-management'
@@ -198,6 +200,16 @@ const TrustRoute = TrustRouteImport.update({
   path: '/trust',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookDemoIndexRoute = BookDemoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BookDemoRoute,
+} as any)
+const BookDemoConfirmedRoute = BookDemoConfirmedRouteImport.update({
+  id: '/confirmed',
+  path: '/confirmed',
+  getParentRoute: () => BookDemoRoute,
+} as any)
 const FeaturesIndexRoute = FeaturesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -337,7 +349,7 @@ export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
-  '/book-demo': typeof BookDemoRoute
+  '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
@@ -360,6 +372,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
+  '/book-demo/confirmed': typeof BookDemoConfirmedRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
@@ -372,6 +385,7 @@ export interface FileRoutesByFullPath {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo/': typeof BookDemoIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/frameworks/': typeof FrameworksIndexRoute
   '/industries/': typeof IndustriesIndexRoute
@@ -392,7 +406,6 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
-  '/book-demo': typeof BookDemoRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
@@ -409,6 +422,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
+  '/book-demo/confirmed': typeof BookDemoConfirmedRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
@@ -417,6 +431,7 @@ export interface FileRoutesByTo {
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo': typeof BookDemoIndexRoute
   '/features': typeof FeaturesIndexRoute
   '/frameworks': typeof FrameworksIndexRoute
   '/industries': typeof IndustriesIndexRoute
@@ -438,7 +453,7 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
-  '/book-demo': typeof BookDemoRoute
+  '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
@@ -461,6 +476,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/testimonials': typeof TestimonialsRoute
   '/trust': typeof TrustRoute
+  '/book-demo/confirmed': typeof BookDemoConfirmedRoute
   '/features/$slug': typeof FeaturesSlugRoute
   '/features/framework-management': typeof FeaturesFrameworkManagementRoute
   '/frameworks/$slug': typeof FrameworksSlugRoute
@@ -473,6 +489,7 @@ export interface FileRoutesById {
   '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/book-demo/': typeof BookDemoIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/frameworks/': typeof FrameworksIndexRoute
   '/industries/': typeof IndustriesIndexRoute
@@ -518,6 +535,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/testimonials'
     | '/trust'
+    | '/book-demo/confirmed'
     | '/features/$slug'
     | '/features/framework-management'
     | '/frameworks/$slug'
@@ -530,6 +548,7 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/book-demo/'
     | '/features/'
     | '/frameworks/'
     | '/industries/'
@@ -550,7 +569,6 @@ export interface FileRouteTypes {
     | '/$'
     | '/404'
     | '/about'
-    | '/book-demo'
     | '/compare'
     | '/contact'
     | '/customers'
@@ -567,6 +585,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/testimonials'
     | '/trust'
+    | '/book-demo/confirmed'
     | '/features/$slug'
     | '/features/framework-management'
     | '/frameworks/$slug'
@@ -575,6 +594,7 @@ export interface FileRouteTypes {
     | '/resources/faq'
     | '/resources/product-updates'
     | '/solutions/$slug'
+    | '/book-demo'
     | '/features'
     | '/frameworks'
     | '/industries'
@@ -618,6 +638,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/testimonials'
     | '/trust'
+    | '/book-demo/confirmed'
     | '/features/$slug'
     | '/features/framework-management'
     | '/frameworks/$slug'
@@ -630,6 +651,7 @@ export interface FileRouteTypes {
     | '/resources/product-updates'
     | '/resources/webinars'
     | '/solutions/$slug'
+    | '/book-demo/'
     | '/features/'
     | '/frameworks/'
     | '/industries/'
@@ -651,7 +673,7 @@ export interface RootRouteChildren {
   SplatRoute: typeof SplatRoute
   R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
-  BookDemoRoute: typeof BookDemoRoute
+  BookDemoRoute: typeof BookDemoRouteWithChildren
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   CustomersRoute: typeof CustomersRoute
@@ -867,6 +889,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrustRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book-demo/': {
+      id: '/book-demo/'
+      path: '/'
+      fullPath: '/book-demo/'
+      preLoaderRoute: typeof BookDemoIndexRouteImport
+      parentRoute: typeof BookDemoRoute
+    }
+    '/book-demo/confirmed': {
+      id: '/book-demo/confirmed'
+      path: '/confirmed'
+      fullPath: '/book-demo/confirmed'
+      preLoaderRoute: typeof BookDemoConfirmedRouteImport
+      parentRoute: typeof BookDemoRoute
+    }
     '/features/': {
       id: '/features/'
       path: '/'
@@ -1052,6 +1088,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BookDemoRouteChildren {
+  BookDemoConfirmedRoute: typeof BookDemoConfirmedRoute
+  BookDemoIndexRoute: typeof BookDemoIndexRoute
+}
+
+const BookDemoRouteChildren: BookDemoRouteChildren = {
+  BookDemoConfirmedRoute: BookDemoConfirmedRoute,
+  BookDemoIndexRoute: BookDemoIndexRoute,
+}
+
+const BookDemoRouteWithChildren = BookDemoRoute._addFileChildren(
+  BookDemoRouteChildren,
+)
+
 interface FeaturesRouteChildren {
   FeaturesSlugRoute: typeof FeaturesSlugRoute
   FeaturesFrameworkManagementRoute: typeof FeaturesFrameworkManagementRoute
@@ -1205,7 +1255,7 @@ const rootRouteChildren: RootRouteChildren = {
   SplatRoute: SplatRoute,
   R404Route: R404Route,
   AboutRoute: AboutRoute,
-  BookDemoRoute: BookDemoRoute,
+  BookDemoRoute: BookDemoRouteWithChildren,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   CustomersRoute: CustomersRoute,
