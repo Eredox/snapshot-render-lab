@@ -148,7 +148,7 @@ export function EredoxHero() {
       <div className="container-page relative z-10 grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center">
         <div>
           <p className="eyebrow text-ember">The Eredox suite</p>
-          <h1 className="wordmark mt-4 text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
             Build Trust. Prove Compliance. Move Forward.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-ink-foreground/75">
