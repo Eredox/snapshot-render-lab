@@ -181,6 +181,80 @@ function PlatformPage() {
         <RelatedLinks title="Explore the platform" items={related} />
       </Section>
 
+      <Section id="pricing">
+        <SectionHeading
+          eyebrow="Pricing"
+          title="Plans that scale with the programme"
+          description="Start free to evaluate the workflow, then move to the plan that matches your frameworks, evidence and assurance requirements. Full feature comparison is on the pricing page."
+        />
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <Card key={plan.slug} {...(plan.highlight ? { className: "border-primary" } : {})}>
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-lg font-semibold">{plan.name}</h3>
+                {plan.highlight ? (
+                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-medium text-primary">Most popular</span>
+                ) : null}
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground">{plan.summary}</p>
+              <p className="mt-4">
+                {plan.quoteOnly ? (
+                  <span className="text-2xl font-semibold">Quote only</span>
+                ) : (
+                  <>
+                    <span className="text-2xl font-semibold">
+                      {plan.monthly === 0 ? "Free" : `$${plan.monthly} ${currency}`}
+                    </span>
+                    {plan.monthly !== 0 ? <span className="text-sm text-muted-foreground"> / month</span> : null}
+                  </>
+                )}
+              </p>
+              {plan.annual !== null && plan.annual > 0 ? (
+                <p className="mt-1 text-xs text-muted-foreground">${plan.annual} {currency} / month billed annually</p>
+              ) : null}
+              <FeatureList className="mt-4" items={plan.includes.slice(0, 4)} />
+              <div className="mt-5">
+                <CtaLink to={plan.cta.to as any} variant={plan.highlight ? "primary" : "outline"} className="w-full">
+                  {plan.cta.label}
+                </CtaLink>
+              </div>
+            </Card>
+          ))}
+        </div>
+        <Disclaimer className="mt-6">{site.pricingApprovalNote}</Disclaimer>
+        <div className="mt-4">
+          <CtaLink to="/pricing" variant="ghost">
+            Full plan comparison <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </CtaLink>
+        </div>
+      </Section>
+
+      <Section tone="surface" id="contact">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div>
+            <SectionHeading
+              eyebrow="Talk to us"
+              title="Discuss NOVA for your organisation"
+              description="Tell us about your frameworks, team and assurance timeline and we will help you work out where to start. You can also book a demo or start free directly."
+            />
+            <div className="mt-6 flex flex-wrap gap-3">
+              <CtaLink to="/book-demo" variant="outline">
+                Book a demo
+              </CtaLink>
+              <CtaLink to="/start" variant="ghost">
+                Start free
+              </CtaLink>
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">{site.humanStatement}</p>
+          </div>
+          <Card>
+            <h2 className="text-lg font-semibold">Contact us</h2>
+            <p className="mt-2 text-sm text-muted-foreground">We respond within two business days.</p>
+            <ContactForm className="mt-6" defaultMessage="I would like to discuss NOVA Compliance for my organisation. " />
+          </Card>
+        </div>
+      </Section>
+
       <ConversionCta />
     </>
   );
