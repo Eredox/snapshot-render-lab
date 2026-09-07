@@ -115,6 +115,12 @@ function Index() {
             </Card>
           ))}
         </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <CtaLink to="/platform">Explore the NOVA product</CtaLink>
+          <CtaLink to="/pricing" variant="outline">
+            See pricing
+          </CtaLink>
+        </div>
       </Section>
 
       {/* Platform pillars */}

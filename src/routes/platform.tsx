@@ -3,7 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks, Disclaimer } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
+import { ContactForm } from "@/components/site/ContactForm";
 import { features } from "@/data/features";
+import { plans, currency } from "@/data/pricing";
 import { site } from "@/config/site";
 import { pageMeta, ldScript, breadcrumbSchema } from "@/lib/seo";
 
