@@ -97,7 +97,7 @@ function FrameworksPage() {
           title="Planned frameworks by region"
           description="A regional view of the major compliance frameworks and regulatory regimes NOVA may support. Eredox is headquartered in Australia and its service scope is worldwide."
         />
-        <Tabs defaultValue={frameworkRegister[0].id} className="mt-8">
+        <Tabs defaultValue={frameworkRegister[0]!.id} className="mt-8">
           <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 bg-secondary p-1">
             {frameworkRegister.map((region) => (
               <TabsTrigger key={region.id} value={region.id} className="text-xs sm:text-sm">
