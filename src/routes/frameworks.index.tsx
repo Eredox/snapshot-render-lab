@@ -27,6 +27,21 @@ const related = [
   { label: "Pricing", to: "/pricing", description: "Plans and entitlements" },
 ];
 
+function PriorityBadge({ priority }: { priority: RegisterPriority }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium",
+        priority === "Core" && "bg-primary-soft text-accent-foreground",
+        priority === "Sector" && "bg-ember-soft text-ember-foreground",
+        priority === "Reference" && "bg-secondary text-secondary-foreground",
+      )}
+    >
+      {priority}
+    </span>
+  );
+}
+
 function FrameworksPage() {
   const available = frameworks.filter((f) => f.availability === "Available now");
   const planned = frameworks.filter((f) => f.availability !== "Available now");
