@@ -74,6 +74,64 @@ function FrameworksPage() {
       </Section>
 
       <Section>
+        <SectionHeading
+          eyebrow="Global register"
+          title="Planned frameworks by region"
+          description="A regional view of the major compliance frameworks and regulatory regimes NOVA may support. Eredox is headquartered in Australia and its service scope is worldwide."
+        />
+        <Tabs defaultValue={frameworkRegister[0].id} className="mt-8">
+          <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 bg-secondary p-1">
+            {frameworkRegister.map((region) => (
+              <TabsTrigger key={region.id} value={region.id} className="text-xs sm:text-sm">
+                {region.shortLabel}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {frameworkRegister.map((region) => (
+            <TabsContent key={region.id} value={region.id} className="mt-6">
+              <h3 className="text-xl font-semibold">{region.label}</h3>
+              <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{region.intro}</p>
+              <div className="mt-5 overflow-x-auto rounded-xl border border-border">
+                <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
+                  <thead className="bg-surface">
+                    <tr>
+                      <th scope="col" className="px-4 py-3 font-semibold">Framework</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">Jurisdiction</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">Primary subject</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">NOVA relevance</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">Priority</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {region.entries.map((entry) => (
+                      <tr key={entry.name} className="border-t border-border align-top">
+                        <td className="px-4 py-3 font-medium">{entry.name}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{entry.jurisdiction}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{entry.subject}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{entry.relevance}</td>
+                        <td className="px-4 py-3">
+                          <PriorityBadge priority={entry.priority} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {registerPriorityMeaning.map((p) => (
+            <Card key={p.priority}>
+              <PriorityBadge priority={p.priority} />
+              <p className="mt-3 text-sm text-muted-foreground">{p.meaning}</p>
+            </Card>
+          ))}
+        </div>
+        <Disclaimer className="mt-8">{registerNote}</Disclaimer>
+      </Section>
+
+      <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div>
             <SectionHeading eyebrow="Readiness" title="Illustrative readiness reporting" />
