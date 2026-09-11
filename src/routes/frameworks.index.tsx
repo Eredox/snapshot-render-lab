@@ -2,7 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks, Disclaimer } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
+import { frameworkRegister, registerNote, registerPriorityMeaning, type RegisterPriority } from "@/data/framework-register";
+import { cn } from "@/lib/utils";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
