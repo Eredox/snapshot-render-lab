@@ -1,6 +1,7 @@
 import { FileText, ShieldCheck, Database, Lock, BadgeCheck, Fingerprint } from "lucide-react";
 import type { CSSProperties } from "react";
 import { CtaLink } from "@/components/site/cta";
+import { PulsingBorderBackground } from "@/components/site/PulsingBorderBackground";
 import { site } from "@/config/site";
 
 /**
