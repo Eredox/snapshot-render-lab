@@ -362,11 +362,11 @@ export function PulsingBorderBackground({ className }: { className?: string }) {
     const pointer = { x: 0, y: 0, presence: 0 };
 
     function setCanvasSize() {
-      const rect = canvas.getBoundingClientRect();
+      const rect = canvas!.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      canvas!.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas!.height = Math.max(1, Math.floor(rect.height * dpr));
+      gl!.viewport(0, 0, canvas!.width, canvas!.height);
     }
 
     setCanvasSize();
