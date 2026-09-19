@@ -441,7 +441,7 @@ export function PulsingBorderBackground({ className }: { className?: string }) {
     return () => {
       cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
-      canvas.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointermove", handlePointerMove);
       canvas.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibility);
       gl.deleteProgram(program);
