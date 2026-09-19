@@ -266,7 +266,7 @@ void main() {
 `;
 
 // Preset values from the brief.
-const COLORS = [
+const COLORS: [number, number, number][] = [
   [0.0, 0.0, 0.0],
   [0.251, 1.0, 0.0],
   [0.0, 1.0, 0.067],
@@ -277,13 +277,13 @@ const COLORS = [
   [0.0, 0.0, 0.0],
 ];
 
-const U_SCENE = [0, 0, 0, 5.0];
-const U_SHAPE = [1.34, 0.9, 0.07, 0.0];
-const U_SURFACE = [1.82, 1.31, 0.02, 1.04];
-const U_FINISH = [0.52, 0.0, 0.002, 0.05];
-const U_TRANSFORM = [6304.0, 3.14, 0.0, 1.0];
-const U_SPACE = [0.0, 0.0, 0.0, 0.0];
-const U_CURSOR = [0.0, 4.0, 1.0, 0.66];
+const U_SCENE: [number, number, number, number] = [0, 0, 0, 5.0];
+const U_SHAPE: [number, number, number, number] = [1.34, 0.9, 0.07, 0.0];
+const U_SURFACE: [number, number, number, number] = [1.82, 1.31, 0.02, 1.04];
+const U_FINISH: [number, number, number, number] = [0.52, 0.0, 0.002, 0.05];
+const U_TRANSFORM: [number, number, number, number] = [6304.0, 3.14, 0.0, 1.0];
+const U_SPACE: [number, number, number, number] = [0.0, 0.0, 0.0, 0.0];
+const U_CURSOR: [number, number, number, number] = [0.0, 4.0, 1.0, 0.66];
 
 function compileShader(gl: WebGLRenderingContext, source: string, type: number) {
   const shader = gl.createShader(type);
