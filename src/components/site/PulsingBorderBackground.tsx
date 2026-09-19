@@ -423,16 +423,16 @@ export function PulsingBorderBackground({ className }: { className?: string }) {
 
       const uTime = elapsed * 0.21;
 
-      gl.uniform3fv(colorsLoc, COLORS.flat());
-      gl.uniform4f(sceneLoc, canvas.width, canvas.height, uTime, U_SCENE[3]);
-      gl.uniform4f(shapeLoc, U_SHAPE[0], U_SHAPE[1], U_SHAPE[2], U_SHAPE[3]);
-      gl.uniform4f(surfaceLoc, U_SURFACE[0], U_SURFACE[1], U_SURFACE[2], U_SURFACE[3]);
-      gl.uniform4f(finishLoc, U_FINISH[0], U_FINISH[1], U_FINISH[2], U_FINISH[3]);
-      gl.uniform4f(transformLoc, U_TRANSFORM[0], U_TRANSFORM[1], U_TRANSFORM[2], U_TRANSFORM[3]);
-      gl.uniform4f(spaceLoc, U_SPACE[0], U_SPACE[1], pointer.x, pointer.y);
-      gl.uniform4f(cursorLoc, pointer.presence, U_CURSOR[1], U_CURSOR[2], U_CURSOR[3]);
+      gl!.uniform3fv(colorsLoc, COLORS.flat());
+      gl!.uniform4f(sceneLoc, canvas!.width, canvas!.height, uTime, U_SCENE[3]);
+      gl!.uniform4f(shapeLoc, U_SHAPE[0], U_SHAPE[1], U_SHAPE[2], U_SHAPE[3]);
+      gl!.uniform4f(surfaceLoc, U_SURFACE[0], U_SURFACE[1], U_SURFACE[2], U_SURFACE[3]);
+      gl!.uniform4f(finishLoc, U_FINISH[0], U_FINISH[1], U_FINISH[2], U_FINISH[3]);
+      gl!.uniform4f(transformLoc, U_TRANSFORM[0], U_TRANSFORM[1], U_TRANSFORM[2], U_TRANSFORM[3]);
+      gl!.uniform4f(spaceLoc, U_SPACE[0], U_SPACE[1], pointer.x, pointer.y);
+      gl!.uniform4f(cursorLoc, pointer.presence, U_CURSOR[1], U_CURSOR[2], U_CURSOR[3]);
 
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      gl!.drawArrays(gl!.TRIANGLES, 0, 3);
       rafId = requestAnimationFrame(loop);
     }
 
@@ -442,12 +442,12 @@ export function PulsingBorderBackground({ className }: { className?: string }) {
       cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       window.removeEventListener("pointermove", handlePointerMove);
-      canvas.removeEventListener("pointerleave", handlePointerLeave);
+      canvas!.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibility);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      gl.deleteBuffer(buffer);
+      gl!.deleteProgram(program!);
+      gl!.deleteShader(vertexShader);
+      gl!.deleteShader(fragmentShader);
+      gl!.deleteBuffer(buffer!);
     };
   }, [mounted]);
 
