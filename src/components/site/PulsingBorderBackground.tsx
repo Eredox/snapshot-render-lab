@@ -374,18 +374,28 @@ export function PulsingBorderBackground({ className }: { className?: string }) {
     const resizeObserver = new ResizeObserver(setCanvasSize);
     resizeObserver.observe(canvas);
 
-    function handlePointerMove(event: PointerEvent) {
+    function updatePointer(clientX: number, clientY: number) {
       const rect = canvas.getBoundingClientRect();
-      pointer.x = (event.clientX - rect.left) / rect.width * 2 - 1;
-      pointer.y = 1 - (event.clientY - rect.top) / rect.height * 2;
-      pointer.presence = 1;
+      pointer.x = (clientX - rect.left) / rect.width * 2 - 1;
+      pointer.y = 1 - (clientY - rect.top) / rect.height * 2;
+      pointer.presence =
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom
+          ? 1
+          : 0;
+    }
+
+    function handlePointerMove(event: PointerEvent) {
+      updatePointer(event.clientX, event.clientY);
     }
 
     function handlePointerLeave() {
       pointer.presence = 0;
     }
 
-    canvas.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointermove", handlePointerMove);
     canvas.addEventListener("pointerleave", handlePointerLeave);
 
     let elapsed = 0;
