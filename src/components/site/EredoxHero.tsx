@@ -1,6 +1,7 @@
 import { FileText, ShieldCheck, Database, Lock, BadgeCheck, Fingerprint } from "lucide-react";
 import type { CSSProperties } from "react";
 import { CtaLink } from "@/components/site/cta";
+import { PulsingBorderBackground } from "@/components/site/PulsingBorderBackground";
 import { site } from "@/config/site";
 
 /**
@@ -135,6 +136,7 @@ function Scene() {
 export function EredoxHero() {
   return (
     <section className="relative overflow-hidden bg-ink text-ink-foreground">
+      <PulsingBorderBackground className="absolute inset-0 h-full w-full" />
       <div className="grid-mesh pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true" />
       <div
         className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-primary/30 blur-3xl motion-safe:[animation:eredox-glow_9s_ease-in-out_infinite]"
