@@ -9,9 +9,15 @@ function sitemapUrls(): { loc: string; lastmod?: string }[] {
   const isResourceDetail = (path: string) =>
     resourceSections.some((base) => path.startsWith(`${base}/`));
 
-  const staticUrls = staticRoutes
-    .filter((r) => r !== "/404" && r !== "/book-demo/confirmed")
-    .map((r) => ({ loc: r }));
+  /** Empty sections are noindex, so they stay out of the sitemap. */
+  const excluded = new Set<string>([
+    "/404",
+    "/book-demo/confirmed",
+    "/resources/case-studies",
+    "/resources/webinars",
+  ]);
+
+  const staticUrls = staticRoutes.filter((r) => !excluded.has(r)).map((r) => ({ loc: r }));
 
   const dynamicUrls = dynamicRoutes
     .flatMap((d) => d.slugs.map((s) => `${d.pattern.replace("/$slug", "")}/${s}`))
