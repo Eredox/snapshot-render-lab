@@ -4,15 +4,17 @@ import { ConversionCta } from "@/components/site/cta";
 import { byType, resourcePath } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+const base = pageMeta({
+  title: "Case studies — NOVA Compliance",
+  description:
+    "Customer case studies for NOVA Compliance will be published here once organisations have approved their stories for publication.",
+  path: "/resources/case-studies",
+});
+
 export const Route = createFileRoute("/resources/case-studies/")({
   head: () => ({
-    ...pageMeta({
-      title: "Case studies — NOVA Compliance",
-      description:
-        "Customer case studies for NOVA Compliance will be published here once organisations have approved their stories for publication.",
-      path: "/resources/case-studies",
-    }),
-    meta: [{ name: "robots", content: "noindex, follow" }],
+    ...base,
+    meta: [...base.meta, { name: "robots", content: "noindex, follow" }],
     scripts: [
       ldScript(
         breadcrumbSchema([

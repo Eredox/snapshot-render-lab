@@ -30,6 +30,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as StatusRouteImport } from './routes/status'
@@ -170,6 +171,11 @@ const RoadmapRoute = RoadmapRouteImport.update({
 const SecurityRoute = SecurityRouteImport.update({
   id: '/security',
   path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -380,6 +386,7 @@ export interface FileRoutesByFullPath {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
@@ -433,6 +440,7 @@ export interface FileRoutesByTo {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
@@ -487,6 +495,7 @@ export interface FileRoutesById {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
@@ -548,6 +557,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/solutions'
     | '/start'
     | '/status'
@@ -601,6 +611,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/start'
     | '/status'
     | '/support'
@@ -654,6 +665,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/solutions'
     | '/start'
     | '/status'
@@ -714,6 +726,7 @@ export interface RootRouteChildren {
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   RoadmapRoute: typeof RoadmapRoute
   SecurityRoute: typeof SecurityRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   StartRoute: typeof StartRoute
   StatusRoute: typeof StatusRoute
@@ -869,6 +882,13 @@ declare module '@tanstack/react-router' {
       path: '/security'
       fullPath: '/security'
       preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions': {
@@ -1326,6 +1346,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResponsibleAiRoute: ResponsibleAiRoute,
   RoadmapRoute: RoadmapRoute,
   SecurityRoute: SecurityRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   StartRoute: StartRoute,
   StatusRoute: StatusRoute,
