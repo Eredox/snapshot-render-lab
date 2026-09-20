@@ -59,15 +59,31 @@ function FrameworksPage() {
         <SectionHeading eyebrow="Available now" title="Ready to activate" />
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {available.map((f) => (
-            <Card key={f.slug} interactive>
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold">{f.name}</h2>
-                <AvailabilityBadge value={f.availability} />
+            <Card key={f.slug} interactive className="h-full">
+              <div className="flex items-start gap-4">
+                {f.icon ? (
+                  <img
+                    src={f.icon}
+                    alt=""
+                    aria-hidden="true"
+                    width={72}
+                    height={72}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-16 w-16 shrink-0 object-contain sm:h-[72px] sm:w-[72px]"
+                  />
+                ) : null}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="text-lg font-semibold">{f.name}</h2>
+                    <AvailabilityBadge value={f.availability} />
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
+                  <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                    Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-              <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
             </Card>
           ))}
         </div>
