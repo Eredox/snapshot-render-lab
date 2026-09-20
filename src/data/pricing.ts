@@ -42,8 +42,8 @@ export const plans: Plan[] = [
     slug: "launch",
     name: "Launch",
     summary: "A first certification or attestation programme run properly from the start.",
-    monthly: 149,
-    annual: 124,
+    monthly: 99,
+    annual: 82,
     requiresApproval: true,
     bestFor: "Startups preparing for their first enterprise security review",
     includes: [
