@@ -97,8 +97,8 @@ export const plans: Plan[] = [
     slug: "business",
     name: "Business",
     summary: "Broader scope, more users and deeper governance across business units.",
-    monthly: 1149,
-    annual: 957,
+    monthly: 799,
+    annual: 665,
     requiresApproval: true,
     bestFor: "Regulated organisations with several teams inside one programme",
     includes: [
