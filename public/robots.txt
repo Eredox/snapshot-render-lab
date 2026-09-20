@@ -10,5 +10,33 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# AI search and answer engines — allowed, so NOVA can be cited in answers.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Model training crawlers — kept separate from search so the policy is explicit.
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Disallow: /
+
 User-agent: *
 Allow: /
+
+Sitemap: https://www.nova.eredox.com/sitemap.xml

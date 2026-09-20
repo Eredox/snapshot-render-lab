@@ -1,36 +1,48 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Section, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
+import { Section, PageHero, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { resources } from "@/data/resources";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
-
-const typeName = "Product update";
+import { ResourceArticle } from "@/components/site/ResourceArticle";
+import { resources, resourcePath, legacyResourceRedirects } from "@/data/resources";
+import { articleMeta, breadcrumbSchema, blogPostingSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/resources/blog/$slug")({
   loader: ({ params }) => {
-    const post = resources.find((r) => r.type === typeName && r.slug === params.slug);
-    if (!post) throw notFound();
+    const legacy = legacyResourceRedirects[`/resources/blog/${params.slug}`];
+    if (legacy) throw redirect({ to: legacy as any, statusCode: 301 });
+
+    const post = resources.find((r) => r.slug === params.slug);
+    if (post && post.type !== "Blog article") {
+      throw redirect({ to: resourcePath(post) as any, statusCode: 301 });
+    }
+    if (!post || post.status !== "Published") throw notFound();
     return { post };
   },
   head: ({ loaderData }) => {
     const post = loaderData?.post;
     if (!post) {
-      return {
-        meta: [{ title: "Article not found — NOVA Compliance" }, { name: "robots", content: "noindex" }],
-      };
+      return { meta: [{ title: "Article not found — NOVA Compliance" }, { name: "robots", content: "noindex" }] };
     }
+    const path = resourcePath(post);
+    const title = post.seoTitle ?? `${post.title} — NOVA Compliance Blog`;
+    const description = post.seoDescription ?? post.summary;
     return {
-      ...pageMeta({
-        title: `${post.title} — NOVA Compliance`,
-        description: post.summary,
-        path: `/resources/blog/${post.slug}`,
-      }),
+      ...articleMeta({ title, description, path }),
       scripts: [
+        ldScript(
+          blogPostingSchema({
+            title: post.title,
+            description,
+            path,
+            ...(post.published && { published: post.published }),
+            ...(post.modified && { modified: post.modified }),
+            ...(post.category && { section: post.category }),
+          }),
+        ),
         ldScript(
           breadcrumbSchema([
             { label: "Resources", to: "/resources" },
             { label: "Blog", to: "/resources/blog" },
-            { label: post.title, to: `/resources/blog/${post.slug}` },
+            { label: post.title, to: path },
           ]),
         ),
       ],
@@ -43,9 +55,16 @@ export const Route = createFileRoute("/resources/blog/$slug")({
 function PostNotFound() {
   return (
     <main>
-      <PageHero eyebrow="Blog" title="Article not found" description="That article does not exist." breadcrumbs={[{ label: "Blog", to: "/resources/blog" }]} />
+      <PageHero
+        eyebrow="Blog"
+        title="Article not found"
+        description="That article does not exist or has not been published."
+        breadcrumbs={[{ label: "Blog", to: "/resources/blog" }]}
+      />
       <Section>
-        <Link to="/resources/blog" className="text-primary underline">Back to blog</Link>
+        <Link to="/resources/blog" className="text-primary underline">
+          Back to the blog
+        </Link>
       </Section>
     </main>
   );
@@ -53,51 +72,33 @@ function PostNotFound() {
 
 function PostDetail() {
   const { post } = Route.useLoaderData();
-  const related = resources.filter((r) => r.type === typeName && r.slug !== post.slug).slice(0, 3);
+  const related = resources
+    .filter((r) => r.status === "Published" && r.slug !== post.slug)
+    .slice(0, 3);
 
   return (
     <main>
       <PageHero
-        eyebrow="Blog"
+        eyebrow={post.category ?? "Blog"}
         title={post.title}
         description={post.summary}
         breadcrumbs={[
           { label: "Resources", to: "/resources" },
           { label: "Blog", to: "/resources/blog" },
-          { label: post.title, to: `/resources/blog/${post.slug}` },
+          { label: post.title, to: resourcePath(post) },
         ]}
       />
 
       <Section>
         <div className="mx-auto max-w-3xl">
-          <Card>
-            {post.published ? <p className="text-sm text-muted-foreground">{post.published}</p> : null}
-            {post.readingTime ? <p className="text-sm text-muted-foreground">{post.readingTime}</p> : null}
-            <div className="mt-4 space-y-8">
-              {post.sections?.map((section) => (
-                <section key={section.heading}>
-                  <h2 className="text-xl font-semibold">{section.heading}</h2>
-                  <div className="mt-3 space-y-3">
-                    {section.paragraphs.map((para, i) => (
-                      <p key={i} className="text-muted-foreground">{para}</p>
-                    ))}
-                  </div>
-                  {section.points?.length ? (
-                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                      {section.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </section>
-              ))}
-            </div>
-          </Card>
-          <RelatedLinks
-            className="mt-8"
-            title="More articles"
-            items={related.map((r) => ({ label: r.title, to: `/resources/blog/${r.slug}`, description: r.summary }))}
-          />
+          <ResourceArticle resource={post} />
+          {related.length ? (
+            <RelatedLinks
+              className="mt-8"
+              title="Related reading"
+              items={related.map((r) => ({ label: r.title, to: resourcePath(r), description: r.summary }))}
+            />
+          ) : null}
         </div>
       </Section>
 

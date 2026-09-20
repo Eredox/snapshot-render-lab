@@ -15,3 +15,19 @@ The image is built from the repository lockfile with the multi-stage
 `Dockerfile`, runs as the non-root `app` user, and includes a local HTTP
 healthcheck. TLS termination, HTTP-to-HTTPS redirect, and certificate renewal
 remain edge responsibilities.
+
+The source-controlled edge asset at
+`ops/nginx/www.nova.eredox.com.conf` is an isolated virtual host for the
+public website. It routes only `www.nova.eredox.com` to the private
+`nova-public-website:3000` alias; it does not change the existing
+`nova.eredox.com` or `crm.nova.eredox.com` server blocks. Install the
+certificate as `www.nova.eredox.com.fullchain.pem` and
+`www.nova.eredox.com.privkey.pem` in the edge certificate mount and retain the
+HTTP-01 webroot location for the established renewal process.
+
+Install `ops/server1/nova-public-website-certbot-deploy-hook.sh` as a root-only
+Certbot deploy hook for the `www.nova.eredox.com` lineage. The hook discovers
+the active edge certificate mount, stages the renewed pair with restrictive
+permissions, validates Nginx, and sends a reload signal with restoration of
+the prior pair if validation or reload fails. It is separate from the
+existing NOVA certificate hook.

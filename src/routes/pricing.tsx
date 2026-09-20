@@ -5,7 +5,7 @@ import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks, Dis
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { plans, comparison, supportComparison, pricingFaqs, currency } from "@/data/pricing";
 import { site } from "@/config/site";
-import { pageMeta, breadcrumbSchema, ldScript, faqSchema } from "@/lib/seo";
+import { pageMeta, breadcrumbSchema, ldScript, faqSchema, pricingSchema, softwareSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -14,7 +14,12 @@ export const Route = createFileRoute("/pricing")({
       description: "NOVA Compliance subscription plans, indicative pricing in AUD, feature comparison and support levels.",
       path: "/pricing",
     }),
-    scripts: [ldScript(faqSchema(pricingFaqs)), ldScript(breadcrumbSchema([{ label: "Pricing", to: "/pricing" }]))],
+    scripts: [
+      ldScript(faqSchema(pricingFaqs)),
+      ldScript(breadcrumbSchema([{ label: "Pricing", to: "/pricing" }])),
+      ldScript(softwareSchema()),
+      ldScript(pricingSchema({ currency, plans })),
+    ],
   }),
   component: PricingPage,
 });

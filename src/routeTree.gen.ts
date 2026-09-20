@@ -30,6 +30,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResponsibleAiRouteImport } from './routes/responsible-ai'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as StatusRouteImport } from './routes/status'
@@ -62,6 +63,8 @@ import { Route as ResourcesCaseStudiesIndexRouteImport } from './routes/resource
 import { Route as ResourcesCaseStudiesSlugRouteImport } from './routes/resources.case-studies.$slug'
 import { Route as ResourcesGuidesIndexRouteImport } from './routes/resources.guides.index'
 import { Route as ResourcesGuidesSlugRouteImport } from './routes/resources.guides.$slug'
+import { Route as ResourcesProductUpdatesIndexRouteImport } from './routes/resources.product-updates.index'
+import { Route as ResourcesProductUpdatesSlugRouteImport } from './routes/resources.product-updates.$slug'
 import { Route as ResourcesWebinarsIndexRouteImport } from './routes/resources.webinars.index'
 import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.webinars.$slug'
 
@@ -168,6 +171,11 @@ const RoadmapRoute = RoadmapRouteImport.update({
 const SecurityRoute = SecurityRouteImport.update({
   id: '/security',
   path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -333,6 +341,18 @@ const ResourcesGuidesSlugRoute = ResourcesGuidesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ResourcesGuidesRoute,
 } as any)
+const ResourcesProductUpdatesIndexRoute =
+  ResourcesProductUpdatesIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ResourcesProductUpdatesRoute,
+  } as any)
+const ResourcesProductUpdatesSlugRoute =
+  ResourcesProductUpdatesSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => ResourcesProductUpdatesRoute,
+  } as any)
 const ResourcesWebinarsIndexRoute = ResourcesWebinarsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -366,6 +386,7 @@ export interface FileRoutesByFullPath {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
@@ -382,7 +403,7 @@ export interface FileRoutesByFullPath {
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/guides': typeof ResourcesGuidesRouteWithChildren
-  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
+  '/resources/product-updates': typeof ResourcesProductUpdatesRouteWithChildren
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/book-demo/': typeof BookDemoIndexRoute
@@ -395,10 +416,12 @@ export interface FileRoutesByFullPath {
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/product-updates/$slug': typeof ResourcesProductUpdatesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
   '/resources/blog/': typeof ResourcesBlogIndexRoute
   '/resources/case-studies/': typeof ResourcesCaseStudiesIndexRoute
   '/resources/guides/': typeof ResourcesGuidesIndexRoute
+  '/resources/product-updates/': typeof ResourcesProductUpdatesIndexRoute
   '/resources/webinars/': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -417,6 +440,7 @@ export interface FileRoutesByTo {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
@@ -429,7 +453,6 @@ export interface FileRoutesByTo {
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/resources/faq': typeof ResourcesFaqRoute
-  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/book-demo': typeof BookDemoIndexRoute
   '/features': typeof FeaturesIndexRoute
@@ -441,10 +464,12 @@ export interface FileRoutesByTo {
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/product-updates/$slug': typeof ResourcesProductUpdatesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
   '/resources/blog': typeof ResourcesBlogIndexRoute
   '/resources/case-studies': typeof ResourcesCaseStudiesIndexRoute
   '/resources/guides': typeof ResourcesGuidesIndexRoute
+  '/resources/product-updates': typeof ResourcesProductUpdatesIndexRoute
   '/resources/webinars': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRoutesById {
@@ -470,6 +495,7 @@ export interface FileRoutesById {
   '/responsible-ai': typeof ResponsibleAiRoute
   '/roadmap': typeof RoadmapRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solutions': typeof SolutionsRouteWithChildren
   '/start': typeof StartRoute
   '/status': typeof StatusRoute
@@ -486,7 +512,7 @@ export interface FileRoutesById {
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
   '/resources/guides': typeof ResourcesGuidesRouteWithChildren
-  '/resources/product-updates': typeof ResourcesProductUpdatesRoute
+  '/resources/product-updates': typeof ResourcesProductUpdatesRouteWithChildren
   '/resources/webinars': typeof ResourcesWebinarsRouteWithChildren
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/book-demo/': typeof BookDemoIndexRoute
@@ -499,10 +525,12 @@ export interface FileRoutesById {
   '/resources/blog/$slug': typeof ResourcesBlogSlugRoute
   '/resources/case-studies/$slug': typeof ResourcesCaseStudiesSlugRoute
   '/resources/guides/$slug': typeof ResourcesGuidesSlugRoute
+  '/resources/product-updates/$slug': typeof ResourcesProductUpdatesSlugRoute
   '/resources/webinars/$slug': typeof ResourcesWebinarsSlugRoute
   '/resources/blog/': typeof ResourcesBlogIndexRoute
   '/resources/case-studies/': typeof ResourcesCaseStudiesIndexRoute
   '/resources/guides/': typeof ResourcesGuidesIndexRoute
+  '/resources/product-updates/': typeof ResourcesProductUpdatesIndexRoute
   '/resources/webinars/': typeof ResourcesWebinarsIndexRoute
 }
 export interface FileRouteTypes {
@@ -529,6 +557,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/solutions'
     | '/start'
     | '/status'
@@ -558,10 +587,12 @@ export interface FileRouteTypes {
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
+    | '/resources/product-updates/$slug'
     | '/resources/webinars/$slug'
     | '/resources/blog/'
     | '/resources/case-studies/'
     | '/resources/guides/'
+    | '/resources/product-updates/'
     | '/resources/webinars/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -580,6 +611,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/start'
     | '/status'
     | '/support'
@@ -592,7 +624,6 @@ export interface FileRouteTypes {
     | '/industries/$slug'
     | '/legal/$slug'
     | '/resources/faq'
-    | '/resources/product-updates'
     | '/solutions/$slug'
     | '/book-demo'
     | '/features'
@@ -604,10 +635,12 @@ export interface FileRouteTypes {
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
+    | '/resources/product-updates/$slug'
     | '/resources/webinars/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/guides'
+    | '/resources/product-updates'
     | '/resources/webinars'
   id:
     | '__root__'
@@ -632,6 +665,7 @@ export interface FileRouteTypes {
     | '/responsible-ai'
     | '/roadmap'
     | '/security'
+    | '/sitemap.xml'
     | '/solutions'
     | '/start'
     | '/status'
@@ -661,10 +695,12 @@ export interface FileRouteTypes {
     | '/resources/blog/$slug'
     | '/resources/case-studies/$slug'
     | '/resources/guides/$slug'
+    | '/resources/product-updates/$slug'
     | '/resources/webinars/$slug'
     | '/resources/blog/'
     | '/resources/case-studies/'
     | '/resources/guides/'
+    | '/resources/product-updates/'
     | '/resources/webinars/'
   fileRoutesById: FileRoutesById
 }
@@ -690,6 +726,7 @@ export interface RootRouteChildren {
   ResponsibleAiRoute: typeof ResponsibleAiRoute
   RoadmapRoute: typeof RoadmapRoute
   SecurityRoute: typeof SecurityRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   StartRoute: typeof StartRoute
   StatusRoute: typeof StatusRoute
@@ -845,6 +882,13 @@ declare module '@tanstack/react-router' {
       path: '/security'
       fullPath: '/security'
       preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions': {
@@ -1071,6 +1115,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesGuidesSlugRouteImport
       parentRoute: typeof ResourcesGuidesRoute
     }
+    '/resources/product-updates/': {
+      id: '/resources/product-updates/'
+      path: '/'
+      fullPath: '/resources/product-updates/'
+      preLoaderRoute: typeof ResourcesProductUpdatesIndexRouteImport
+      parentRoute: typeof ResourcesProductUpdatesRoute
+    }
+    '/resources/product-updates/$slug': {
+      id: '/resources/product-updates/$slug'
+      path: '/$slug'
+      fullPath: '/resources/product-updates/$slug'
+      preLoaderRoute: typeof ResourcesProductUpdatesSlugRouteImport
+      parentRoute: typeof ResourcesProductUpdatesRoute
+    }
     '/resources/webinars/': {
       id: '/resources/webinars/'
       path: '/'
@@ -1199,6 +1257,22 @@ const ResourcesGuidesRouteWithChildren = ResourcesGuidesRoute._addFileChildren(
   ResourcesGuidesRouteChildren,
 )
 
+interface ResourcesProductUpdatesRouteChildren {
+  ResourcesProductUpdatesSlugRoute: typeof ResourcesProductUpdatesSlugRoute
+  ResourcesProductUpdatesIndexRoute: typeof ResourcesProductUpdatesIndexRoute
+}
+
+const ResourcesProductUpdatesRouteChildren: ResourcesProductUpdatesRouteChildren =
+  {
+    ResourcesProductUpdatesSlugRoute: ResourcesProductUpdatesSlugRoute,
+    ResourcesProductUpdatesIndexRoute: ResourcesProductUpdatesIndexRoute,
+  }
+
+const ResourcesProductUpdatesRouteWithChildren =
+  ResourcesProductUpdatesRoute._addFileChildren(
+    ResourcesProductUpdatesRouteChildren,
+  )
+
 interface ResourcesWebinarsRouteChildren {
   ResourcesWebinarsSlugRoute: typeof ResourcesWebinarsSlugRoute
   ResourcesWebinarsIndexRoute: typeof ResourcesWebinarsIndexRoute
@@ -1217,7 +1291,7 @@ interface ResourcesRouteChildren {
   ResourcesCaseStudiesRoute: typeof ResourcesCaseStudiesRouteWithChildren
   ResourcesFaqRoute: typeof ResourcesFaqRoute
   ResourcesGuidesRoute: typeof ResourcesGuidesRouteWithChildren
-  ResourcesProductUpdatesRoute: typeof ResourcesProductUpdatesRoute
+  ResourcesProductUpdatesRoute: typeof ResourcesProductUpdatesRouteWithChildren
   ResourcesWebinarsRoute: typeof ResourcesWebinarsRouteWithChildren
   ResourcesIndexRoute: typeof ResourcesIndexRoute
 }
@@ -1227,7 +1301,7 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesCaseStudiesRoute: ResourcesCaseStudiesRouteWithChildren,
   ResourcesFaqRoute: ResourcesFaqRoute,
   ResourcesGuidesRoute: ResourcesGuidesRouteWithChildren,
-  ResourcesProductUpdatesRoute: ResourcesProductUpdatesRoute,
+  ResourcesProductUpdatesRoute: ResourcesProductUpdatesRouteWithChildren,
   ResourcesWebinarsRoute: ResourcesWebinarsRouteWithChildren,
   ResourcesIndexRoute: ResourcesIndexRoute,
 }
@@ -1272,6 +1346,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResponsibleAiRoute: ResponsibleAiRoute,
   RoadmapRoute: RoadmapRoute,
   SecurityRoute: SecurityRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   StartRoute: StartRoute,
   StatusRoute: StatusRoute,

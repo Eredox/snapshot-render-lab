@@ -15,6 +15,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { site } from "@/config/site";
+import { ldScript, organizationSchema, websiteSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -95,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preload", href: "/fonts/cirqua.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
     ],
-
+    scripts: [ldScript(organizationSchema()), ldScript(websiteSchema())],
   }),
   shellComponent: RootShell,
   component: RootComponent,
