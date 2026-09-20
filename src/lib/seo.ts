@@ -155,16 +155,15 @@ export function pricingSchema(opts: {
   };
 }
 
-import { siteUrl } from "@/config/site";
-
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path: string): string {
   return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 /** Page meta with absolute canonical/og:url, for indexable article pages. */
-export function articleMeta(opts: { title: string; description: string; path: string }) {
+export function articleMeta(opts: { title: string; description: string; path: string; image?: string }) {
   const url = absoluteUrl(opts.path);
+  const image = opts.image ?? defaultShareImage;
   return {
     meta: [
       { title: opts.title },
@@ -173,9 +172,13 @@ export function articleMeta(opts: { title: string; description: string; path: st
       { property: "og:description", content: opts.description },
       { property: "og:type", content: "article" },
       { property: "og:url", content: url },
+      { property: "og:image", content: image },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: opts.title },
       { name: "twitter:description", content: opts.description },
+      { name: "twitter:image", content: image },
     ] as MetaEntry[],
     links: [{ rel: "canonical", href: url }],
   };
