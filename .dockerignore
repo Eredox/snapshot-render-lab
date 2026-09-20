@@ -1,0 +1,9 @@
+.git
+.gitignore
+.output
+.wrangler
+node_modules
+coverage
+dist
+*.log
+Dockerfile*
