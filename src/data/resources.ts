@@ -1,32 +1,192 @@
-export type ResourceType = "Guide" | "Product update" | "Explainer";
+/**
+ * Single governed source for every public resource item.
+ *
+ * Taxonomy rules (enforced by src/routes/__tests__/resource-taxonomy.test.ts):
+ * - each resource has exactly ONE type
+ * - each type maps to exactly ONE route section, so every item has one
+ *   canonical URL and no text is duplicated across sections
+ * - "Explainer" no longer exists as a type; those items are blog articles with
+ *   a category, which is where explanatory writing belongs
+ */
+
+export type ResourceType =
+  | "Blog article"
+  | "Guide"
+  | "Product update"
+  | "Case study"
+  | "Webinar";
+
+export type ResourceStatus = "Published" | "Coming soon";
+
+export type ResourceSection = { heading: string; paragraphs: string[]; points?: string[] };
 
 export type Resource = {
   slug: string;
   title: string;
   type: ResourceType;
-  status: "Published" | "Coming soon";
+  /** Editorial category, used for blog articles. Not a second taxonomy. */
+  category?: string;
+  status: ResourceStatus;
   summary: string;
   readingTime?: string;
+  /** ISO date. Only set where the date is genuine. */
   published?: string;
+  modified?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   /** Body sections. Only populated for published entries. */
-  sections?: { heading: string; paragraphs: string[]; points?: string[] }[];
+  sections?: ResourceSection[];
+  relatedFrameworks?: { label: string; to: string }[];
+  relatedFeatures?: { label: string; to: string }[];
+  featured?: boolean;
 };
 
-export const resourceTypes: ResourceType[] = ["Guide", "Product update", "Explainer"];
+export const resourceTypes: ResourceType[] = [
+  "Blog article",
+  "Guide",
+  "Product update",
+  "Case study",
+  "Webinar",
+];
+
+/** The one route section that owns each type. */
+export const typeRoutes: Record<ResourceType, string> = {
+  "Blog article": "/resources/blog",
+  Guide: "/resources/guides",
+  "Product update": "/resources/product-updates",
+  "Case study": "/resources/case-studies",
+  Webinar: "/resources/webinars",
+};
+
+export const typeLabels: Record<ResourceType, string> = {
+  "Blog article": "Blog",
+  Guide: "Guides",
+  "Product update": "Product updates",
+  "Case study": "Case studies",
+  Webinar: "Webinars",
+};
 
 export const emptyStateMessage =
   "Resources are being prepared. Contact Eredox for a NOVA compliance workflow demonstration.";
 
+export const publisher = "Eredox Pty Ltd";
+
+/** Blog categories in use. Adding an article uses one of these. */
+export const blogCategories = [
+  "Frameworks",
+  "Evidence",
+  "Risk",
+  "Responsible AI",
+  "Programme management",
+] as const;
+
+/**
+ * Editorial backlog. These are planning topics only — nothing here is
+ * published, and none of them render as an article until written and approved.
+ */
+export const plannedBlogTopics: { title: string; category: string }[] = [
+  { title: "What is ISO/IEC 27001 and who needs it?", category: "Frameworks" },
+  { title: "SOC 2 compared with ISO/IEC 27001", category: "Frameworks" },
+  { title: "What is compliance evidence?", category: "Evidence" },
+  { title: "Preparing for a SOC 2 Type II period", category: "Frameworks" },
+  { title: "Understanding Essential Eight maturity", category: "Frameworks" },
+  { title: "ISO/IEC 42001 and AI management systems", category: "Responsible AI" },
+  { title: "How control mapping reduces duplicate compliance work", category: "Programme management" },
+  { title: "What makes evidence audit-ready?", category: "Evidence" },
+  { title: "What is risk acceptance?", category: "Risk" },
+  { title: "Human oversight in AI-assisted compliance", category: "Responsible AI" },
+  { title: "Managing multiple compliance frameworks", category: "Programme management" },
+  { title: "Compliance readiness compared with certification", category: "Programme management" },
+];
+
 export const resources: Resource[] = [
+  {
+    slug: "choosing-your-first-framework",
+    title: "Choosing your first compliance framework",
+    type: "Blog article",
+    category: "Frameworks",
+    status: "Published",
+    published: "2026-08-05",
+    modified: "2026-08-05",
+    readingTime: "5 min read",
+    featured: true,
+    seoTitle: "Choosing your first compliance framework — SOC 2, ISO 27001 or Essential Eight",
+    seoDescription:
+      "How organisations usually choose between SOC 2, ISO/IEC 27001 and Essential Eight, and the questions worth answering before committing to one.",
+    summary:
+      "SOC 2, ISO/IEC 27001 or Essential Eight — how the choice usually gets made, and the questions worth answering before committing.",
+    relatedFrameworks: [
+      { label: "SOC 2 in NOVA", to: "/frameworks/soc-2" },
+      { label: "ISO/IEC 27001 in NOVA", to: "/frameworks/iso-27001" },
+      { label: "All frameworks", to: "/frameworks" },
+    ],
+    sections: [
+      {
+        heading: "Let the buyer decide, mostly",
+        paragraphs: [
+          "The most reliable signal is what your customers actually ask for. Enterprise buyers in the United States typically ask for a SOC 2 report; international and government-adjacent buyers more often ask for ISO/IEC 27001 certification; Australian government supply chains commonly reference Essential Eight maturity.",
+          "Choosing a framework nobody has asked for produces effort without commercial return.",
+        ],
+      },
+      {
+        heading: "Understand what each one is",
+        paragraphs: [
+          "SOC 2 results in an examination report from an independent accounting firm, describing controls against the Trust Services Criteria. ISO/IEC 27001 results in certification of a management system by an accredited body. Essential Eight is an assessment of maturity against eight prioritised mitigation strategies.",
+          "They are not interchangeable, and none of them is a statement that an organisation is secure.",
+        ],
+      },
+      {
+        heading: "Questions worth answering first",
+        paragraphs: ["A short internal discussion prevents a long correction later."],
+        points: [
+          "Which buyers are blocked today, and what exactly did they ask for?",
+          "What scope can we honestly commit to and maintain?",
+          "Who will own controls day to day once the project ends?",
+          "What is already in place that simply is not documented?",
+        ],
+      },
+      {
+        heading: "Scope narrowly and honestly",
+        paragraphs: [
+          "A narrow scope that is genuinely maintained is more valuable than a broad scope that decays. Scope can be extended once the operating rhythm exists.",
+        ],
+      },
+      {
+        heading: "Expect to reuse the work",
+        paragraphs: [
+          "Access control, change management, incident response and backup evidence carry across frameworks. The second framework is substantially cheaper than the first when the control set is shared rather than rebuilt.",
+          "NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "risk-acceptance-that-holds-up",
+    title: "Risk acceptance that holds up",
+    type: "Blog article",
+    category: "Risk",
+    status: "Coming soon",
+    summary: "Recording acceptance as a decision with an owner, a basis and a review date.",
+  },
+  {
+    slug: "human-oversight-in-ai-assisted-compliance",
+    title: "Human oversight in AI-assisted compliance",
+    type: "Blog article",
+    category: "Responsible AI",
+    status: "Coming soon",
+    summary: "Where the boundary sits between assistance and approval, and why it must be explicit.",
+  },
   {
     slug: "evidence-that-survives-an-audit",
     title: "Evidence that survives an audit",
     type: "Guide",
     status: "Published",
     published: "2026-07-14",
+    modified: "2026-07-14",
     readingTime: "6 min read",
     summary:
       "What separates an artefact an assessor accepts from one that generates a follow-up request, and how to capture the difference at collection time.",
+    relatedFeatures: [{ label: "Evidence management", to: "/features" }],
     sections: [
       {
         heading: "The problem is provenance, not volume",
@@ -69,54 +229,6 @@ export const resources: Resource[] = [
     ],
   },
   {
-    slug: "choosing-your-first-framework",
-    title: "Choosing your first compliance framework",
-    type: "Explainer",
-    status: "Published",
-    published: "2026-08-05",
-    readingTime: "5 min read",
-    summary:
-      "SOC 2, ISO/IEC 27001 or Essential Eight — how the choice usually gets made, and the questions worth answering before committing.",
-    sections: [
-      {
-        heading: "Let the buyer decide, mostly",
-        paragraphs: [
-          "The most reliable signal is what your customers actually ask for. Enterprise buyers in the United States typically ask for a SOC 2 report; international and government-adjacent buyers more often ask for ISO/IEC 27001 certification; Australian government supply chains commonly reference Essential Eight maturity.",
-          "Choosing a framework nobody has asked for produces effort without commercial return.",
-        ],
-      },
-      {
-        heading: "Understand what each one is",
-        paragraphs: [
-          "SOC 2 results in an examination report from an independent accounting firm, describing controls against the Trust Services Criteria. ISO/IEC 27001 results in certification of a management system by an accredited body. Essential Eight is an assessment of maturity against eight prioritised mitigation strategies.",
-          "They are not interchangeable, and none of them is a statement that an organisation is secure.",
-        ],
-      },
-      {
-        heading: "Questions worth answering first",
-        paragraphs: ["A short internal discussion prevents a long correction later."],
-        points: [
-          "Which buyers are blocked today, and what exactly did they ask for?",
-          "What scope can we honestly commit to and maintain?",
-          "Who will own controls day to day once the project ends?",
-          "What is already in place that simply is not documented?",
-        ],
-      },
-      {
-        heading: "Scope narrowly and honestly",
-        paragraphs: [
-          "A narrow scope that is genuinely maintained is more valuable than a broad scope that decays. Scope can be extended once the operating rhythm exists.",
-        ],
-      },
-      {
-        heading: "Expect to reuse the work",
-        paragraphs: [
-          "Access control, change management, incident response and backup evidence carry across frameworks. The second framework is substantially cheaper than the first when the control set is shared rather than rebuilt.",
-        ],
-      },
-    ],
-  },
-  {
     slug: "control-ownership-in-small-teams",
     title: "Control ownership in small teams",
     type: "Guide",
@@ -131,33 +243,50 @@ export const resources: Resource[] = [
     summary: "What changes when the assessment covers a period rather than a point in time.",
   },
   {
-    slug: "risk-acceptance-that-holds-up",
-    title: "Risk acceptance that holds up",
-    type: "Explainer",
-    status: "Coming soon",
-    summary: "Recording acceptance as a decision with an owner, a basis and a review date.",
-  },
-  {
     slug: "nova-platform-update",
     title: "NOVA platform update",
     type: "Product update",
     status: "Coming soon",
     summary: "Release notes will be published here once the first public release note is approved.",
   },
-  {
-    slug: "human-oversight-in-ai-assisted-compliance",
-    title: "Human oversight in AI-assisted compliance",
-    type: "Explainer",
-    status: "Coming soon",
-    summary: "Where the boundary sits between assistance and approval, and why it must be explicit.",
-  },
 ];
+
+/** The canonical path for a resource, derived from its single type. */
+export function resourcePath(resource: Resource): string {
+  return `${typeRoutes[resource.type]}/${resource.slug}`;
+}
+
+export function byType(type: ResourceType): Resource[] {
+  return resources.filter((r) => r.type === type);
+}
+
+export function publishedByType(type: ResourceType): Resource[] {
+  return resources.filter((r) => r.type === type && r.status === "Published");
+}
 
 export function getResource(slug: string): Resource | undefined {
   return resources.find((r) => r.slug === slug);
 }
 
-export const publishedResources = resources.filter((r) => r.status === "Published");
+/** Every published item, in reverse publication order. */
+export const publishedResources = resources
+  .filter((r) => r.status === "Published")
+  .sort((a, b) => (b.published ?? "").localeCompare(a.published ?? ""));
+
+/**
+ * Permanent redirects for URLs that existed before the taxonomy was
+ * normalised. Old path -> current canonical path.
+ */
+export const legacyResourceRedirects: Record<string, string> = {
+  "/resources/case-studies/choosing-your-first-framework": "/resources/blog/choosing-your-first-framework",
+  "/resources/case-studies/risk-acceptance-that-holds-up": "/resources/blog/risk-acceptance-that-holds-up",
+  "/resources/case-studies/human-oversight-in-ai-assisted-compliance":
+    "/resources/blog/human-oversight-in-ai-assisted-compliance",
+  "/resources/blog/nova-platform-update": "/resources/product-updates/nova-platform-update",
+  "/resources/webinars/evidence-that-survives-an-audit": "/resources/guides/evidence-that-survives-an-audit",
+  "/resources/webinars/control-ownership-in-small-teams": "/resources/guides/control-ownership-in-small-teams",
+  "/resources/webinars/preparing-for-a-type-ii-period": "/resources/guides/preparing-for-a-type-ii-period",
+};
 
 export type FaqCategory = { category: string; items: { question: string; answer: string }[] };
 
