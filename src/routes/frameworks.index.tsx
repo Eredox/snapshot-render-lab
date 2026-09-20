@@ -57,10 +57,10 @@ function FrameworksPage() {
 
       <Section>
         <SectionHeading eyebrow="Available now" title="Ready to activate" />
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {available.map((f) => (
             <Card key={f.slug} interactive className="h-full">
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-5">
                 {f.icon ? (
                   <img
                     src={f.icon}
@@ -70,7 +70,7 @@ function FrameworksPage() {
                     height={72}
                     loading="lazy"
                     decoding="async"
-                    className="h-16 w-16 shrink-0 object-contain sm:h-[72px] sm:w-[72px]"
+                    className="h-[72px] w-[72px] shrink-0 object-contain"
                   />
                 ) : null}
                 <div className="min-w-0 flex-1">
