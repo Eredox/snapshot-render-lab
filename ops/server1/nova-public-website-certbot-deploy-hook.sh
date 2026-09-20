@@ -10,7 +10,7 @@ privkey="$lineage/privkey.pem"
 [ -r "$fullchain" ]
 [ -r "$privkey" ]
 
-cert_dir="$(docker inspect --format '{{range .Mounts}}{{if eq .Destination \"/etc/nginx/certs\"}}{{.Source}}{{end}}{{end}}' "$nginx_container")"
+cert_dir="$(docker inspect --format '{{range .Mounts}}{{if eq .Destination "/etc/nginx/certs"}}{{.Source}}{{end}}{{end}}' "$nginx_container")"
 [ -n "$cert_dir" ]
 
 stage_dir="$(mktemp -d /opt/nova/secrets/.nova-public-tls-stage.XXXXXX)"
