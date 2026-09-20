@@ -4,6 +4,7 @@ export type Framework = {
   slug: string;
   name: string;
   shortName: string;
+  icon?: string;
   category: "Security assurance" | "Information security" | "Cyber resilience" | "AI governance" | "Healthcare privacy" | "Government";
   availability: Availability;
   jurisdictions: string[];
@@ -22,6 +23,7 @@ export const frameworks: Framework[] = [
     slug: "soc-2",
     name: "SOC 2",
     shortName: "SOC 2",
+    icon: "/media/frameworks/soc-2.png",
     category: "Security assurance",
     availability: "Available now",
     jurisdictions: ["Global", "United States"],
@@ -67,6 +69,7 @@ export const frameworks: Framework[] = [
     slug: "iso-27001",
     name: "ISO/IEC 27001",
     shortName: "ISO 27001",
+    icon: "/media/frameworks/iso-27001.png",
     category: "Information security",
     availability: "Available now",
     jurisdictions: ["Global"],
@@ -113,6 +116,7 @@ export const frameworks: Framework[] = [
     slug: "essential-eight",
     name: "Essential Eight",
     shortName: "Essential Eight",
+    icon: "/media/frameworks/essential-eight.png",
     category: "Cyber resilience",
     availability: "Available now",
     jurisdictions: ["Australia"],
@@ -157,6 +161,7 @@ export const frameworks: Framework[] = [
     slug: "iso-42001",
     name: "ISO/IEC 42001",
     shortName: "ISO 42001",
+    icon: "/media/frameworks/iso-42001.png",
     category: "AI governance",
     availability: "Available now",
     jurisdictions: ["Global"],
