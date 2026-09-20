@@ -24,3 +24,10 @@ public website. It routes only `www.nova.eredox.com` to the private
 certificate as `www.nova.eredox.com.fullchain.pem` and
 `www.nova.eredox.com.privkey.pem` in the edge certificate mount and retain the
 HTTP-01 webroot location for the established renewal process.
+
+Install `ops/server1/nova-public-website-certbot-deploy-hook.sh` as a root-only
+Certbot deploy hook for the `www.nova.eredox.com` lineage. The hook discovers
+the active edge certificate mount, stages the renewed pair with restrictive
+permissions, validates Nginx, and sends a reload signal with restoration of
+the prior pair if validation or reload fails. It is separate from the
+existing NOVA certificate hook.
