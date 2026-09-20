@@ -1,33 +1,41 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { resources } from "@/data/resources";
+import { byType, resourcePath } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
-const typeName = "Explainer";
+const base = pageMeta({
+  title: "Case studies — NOVA Compliance",
+  description:
+    "Customer case studies for NOVA Compliance will be published here once organisations have approved their stories for publication.",
+  path: "/resources/case-studies",
+});
 
 export const Route = createFileRoute("/resources/case-studies/")({
   head: () => ({
-    ...pageMeta({
-      title: "Case studies — NOVA Compliance",
-      description: "Examples of how organisations use NOVA Compliance to prepare for assessments and run their compliance programmes.",
-      path: "/resources/case-studies",
-    }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "Resources", to: "/resources" }, { label: "Case studies", to: "/resources/case-studies" }]))],
+    ...base,
+    meta: [...base.meta, { name: "robots", content: "noindex, follow" }],
+    scripts: [
+      ldScript(
+        breadcrumbSchema([
+          { label: "Resources", to: "/resources" },
+          { label: "Case studies", to: "/resources/case-studies" },
+        ]),
+      ),
+    ],
   }),
   component: CaseStudiesPage,
 });
 
 function CaseStudiesPage() {
-  const studies = resources.filter((r) => r.type === typeName);
+  const studies = byType("Case study").filter((s) => s.status === "Published");
 
   return (
     <main>
       <PageHero
         eyebrow="Resources"
         title="Case studies"
-        description="Examples of how teams use NOVA to keep their compliance programmes coherent."
+        description="Named customer stories are published only with the organisation's written approval."
         breadcrumbs={[
           { label: "Resources", to: "/resources" },
           { label: "Case studies", to: "/resources/case-studies" },
@@ -35,18 +43,37 @@ function CaseStudiesPage() {
       />
 
       <Section>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {studies.map((study) => (
-            <Card key={study.slug} interactive>
-              <h2 className="text-lg font-semibold">{study.title}</h2>
-              {study.published ? <p className="mt-1 text-xs text-muted-foreground">{study.published}</p> : null}
-              <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{study.summary}</p>
-              <Link to={`/resources/case-studies/${study.slug}` as any} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                Read case study <ArrowRight aria-hidden="true" className="h-4 w-4" />
+        {studies.length === 0 ? (
+          <Card>
+            <p className="text-muted-foreground">
+              No case studies have been published. Eredox does not publish customer stories, names or outcomes
+              without approval, so this page stays empty until a genuine study is approved.
+            </p>
+            <p className="mt-4 text-sm text-muted-foreground">
+              In the meantime, read the{" "}
+              <Link to="/resources/blog" className="text-primary hover:underline">
+                blog
+              </Link>{" "}
+              or the{" "}
+              <Link to="/resources/guides" className="text-primary hover:underline">
+                guides library
               </Link>
-            </Card>
-          ))}
-        </div>
+              .
+            </p>
+          </Card>
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {studies.map((study) => (
+              <Card key={study.slug} interactive>
+                <h2 className="text-lg font-semibold">{study.title}</h2>
+                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{study.summary}</p>
+                <Link to={resourcePath(study) as any} className="mt-4 inline-flex text-sm font-medium text-primary hover:underline">
+                  Read case study
+                </Link>
+              </Card>
+            ))}
+          </div>
+        )}
       </Section>
 
       <ConversionCta />

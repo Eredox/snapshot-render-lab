@@ -52,3 +52,6 @@ export const contactRoutes = {
   start: "/start",
   support: "/support",
 } as const;
+
+/** Absolute public origin, used for canonical URLs, sitemap and structured data. */
+export const siteUrl = "https://www.nova.eredox.com";

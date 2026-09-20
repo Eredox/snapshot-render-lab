@@ -68,10 +68,9 @@ export const dynamicRoutes: { pattern: string; slugs: string[] }[] = [
   { pattern: "/frameworks/$slug", slugs: frameworks.map((f) => f.slug) },
   { pattern: "/industries/$slug", slugs: ["finance", "healthcare", "technology", "government", "legal", "startups"] },
   { pattern: "/solutions/$slug", slugs: solutions.map((s) => s.slug) },
-  { pattern: "/resources/blog/$slug", slugs: resources.filter((r) => r.type === "Product update").map((r) => r.slug) },
-  { pattern: "/resources/case-studies/$slug", slugs: resources.filter((r) => r.type === "Explainer").map((r) => r.slug) },
+  { pattern: "/resources/blog/$slug", slugs: resources.filter((r) => r.type === "Blog article").map((r) => r.slug) },
   { pattern: "/resources/guides/$slug", slugs: resources.filter((r) => r.type === "Guide").map((r) => r.slug) },
-  { pattern: "/resources/webinars/$slug", slugs: resources.filter((r) => r.type === "Guide").map((r) => r.slug) },
+  { pattern: "/resources/product-updates/$slug", slugs: resources.filter((r) => r.type === "Product update").map((r) => r.slug) },
   { pattern: "/legal/$slug", slugs: legalDocs.map((d) => d.slug) },
 ];
 
@@ -123,7 +122,8 @@ export const trustMenu: NavItem[] = [
 ];
 
 export const resourcesMenu: NavItem[] = [
-  { label: "Resource library", to: "/resources", description: "Guides and explainers" },
+  { label: "Resource library", to: "/resources", description: "Everything in one place" },
+  { label: "Blog", to: "/resources/blog", description: "Compliance, GRC and assurance insights" },
   { label: "Guides", to: "/resources/guides", description: "Practical, hands-on material" },
   { label: "Product updates", to: "/resources/product-updates", description: "Release information" },
   { label: "FAQ", to: "/resources/faq", description: "Questions we are asked most" },

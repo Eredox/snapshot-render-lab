@@ -1,15 +1,20 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Section, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
+import { Section, PageHero } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { resources } from "@/data/resources";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
-
-const typeName = "Explainer";
+import { ResourceArticle } from "@/components/site/ResourceArticle";
+import { resources, resourcePath, legacyResourceRedirects } from "@/data/resources";
+import { articleMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/resources/case-studies/$slug")({
   loader: ({ params }) => {
-    const study = resources.find((r) => r.type === typeName && r.slug === params.slug);
-    if (!study) throw notFound();
+    const legacy = legacyResourceRedirects[`/resources/case-studies/${params.slug}`];
+    if (legacy) throw redirect({ to: legacy as any, statusCode: 301 });
+
+    const study = resources.find((r) => r.slug === params.slug);
+    if (study && study.type !== "Case study") {
+      throw redirect({ to: resourcePath(study) as any, statusCode: 301 });
+    }
+    if (!study || study.status !== "Published") throw notFound();
     return { study };
   },
   head: ({ loaderData }) => {
@@ -19,18 +24,19 @@ export const Route = createFileRoute("/resources/case-studies/$slug")({
         meta: [{ title: "Case study not found — NOVA Compliance" }, { name: "robots", content: "noindex" }],
       };
     }
+    const path = resourcePath(study);
     return {
-      ...pageMeta({
-        title: `${study.title} — NOVA Compliance Case Studies`,
-        description: study.summary,
-        path: `/resources/case-studies/${study.slug}`,
+      ...articleMeta({
+        title: study.seoTitle ?? `${study.title} — NOVA Compliance Case Studies`,
+        description: study.seoDescription ?? study.summary,
+        path,
       }),
       scripts: [
         ldScript(
           breadcrumbSchema([
             { label: "Resources", to: "/resources" },
             { label: "Case studies", to: "/resources/case-studies" },
-            { label: study.title, to: `/resources/case-studies/${study.slug}` },
+            { label: study.title, to: path },
           ]),
         ),
       ],
@@ -43,9 +49,16 @@ export const Route = createFileRoute("/resources/case-studies/$slug")({
 function StudyNotFound() {
   return (
     <main>
-      <PageHero eyebrow="Case studies" title="Case study not found" description="That case study does not exist." breadcrumbs={[{ label: "Case studies", to: "/resources/case-studies" }]} />
+      <PageHero
+        eyebrow="Case studies"
+        title="Case study not found"
+        description="That case study does not exist or has not been published."
+        breadcrumbs={[{ label: "Case studies", to: "/resources/case-studies" }]}
+      />
       <Section>
-        <Link to="/resources/case-studies" className="text-primary underline">Back to case studies</Link>
+        <Link to="/resources/case-studies" className="text-primary underline">
+          Back to case studies
+        </Link>
       </Section>
     </main>
   );
@@ -53,7 +66,6 @@ function StudyNotFound() {
 
 function StudyDetail() {
   const { study } = Route.useLoaderData();
-  const related = resources.filter((r) => r.type === typeName && r.slug !== study.slug).slice(0, 3);
 
   return (
     <main>
@@ -64,42 +76,14 @@ function StudyDetail() {
         breadcrumbs={[
           { label: "Resources", to: "/resources" },
           { label: "Case studies", to: "/resources/case-studies" },
-          { label: study.title, to: `/resources/case-studies/${study.slug}` },
+          { label: study.title, to: resourcePath(study) },
         ]}
       />
-
       <Section>
         <div className="mx-auto max-w-3xl">
-          <Card>
-            {study.published ? <p className="text-sm text-muted-foreground">{study.published}</p> : null}
-            <div className="mt-4 space-y-8">
-              {study.sections?.map((section) => (
-                <section key={section.heading}>
-                  <h2 className="text-xl font-semibold">{section.heading}</h2>
-                  <div className="mt-3 space-y-3">
-                    {section.paragraphs.map((para, i) => (
-                      <p key={i} className="text-muted-foreground">{para}</p>
-                    ))}
-                  </div>
-                  {section.points?.length ? (
-                    <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                      {section.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </section>
-              ))}
-            </div>
-          </Card>
-          <RelatedLinks
-            className="mt-8"
-            title="More case studies"
-            items={related.map((r) => ({ label: r.title, to: `/resources/case-studies/${r.slug}`, description: r.summary }))}
-          />
+          <ResourceArticle resource={study} />
         </div>
       </Section>
-
       <ConversionCta />
     </main>
   );
