@@ -79,8 +79,8 @@ export const plans: Plan[] = [
     slug: "professional",
     name: "Professional",
     summary: "Assurance-grade operation with external review workflows included.",
-    monthly: 899,
-    annual: 749,
+    monthly: 499,
+    annual: 416,
     requiresApproval: true,
     bestFor: "Organisations undergoing recurring external assessment",
     includes: [
