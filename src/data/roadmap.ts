@@ -7,7 +7,12 @@ import { frameworks } from "@/data/frameworks";
  * claims. Statuses are honest: nothing planned is presented as available.
  */
 
-export type RoadmapStatus = "Available now" | "Partly available" | "Planned";
+export type RoadmapStatus =
+  | "Available now"
+  | "Available connected to your data"
+  | "Custom framework available"
+  | "Partly available"
+  | "Planned";
 
 export type RoadmapEntry = {
   title: string;
@@ -34,7 +39,13 @@ export const roadmapEntries: RoadmapEntry[] = [
   })),
 ];
 
-export const roadmapStatusOrder: RoadmapStatus[] = ["Available now", "Partly available", "Planned"];
+export const roadmapStatusOrder: RoadmapStatus[] = [
+  "Available now",
+  "Available connected to your data",
+  "Custom framework available",
+  "Partly available",
+  "Planned",
+];
 
 export const roadmapNote =
   "The roadmap reflects current development intent, not a commitment. Timing and scope can change, and planned items are never represented as operational.";

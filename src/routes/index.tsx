@@ -8,9 +8,10 @@ import { EredoxHero } from "@/components/site/EredoxHero";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
 
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
+import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { features } from "@/data/features";
-import { solutions } from "@/data/solutions";
-import { plans, supportComparison } from "@/data/pricing";
+import { integrations } from "@/data/integrations";
+import { plans } from "@/data/pricing";
 import { faqCategories } from "@/data/resources";
 import { site } from "@/config/site";
 import { pageMeta, ldScript, faqSchema, softwareSchema } from "@/lib/seo";
@@ -83,14 +84,15 @@ function Index() {
       <EredoxHero />
 
 
-      {/* Trust bar */}
+      {/* Proof strip */}
       <Section tone="ink" className="py-10">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-3 lg:grid-cols-5">
           {[
-            { label: "Frameworks available now", value: frameworks.filter((f) => f.availability === "Available now").length.toString() },
-            { label: "Feature areas", value: features.length.toString() },
-            { label: "Organisation solutions", value: solutions.filter((s) => s.audience === "Organisation").length.toString() },
-            { label: "Plans to scale with", value: plans.length.toString() },
+            { label: "Available frameworks", value: governedFrameworkCatalogue.availableCount.toString() },
+            { label: "Controls and evidence", value: "Shared" },
+            { label: "Approval built in", value: "Human" },
+            { label: "Requirements supported", value: "Custom" },
+            { label: "Integrations & connectors", value: "Connected" },
           ].map((s) => (
             <div key={s.label} className="text-center lg:text-left">
               <p className="text-3xl font-semibold text-ink-foreground">{s.value}</p>
@@ -100,12 +102,49 @@ function Index() {
         </div>
       </Section>
 
+      {/* AI Governance */}
+      <Section tone="soft">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionHeading
+              eyebrow="AI Governance"
+              title="AI assistance grounded in your workspace, always for human approval"
+              description="NOVA supports AI governance with governed controls, policies and evidence: explain requirements, draft descriptions, summarise artefacts and identify likely gaps while keeping human oversight in the approval loop. It does not approve anything."
+            />
+            <FeatureList
+              className="mt-6"
+              items={[
+                "Interprets and summarises uploaded evidence",
+                "Prepares policy and control description drafts",
+                "Identifies likely gaps against activated requirements",
+                "Explains what a requirement is asking for in plain language",
+              ]}
+            />
+            <div className="mt-6 flex flex-wrap gap-3">
+              <CtaLink to="/features/ai-assistant">Explore AI assistance</CtaLink>
+              <CtaLink to="/responsible-ai" variant="outline">
+                Responsible AI
+              </CtaLink>
+            </div>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <blockquote className="text-lg font-medium leading-relaxed text-foreground">
+              “NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.”
+            </blockquote>
+            <p className="mt-4 text-sm text-muted-foreground">
+              The assistant speeds preparation. It does not carry accountability for policies, risk acceptance or any
+              statement made to an auditor, regulator or customer.
+            </p>
+          </div>
+        </div>
+      </Section>
+
       {/* Outcomes */}
       <Section>
         <SectionHeading
           eyebrow="Why NOVA"
           title="Compliance work that compounds instead of repeating"
-          description="Most compliance programmes slow down because evidence is scattered, ownership is unclear and every assessment starts from scratch. NOVA keeps the programme record in one governed workspace."
+          description="Most GRC programmes slow down because evidence is scattered, ownership is unclear and every assessment starts from scratch. NOVA keeps the compliance management record in one governed workspace."
         />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {outcomes.map((o) => (
@@ -128,7 +167,7 @@ function Index() {
         <SectionHeading
           eyebrow="Platform"
           title="One workspace for frameworks, evidence and decisions"
-          description="NOVA connects the parts of a compliance programme so the readiness report is a consequence of the records, not a separate exercise."
+          description="NOVA connects the parts of a multi-framework compliance programme so the readiness report is a consequence of the records, not a separate exercise."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p) => (
@@ -150,14 +189,42 @@ function Index() {
         </div>
       </Section>
 
+      {/* Integrations and connectors */}
+      <Section>
+        <SectionHeading
+          eyebrow="Integrations & Connectors"
+          title="Connect NOVA to the systems where your evidence already lives."
+          description="Reduce manual collection and support automated evidence collection by connecting NOVA to the tools, repositories and business systems your organisation already uses. Bring relevant evidence and operational signals into the governed compliance workspace, map them to controls, and keep human review in the approval loop."
+        />
+        <div className="mt-10 rounded-2xl border border-border bg-card p-5 md:p-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Governed evidence flow</p>
+          <div className="mt-5 flex flex-wrap items-center gap-2" aria-label="Business systems to reporting flow">
+            {["Business Systems", "Connectors", "Evidence", "Controls", "Frameworks", "Human Review", "Reporting"].map((step, index) => (
+              <div key={step} className="flex items-center gap-2">
+                <span className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground">
+                  {step}
+                </span>
+                {index < 6 ? <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" /> : null}
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-sm text-muted-foreground">
+            The current inventory marks {integrations.filter((integration) => integration.status === "Available now").length} integrations as available now; other connector categories retain their source status on the integrations page.
+          </p>
+          <CtaLink to="/integrations" className="mt-6">
+            Explore integrations
+          </CtaLink>
+        </div>
+      </Section>
+
       {/* Framework coverage */}
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div>
             <SectionHeading
               eyebrow="Frameworks"
-              title="Available frameworks, with more on the roadmap"
-              description="Activate the frameworks that apply to your organisation. Available frameworks map onto a shared control set so evidence can be reused rather than collected again for every assessment."
+              title="Frameworks for the obligations in scope"
+              description={`${governedFrameworkCatalogue.availableCount} framework capabilities are represented in the governed NOVA catalogue. The detailed public cards distinguish what is available now from what is available connected to your data; activation still depends on customer scope and evidence.`}
             />
             <div className="mt-8 space-y-4">
               {frameworks.map((f) => (
@@ -180,6 +247,16 @@ function Index() {
                 See all frameworks
               </CtaLink>
             </div>
+            <Card className="mt-6 bg-primary-soft/40">
+              <p className="eyebrow">Custom framework available</p>
+              <h3 className="mt-2 text-lg font-semibold">Create a custom framework for any requirement.</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Bring customer, contractual, regulatory or internal requirements into a governed framework with human-reviewed mappings and evidence decisions.
+              </p>
+              <Link to="/book-demo" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                Discuss your requirements <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              </Link>
+            </Card>
           </div>
           <div className="rounded-2xl border border-border bg-card p-6">
             <h3 className="text-lg font-semibold">Illustrative readiness snapshot</h3>
@@ -248,49 +325,12 @@ function Index() {
         </div>
       </Section>
 
-      {/* AI assistant */}
-      <Section tone="soft">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <SectionHeading
-              eyebrow="NOVA AI Assistant"
-              title="Assistance grounded in your workspace, always for human approval"
-              description="The assistant works from your governed controls, policies and evidence to explain requirements, draft descriptions, summarise artefacts and identify likely gaps. It does not approve anything."
-            />
-            <FeatureList
-              className="mt-6"
-              items={[
-                "Interprets and summarises uploaded evidence",
-                "Prepares policy and control description drafts",
-                "Identifies likely gaps against activated requirements",
-                "Explains what a requirement is asking for in plain language",
-              ]}
-            />
-            <div className="mt-6 flex flex-wrap gap-3">
-              <CtaLink to="/features/ai-assistant">Explore AI assistance</CtaLink>
-              <CtaLink to="/responsible-ai" variant="outline">
-                Responsible AI
-              </CtaLink>
-            </div>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-6">
-            <blockquote className="text-lg font-medium leading-relaxed text-foreground">
-              “NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.”
-            </blockquote>
-            <p className="mt-4 text-sm text-muted-foreground">
-              The assistant speeds preparation. It does not carry accountability for policies, risk acceptance or any
-              statement made to an auditor, regulator or customer.
-            </p>
-          </div>
-        </div>
-      </Section>
-
       {/* Evidence and automation */}
       <Section>
         <SectionHeading
           eyebrow="Evidence and automation"
           title="Automation that preserves accountability"
-          description="Connectors and AI reduce repetitive work, but evidence only counts once a person has reviewed it. Every automation boundary is explicit."
+          description="Connectors and AI support evidence management and reduce repetitive work, but evidence only counts once a person has reviewed it. Every automation boundary is explicit."
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {[
@@ -320,7 +360,7 @@ function Index() {
             <SectionHeading
               eyebrow="Security and trust"
               title="Built to hold sensitive assurance material"
-              description="NOVA keeps each organisation's evidence inside its own tenant boundary, with role-based access and scoped auditor engagement."
+              description="NOVA keeps each organisation's evidence inside its own tenant boundary, with role-based access, human oversight and scoped auditor engagement."
             />
             <FeatureList
               className="mt-6"
@@ -425,22 +465,22 @@ function Index() {
       <Section>
         <SectionHeading
           eyebrow="Roadmap"
-          title="What is available today and what is planned"
-          description="NOVA ships capabilities as they are ready. Planned work is labelled everywhere so nobody expects a feature that is not live."
+          title="What is available, configurable and still in development"
+          description="NOVA distinguishes active capability, availability by configuration and work still in development so customers can judge scope accurately."
         />
         <div className="mt-10 overflow-x-auto rounded-xl border border-border bg-card">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium">Area</th>
-                <th className="px-4 py-3 font-medium">Available now</th>
-                <th className="px-4 py-3 font-medium">Planned</th>
+                <th className="px-4 py-3 font-medium">Available / configured</th>
+                <th className="px-4 py-3 font-medium">In development / scope note</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {[
-                { area: "Frameworks", available: "SOC 2, ISO/IEC 27001, Essential Eight, ISO/IEC 42001", planned: "NIST CSF, HIPAA, ISM" },
-                { area: "Evidence collection", available: "Manual upload, GitHub connector, reviewer validation", planned: "Additional cloud connectors" },
+                { area: "Frameworks", available: `${governedFrameworkCatalogue.availableCount} catalogue capabilities; detailed cards show status`, planned: "Activation depends on scope, data and evidence" },
+                { area: "Evidence collection", available: "Manual upload, GitHub connector, reviewer validation", planned: "Additional connectors retain their source status" },
                 { area: "AI assistance", available: "Evidence interpretation, requirement explanation, gap identification", planned: "Multi-connector evidence suggestions" },
                 { area: "Assurance", available: "Readiness reporting, Trust Centre, Auditor Portal", planned: "Executive board views for lower tiers" },
               ].map((r) => (
