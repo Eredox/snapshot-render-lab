@@ -94,6 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "apple-touch-icon", href: "/media/brand/nova-shield.png" },
       { rel: "preload", href: "/fonts/cirqua.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
     ],
     scripts: [ldScript(organizationSchema()), ldScript(websiteSchema())],
