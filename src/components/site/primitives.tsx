@@ -86,21 +86,23 @@ export function Card({
 
 export function AvailabilityBadge({ value }: { value: string }) {
   const isAvailable = value === "Available now";
-  const isPartial = value === "Partly available";
+  const isConnected = value === "Available connected to your data";
+  const isCustom = value === "Custom framework available";
   return (
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium",
         isAvailable && "bg-primary-soft text-accent-foreground",
-        isPartial && "bg-ember-soft text-ember-foreground",
-        !isAvailable && !isPartial && "bg-secondary text-secondary-foreground",
+        isConnected && "bg-ember-soft text-ember-foreground",
+        isCustom && "bg-secondary text-foreground",
+        !isAvailable && !isConnected && !isCustom && "bg-secondary text-secondary-foreground",
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
           "h-1.5 w-1.5 rounded-full",
-          isAvailable ? "bg-primary" : isPartial ? "bg-ember" : "bg-muted-foreground",
+          isAvailable ? "bg-primary" : isConnected ? "bg-ember" : "bg-muted-foreground",
         )}
       />
       {value}

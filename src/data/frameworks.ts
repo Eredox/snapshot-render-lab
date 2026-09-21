@@ -1,11 +1,19 @@
-export type Availability = "Available now" | "Planned";
+export type Availability = "Available now" | "Available connected to your data" | "Custom framework available";
 
 export type Framework = {
   slug: string;
   name: string;
   shortName: string;
   icon?: string;
-  category: "Security assurance" | "Information security" | "Cyber resilience" | "AI governance" | "Healthcare privacy" | "Government";
+  category:
+    | "Security assurance"
+    | "Information security"
+    | "Cyber resilience"
+    | "AI governance"
+    | "Healthcare privacy"
+    | "Privacy"
+    | "Financial services"
+    | "Government & defence";
   availability: Availability;
   jurisdictions: string[];
   description: string;
@@ -203,125 +211,92 @@ export const frameworks: Framework[] = [
     keywords: ["ai management system", "aims", "impact assessment", "human oversight"],
   },
   {
-    slug: "nist-csf",
-    name: "NIST Cybersecurity Framework",
-    shortName: "NIST CSF",
-    category: "Cyber resilience",
-    availability: "Planned",
-    jurisdictions: ["Global", "United States"],
-    description:
-      "A voluntary framework organising cybersecurity outcomes into functions, categories and subcategories.",
-    overview: [
-      "The NIST Cybersecurity Framework organises cybersecurity activity into high-level functions supported by categories and subcategories of outcomes.",
-      "It is frequently used as a common language between technical teams and executives, and as a way to describe a current profile against a target profile.",
-      "Framework support in NOVA is planned and is not operational today. Nothing in the product currently assesses or reports against NIST CSF.",
-    ],
-    intendedFor: [
-      "Organisations that report cybersecurity posture to boards and executives",
-      "Teams describing a current profile against a target profile",
-      "Groups aligning several regional requirements to one vocabulary",
-    ],
+    slug: "gdpr",
+    name: "General Data Protection Regulation (EU) 2016/679",
+    shortName: "GDPR",
+    icon: "/media/frameworks/gdpr.png",
+    category: "Privacy",
+    availability: "Available connected to your data",
+    jurisdictions: ["European Union / EEA"],
+    description: "Regulatory privacy requirements for organisations handling personal data in the EU/EEA and related contexts.",
+    overview: ["NOVA provides a structured GDPR readiness record for obligations, applicability decisions, evidence, risks and privacy governance."],
+    intendedFor: ["Organisations handling EU/EEA personal data", "Teams maintaining records of processing and privacy evidence"],
     governanceAreas: [
-      { title: "Govern", body: "Strategy, expectations and policy that direct the cybersecurity programme." },
-      { title: "Identify", body: "Understanding assets, suppliers and risks in the operating context." },
-      { title: "Protect", body: "Safeguards that limit the likelihood and impact of an event." },
-      { title: "Detect", body: "Finding and analysing anomalies, indicators and events." },
-      { title: "Respond and recover", body: "Containing incidents and restoring capability afterwards." },
+      { title: "Accountability", body: "Record ownership, decisions, policies and review evidence for privacy obligations." },
+      { title: "Data subject rights", body: "Track rights handling, requests, decisions and response evidence." },
+      { title: "Processing governance", body: "Maintain processing, retention, transfer and processor records." },
     ],
-    novaSupport: [
-      "Planned: profile definition with current and target outcome levels",
-      "Planned: subcategory-level mapping to existing controls and evidence",
-      "Planned: executive-oriented reporting by function",
+    novaSupport: ["Map privacy requirements to evidence and policies", "Keep applicability and human review decisions visible", "Connect data inventory and incident records where available"],
+    controlsAndEvidence: ["Records of processing activities", "Privacy notices and DPIA evidence", "Data subject request and breach registers"],
+    crossFramework: ["Privacy and security evidence can be reused where it genuinely satisfies both GDPR obligations and security controls."],
+    keywords: ["gdpr", "privacy", "data protection", "europe"],
+  },
+  {
+    slug: "pci-dss",
+    name: "PCI DSS v4.0.1 — Payment Card Industry Data Security Standard",
+    shortName: "PCI DSS",
+    icon: "/media/frameworks/pci-dss.png",
+    category: "Financial services",
+    availability: "Available connected to your data",
+    jurisdictions: ["Global"],
+    description: "Payment-card security readiness for environments that store, process or transmit cardholder data.",
+    overview: ["NOVA supports PCI DSS readiness tracking with scope, requirements, evidence, targeted risk analysis and human review records."],
+    intendedFor: ["Payment service providers", "Merchants and service providers with cardholder-data environments"],
+    governanceAreas: [
+      { title: "Scope", body: "Define the cardholder-data environment and connected systems before assessment work begins." },
+      { title: "Security requirements", body: "Track technical and organisational requirements with owners and evidence." },
+      { title: "Validation", body: "Keep review, remediation and assessor-facing records together." },
     ],
-    controlsAndEvidence: [
-      "Planned. When this framework becomes available, existing control and evidence records will be mappable rather than re-collected.",
-    ],
-    crossFramework: [
-      "Planned overlap with ISO/IEC 27001 controls and Essential Eight technical strategies",
-    ],
-    keywords: ["csf", "functions", "profile", "nist"],
+    novaSupport: ["Maintain requirement-level readiness records", "Link evidence, risks, policies and assets to the defined scope", "Keep future-dated requirement decisions visible"],
+    controlsAndEvidence: ["Network and access reviews", "Vulnerability and configuration evidence", "Targeted risk analysis and remediation records"],
+    crossFramework: ["Payment security evidence can overlap with SOC 2, ISO/IEC 27001 and Essential Eight controls where the scope is shared."],
+    keywords: ["pci dss", "payment cards", "cardholder data", "v4.0.1"],
   },
   {
     slug: "hipaa",
-    name: "HIPAA",
+    name: "HIPAA — Privacy, Security & Breach Notification",
     shortName: "HIPAA",
+    icon: "/media/frameworks/hipaa.png",
     category: "Healthcare privacy",
-    availability: "Planned",
+    availability: "Available connected to your data",
     jurisdictions: ["United States"],
-    description:
-      "United States requirements for safeguarding protected health information held by covered entities and business associates.",
-    overview: [
-      "HIPAA establishes obligations for covered entities and their business associates regarding the confidentiality, integrity and availability of protected health information.",
-      "The Security Rule sets administrative, physical and technical safeguards; the Privacy Rule governs use and disclosure; the Breach Notification Rule sets reporting obligations.",
-      "Support in NOVA is planned and is not operational today. This page describes intent, not current capability.",
-    ],
-    intendedFor: [
-      "Covered entities handling protected health information",
-      "Business associates processing health data on behalf of others",
-      "Health technology vendors entering the United States market",
-    ],
+    description: "US healthcare privacy, security and breach-notification readiness for covered entities and business associates.",
+    overview: ["NOVA supports HIPAA readiness records for Security Rule, Privacy Rule, Breach Notification Rule and business-associate obligations."],
+    intendedFor: ["Covered entities handling protected health information", "Business associates processing health data for customers"],
     governanceAreas: [
-      { title: "Administrative safeguards", body: "Risk analysis, workforce training, sanction policy and contingency planning." },
-      { title: "Physical safeguards", body: "Facility access, workstation use and device and media controls." },
-      { title: "Technical safeguards", body: "Access control, audit controls, integrity and transmission security." },
-      { title: "Privacy obligations", body: "Permitted uses and disclosures, and individual rights over health information." },
-      { title: "Breach notification", body: "Assessment, documentation and notification obligations after an incident." },
+      { title: "Security safeguards", body: "Track administrative, physical and technical safeguards with evidence." },
+      { title: "Privacy and disclosure", body: "Record permitted-use, minimum-necessary and individual-rights decisions." },
+      { title: "Breach response", body: "Maintain assessment, escalation and notification decision records." },
     ],
-    novaSupport: [
-      "Planned: safeguard mapping onto existing controls",
-      "Planned: business associate relationship records",
-      "Planned: breach assessment workflow support",
-    ],
-    controlsAndEvidence: [
-      "Planned. No HIPAA-specific assessment or reporting exists in NOVA today.",
-    ],
-    crossFramework: [
-      "Planned reuse of access control, audit and incident evidence already held for SOC 2 and ISO/IEC 27001",
-    ],
-    keywords: ["phi", "security rule", "privacy rule", "healthcare"],
+    novaSupport: ["Record safeguard applicability and human review", "Link ePHI system, access and training evidence", "Track breach assessment and business-associate governance"],
+    controlsAndEvidence: ["Security risk analysis", "Access, MFA and audit-log reviews", "Business-associate and breach registers"],
+    crossFramework: ["Access, incident, continuity and audit evidence can support related security frameworks where it is materially applicable."],
+    keywords: ["hipaa", "phi", "security rule", "healthcare"],
   },
   {
-    slug: "ism",
-    name: "Australian Government Information Security Manual",
-    shortName: "ISM",
-    category: "Government",
-    availability: "Planned",
-    jurisdictions: ["Australia"],
-    description:
-      "A cybersecurity framework of controls published by the Australian Signals Directorate for government systems and their suppliers.",
-    overview: [
-      "The Information Security Manual provides a large catalogue of cybersecurity controls, applied according to system classification and risk.",
-      "It is applied by Australian government entities and by suppliers operating systems on their behalf, usually alongside a system security plan and a formal authorisation process.",
-      "Support in NOVA is planned and is not operational today.",
-    ],
-    intendedFor: [
-      "Australian government entities and their delivery partners",
-      "Suppliers operating systems that handle government information",
-      "Organisations preparing a system security plan",
-    ],
+    slug: "cmmc",
+    name: "Cybersecurity Maturity Model Certification (CMMC)",
+    shortName: "CMMC",
+    icon: "/media/frameworks/cmmc.png",
+    category: "Government & defence",
+    availability: "Available connected to your data",
+    jurisdictions: ["United States"],
+    description: "US defence-industrial cybersecurity readiness across CMMC practices, scope, evidence and assessment preparation.",
+    overview: ["NOVA supports CMMC readiness tracking with level-aware practices, scope records, evidence, risks and human-owned assessment decisions."],
+    intendedFor: ["Defence industrial base organisations", "Suppliers handling FCI or CUI within an assessed boundary"],
     governanceAreas: [
-      { title: "Governance", body: "Roles, system ownership and the cyber security strategy for the system." },
-      { title: "System classification", body: "Determining the sensitivity or classification that drives control selection." },
-      { title: "Control selection", body: "Choosing applicable controls from the catalogue and recording the rationale." },
-      { title: "System security plan", body: "Documenting the security posture of the system as it is operated." },
-      { title: "Authorisation and review", body: "Approval to operate, and continuing review of residual risk." },
+      { title: "Assessment scope", body: "Record the system boundary, assets, dependencies and applicability decisions." },
+      { title: "Maturity practices", body: "Track practices and evidence by target level with accountable owners." },
+      { title: "Assessment preparation", body: "Keep SSP, POA&M, risk and review records ready for human assessment." },
     ],
-    novaSupport: [
-      "Planned: control catalogue import with applicability decisions",
-      "Planned: system security plan evidence structure",
-      "Planned: residual risk reporting for authorisation decisions",
-    ],
-    controlsAndEvidence: [
-      "Planned. No ISM control catalogue is available in NOVA today.",
-    ],
-    crossFramework: [
-      "Planned overlap with Essential Eight maturity evidence and ISO/IEC 27001 controls",
-    ],
-    keywords: ["asd", "system security plan", "classification", "australia"],
+    novaSupport: ["Maintain level-aware practice readiness", "Link scope assets, policies, risks and evidence", "Preserve the boundary that NOVA does not issue certification or official assessment results"],
+    controlsAndEvidence: ["System security plan and scope records", "MFA, logging and vulnerability evidence", "POA&M and supplier-flowdown records"],
+    crossFramework: ["CMMC evidence may overlap with Essential Eight, ISO/IEC 27001 and other security programmes where scope and requirements align."],
+    keywords: ["cmmc", "defence industrial base", "cui", "maturity"],
   },
 ];
 
-export const availabilityGroups: Availability[] = ["Available now", "Planned"];
+export const availabilityGroups: Availability[] = ["Available now", "Available connected to your data"];
 
 export const frameworkCategories = Array.from(new Set(frameworks.map((f) => f.category)));
 
@@ -335,7 +310,4 @@ export const illustrativeReadiness = [
   { name: "ISO/IEC 27001", label: "Readiness", value: 85 },
   { name: "Essential Eight", label: "Maturity coverage", value: 90 },
   { name: "ISO/IEC 42001", label: "Readiness", value: 82 },
-  { name: "NIST CSF", label: "Planned", value: 0 },
-  { name: "HIPAA", label: "Planned", value: 0 },
-  { name: "ISM", label: "Planned", value: 0 },
 ].filter((f) => f.value > 0);
