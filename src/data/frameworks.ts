@@ -212,7 +212,7 @@ export const frameworks: Framework[] = [
   },
   {
     slug: "gdpr",
-    name: "General Data Protection Regulation (EU) 2016/679",
+    name: "GDPR — General Data Protection Regulation (EU) 2016/679",
     shortName: "GDPR",
     icon: "/media/frameworks/gdpr.png",
     category: "Privacy",
