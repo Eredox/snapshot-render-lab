@@ -15,7 +15,7 @@ export function Logo({ className, inverted = false }: { className?: string; inve
         src="/media/brand/nova-shield.png"
         alt=""
         aria-hidden="true"
-        className="h-12 w-12 shrink-0 object-contain"
+        className="h-20 w-20 shrink-0 object-contain"
       />
       <span className="leading-none">
         <span className={cn("wordmark block text-lg font-bold tracking-tight", inverted ? "text-ink-foreground" : "text-foreground")}>
