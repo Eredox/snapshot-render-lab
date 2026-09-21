@@ -48,7 +48,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container-page">
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="flex h-20 items-center justify-between gap-4">
           <Link to="/" className="shrink-0" aria-label="NOVA Compliance home">
             <Logo />
           </Link>
@@ -166,7 +166,7 @@ export function Header() {
       </div>
 
       {mobileOpen ? (
-        <div id="mobile-navigation" className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-background lg:hidden">
+        <div id="mobile-navigation" className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-border bg-background lg:hidden">
           <div className="container-page py-4">
             <ul className="space-y-1">
               {headerNav.map((entry) =>
