@@ -127,14 +127,25 @@ function Index() {
               </CtaLink>
             </div>
           </div>
-          <div className="rounded-2xl border border-border bg-card p-6">
-            <blockquote className="text-lg font-medium leading-relaxed text-foreground">
-              “NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.”
-            </blockquote>
-            <p className="mt-4 text-sm text-muted-foreground">
-              The assistant speeds preparation. It does not carry accountability for policies, risk acceptance or any
-              statement made to an auditor, regulator or customer.
-            </p>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card">
+            <img
+              src="/media/ai-governance/nova-ai-governance-human-review-workflow.png"
+              alt="NOVA AI governance workflow showing policies, controls, evidence and requirements feeding into AI-assisted review with human approval."
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-contain"
+            />
+            <div className="p-6">
+              <blockquote className="text-lg font-medium leading-relaxed text-foreground">
+                “NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.”
+              </blockquote>
+              <p className="mt-4 text-sm text-muted-foreground">
+                The assistant speeds preparation. It does not carry accountability for policies, risk acceptance or any
+                statement made to an auditor, regulator or customer.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
