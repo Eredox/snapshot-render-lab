@@ -202,29 +202,48 @@ function Index() {
 
       {/* Integrations and connectors */}
       <Section>
-        <SectionHeading
-          eyebrow="Integrations & Connectors"
-          title="Connect NOVA to the systems where your evidence already lives."
-          description="Reduce manual collection and support automated evidence collection by connecting NOVA to the tools, repositories and business systems your organisation already uses. Bring relevant evidence and operational signals into the governed compliance workspace, map them to controls, and keep human review in the approval loop."
-        />
-        <div className="mt-10 rounded-2xl border border-border bg-card p-5 md:p-6">
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Governed evidence flow</p>
-          <div className="mt-5 flex flex-wrap items-center gap-2" aria-label="Business systems to reporting flow">
-            {["Business Systems", "Connectors", "Evidence", "Controls", "Frameworks", "Human Review", "Reporting"].map((step, index) => (
-              <div key={step} className="flex items-center gap-2">
-                <span className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground">
-                  {step}
-                </span>
-                {index < 6 ? <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" /> : null}
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionHeading
+              eyebrow="Integrations & Connectors"
+              title="Connect NOVA to the systems where your evidence already lives."
+              description="Reduce manual collection by connecting NOVA to the tools, repositories and business systems your organisation already uses. Bring relevant evidence and operational signals into the governed compliance workspace, map them to controls, and keep human review in the approval loop."
+            />
+            <div className="mt-10 rounded-2xl border border-border bg-card p-5 md:p-6">
+              <p className="text-sm font-semibold uppercase tracking-wider text-primary">Governed evidence flow</p>
+              <div className="mt-5 flex flex-wrap items-center gap-2" aria-label="Business systems to reporting flow">
+                {["Business Systems", "Connectors", "Evidence", "Controls", "Frameworks", "Human Review", "Reporting"].map((step, index) => (
+                  <div key={step} className="flex items-center gap-2">
+                    <span className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground">
+                      {step}
+                    </span>
+                    {index < 6 ? <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" /> : null}
+                  </div>
+                ))}
               </div>
-            ))}
+              <p className="mt-5 text-sm text-muted-foreground">
+                The current inventory marks {integrations.filter((integration) => integration.status === "Available now").length} integrations as available now; other connector categories retain their source status on the integrations page.
+              </p>
+              <CtaLink to="/integrations" className="mt-6">
+                Explore integrations
+              </CtaLink>
+            </div>
           </div>
-          <p className="mt-5 text-sm text-muted-foreground">
-            The current inventory marks {integrations.filter((integration) => integration.status === "Available now").length} integrations as available now; other connector categories retain their source status on the integrations page.
-          </p>
-          <CtaLink to="/integrations" className="mt-6">
-            Explore integrations
-          </CtaLink>
+          <figure className="overflow-hidden rounded-2xl border border-border bg-card">
+            <img
+              src="/media/integrations/nova-integrations-connectors-evidence-workflow.png"
+              alt="NOVA integrations and connectors workflow showing business systems feeding evidence into controls, frameworks, human review and compliance reporting."
+              title="NOVA Integrations & Connectors Evidence Workflow"
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-contain"
+            />
+            <figcaption className="sr-only">
+              Connect business systems to NOVA to collect evidence, map controls and frameworks, support human review and produce compliance reporting.
+            </figcaption>
+          </figure>
         </div>
       </Section>
 
