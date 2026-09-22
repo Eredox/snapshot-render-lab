@@ -303,21 +303,6 @@ function PlatformPage() {
         <Disclaimer className="mt-8">{site.frameworkDisclaimer}</Disclaimer>
       </Section>
 
-      <Section tone="surface">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-center">
-          <div>
-            <SectionHeading
-              eyebrow="Plans and entitlements"
-              title="See plans and entitlements"
-              description="Choose the plan that matches your frameworks, users and assurance requirements."
-            />
-          </div>
-          <div className="flex lg:justify-end">
-            <CtaLink to="/pricing">View pricing</CtaLink>
-          </div>
-        </div>
-      </Section>
-
       <Section>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-center">
           <div>
