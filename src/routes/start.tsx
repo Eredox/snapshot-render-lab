@@ -1,7 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
+import { plans } from "@/data/pricing";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
@@ -25,12 +25,14 @@ const steps = [
   "Invite a reviewer and see readiness reporting",
 ];
 
+const freePlan = plans.find((plan) => plan.slug === "free");
+
 const freeLimits = [
   "One workspace",
   "Up to three contributors",
-  "One active framework",
-  "Manual evidence upload",
-  "Community support",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ?? "One active framework",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ?? "Manual evidence upload",
+  freePlan?.support ?? "Community support",
 ];
 
 function StartPage() {
@@ -57,8 +59,9 @@ function StartPage() {
                 </li>
               ))}
             </ol>
-            <div className="mt-8">
-              <CtaLink to="/book-demo">Or book a demo</CtaLink>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <CtaLink to="/pricing">Compare plans</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
             </div>
           </div>
           <Card>
@@ -72,11 +75,18 @@ function StartPage() {
             >
               Sign-up form coming soon
             </button>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <CtaLink to="/pricing">Compare plans</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
+            </div>
           </Card>
         </div>
       </Section>
 
-      <ConversionCta />
+      <ConversionCta
+        primary={{ label: "Compare plans", to: "/pricing" }}
+        secondary={{ label: "Book a demo", to: "/book-demo" }}
+      />
     </>
   );
 }
