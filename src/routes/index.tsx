@@ -357,30 +357,49 @@ function Index() {
 
       {/* Evidence and automation */}
       <Section>
-        <SectionHeading
-          eyebrow="Evidence and automation"
-          title="Automation that preserves accountability"
-          description="Connectors and AI support evidence management and reduce repetitive work, but evidence only counts once a person has reviewed it. Every automation boundary is explicit."
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {[
-            { title: "Manual upload", body: "Upload artefacts with structured metadata and map them to controls." },
-            { title: "GitHub connector", body: "Bring engineering evidence into the workspace automatically, then review it." },
-            { title: "Reviewer validation", body: "A person confirms the artefact actually demonstrates the control before it counts." },
-          ].map((c) => (
-            <Card key={c.title}>
-              <h3 className="font-semibold">{c.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{c.body}</p>
-            </Card>
-          ))}
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionHeading
+              eyebrow="Evidence and automation"
+              title="Automation that preserves accountability"
+              description="Connectors and AI support evidence management and reduce repetitive work, but evidence only counts once a person has reviewed it. Every automation boundary is explicit."
+            />
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+              {[
+                { title: "Manual upload", body: "Upload artefacts with structured metadata and map them to controls." },
+                { title: "GitHub connector", body: "Bring engineering evidence into the workspace automatically, then review it." },
+                { title: "Reviewer validation", body: "A person confirms the artefact actually demonstrates the control before it counts." },
+              ].map((c) => (
+                <Card key={c.title}>
+                  <h3 className="font-semibold">{c.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{c.body}</p>
+                </Card>
+              ))}
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Connectors are listed on the{" "}
+              <Link to="/integrations" className="text-primary underline">
+                integrations page
+              </Link>
+              . Planned connectors are clearly labelled as not available today.
+            </p>
+          </div>
+          <figure className="overflow-hidden rounded-2xl border border-border bg-card">
+            <img
+              src="/media/evidence-automation/nova-evidence-automation-human-review-workflow.png"
+              alt="NOVA evidence automation workflow showing manual upload, GitHub connector ingestion and human reviewer validation before evidence is counted for compliance."
+              title="NOVA Evidence Automation Human Review Workflow"
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-contain"
+            />
+            <figcaption className="sr-only">
+              Evidence can be collected through uploads and connectors, but it only counts after human review and validation.
+            </figcaption>
+          </figure>
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">
-          Connectors are listed on the{" "}
-          <Link to="/integrations" className="text-primary underline">
-            integrations page
-          </Link>
-          . Planned connectors are clearly labelled as not available today.
-        </p>
       </Section>
 
       {/* Security */}
