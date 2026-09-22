@@ -12,9 +12,9 @@ import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { features } from "@/data/features";
 import { integrations } from "@/data/integrations";
 import { plans } from "@/data/pricing";
-import { faqCategories } from "@/data/resources";
+import { homepageFaqItems } from "@/data/resources";
 import { site } from "@/config/site";
-import { pageMeta, ldScript, faqSchema, softwareSchema } from "@/lib/seo";
+import { pageMeta, ldScript, softwareSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,8 +75,8 @@ const audiences = [
 ];
 
 function Index() {
-  const [activeFaq, setActiveFaq] = useState<{ category: number; item: number } | null>({ category: 0, item: 0 });
-  const activeItem = activeFaq ? faqCategories[activeFaq.category]?.items[activeFaq.item] : undefined;
+  const [activeFaq, setActiveFaq] = useState(0);
+  const activeItem = homepageFaqItems[activeFaq] ?? homepageFaqItems[0]!;
 
   return (
     <>
@@ -513,39 +513,36 @@ function Index() {
       {/* FAQ */}
       <Section tone="surface">
         <SectionHeading eyebrow="FAQ" title="Common questions" description="Browse by topic to find answers about NOVA, frameworks, evidence, AI, security and pricing." />
-        <div className="mt-10 grid gap-8 lg:grid-cols-3">
-          <div className="space-y-2 lg:col-span-1">
-            {faqCategories.map((cat, ci) => (
-              <div key={cat.category}>
-                <p className="px-2 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{cat.category}</p>
-                <ul>
-                  {cat.items.map((item, ii) => {
-                    const active = activeFaq?.category === ci && activeFaq?.item === ii;
-                    return (
-                      <li key={item.question}>
-                        <button
-                          type="button"
-                          onClick={() => setActiveFaq({ category: ci, item: ii })}
-                          className={`w-full rounded-lg px-2 py-2 text-left text-sm ${active ? "bg-primary-soft font-medium text-accent-foreground" : "hover:bg-surface"}`}
-                        >
-                          {item.question}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
+        <div className="mt-10 grid gap-3 lg:grid-cols-5">
+          <div className="space-y-2 lg:col-span-2">
+            {homepageFaqItems.map((item, index) => {
+              const active = activeFaq === index;
+              return (
+                <button
+                  key={item.question}
+                  type="button"
+                  aria-expanded={active}
+                  aria-controls={`homepage-faq-answer-${index}`}
+                  onClick={() => setActiveFaq(index)}
+                  className={`w-full rounded-lg px-3 py-3 text-left text-sm ${active ? "bg-primary-soft font-medium text-accent-foreground" : "hover:bg-background"}`}
+                >
+                  {item.question}
+                </button>
+              );
+            })}
           </div>
-          <div className="rounded-xl border border-border bg-card p-6 lg:col-span-2">
-            {activeItem ? (
-              <>
-                <h3 className="text-lg font-semibold">{activeItem.question}</h3>
-                <p className="mt-3 text-muted-foreground">{activeItem.answer}</p>
-              </>
-            ) : (
-              <p className="text-muted-foreground">Select a question to see the answer.</p>
-            )}
+          <div id={`homepage-faq-answer-${activeFaq}`} className="rounded-xl border border-border bg-card p-6 lg:col-span-3">
+            <h3 className="text-lg font-semibold">{activeItem.question}</h3>
+            <p className="mt-3 text-muted-foreground">{activeItem.answer}</p>
+            {activeItem.links?.length ? (
+              <div className="mt-5 flex flex-wrap gap-4">
+                {activeItem.links.map((link) => (
+                  <Link key={link.to} to={link.to as any} className="text-sm font-medium text-primary underline">
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
         <div className="mt-8">
