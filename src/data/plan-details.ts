@@ -16,7 +16,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Review evidence and decide what is sufficient for your programme.",
       "Keep readiness, risk and external assurance decisions with accountable people.",
     ],
-    limitations: ["One activated framework", "Small control set", "Self-service support"],
+    limitations: ["The Free entitlement is intended for evaluation and initial readiness work."],
     upgradePath:
       "Move to a paid plan when you need broader framework scope, deeper control workflows, additional evidence capabilities or more structured support.",
   },
@@ -28,28 +28,21 @@ export const planDetails: Record<string, PlanDetail> = {
       "Validate mapped evidence before it counts towards readiness.",
       "Record policy approvals and readiness decisions with human accountability.",
     ],
-    limitations: [
-      "One activated framework",
-      "No GitHub evidence connector in this plan",
-      "Paid onboarding handoff rather than self-service checkout",
-    ],
+    limitations: ["Commercial onboarding is handled through the governed Launch sales handoff."],
     upgradePath:
-      "Move to Growth when you need multiple frameworks, cross-framework reuse, risk treatment and the GitHub evidence connector.",
+      "Move to Growth when you need the higher authorised-repository allowance, risk treatment and deeper evidence operations.",
     commercialNote:
       "Secure paid checkout is not currently connected on the public website. Start now opens the governed Launch sales handoff with the selected plan preserved.",
   },
   growth: {
     evidenceAndAutomation:
-      "Use one shared control set across multiple frameworks, with evidence reuse and the GitHub evidence connector available as governed capabilities in this plan.",
+      "Use one shared control set across three frameworks, with evidence reuse and the GitHub evidence connector available as governed capabilities in this plan.",
     governanceAndHumanApproval: [
       "Track control ownership, risk treatment and explicit acceptance decisions.",
       "Reuse evidence only where the mapping genuinely satisfies each requirement.",
       "Keep reviewer validation and final readiness decisions human-led.",
     ],
-    limitations: [
-      "External auditor and Trust Centre workflows are not included in this plan",
-      "Commercial terms require sales contact",
-    ],
+    limitations: ["Commercial terms require sales contact."],
     upgradePath:
       "Move to Professional when you need recurring external review workflows, Trust Centre publication and broader assurance operations.",
   },
@@ -61,10 +54,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Approve what is shared with auditors and external audiences.",
       "Use readiness reporting to support, not replace, the human decision to proceed.",
     ],
-    limitations: [
-      "Broader business-unit scope and executive views are reserved for Business and above",
-      "Commercial terms require sales contact",
-    ],
+    limitations: ["Broader business-unit scope and executive views follow the Business entitlement."],
     upgradePath:
       "Move to Business when you need broader users, scopes, AI assistance across the programme and executive reporting views.",
   },
@@ -76,10 +66,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Keep AI assistance advisory and subject to human review and approval.",
       "Use executive reporting to inform accountable governance decisions.",
     ],
-    limitations: [
-      "Enterprise scope and commercial terms are defined per organisation",
-      "Commercial terms require sales contact",
-    ],
+    limitations: ["Commercial terms require sales contact."],
     upgradePath:
       "Move to Enterprise when your scope, users, business units or assurance obligations need a tailored commercial and onboarding arrangement.",
   },
@@ -91,10 +78,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Retain tenant boundaries, approval gates and traceable records across the programme.",
       "Use tailored assurance workflows without transferring final decisions to NOVA.",
     ],
-    limitations: [
-      "Scope, users and support arrangements are agreed per organisation",
-      "Pricing and implementation require an approved quote",
-    ],
+    limitations: ["Pricing and implementation require an approved quote."],
     upgradePath:
       "Enterprise is the tailored path for complex environments; the quote defines the agreed scope, commercial terms and onboarding plan.",
   },

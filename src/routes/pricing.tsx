@@ -81,10 +81,13 @@ function PricingPage() {
                     <span className="text-3xl font-semibold">
                       ${billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
                     </span>
-                    <span className="text-muted-foreground">/month</span>
+                    <span className="text-muted-foreground">/{billing === "monthly" ? "month" : "year"}</span>
                   </>
                 )}
               </div>
+              {billing === "annual" && p.annual !== null && p.annual > 0 ? (
+                <p className="mt-1 text-xs text-muted-foreground">${Math.round(p.annual / 12)} {currency}/month effective when billed annually</p>
+              ) : null}
               {p.requiresApproval ? <p className="mt-1 text-xs text-muted-foreground">{site.pricingApprovalNote}</p> : null}
               <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Best for</p>
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>

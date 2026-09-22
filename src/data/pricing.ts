@@ -1,4 +1,10 @@
 import { site } from "@/config/site";
+import {
+  canonicalPlanManifest,
+  frameworkEntitlementLabel,
+  githubRepositoryEntitlementLabel,
+  type CanonicalPlan,
+} from "@/data/canonical-plan-manifest";
 
 export const currency = "AUD";
 
@@ -7,9 +13,9 @@ export type Plan = {
   name: string;
   summary: string;
   /** Indicative monthly amount in AUD, or null when the plan is quote-only. */
-  monthly: number | null;
-  /** Indicative amount per month when billed annually. */
-  annual: number | null;
+  monthly: CanonicalPlan["price_monthly"];
+  /** Indicative annual total in AUD when billed annually. */
+  annual: CanonicalPlan["price_annual"];
   quoteOnly?: boolean;
   highlight?: boolean;
   /** True while the amount has not been approved by Eredox. */
@@ -20,6 +26,10 @@ export type Plan = {
   primaryAction: { label: string; to: string };
   detailPath: string;
   frameworkEntitlement: string;
+  githubRepositoryEntitlement: string;
+  maxUsers: number | null;
+  maxControls: number | null;
+  crossFrameworkReuseEnabled: boolean;
 };
 
 export const plans: Plan[] = [
@@ -27,31 +37,36 @@ export const plans: Plan[] = [
     slug: "free",
     name: "Free",
     summary: "Evaluate the workflow with a single framework and a small control set.",
-    monthly: 0,
-    annual: 0,
+    monthly: canonicalPlanManifest.plans.free.price_monthly,
+    annual: canonicalPlanManifest.plans.free.price_annual,
     requiresApproval: false,
     bestFor: "Teams assessing whether the workflow fits before committing",
     includes: [
       "One activated framework",
       "Core control library",
       "Manual evidence upload",
-      "Single administrator",
+      "Up to 2 users, including one administrator",
     ],
     support: "Documentation and community resources",
     primaryAction: { label: "Start now", to: "/start" },
     detailPath: "/plans/free",
-    frameworkEntitlement: "One activated framework, with the wider NOVA catalogue available for future scope decisions.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.free),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.free),
+    maxUsers: canonicalPlanManifest.plans.free.max_users,
+    maxControls: canonicalPlanManifest.plans.free.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.free.cross_framework_reuse_enabled,
   },
   {
     slug: "launch",
     name: "Launch",
     summary: "A first certification or attestation programme run properly from the start.",
-    monthly: 99,
-    annual: 82,
+    monthly: canonicalPlanManifest.plans.launch.price_monthly,
+    annual: canonicalPlanManifest.plans.launch.price_annual,
     requiresApproval: true,
     bestFor: "Startups preparing for their first enterprise security review",
     includes: [
-      "One activated framework",
+      "3 activated frameworks",
+      "Up to 1 authorised GitHub repository",
       "Control ownership and review cadence",
       "Evidence mapping and reviewer validation",
       "Policy versioning and approval",
@@ -60,20 +75,25 @@ export const plans: Plan[] = [
     support: "Email support during business hours",
     primaryAction: { label: "Start now", to: "/contact?plan=launch" },
     detailPath: "/plans/launch",
-    frameworkEntitlement: "One activated framework, with additional scope available through a later plan decision.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.launch),
+    maxUsers: canonicalPlanManifest.plans.launch.max_users,
+    maxControls: canonicalPlanManifest.plans.launch.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.launch.cross_framework_reuse_enabled,
   },
   {
     slug: "growth",
     name: "Growth",
-    summary: "Multiple frameworks on one shared control set, with reuse across requirements.",
-    monthly: 249,
-    annual: 207,
+    summary: "Three frameworks on one shared control set, with reuse across requirements.",
+    monthly: canonicalPlanManifest.plans.growth.price_monthly,
+    annual: canonicalPlanManifest.plans.growth.price_annual,
     highlight: true,
     requiresApproval: true,
     bestFor: "Technology SMEs maintaining more than one obligation",
     includes: [
-      "Multiple activated frameworks",
+      "3 activated frameworks",
       "Cross-framework control and evidence reuse",
+      "Up to 3 authorised GitHub repositories",
       "Risk register with treatment and acceptance",
       "GitHub evidence connector",
       "Trend and gap reporting",
@@ -81,18 +101,23 @@ export const plans: Plan[] = [
     support: "Email support with prioritised response",
     primaryAction: { label: "Contact sales", to: "/contact?plan=growth" },
     detailPath: "/plans/growth",
-    frameworkEntitlement: "Multiple activated frameworks on one shared control set, subject to customer scope and requirements.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.growth),
+    maxUsers: canonicalPlanManifest.plans.growth.max_users,
+    maxControls: canonicalPlanManifest.plans.growth.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.growth.cross_framework_reuse_enabled,
   },
   {
     slug: "professional",
     name: "Professional",
     summary: "Assurance-grade operation with external review workflows included.",
-    monthly: 499,
-    annual: 416,
+    monthly: canonicalPlanManifest.plans.professional.price_monthly,
+    annual: canonicalPlanManifest.plans.professional.price_annual,
     requiresApproval: true,
     bestFor: "Organisations undergoing recurring external assessment",
     includes: [
-      "Everything in Growth",
+      "All available frameworks",
+      "All authorised GitHub repositories",
       "Auditor Portal with scoped engagement access",
       "Trust Centre publication",
       "Asset register and classification",
@@ -101,18 +126,23 @@ export const plans: Plan[] = [
     support: "Priority support with a named contact",
     primaryAction: { label: "Contact sales", to: "/contact?plan=professional" },
     detailPath: "/plans/professional",
-    frameworkEntitlement: "Multiple activated frameworks with broader assurance workflows, subject to customer scope and requirements.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.professional),
+    maxUsers: canonicalPlanManifest.plans.professional.max_users,
+    maxControls: canonicalPlanManifest.plans.professional.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.professional.cross_framework_reuse_enabled,
   },
   {
     slug: "business",
     name: "Business",
     summary: "Broader scope, more users and deeper governance across business units.",
-    monthly: 799,
-    annual: 665,
+    monthly: canonicalPlanManifest.plans.business.price_monthly,
+    annual: canonicalPlanManifest.plans.business.price_annual,
     requiresApproval: true,
     bestFor: "Regulated organisations with several teams inside one programme",
     includes: [
-      "Everything in Professional",
+      "All available frameworks",
+      "All authorised GitHub repositories",
       "Extended user and role capacity",
       "Multiple scopes within one tenant",
       "AI assistance across policies, evidence and gap identification",
@@ -121,19 +151,23 @@ export const plans: Plan[] = [
     support: "Priority support with onboarding assistance",
     primaryAction: { label: "Contact sales", to: "/contact?plan=business" },
     detailPath: "/plans/business",
-    frameworkEntitlement: "Multiple activated frameworks across broader business scope, subject to customer scope and requirements.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.business),
+    maxUsers: canonicalPlanManifest.plans.business.max_users,
+    maxControls: canonicalPlanManifest.plans.business.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.business.cross_framework_reuse_enabled,
   },
   {
     slug: "enterprise",
     name: "Enterprise",
     summary: "Quoted per organisation against scope, users and assurance requirements.",
-    monthly: null,
-    annual: null,
-    quoteOnly: true,
+    monthly: canonicalPlanManifest.plans.enterprise.price_monthly,
+    annual: canonicalPlanManifest.plans.enterprise.price_annual,
+    quoteOnly: canonicalPlanManifest.plans.enterprise.quote_required,
     requiresApproval: false,
     bestFor: "Complex environments with bespoke scope and assurance obligations",
     includes: [
-      "Everything in Business",
+      "All authorised GitHub repositories",
       "Scope defined per organisation",
       "Commercial terms agreed with Eredox",
       "Structured onboarding programme",
@@ -141,7 +175,11 @@ export const plans: Plan[] = [
     support: "Agreed support arrangements",
     primaryAction: { label: "Request a quote", to: "/request-quote?plan=enterprise" },
     detailPath: "/plans/enterprise",
-    frameworkEntitlement: "Framework scope is defined per organisation, users, business units and assurance requirements.",
+    frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.enterprise),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.enterprise),
+    maxUsers: canonicalPlanManifest.plans.enterprise.max_users,
+    maxControls: canonicalPlanManifest.plans.enterprise.max_controls,
+    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.enterprise.cross_framework_reuse_enabled,
   },
 ];
 
@@ -156,14 +194,17 @@ export type ComparisonGroup = {
 
 const y = "Included";
 const n = "—";
+const planBySlug = Object.fromEntries(plans.map((plan) => [plan.slug, plan])) as Record<string, Plan>;
+const frameworkComparisonValue = (slug: string) => planBySlug[slug]!.frameworkEntitlement.replace(" activated", "");
+const githubComparisonValue = (slug: string) => planBySlug[slug]!.githubRepositoryEntitlement;
 
 export const comparison: ComparisonGroup[] = [
   {
     group: "Frameworks and controls",
     rows: [
-      { label: "Activated frameworks", values: { free: "1", launch: "1", growth: "Multiple", professional: "Multiple", business: "Multiple", enterprise: "Defined per scope" } },
+      { label: "Activated frameworks", values: { free: frameworkComparisonValue("free"), launch: frameworkComparisonValue("launch"), growth: frameworkComparisonValue("growth"), professional: frameworkComparisonValue("professional"), business: frameworkComparisonValue("business"), enterprise: frameworkComparisonValue("enterprise") } },
       { label: "Shared control library", values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Cross-framework control reuse", values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y } },
+      { label: "Cross-framework control reuse", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
       { label: "Control testing records", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
     ],
   },
@@ -172,7 +213,7 @@ export const comparison: ComparisonGroup[] = [
     rows: [
       { label: "Manual evidence upload", values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y } },
       { label: "Reviewer validation", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "GitHub evidence connector", values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y } },
+      { label: "GitHub repositories", values: { free: githubComparisonValue("free"), launch: githubComparisonValue("launch"), growth: githubComparisonValue("growth"), professional: githubComparisonValue("professional"), business: githubComparisonValue("business"), enterprise: githubComparisonValue("enterprise") } },
       { label: "Policy versioning and approval", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
     ],
   },

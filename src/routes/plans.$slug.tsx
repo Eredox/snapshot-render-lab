@@ -93,7 +93,7 @@ function PlanPrice({
       <p className="text-3xl font-semibold">{monthly === 0 ? "Free" : `$${monthly} ${currency}`}</p>
       {monthly > 0 ? (
         <p className="mt-1 text-sm text-muted-foreground">
-          per month, or ${annual} {currency} per month billed annually
+          per month, or ${annual} {currency} per year billed annually
         </p>
       ) : null}
     </>
@@ -139,12 +139,21 @@ function PlanPage() {
             </div>
 
             <div>
-              <SectionHeading eyebrow="Framework entitlement" title="Scope what applies" />
-              <p className="mt-4 text-muted-foreground">{plan.frameworkEntitlement}</p>
+              <SectionHeading eyebrow="Plan entitlements" title="Scope what applies" />
+              <FeatureList
+                className="mt-5"
+                items={[
+                  plan.frameworkEntitlement,
+                  plan.githubRepositoryEntitlement,
+                  plan.maxUsers === null ? "User capacity defined by the agreed plan scope" : `Up to ${plan.maxUsers} users`,
+                  plan.maxControls === null ? "Controls defined by the governed plan scope" : `Up to ${plan.maxControls} controls`,
+                  plan.crossFrameworkReuseEnabled ? "Cross-framework control and evidence reuse" : "Cross-framework reuse is not included",
+                ]}
+              />
               <p className="mt-3 text-sm text-muted-foreground">
                 NOVA has a wider governed catalogue of {governedFrameworkCatalogue.availableCount}{" "}
                 framework capabilities. Activation depends on customer scope, data and requirements;
-                this plan does not activate every framework automatically.
+                an available catalogue does not activate every framework automatically.
               </p>
             </div>
           </div>

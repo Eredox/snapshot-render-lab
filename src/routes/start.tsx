@@ -19,7 +19,7 @@ export const Route = createFileRoute("/start")({
 
 const steps = [
   "Create your workspace and tenant",
-  "Activate one or more frameworks",
+  "Activate one framework",
   "Map initial controls and assign owners",
   "Upload or connect your first evidence",
   "Invite a reviewer and see readiness reporting",
@@ -29,7 +29,7 @@ const freePlan = plans.find((plan) => plan.slug === "free");
 
 const freeLimits = [
   "One workspace",
-  "Up to three contributors",
+  `Up to ${freePlan?.maxUsers ?? 2} users, including one administrator`,
   freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ?? "One active framework",
   freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ?? "Manual evidence upload",
   freePlan?.support ?? "Community support",
