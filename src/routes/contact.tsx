@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { Calendar, Mail, ShieldQuestion } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
@@ -19,6 +19,17 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const search = useSearch({ strict: false }) as { plan?: string };
+  const planLabels = {
+    launch: "Launch",
+    growth: "Growth",
+    professional: "Professional",
+    business: "Business",
+  } as const;
+  const selectedPlan = search.plan && search.plan in planLabels
+    ? planLabels[search.plan as keyof typeof planLabels]
+    : undefined;
+
   return (
     <>
       <PageHero
@@ -31,8 +42,16 @@ function ContactPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div>
-            <SectionHeading title="Send a message" />
-            <ContactForm />
+            <SectionHeading title={selectedPlan ? `Ask about ${selectedPlan}` : "Send a message"} />
+            {selectedPlan ? (
+              <p className="mt-3 text-sm text-muted-foreground">
+                Your message will be treated as a sales enquiry about the NOVA {selectedPlan} plan. You can add your
+                organisation, scope and timing below.
+              </p>
+            ) : null}
+            <ContactForm
+              defaultMessage={selectedPlan ? `Sales enquiry about the NOVA ${selectedPlan} plan.\n\n` : ""}
+            />
           </div>
           <div className="space-y-6">
             <Card>

@@ -17,7 +17,9 @@ export type Plan = {
   bestFor: string;
   includes: string[];
   support: string;
-  cta: { label: string; to: string };
+  primaryAction: { label: string; to: string };
+  detailPath: string;
+  frameworkEntitlement: string;
 };
 
 export const plans: Plan[] = [
@@ -36,7 +38,9 @@ export const plans: Plan[] = [
       "Single administrator",
     ],
     support: "Documentation and community resources",
-    cta: { label: "Start free", to: "/start" },
+    primaryAction: { label: "Start now", to: "/start" },
+    detailPath: "/plans/free",
+    frameworkEntitlement: "One activated framework, with the wider NOVA catalogue available for future scope decisions.",
   },
   {
     slug: "launch",
@@ -54,7 +58,9 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    cta: { label: "Start free", to: "/start" },
+    primaryAction: { label: "Start now", to: "/contact?plan=launch" },
+    detailPath: "/plans/launch",
+    frameworkEntitlement: "One activated framework, with additional scope available through a later plan decision.",
   },
   {
     slug: "growth",
@@ -73,7 +79,9 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    cta: { label: "Book a demo", to: "/book-demo" },
+    primaryAction: { label: "Contact sales", to: "/contact?plan=growth" },
+    detailPath: "/plans/growth",
+    frameworkEntitlement: "Multiple activated frameworks on one shared control set, subject to customer scope and requirements.",
   },
   {
     slug: "professional",
@@ -91,7 +99,9 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    cta: { label: "Book a demo", to: "/book-demo" },
+    primaryAction: { label: "Contact sales", to: "/contact?plan=professional" },
+    detailPath: "/plans/professional",
+    frameworkEntitlement: "Multiple activated frameworks with broader assurance workflows, subject to customer scope and requirements.",
   },
   {
     slug: "business",
@@ -109,7 +119,9 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    cta: { label: "Contact sales", to: "/contact" },
+    primaryAction: { label: "Contact sales", to: "/contact?plan=business" },
+    detailPath: "/plans/business",
+    frameworkEntitlement: "Multiple activated frameworks across broader business scope, subject to customer scope and requirements.",
   },
   {
     slug: "enterprise",
@@ -127,9 +139,15 @@ export const plans: Plan[] = [
       "Structured onboarding programme",
     ],
     support: "Agreed support arrangements",
-    cta: { label: "Request a quote", to: "/contact" },
+    primaryAction: { label: "Request a quote", to: "/request-quote?plan=enterprise" },
+    detailPath: "/plans/enterprise",
+    frameworkEntitlement: "Framework scope is defined per organisation, users, business units and assurance requirements.",
   },
 ];
+
+export function getPlan(slug: string): Plan | undefined {
+  return plans.find((plan) => plan.slug === slug);
+}
 
 export type ComparisonGroup = {
   group: string;

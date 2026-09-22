@@ -484,8 +484,8 @@ function Index() {
                 <p className="mt-1 text-sm text-muted-foreground">{freePlan.summary}</p>
                 <p className="mt-4 text-3xl font-semibold">Free</p>
                 <FeatureList className="mt-5" items={freePlan.includes} />
-                <CtaLink to={freePlan.cta.to} className="mt-6 w-full">
-                  {freePlan.cta.label}
+                <CtaLink to={freePlan.primaryAction.to} className="mt-6 w-full">
+                  Start free
                 </CtaLink>
               </Card>
               <div className="mt-5">

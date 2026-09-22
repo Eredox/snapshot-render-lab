@@ -48,6 +48,7 @@ import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as PlansSlugRouteImport } from './routes/plans.$slug'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
 import { Route as ResourcesCaseStudiesRouteImport } from './routes/resources.case-studies'
@@ -264,6 +265,11 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => LegalRoute,
 } as any)
+const PlansSlugRoute = PlansSlugRouteImport.update({
+  id: '/plans/$slug',
+  path: '/plans/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -399,6 +405,7 @@ export interface FileRoutesByFullPath {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/plans/$slug': typeof PlansSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
@@ -452,6 +459,7 @@ export interface FileRoutesByTo {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/plans/$slug': typeof PlansSlugRoute
   '/resources/faq': typeof ResourcesFaqRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/book-demo': typeof BookDemoIndexRoute
@@ -508,6 +516,7 @@ export interface FileRoutesById {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/plans/$slug': typeof PlansSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
   '/resources/faq': typeof ResourcesFaqRoute
@@ -570,6 +579,7 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/plans/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/faq'
@@ -623,6 +633,7 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/plans/$slug'
     | '/resources/faq'
     | '/solutions/$slug'
     | '/book-demo'
@@ -678,6 +689,7 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/plans/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
     | '/resources/faq'
@@ -733,6 +745,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   TestimonialsRoute: typeof TestimonialsRoute
   TrustRoute: typeof TrustRoute
+  PlansSlugRoute: typeof PlansSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1009,6 +1022,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/legal/$slug'
       preLoaderRoute: typeof LegalSlugRouteImport
       parentRoute: typeof LegalRoute
+    }
+    '/plans/$slug': {
+      id: '/plans/$slug'
+      path: '/plans/$slug'
+      fullPath: '/plans/$slug'
+      preLoaderRoute: typeof PlansSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/resources/': {
       id: '/resources/'
@@ -1353,6 +1373,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   TestimonialsRoute: TestimonialsRoute,
   TrustRoute: TrustRoute,
+  PlansSlugRoute: PlansSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

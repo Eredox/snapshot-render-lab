@@ -3,6 +3,7 @@ import { frameworks } from "@/data/frameworks";
 import { solutions } from "@/data/solutions";
 import { legalDocs } from "@/data/legal";
 import { resources } from "@/data/resources";
+import { plans } from "@/data/pricing";
 import { appUrls } from "@/config/site";
 
 /**
@@ -72,6 +73,7 @@ export const dynamicRoutes: { pattern: string; slugs: string[] }[] = [
   { pattern: "/resources/guides/$slug", slugs: resources.filter((r) => r.type === "Guide").map((r) => r.slug) },
   { pattern: "/resources/product-updates/$slug", slugs: resources.filter((r) => r.type === "Product update").map((r) => r.slug) },
   { pattern: "/legal/$slug", slugs: legalDocs.map((d) => d.slug) },
+  { pattern: "/plans/$slug", slugs: plans.map((p) => p.slug) },
 ];
 
 /** Every internal path the site can legitimately resolve. */

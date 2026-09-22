@@ -89,9 +89,12 @@ function PricingPage() {
               <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Best for</p>
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>
               <FeatureList className="mt-5" items={p.includes} />
-              <CtaLink to={p.cta.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
-                {p.cta.label}
+              <CtaLink to={p.primaryAction.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
+                {p.primaryAction.label}
               </CtaLink>
+              <Link to={p.detailPath} className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-3 text-sm font-medium text-foreground hover:bg-surface">
+                Find out more
+              </Link>
             </Card>
           ))}
         </div>
