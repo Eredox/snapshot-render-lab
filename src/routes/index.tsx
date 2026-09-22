@@ -510,40 +510,6 @@ function Index() {
         </div>
       </Section>
 
-      {/* Availability / roadmap */}
-      <Section>
-        <SectionHeading
-          eyebrow="Roadmap"
-          title="What is available, configurable and still in development"
-          description="NOVA distinguishes active capability, availability by configuration and work still in development so customers can judge scope accurately."
-        />
-        <div className="mt-10 overflow-x-auto rounded-xl border border-border bg-card">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
-              <tr>
-                <th className="px-4 py-3 font-medium">Area</th>
-                <th className="px-4 py-3 font-medium">Available / configured</th>
-                <th className="px-4 py-3 font-medium">In development / scope note</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {[
-                { area: "Frameworks", available: `${governedFrameworkCatalogue.availableCount} catalogue capabilities; detailed cards show status`, planned: "Activation depends on scope, data and evidence" },
-                { area: "Evidence collection", available: "Manual upload, GitHub connector, reviewer validation", planned: "Additional connectors retain their source status" },
-                { area: "AI assistance", available: "Evidence interpretation, requirement explanation, gap identification", planned: "Multi-connector evidence suggestions" },
-                { area: "Assurance", available: "Readiness reporting, Trust Centre, Auditor Portal", planned: "Executive board views for lower tiers" },
-              ].map((r) => (
-                <tr key={r.area}>
-                  <td className="px-4 py-3 font-medium">{r.area}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{r.available}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{r.planned}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
-
       {/* FAQ */}
       <Section tone="surface">
         <SectionHeading eyebrow="FAQ" title="Common questions" description="Browse by topic to find answers about NOVA, frameworks, evidence, AI, security and pricing." />
