@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
 import { footerColumns } from "@/config/navigation";
-import { site, appUrls, socialLinks } from "@/config/site";
+import { site, socialLinks } from "@/config/site";
 import { CookiePreferencesButton } from "@/components/site/CookieConsent";
 
 export function Footer() {
@@ -16,16 +15,6 @@ export function Footer() {
             <Logo inverted />
             <p className="mt-5 max-w-sm text-sm text-ink-foreground/70">{site.tagline}</p>
             <p className="mt-4 max-w-sm text-sm text-ink-foreground/60">{site.ownership}</p>
-            <a
-              href={appUrls.app}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-ink-foreground hover:underline"
-            >
-              Sign in to NOVA
-              <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
           </div>
 
           <nav aria-label="Footer" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
