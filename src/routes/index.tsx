@@ -16,6 +16,8 @@ import { homepageFaqItems } from "@/data/resources";
 import { site } from "@/config/site";
 import { pageMeta, ldScript, softwareSchema } from "@/lib/seo";
 
+const freePlan = plans.find((plan) => plan.slug === "free");
+
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageMeta({
@@ -468,45 +470,31 @@ function Index() {
         </div>
       </Section>
 
-      {/* Pricing preview */}
-      <Section tone="surface" id="pricing">
-        <SectionHeading
-          eyebrow="Pricing"
-          title="Plans that scale with the size of the programme"
-          description="From a free evaluation workspace through to enterprise deployments with bespoke scope."
-        />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {plans.slice(0, 3).map((p) => (
-            <Card key={p.slug} className={p.highlight ? "relative border-primary shadow-lift" : ""}>
-              {p.highlight ? (
-                <span className="absolute -top-3 left-6 inline-flex rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                  Popular
-                </span>
-              ) : null}
-              <h3 className="text-lg font-semibold">{p.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{p.summary}</p>
-              <p className="mt-4">
-                {p.monthly === 0 ? (
-                  <span className="text-3xl font-semibold">Free</span>
-                ) : (
-                  <>
-                    <span className="text-3xl font-semibold">${p.monthly}</span>
-                    <span className="text-muted-foreground">/month</span>
-                  </>
-                )}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">{p.quoteOnly ? "Quoted per scope" : `${site.pricingApprovalNote}`}</p>
-              <FeatureList className="mt-5" items={p.includes.slice(0, 4)} />
-              <CtaLink to={p.cta.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
-                {p.cta.label}
-              </CtaLink>
-            </Card>
-          ))}
-        </div>
-        <div className="mt-8">
-          <CtaLink to="/pricing" variant="ghost">
-            Compare all plans <ArrowRight aria-hidden="true" className="h-4 w-4" />
-          </CtaLink>
+      <Section tone="surface">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-start">
+          <SectionHeading
+            eyebrow="Pricing"
+            title="Start free. Scale when you’re ready."
+            description="Explore NOVA with a free workspace, then move to the plan that matches your frameworks, users and assurance needs."
+          />
+          {freePlan ? (
+            <div>
+              <Card className="border-primary shadow-lift">
+                <h3 className="text-lg font-semibold">{freePlan.name}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{freePlan.summary}</p>
+                <p className="mt-4 text-3xl font-semibold">Free</p>
+                <FeatureList className="mt-5" items={freePlan.includes} />
+                <CtaLink to={freePlan.cta.to} className="mt-6 w-full">
+                  {freePlan.cta.label}
+                </CtaLink>
+              </Card>
+              <div className="mt-5">
+                <CtaLink to="/pricing" variant="ghost">
+                  Compare all plans <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </CtaLink>
+              </div>
+            </div>
+          ) : null}
         </div>
       </Section>
 
