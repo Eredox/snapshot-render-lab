@@ -19,19 +19,41 @@ EREDOX_SMTP_USERNAME=compliance@eredox.com
 EREDOX_SMTP_PASSWORD=<server secret>
 NOVA_FORM_FROM_EMAIL=compliance@eredox.com
 NOVA_FORM_TO_EMAIL=compliance@eredox.com
-NOVA_CRM_ENQUIRY_URL=<authenticated server-side CRM/Odoo bridge endpoint>
-NOVA_CRM_ENQUIRY_TOKEN=<optional server secret>
+NOVA_CRM_ENQUIRY_URL=https://crm.nova.eredox.com/nova_website_intake/v1/enquiries
+NOVA_WEBSITE_INTAKE_KEY_ID=<server-side key id>
+NOVA_WEBSITE_INTAKE_KEY_SECRET=<server-side secret>
 ```
 
 Port 465 is implicit TLS and must remain paired with `EREDOX_SMTP_SECURE=true`.
 The mail `From` address is fixed by configuration to the NOVA Compliance
 mailbox; the visitor address is used only as `Reply-To`.
 
-The CRM bridge receives JSON containing `source: "nova-public-website"`, the
-form type, visitor details and booking details where supplied. It must return a
-2xx response after creating the enquiry. The website deliberately does not
-guess an Odoo database, model, or authentication scheme: the bridge owns that
-integration contract.
+The CRM bridge receives only the allowlisted Odoo intake fields. The website
+server signs each request with HMAC-SHA256 using the exact canonical request
+contract implemented by `nova_website_intake`:
+
+```text
+POST
+/nova_website_intake/v1/enquiries
+enquiry.create
+<timestamp>
+<nonce>
+<operation-id>
+<sha256-body>
+application/json
+<key-id>
+```
+
+The JSON body is serialized once; those exact UTF-8 bytes are hashed and sent.
+Each logical submission gets one operation ID. A transport retry reuses that
+operation ID and body, but generates a fresh nonce, timestamp and signature.
+The shared key ID and secret are server-only and are never sent to browser
+code. Bearer authentication is not used.
+
+The bridge must return a validated CRM success object before the website sends
+the SMTP notification. CRM failures do not send email or show visitor success.
+Transient transport/500/503 failures use only a bounded retry policy; validation,
+authentication, conflict and media-type failures are not retried.
 
 ## Controlled verification
 

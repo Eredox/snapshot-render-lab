@@ -1,7 +1,13 @@
-import { randomUUID } from "node:crypto";
+import { createHash, createHmac, randomUUID } from "node:crypto";
 import { connect, type TLSSocket } from "node:tls";
 
-type FormType = "contact" | "demo-booking";
+type FormType =
+  | "general-enquiry"
+  | "plan-enquiry"
+  | "quote-request"
+  | "framework-enquiry"
+  | "support-enquiry"
+  | "demo-booking";
 
 export type FormSubmission = {
   type: FormType;
@@ -26,7 +32,30 @@ type SmtpConfig = {
 
 const MAX_BODY_BYTES = 32_000;
 const REQUEST_TIMEOUT_MS = 15_000;
+const CRM_MAX_ATTEMPTS = 2;
+const CRM_CONTENT_TYPE = "application/json";
+const CRM_OPERATION = "enquiry.create";
+const CRM_PATH = "/nova_website_intake/v1/enquiries";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const crmTypes = new Set<FormType>([
+  "general-enquiry",
+  "plan-enquiry",
+  "quote-request",
+  "framework-enquiry",
+  "support-enquiry",
+  "demo-booking",
+]);
+const formFields = new Set([
+  "type",
+  "name",
+  "email",
+  "company",
+  "message",
+  "framework",
+  "teamSize",
+  "date",
+  "timeSlot",
+]);
 
 class FormConfigurationError extends Error {}
 
@@ -61,7 +90,18 @@ function smtpConfig(): SmtpConfig {
 function normaliseSubmission(value: unknown): FormSubmission {
   if (!value || typeof value !== "object") throw new Error("Invalid form payload");
   const input = value as Record<string, unknown>;
-  const type = input["type"] === "demo-booking" ? "demo-booking" : "contact";
+  if (Object.keys(input).some((field) => !formFields.has(field))) {
+    throw new Error("Invalid form payload");
+  }
+  const inputType = input["type"];
+  let type: FormType;
+  if (inputType === undefined || inputType === "contact") {
+    type = "general-enquiry";
+  } else if (typeof inputType === "string" && crmTypes.has(inputType as FormType)) {
+    type = inputType as FormType;
+  } else {
+    throw new Error("Invalid type");
+  }
   const fields = {
     name: input["name"],
     email: input["email"],
@@ -102,7 +142,11 @@ function normaliseSubmission(value: unknown): FormSubmission {
 
   if (
     type === "demo-booking" &&
-    (!submission.framework || !submission.teamSize || !submission.date || !submission.timeSlot)
+    (!submission.company ||
+      !submission.framework ||
+      !submission.teamSize ||
+      !submission.date ||
+      !submission.timeSlot)
   ) {
     throw new Error("Incomplete booking details");
   }
@@ -270,24 +314,160 @@ async function sendMail(submission: FormSubmission) {
   }
 }
 
-async function createCrmEnquiry(submission: FormSubmission): Promise<void> {
+class CrmResponseError extends Error {
+  constructor(
+    readonly status: number,
+    readonly retryable: boolean,
+  ) {
+    super(`CRM enquiry endpoint returned ${status}`);
+  }
+}
+
+function sourcePathForRequest(request: Request): string {
+  const referer = request.headers.get("referer");
+  if (referer) {
+    try {
+      const refererUrl = new URL(referer);
+      const requestUrl = new URL(request.url);
+      if (refererUrl.origin === requestUrl.origin && refererUrl.pathname.startsWith("/")) {
+        return refererUrl.pathname;
+      }
+    } catch {
+      // Use the safe endpoint path below when the browser sends no valid same-origin referer.
+    }
+  }
+  return "/";
+}
+
+function crmPayload(submission: FormSubmission, sourcePath: string): Record<string, string> {
+  return {
+    type: submission.type,
+    name: submission.name,
+    email: submission.email,
+    organisation: submission.company,
+    message: submission.message,
+    plan: "",
+    framework: submission.framework ?? "",
+    team_size: submission.teamSize ?? "",
+    preferred_date: submission.date ?? "",
+    preferred_time: submission.timeSlot ?? "",
+    source_path: sourcePath,
+    submitted_at: new Date().toISOString(),
+  };
+}
+
+function canonicalCrmRequest({
+  timestamp,
+  nonce,
+  operationId,
+  bodyHash,
+  keyId,
+}: {
+  timestamp: string;
+  nonce: string;
+  operationId: string;
+  bodyHash: string;
+  keyId: string;
+}): string {
+  return [
+    "POST",
+    CRM_PATH,
+    CRM_OPERATION,
+    timestamp,
+    nonce,
+    operationId,
+    bodyHash,
+    CRM_CONTENT_TYPE,
+    keyId,
+  ].join("\n");
+}
+
+function crmHeaders({
+  body,
+  keyId,
+  secret,
+  operationId,
+  minimumTimestamp = 0,
+}: {
+  body: Buffer;
+  keyId: string;
+  secret: string;
+  operationId: string;
+  minimumTimestamp?: number;
+}): Record<string, string> {
+  const timestamp = Math.max(Math.floor(Date.now() / 1000), minimumTimestamp + 1).toString();
+  const nonce = randomUUID();
+  const bodyHash = createHash("sha256").update(body).digest("hex");
+  const canonical = canonicalCrmRequest({ timestamp, nonce, operationId, bodyHash, keyId });
+  const signature = createHmac("sha256", secret).update(canonical, "utf8").digest("hex");
+  return {
+    "content-type": CRM_CONTENT_TYPE,
+    "x-nova-key-id": keyId,
+    "x-nova-timestamp": timestamp,
+    "x-nova-nonce": nonce,
+    "x-nova-operation-id": operationId,
+    "x-nova-signature": signature,
+  };
+}
+
+function isCrmSuccess(value: unknown): value is {
+  success: true;
+  record_type: "crm.lead";
+  record_id: number;
+  reference: string;
+} {
+  if (!value || typeof value !== "object") return false;
+  const result = value as Record<string, unknown>;
+  return (
+    result["success"] === true &&
+    result["record_type"] === "crm.lead" &&
+    typeof result["record_id"] === "number" &&
+    Number.isInteger(result["record_id"]) &&
+    result["record_id"] > 0 &&
+    typeof result["reference"] === "string" &&
+    /^NWI-\d+$/.test(result["reference"])
+  );
+}
+
+async function createCrmEnquiry(submission: FormSubmission, sourcePath: string): Promise<void> {
   const url = requiredEnvironment("NOVA_CRM_ENQUIRY_URL");
-  const token = environment("NOVA_CRM_ENQUIRY_TOKEN");
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-  try {
-    const result = await fetch(url, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        ...(token ? { authorization: `Bearer ${token}` } : {}),
-      },
-      body: JSON.stringify({ source: "nova-public-website", ...submission }),
-      signal: controller.signal,
-    });
-    if (!result.ok) throw new Error(`CRM enquiry endpoint returned ${result.status}`);
-  } finally {
-    clearTimeout(timer);
+  const keyId = requiredEnvironment("NOVA_WEBSITE_INTAKE_KEY_ID");
+  const secret = requiredEnvironment("NOVA_WEBSITE_INTAKE_KEY_SECRET");
+  const body = Buffer.from(JSON.stringify(crmPayload(submission, sourcePath)), "utf8");
+  const operationId = `website-${randomUUID()}`;
+  let lastTimestamp = 0;
+
+  for (let attempt = 0; attempt < CRM_MAX_ATTEMPTS; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+      const headers = crmHeaders({
+        body,
+        keyId,
+        secret,
+        operationId,
+        minimumTimestamp: lastTimestamp,
+      });
+      lastTimestamp = Number(headers["x-nova-timestamp"]);
+      const result = await fetch(url, {
+        method: "POST",
+        headers,
+        body,
+        signal: controller.signal,
+      });
+      if (!result.ok) {
+        await result.arrayBuffer();
+        throw new CrmResponseError(result.status, result.status === 500 || result.status === 503);
+      }
+      const response = await result.json().catch(() => null);
+      if (!isCrmSuccess(response)) throw new CrmResponseError(502, false);
+      return;
+    } catch (error) {
+      const retryable = !(error instanceof CrmResponseError) || error.retryable;
+      if (!retryable || attempt === CRM_MAX_ATTEMPTS - 1) throw error;
+    } finally {
+      clearTimeout(timer);
+    }
   }
 }
 
@@ -308,7 +488,7 @@ export async function handleFormsRequest(request: Request): Promise<Response> {
       return response(400, { ok: false, message: "Please check the form details and try again" });
     }
     const submission = normaliseSubmission(payload);
-    await createCrmEnquiry(submission);
+    await createCrmEnquiry(submission, sourcePathForRequest(request));
     await sendMail(submission);
     return response(202, { ok: true, message: "Submission received" });
   } catch (error) {
