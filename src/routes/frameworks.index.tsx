@@ -1,19 +1,37 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks, Disclaimer } from "@/components/site/primitives";
+import type { ComponentProps } from "react";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  AvailabilityBadge,
+  RelatedLinks,
+  Disclaimer,
+} from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
-import { frameworkRegister, registerNote, registerPriorityMeaning, type RegisterPriority } from "@/data/framework-register";
+import {
+  frameworkRegister,
+  registerNote,
+  registerPriorityMeaning,
+  type RegisterPriority,
+} from "@/data/framework-register";
 import { cn } from "@/lib/utils";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+type FrameworkRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+const frameworkRouteTo = (path: string): FrameworkRouteTo => path as FrameworkRouteTo;
+
 export const Route = createFileRoute("/frameworks/")({
   head: () => ({
     ...pageMeta({
-      title: "Frameworks — NOVA Compliance",
-      description: "Compliance frameworks supported in NOVA, with availability status, readiness views and honest scope handling.",
+      title: "Compliance Frameworks | NOVA Compliance",
+      description:
+        "Compliance frameworks supported in NOVA, with availability status, readiness views and honest scope handling.",
       path: "/frameworks",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Frameworks", to: "/frameworks" }]))],
@@ -44,7 +62,7 @@ function PriorityBadge({ priority }: { priority: RegisterPriority }) {
 
 function FrameworksPage() {
   const available = frameworks.filter((f) => f.availability === "Available now");
-  const connected = frameworks.filter((f) => f.availability === "Available connected to your data");
+  const configurable = frameworks.filter((f) => f.availability === "Available by configuration");
 
   return (
     <>
@@ -82,10 +100,15 @@ function FrameworksPage() {
                   <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
                     <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
                     {f.jurisdictions.map((jurisdiction) => (
-                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">{jurisdiction}</span>
+                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                        {jurisdiction}
+                      </span>
                     ))}
                   </div>
-                  <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                  <Link
+                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  >
                     Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
                   </Link>
                 </div>
@@ -97,12 +120,12 @@ function FrameworksPage() {
 
       <Section tone="surface">
         <SectionHeading
-          eyebrow="Connected framework coverage"
-          title="Extend the programme to the data you govern"
-          description="These frameworks are supported where the relevant systems, records and evidence are connected or supplied for review."
+          eyebrow="Available by configuration"
+          title="Extend the programme to the requirements you govern"
+          description="These frameworks are available by configuration when the relevant systems, records and evidence are supplied for review."
         />
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {connected.map((f) => (
+          {configurable.map((f) => (
             <Card key={f.slug} interactive className="h-full">
               <div className="flex items-start gap-5">
                 {f.icon ? (
@@ -126,10 +149,15 @@ function FrameworksPage() {
                   <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
                     <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
                     {f.jurisdictions.map((jurisdiction) => (
-                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">{jurisdiction}</span>
+                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                        {jurisdiction}
+                      </span>
                     ))}
                   </div>
-                  <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                  <Link
+                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  >
                     Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
                   </Link>
                 </div>
@@ -144,12 +172,19 @@ function FrameworksPage() {
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="eyebrow">Custom framework available</p>
-              <h2 className="mt-2 text-2xl font-semibold">Bring requirements beyond the standard library</h2>
+              <h2 className="mt-2 text-2xl font-semibold">
+                Bring requirements beyond the standard library
+              </h2>
               <p className="mt-3 max-w-2xl text-muted-foreground">
-                NOVA can structure additional customer, contractual, regulatory or internal requirements as a governed framework, with human-reviewed mappings and evidence decisions.
+                NOVA can structure additional customer, contractual, regulatory or internal
+                requirements as a governed framework, with human-reviewed mappings and evidence
+                decisions.
               </p>
             </div>
-            <Link to="/book-demo" className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-primary hover:underline">
+            <Link
+              to="/book-demo"
+              className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
               Discuss your framework <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </Link>
           </div>
@@ -178,11 +213,21 @@ function FrameworksPage() {
                 <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
                   <thead className="bg-surface">
                     <tr>
-                      <th scope="col" className="px-4 py-3 font-semibold">Framework</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Jurisdiction</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Primary subject</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">NOVA relevance</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Priority</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Framework
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Jurisdiction
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Primary subject
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        NOVA relevance
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Priority
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -248,7 +293,10 @@ function FrameworksPage() {
                     <span className="text-muted-foreground">{f.value}%</span>
                   </div>
                   <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary">
-                    <span className="block h-full rounded-full bg-primary" style={{ width: `${f.value}%` }} />
+                    <span
+                      className="block h-full rounded-full bg-primary"
+                      style={{ width: `${f.value}%` }}
+                    />
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground">{f.label}</p>
                 </div>

@@ -15,13 +15,26 @@ export function Logo({ className, inverted = false }: { className?: string; inve
         src="/media/brand/nova-shield.png"
         alt=""
         aria-hidden="true"
+        width={80}
+        height={80}
+        decoding="async"
         className="h-20 w-20 shrink-0 object-contain"
       />
       <span className="leading-none">
-        <span className={cn("wordmark block text-2xl font-bold tracking-tight", inverted ? "text-ink-foreground" : "text-foreground")}>
+        <span
+          className={cn(
+            "wordmark block text-2xl font-bold tracking-tight",
+            inverted ? "text-ink-foreground" : "text-foreground",
+          )}
+        >
           NOVA
         </span>
-        <span className={cn("block text-sm font-medium uppercase tracking-[0.18em]", inverted ? "text-ink-foreground/60" : "text-muted-foreground")}>
+        <span
+          className={cn(
+            "block text-sm font-medium uppercase tracking-[0.18em]",
+            inverted ? "text-ink-foreground/60" : "text-muted-foreground",
+          )}
+        >
           Compliance
         </span>
       </span>

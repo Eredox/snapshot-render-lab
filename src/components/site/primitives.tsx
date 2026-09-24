@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Check, ChevronRight } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+
+type PrimitiveRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+const primitiveRouteTo = (path: string): PrimitiveRouteTo => path as PrimitiveRouteTo;
 
 export function Section({
   children,
@@ -21,7 +24,10 @@ export function Section({
     ink: "bg-ink text-ink-foreground",
   } as const;
   return (
-    <section id={id} className={cn("border-b border-border py-14 md:py-20", tones[tone], className)}>
+    <section
+      id={id}
+      className={cn("border-b border-border py-14 md:py-20", tones[tone], className)}
+    >
       <div className="container-page">{children}</div>
     </section>
   );
@@ -54,7 +60,12 @@ export function SectionHeading({
         {title}
       </Heading>
       {description ? (
-        <p className={cn("mt-4 text-lg", inverted ? "text-ink-foreground/75" : "text-muted-foreground")}>
+        <p
+          className={cn(
+            "mt-4 text-lg",
+            inverted ? "text-ink-foreground/75" : "text-muted-foreground",
+          )}
+        >
           {description}
         </p>
       ) : null}
@@ -86,23 +97,23 @@ export function Card({
 
 export function AvailabilityBadge({ value }: { value: string }) {
   const isAvailable = value === "Available now";
-  const isConnected = value === "Available connected to your data";
+  const isConfigurable = value === "Available by configuration";
   const isCustom = value === "Custom framework available";
   return (
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium",
         isAvailable && "bg-primary-soft text-accent-foreground",
-        isConnected && "bg-ember-soft text-ember-foreground",
+        isConfigurable && "bg-ember-soft text-ember-foreground",
         isCustom && "bg-secondary text-foreground",
-        !isAvailable && !isConnected && !isCustom && "bg-secondary text-secondary-foreground",
+        !isAvailable && !isConfigurable && !isCustom && "bg-secondary text-secondary-foreground",
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
           "h-1.5 w-1.5 rounded-full",
-          isAvailable ? "bg-primary" : isConnected ? "bg-ember" : "bg-muted-foreground",
+          isAvailable ? "bg-primary" : isConfigurable ? "bg-ember" : "bg-muted-foreground",
         )}
       />
       {value}
@@ -155,7 +166,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {item.label}
               </span>
             ) : (
-              <Link to={item.to as any} className="hover:text-primary hover:underline">
+              <Link to={primitiveRouteTo(item.to)} className="hover:text-primary hover:underline">
                 {item.label}
               </Link>
             )}
@@ -211,12 +222,14 @@ export function RelatedLinks({
   if (items.length === 0) return null;
   return (
     <div className={className}>
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">{title}</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        {title}
+      </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <Link
             key={item.to}
-            to={item.to as any}
+            to={primitiveRouteTo(item.to)}
             className="group rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-soft"
           >
             <span className="flex items-center justify-between gap-2 font-medium group-hover:text-primary">

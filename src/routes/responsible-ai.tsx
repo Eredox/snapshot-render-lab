@@ -1,14 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks } from "@/components/site/primitives";
+import type { ComponentProps } from "react";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  FeatureList,
+  RelatedLinks,
+} from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+type ResponsibleRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+const responsibleRouteTo = (path: string): ResponsibleRouteTo => path as ResponsibleRouteTo;
+
 export const Route = createFileRoute("/responsible-ai")({
   head: () => ({
     ...pageMeta({
-      title: "Responsible AI — NOVA Compliance",
-      description: "How NOVA uses AI to assist compliance work, the boundaries we keep, and the accountabilities that remain with people.",
+      title: "Responsible AI Governance | NOVA Compliance",
+      description:
+        "How NOVA uses AI to assist compliance work, the boundaries we keep, and the accountabilities that remain with people.",
       path: "/responsible-ai",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Responsible AI", to: "/responsible-ai" }]))],
@@ -36,7 +48,16 @@ const commitments = [
 ];
 
 const related = [
-  { label: "AI Assistant feature", to: "/features/ai-assistant", description: "Capabilities and availability" },
+  {
+    label: "AI Assistant feature",
+    to: "/features/ai-assistant",
+    description: "Capabilities and availability",
+  },
+  {
+    label: "ISO/IEC 42001",
+    to: "/frameworks/iso-42001",
+    description: "AI management system framework",
+  },
   { label: "Security", to: "/security", description: "Security practices" },
   { label: "Trust and assurance", to: "/trust", description: "How we support customer assurance" },
 ];
@@ -98,11 +119,15 @@ function ResponsibleAIPage() {
       <Section tone="surface">
         <SectionHeading eyebrow="Governance" title="How AI outputs are kept accountable" />
         <p className="text-muted-foreground">
-          AI-generated suggestions are stored with attribution. A reviewer must accept, edit or reject each suggestion
-          before it becomes part of the governed record. Audit history shows who reviewed the output and when.
+          AI-generated suggestions are stored with attribution. A reviewer must accept, edit or
+          reject each suggestion before it becomes part of the governed record. Audit history shows
+          who reviewed the output and when.
         </p>
         <div className="mt-6">
-          <Link to={"/features/ai-assistant" as any} className="text-primary underline">
+          <Link
+            to={responsibleRouteTo("/features/ai-assistant")}
+            className="text-primary underline"
+          >
             Read more about the AI Assistant capability
           </Link>
         </div>

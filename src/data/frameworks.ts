@@ -1,4 +1,5 @@
-export type Availability = "Available now" | "Available connected to your data" | "Custom framework available";
+export type Availability =
+  "Available now" | "Available by configuration" | "Custom framework available";
 
 export type Framework = {
   slug: string;
@@ -48,11 +49,26 @@ export const frameworks: Framework[] = [
       "Organisations that repeatedly answer the same security questionnaires",
     ],
     governanceAreas: [
-      { title: "Control environment", body: "Governance structures, accountability and the way management communicates expectations." },
-      { title: "Risk assessment", body: "Identifying, analysing and responding to risks that threaten the service commitments." },
-      { title: "Monitoring", body: "Ongoing and separate evaluations that detect control deficiencies before an examination does." },
-      { title: "Logical and physical access", body: "Who can reach systems and data, how that access is granted, reviewed and removed." },
-      { title: "Change and operations", body: "How changes are authorised, tested and released, and how incidents are handled." },
+      {
+        title: "Control environment",
+        body: "Governance structures, accountability and the way management communicates expectations.",
+      },
+      {
+        title: "Risk assessment",
+        body: "Identifying, analysing and responding to risks that threaten the service commitments.",
+      },
+      {
+        title: "Monitoring",
+        body: "Ongoing and separate evaluations that detect control deficiencies before an examination does.",
+      },
+      {
+        title: "Logical and physical access",
+        body: "Who can reach systems and data, how that access is granted, reviewed and removed.",
+      },
+      {
+        title: "Change and operations",
+        body: "How changes are authorised, tested and released, and how incidents are handled.",
+      },
     ],
     novaSupport: [
       "Activate the Trust Services Criteria you commit to and record scope decisions in one place",
@@ -94,11 +110,26 @@ export const frameworks: Framework[] = [
       "Groups consolidating several security programmes under one management system",
     ],
     governanceAreas: [
-      { title: "Context and scope", body: "Interested parties, boundaries of the management system and the issues that affect it." },
-      { title: "Leadership and policy", body: "Management commitment, the information security policy and assigned responsibilities." },
-      { title: "Risk management", body: "Risk assessment methodology, treatment plans and residual risk acceptance." },
-      { title: "Annex A controls", body: "Organisational, people, physical and technological controls determined to be applicable." },
-      { title: "Performance evaluation", body: "Internal audit, monitoring, measurement and management review." },
+      {
+        title: "Context and scope",
+        body: "Interested parties, boundaries of the management system and the issues that affect it.",
+      },
+      {
+        title: "Leadership and policy",
+        body: "Management commitment, the information security policy and assigned responsibilities.",
+      },
+      {
+        title: "Risk management",
+        body: "Risk assessment methodology, treatment plans and residual risk acceptance.",
+      },
+      {
+        title: "Annex A controls",
+        body: "Organisational, people, physical and technological controls determined to be applicable.",
+      },
+      {
+        title: "Performance evaluation",
+        body: "Internal audit, monitoring, measurement and management review.",
+      },
     ],
     novaSupport: [
       "Maintain the Statement of Applicability alongside the controls it refers to",
@@ -141,11 +172,26 @@ export const frameworks: Framework[] = [
       "Teams that want a concrete technical baseline before broader certification",
     ],
     governanceAreas: [
-      { title: "Application control", body: "Preventing execution of unapproved applications and scripts." },
-      { title: "Patching", body: "Applications and operating systems patched within defined timeframes." },
-      { title: "Configuration hardening", body: "Macro settings and user application hardening applied consistently." },
-      { title: "Administrative privileges", body: "Restricting, reviewing and monitoring privileged access." },
-      { title: "Authentication and recovery", body: "Multi-factor authentication and regular, tested backups." },
+      {
+        title: "Application control",
+        body: "Preventing execution of unapproved applications and scripts.",
+      },
+      {
+        title: "Patching",
+        body: "Applications and operating systems patched within defined timeframes.",
+      },
+      {
+        title: "Configuration hardening",
+        body: "Macro settings and user application hardening applied consistently.",
+      },
+      {
+        title: "Administrative privileges",
+        body: "Restricting, reviewing and monitoring privileged access.",
+      },
+      {
+        title: "Authentication and recovery",
+        body: "Multi-factor authentication and regular, tested backups.",
+      },
     ],
     novaSupport: [
       "Record the target maturity level and the current assessed level per strategy",
@@ -186,11 +232,26 @@ export const frameworks: Framework[] = [
       "Existing ISO/IEC 27001 holders extending governance to AI systems",
     ],
     governanceAreas: [
-      { title: "AI policy and roles", body: "Governance intent, accountability and the roles that approve AI use." },
-      { title: "Impact assessment", body: "Assessing effects of AI systems on individuals, groups and the organisation." },
-      { title: "Lifecycle governance", body: "Requirements across design, development, deployment, monitoring and retirement." },
-      { title: "Data governance", body: "Provenance, quality and appropriateness of the data used by AI systems." },
-      { title: "Human oversight", body: "Where a person must review, approve or override an automated output." },
+      {
+        title: "AI policy and roles",
+        body: "Governance intent, accountability and the roles that approve AI use.",
+      },
+      {
+        title: "Impact assessment",
+        body: "Assessing effects of AI systems on individuals, groups and the organisation.",
+      },
+      {
+        title: "Lifecycle governance",
+        body: "Requirements across design, development, deployment, monitoring and retirement.",
+      },
+      {
+        title: "Data governance",
+        body: "Provenance, quality and appropriateness of the data used by AI systems.",
+      },
+      {
+        title: "Human oversight",
+        body: "Where a person must review, approve or override an automated output.",
+      },
     ],
     novaSupport: [
       "Maintain AI system inventory entries with owner, purpose and lifecycle stage",
@@ -216,19 +277,44 @@ export const frameworks: Framework[] = [
     shortName: "GDPR",
     icon: "/media/frameworks/gdpr.png",
     category: "Privacy",
-    availability: "Available connected to your data",
+    availability: "Available by configuration",
     jurisdictions: ["European Union / EEA"],
-    description: "Regulatory privacy requirements for organisations handling personal data in the EU/EEA and related contexts.",
-    overview: ["NOVA provides a structured GDPR readiness record for obligations, applicability decisions, evidence, risks and privacy governance."],
-    intendedFor: ["Organisations handling EU/EEA personal data", "Teams maintaining records of processing and privacy evidence"],
-    governanceAreas: [
-      { title: "Accountability", body: "Record ownership, decisions, policies and review evidence for privacy obligations." },
-      { title: "Data subject rights", body: "Track rights handling, requests, decisions and response evidence." },
-      { title: "Processing governance", body: "Maintain processing, retention, transfer and processor records." },
+    description:
+      "Regulatory privacy requirements for organisations handling personal data in the EU/EEA and related contexts.",
+    overview: [
+      "NOVA provides a structured GDPR readiness record for obligations, applicability decisions, evidence, risks and privacy governance.",
     ],
-    novaSupport: ["Map privacy requirements to evidence and policies", "Keep applicability and human review decisions visible", "Connect data inventory and incident records where available"],
-    controlsAndEvidence: ["Records of processing activities", "Privacy notices and DPIA evidence", "Data subject request and breach registers"],
-    crossFramework: ["Privacy and security evidence can be reused where it genuinely satisfies both GDPR obligations and security controls."],
+    intendedFor: [
+      "Organisations handling EU/EEA personal data",
+      "Teams maintaining records of processing and privacy evidence",
+    ],
+    governanceAreas: [
+      {
+        title: "Accountability",
+        body: "Record ownership, decisions, policies and review evidence for privacy obligations.",
+      },
+      {
+        title: "Data subject rights",
+        body: "Track rights handling, requests, decisions and response evidence.",
+      },
+      {
+        title: "Processing governance",
+        body: "Maintain processing, retention, transfer and processor records.",
+      },
+    ],
+    novaSupport: [
+      "Map privacy requirements to evidence and policies",
+      "Keep applicability and human review decisions visible",
+      "Connect data inventory and incident records where available",
+    ],
+    controlsAndEvidence: [
+      "Records of processing activities",
+      "Privacy notices and DPIA evidence",
+      "Data subject request and breach registers",
+    ],
+    crossFramework: [
+      "Privacy and security evidence can be reused where it genuinely satisfies both GDPR obligations and security controls.",
+    ],
     keywords: ["gdpr", "privacy", "data protection", "europe"],
   },
   {
@@ -237,19 +323,44 @@ export const frameworks: Framework[] = [
     shortName: "PCI DSS",
     icon: "/media/frameworks/pci-dss.png",
     category: "Financial services",
-    availability: "Available connected to your data",
+    availability: "Available by configuration",
     jurisdictions: ["Global"],
-    description: "Payment-card security readiness for environments that store, process or transmit cardholder data.",
-    overview: ["NOVA supports PCI DSS readiness tracking with scope, requirements, evidence, targeted risk analysis and human review records."],
-    intendedFor: ["Payment service providers", "Merchants and service providers with cardholder-data environments"],
-    governanceAreas: [
-      { title: "Scope", body: "Define the cardholder-data environment and connected systems before assessment work begins." },
-      { title: "Security requirements", body: "Track technical and organisational requirements with owners and evidence." },
-      { title: "Validation", body: "Keep review, remediation and assessor-facing records together." },
+    description:
+      "Payment-card security readiness for environments that store, process or transmit cardholder data.",
+    overview: [
+      "NOVA supports PCI DSS readiness tracking with scope, requirements, evidence, targeted risk analysis and human review records.",
     ],
-    novaSupport: ["Maintain requirement-level readiness records", "Link evidence, risks, policies and assets to the defined scope", "Keep future-dated requirement decisions visible"],
-    controlsAndEvidence: ["Network and access reviews", "Vulnerability and configuration evidence", "Targeted risk analysis and remediation records"],
-    crossFramework: ["Payment security evidence can overlap with SOC 2, ISO/IEC 27001 and Essential Eight controls where the scope is shared."],
+    intendedFor: [
+      "Payment service providers",
+      "Merchants and service providers with cardholder-data environments",
+    ],
+    governanceAreas: [
+      {
+        title: "Scope",
+        body: "Define the cardholder-data environment and connected systems before assessment work begins.",
+      },
+      {
+        title: "Security requirements",
+        body: "Track technical and organisational requirements with owners and evidence.",
+      },
+      {
+        title: "Validation",
+        body: "Keep review, remediation and assessor-facing records together.",
+      },
+    ],
+    novaSupport: [
+      "Maintain requirement-level readiness records",
+      "Link evidence, risks, policies and assets to the defined scope",
+      "Keep future-dated requirement decisions visible",
+    ],
+    controlsAndEvidence: [
+      "Network and access reviews",
+      "Vulnerability and configuration evidence",
+      "Targeted risk analysis and remediation records",
+    ],
+    crossFramework: [
+      "Payment security evidence can overlap with SOC 2, ISO/IEC 27001 and Essential Eight controls where the scope is shared.",
+    ],
     keywords: ["pci dss", "payment cards", "cardholder data", "v4.0.1"],
   },
   {
@@ -258,19 +369,44 @@ export const frameworks: Framework[] = [
     shortName: "HIPAA",
     icon: "/media/frameworks/hipaa.png",
     category: "Healthcare privacy",
-    availability: "Available connected to your data",
+    availability: "Available by configuration",
     jurisdictions: ["United States"],
-    description: "US healthcare privacy, security and breach-notification readiness for covered entities and business associates.",
-    overview: ["NOVA supports HIPAA readiness records for Security Rule, Privacy Rule, Breach Notification Rule and business-associate obligations."],
-    intendedFor: ["Covered entities handling protected health information", "Business associates processing health data for customers"],
-    governanceAreas: [
-      { title: "Security safeguards", body: "Track administrative, physical and technical safeguards with evidence." },
-      { title: "Privacy and disclosure", body: "Record permitted-use, minimum-necessary and individual-rights decisions." },
-      { title: "Breach response", body: "Maintain assessment, escalation and notification decision records." },
+    description:
+      "US healthcare privacy, security and breach-notification readiness for covered entities and business associates.",
+    overview: [
+      "NOVA supports HIPAA readiness records for Security Rule, Privacy Rule, Breach Notification Rule and business-associate obligations.",
     ],
-    novaSupport: ["Record safeguard applicability and human review", "Link ePHI system, access and training evidence", "Track breach assessment and business-associate governance"],
-    controlsAndEvidence: ["Security risk analysis", "Access, MFA and audit-log reviews", "Business-associate and breach registers"],
-    crossFramework: ["Access, incident, continuity and audit evidence can support related security frameworks where it is materially applicable."],
+    intendedFor: [
+      "Covered entities handling protected health information",
+      "Business associates processing health data for customers",
+    ],
+    governanceAreas: [
+      {
+        title: "Security safeguards",
+        body: "Track administrative, physical and technical safeguards with evidence.",
+      },
+      {
+        title: "Privacy and disclosure",
+        body: "Record permitted-use, minimum-necessary and individual-rights decisions.",
+      },
+      {
+        title: "Breach response",
+        body: "Maintain assessment, escalation and notification decision records.",
+      },
+    ],
+    novaSupport: [
+      "Record safeguard applicability and human review",
+      "Link ePHI system, access and training evidence",
+      "Track breach assessment and business-associate governance",
+    ],
+    controlsAndEvidence: [
+      "Security risk analysis",
+      "Access, MFA and audit-log reviews",
+      "Business-associate and breach registers",
+    ],
+    crossFramework: [
+      "Access, incident, continuity and audit evidence can support related security frameworks where it is materially applicable.",
+    ],
     keywords: ["hipaa", "phi", "security rule", "healthcare"],
   },
   {
@@ -279,24 +415,49 @@ export const frameworks: Framework[] = [
     shortName: "CMMC",
     icon: "/media/frameworks/cmmc.png",
     category: "Government & defence",
-    availability: "Available connected to your data",
+    availability: "Available by configuration",
     jurisdictions: ["United States"],
-    description: "US defence-industrial cybersecurity readiness across CMMC practices, scope, evidence and assessment preparation.",
-    overview: ["NOVA supports CMMC readiness tracking with level-aware practices, scope records, evidence, risks and human-owned assessment decisions."],
-    intendedFor: ["Defence industrial base organisations", "Suppliers handling FCI or CUI within an assessed boundary"],
-    governanceAreas: [
-      { title: "Assessment scope", body: "Record the system boundary, assets, dependencies and applicability decisions." },
-      { title: "Maturity practices", body: "Track practices and evidence by target level with accountable owners." },
-      { title: "Assessment preparation", body: "Keep SSP, POA&M, risk and review records ready for human assessment." },
+    description:
+      "US defence-industrial cybersecurity readiness across CMMC practices, scope, evidence and assessment preparation.",
+    overview: [
+      "NOVA supports CMMC readiness tracking with level-aware practices, scope records, evidence, risks and human-owned assessment decisions.",
     ],
-    novaSupport: ["Maintain level-aware practice readiness", "Link scope assets, policies, risks and evidence", "Preserve the boundary that NOVA does not issue certification or official assessment results"],
-    controlsAndEvidence: ["System security plan and scope records", "MFA, logging and vulnerability evidence", "POA&M and supplier-flowdown records"],
-    crossFramework: ["CMMC evidence may overlap with Essential Eight, ISO/IEC 27001 and other security programmes where scope and requirements align."],
+    intendedFor: [
+      "Defence industrial base organisations",
+      "Suppliers handling FCI or CUI within an assessed boundary",
+    ],
+    governanceAreas: [
+      {
+        title: "Assessment scope",
+        body: "Record the system boundary, assets, dependencies and applicability decisions.",
+      },
+      {
+        title: "Maturity practices",
+        body: "Track practices and evidence by target level with accountable owners.",
+      },
+      {
+        title: "Assessment preparation",
+        body: "Keep SSP, POA&M, risk and review records ready for human assessment.",
+      },
+    ],
+    novaSupport: [
+      "Maintain level-aware practice readiness",
+      "Link scope assets, policies, risks and evidence",
+      "Preserve the boundary that NOVA does not issue certification or official assessment results",
+    ],
+    controlsAndEvidence: [
+      "System security plan and scope records",
+      "MFA, logging and vulnerability evidence",
+      "POA&M and supplier-flowdown records",
+    ],
+    crossFramework: [
+      "CMMC evidence may overlap with Essential Eight, ISO/IEC 27001 and other security programmes where scope and requirements align.",
+    ],
     keywords: ["cmmc", "defence industrial base", "cui", "maturity"],
   },
 ];
 
-export const availabilityGroups: Availability[] = ["Available now", "Available connected to your data"];
+export const availabilityGroups: Availability[] = ["Available now", "Available by configuration"];
 
 export const frameworkCategories = Array.from(new Set(frameworks.map((f) => f.category)));
 

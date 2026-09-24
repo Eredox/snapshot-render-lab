@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { site } from "@/config/site";
 
@@ -13,6 +13,9 @@ const variants = {
 } as const;
 
 export type CtaVariant = keyof typeof variants;
+type RouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+
+const routeTo = (path: string): RouteTo => path as RouteTo;
 
 export function CtaLink({
   to,
@@ -44,7 +47,7 @@ export function CtaLink({
   }
 
   return (
-    <Link to={to as any} className={classes}>
+    <Link to={routeTo(to)} className={classes}>
       {children}
     </Link>
   );
@@ -55,11 +58,13 @@ export function ConversionCta({
   description = "Start free to explore the workflow, or walk through your framework, evidence and reporting requirements with us.",
   primary = { label: "Start free", to: "/start" },
   secondary = { label: "Book a demo", to: "/book-demo" },
+  tertiary,
 }: {
   title?: string;
   description?: string;
   primary?: { label: string; to: string };
   secondary?: { label: string; to: string };
+  tertiary?: { label: string; to: string };
 }) {
   return (
     <section className="bg-ink py-16 text-ink-foreground md:py-20">
@@ -71,12 +76,21 @@ export function ConversionCta({
             <p className="mt-6 text-sm text-ink-foreground/60">{site.humanStatement}</p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink to={primary.to as any} variant="primary">
+            <CtaLink to={primary.to} variant="primary">
               {primary.label}
             </CtaLink>
-            <CtaLink to={secondary.to as any} variant="inverted">
+            <CtaLink to={secondary.to} variant="inverted">
               {secondary.label}
             </CtaLink>
+            {tertiary ? (
+              <CtaLink
+                to={tertiary.to}
+                variant="ghost"
+                className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
+              >
+                {tertiary.label}
+              </CtaLink>
+            ) : null}
           </div>
         </div>
       </div>

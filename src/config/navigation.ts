@@ -4,7 +4,7 @@ import { solutions } from "@/data/solutions";
 import { legalDocs } from "@/data/legal";
 import { resources } from "@/data/resources";
 import { plans } from "@/data/pricing";
-import { appUrls } from "@/config/site";
+import { appUrls, authoritativeLegalUrls } from "@/config/site";
 
 /**
  * Central route and navigation registry.
@@ -67,11 +67,23 @@ export const staticRoutes = [
 export const dynamicRoutes: { pattern: string; slugs: string[] }[] = [
   { pattern: "/features/$slug", slugs: features.map((f) => f.slug) },
   { pattern: "/frameworks/$slug", slugs: frameworks.map((f) => f.slug) },
-  { pattern: "/industries/$slug", slugs: ["finance", "healthcare", "technology", "government", "legal", "startups"] },
+  {
+    pattern: "/industries/$slug",
+    slugs: ["finance", "healthcare", "technology", "government", "legal", "startups"],
+  },
   { pattern: "/solutions/$slug", slugs: solutions.map((s) => s.slug) },
-  { pattern: "/resources/blog/$slug", slugs: resources.filter((r) => r.type === "Blog article").map((r) => r.slug) },
-  { pattern: "/resources/guides/$slug", slugs: resources.filter((r) => r.type === "Guide").map((r) => r.slug) },
-  { pattern: "/resources/product-updates/$slug", slugs: resources.filter((r) => r.type === "Product update").map((r) => r.slug) },
+  {
+    pattern: "/resources/blog/$slug",
+    slugs: resources.filter((r) => r.type === "Blog article").map((r) => r.slug),
+  },
+  {
+    pattern: "/resources/guides/$slug",
+    slugs: resources.filter((r) => r.type === "Guide").map((r) => r.slug),
+  },
+  {
+    pattern: "/resources/product-updates/$slug",
+    slugs: resources.filter((r) => r.type === "Product update").map((r) => r.slug),
+  },
   { pattern: "/legal/$slug", slugs: legalDocs.map((d) => d.slug) },
   { pattern: "/plans/$slug", slugs: plans.map((p) => p.slug) },
 ];
@@ -127,7 +139,11 @@ export const resourcesMenu: NavItem[] = [
   { label: "Resource library", to: "/resources", description: "Everything in one place" },
   { label: "Blog", to: "/resources/blog", description: "Compliance, GRC and assurance insights" },
   { label: "Guides", to: "/resources/guides", description: "Practical, hands-on material" },
-  { label: "Product updates", to: "/resources/product-updates", description: "Release information" },
+  {
+    label: "Product updates",
+    to: "/resources/product-updates",
+    description: "Release information",
+  },
   { label: "FAQ", to: "/resources/faq", description: "Questions we are asked most" },
   { label: "About Eredox", to: "/about", description: "Who builds NOVA" },
   { label: "Support", to: "/support", description: "Getting help" },
@@ -140,17 +156,30 @@ export type HeaderEntry =
 
 export const headerNav: HeaderEntry[] = [
   { kind: "dropdown", label: "Platform", id: "platform", groups: platformMenu },
-  { kind: "dropdown", label: "Frameworks", id: "frameworks", groups: [{ label: "Frameworks", items: frameworksMenu }] },
-  { kind: "dropdown", label: "Solutions", id: "solutions", groups: [{ label: "Solutions", items: solutionsMenu }] },
+  {
+    kind: "dropdown",
+    label: "Frameworks",
+    id: "frameworks",
+    groups: [{ label: "Frameworks", items: frameworksMenu }],
+  },
+  {
+    kind: "dropdown",
+    label: "Solutions",
+    id: "solutions",
+    groups: [{ label: "Solutions", items: solutionsMenu }],
+  },
   { kind: "dropdown", label: "Trust", id: "trust", groups: [{ label: "Trust", items: trustMenu }] },
-  { kind: "dropdown", label: "Resources", id: "resources", groups: [{ label: "Resources", items: resourcesMenu }] },
+  {
+    kind: "dropdown",
+    label: "Resources",
+    id: "resources",
+    groups: [{ label: "Resources", items: resourcesMenu }],
+  },
   { kind: "link", label: "Pricing", to: "/pricing" },
 ];
 
 /** External application destinations — rendered distinctly from internal routes. */
-export const externalNav: NavItem[] = [
-  { label: "Sign in", to: appUrls.app, external: true },
-];
+export const externalNav: NavItem[] = [{ label: "Sign in", to: appUrls.app, external: true }];
 
 export const footerColumns: NavGroup[] = [
   {
@@ -188,6 +217,8 @@ export const footerColumns: NavGroup[] = [
     label: "Legal",
     items: [
       { label: "Legal centre", to: "/legal" },
+      { label: "Terms", to: authoritativeLegalUrls.terms, external: true },
+      { label: "Privacy", to: authoritativeLegalUrls.privacy, external: true },
       ...legalDocs.map((d) => ({ label: d.navLabel, to: `/legal/${d.slug}` })),
     ],
   },
@@ -200,7 +231,11 @@ export function collectInternalNavPaths(): string[] {
     if (entry.kind === "link") paths.push(entry.to);
     else for (const g of entry.groups) for (const i of g.items) paths.push(i.to);
   }
-  for (const col of footerColumns) for (const i of col.items) paths.push(i.to);
+  for (const col of footerColumns) {
+    for (const i of col.items) {
+      if (!i.external && i.to.startsWith("/")) paths.push(i.to);
+    }
+  }
   paths.push("/start", "/book-demo", "/contact", "/support", "/");
   return Array.from(new Set(paths));
 }

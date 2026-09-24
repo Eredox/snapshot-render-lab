@@ -16,12 +16,7 @@ import { integrations } from "@/data/integrations";
 import { features } from "@/data/features";
 import { pricingFaqs, supportComparison } from "@/data/pricing";
 
-export type ResourceType =
-  | "Blog article"
-  | "Guide"
-  | "Product update"
-  | "Case study"
-  | "Webinar";
+export type ResourceType = "Blog article" | "Guide" | "Product update" | "Case study" | "Webinar";
 
 export type ResourceStatus = "Published" | "Coming soon";
 
@@ -98,7 +93,10 @@ export const plannedBlogTopics: { title: string; category: string }[] = [
   { title: "Preparing for a SOC 2 Type II period", category: "Frameworks" },
   { title: "Understanding Essential Eight maturity", category: "Frameworks" },
   { title: "ISO/IEC 42001 and AI management systems", category: "Responsible AI" },
-  { title: "How control mapping reduces duplicate compliance work", category: "Programme management" },
+  {
+    title: "How control mapping reduces duplicate compliance work",
+    category: "Programme management",
+  },
   { title: "What makes evidence audit-ready?", category: "Evidence" },
   { title: "What is risk acceptance?", category: "Risk" },
   { title: "Human oversight in AI-assisted compliance", category: "Responsible AI" },
@@ -181,7 +179,8 @@ export const resources: Resource[] = [
     type: "Blog article",
     category: "Responsible AI",
     status: "Coming soon",
-    summary: "Where the boundary sits between assistance and approval, and why it must be explicit.",
+    summary:
+      "Where the boundary sits between assistance and approval, and why it must be explicit.",
   },
   {
     slug: "evidence-that-survives-an-audit",
@@ -285,14 +284,19 @@ export const publishedResources = resources
  * normalised. Old path -> current canonical path.
  */
 export const legacyResourceRedirects: Record<string, string> = {
-  "/resources/case-studies/choosing-your-first-framework": "/resources/blog/choosing-your-first-framework",
-  "/resources/case-studies/risk-acceptance-that-holds-up": "/resources/blog/risk-acceptance-that-holds-up",
+  "/resources/case-studies/choosing-your-first-framework":
+    "/resources/blog/choosing-your-first-framework",
+  "/resources/case-studies/risk-acceptance-that-holds-up":
+    "/resources/blog/risk-acceptance-that-holds-up",
   "/resources/case-studies/human-oversight-in-ai-assisted-compliance":
     "/resources/blog/human-oversight-in-ai-assisted-compliance",
   "/resources/blog/nova-platform-update": "/resources/product-updates/nova-platform-update",
-  "/resources/webinars/evidence-that-survives-an-audit": "/resources/guides/evidence-that-survives-an-audit",
-  "/resources/webinars/control-ownership-in-small-teams": "/resources/guides/control-ownership-in-small-teams",
-  "/resources/webinars/preparing-for-a-type-ii-period": "/resources/guides/preparing-for-a-type-ii-period",
+  "/resources/webinars/evidence-that-survives-an-audit":
+    "/resources/guides/evidence-that-survives-an-audit",
+  "/resources/webinars/control-ownership-in-small-teams":
+    "/resources/guides/control-ownership-in-small-teams",
+  "/resources/webinars/preparing-for-a-type-ii-period":
+    "/resources/guides/preparing-for-a-type-ii-period",
 };
 
 export type FaqLink = { label: string; to: string };
@@ -304,7 +308,7 @@ const availableFrameworkNames = frameworks
   .map((framework) => framework.name)
   .join(", ");
 const configurableFrameworkNames = frameworks
-  .filter((framework) => framework.availability === "Available connected to your data")
+  .filter((framework) => framework.availability === "Available by configuration")
   .map((framework) => framework.name)
   .join(", ");
 const availableIntegrationNames = integrations
@@ -312,9 +316,15 @@ const availableIntegrationNames = integrations
   .map((integration) => integration.name)
   .join(", ");
 const aiAssistant = features.find((feature) => feature.slug === "ai-assistant");
-const aiCapabilityNames = aiAssistant?.capabilities.map((capability) => capability.title.toLowerCase()).join(", ") ?? "requirement explanation and drafting support";
-const planSupport = supportComparison.map((support) => `${support.plan}: ${support.channel}`).join("; ");
-const auditorAccessAnswer = pricingFaqs.find((faq) => faq.question === "Do you charge for auditor access?")?.answer ?? "Auditor access follows the entitlements shown on the pricing page.";
+const aiCapabilityNames =
+  aiAssistant?.capabilities.map((capability) => capability.title.toLowerCase()).join(", ") ??
+  "requirement explanation and drafting support";
+const planSupport = supportComparison
+  .map((support) => `${support.plan}: ${support.channel}`)
+  .join("; ");
+const auditorAccessAnswer =
+  pricingFaqs.find((faq) => faq.question === "Do you charge for auditor access?")?.answer ??
+  "Auditor access follows the entitlements shown on the pricing page.";
 
 export const faqCategories: FaqCategory[] = [
   {
@@ -349,7 +359,8 @@ export const faqCategories: FaqCategory[] = [
     category: "Getting started",
     items: [
       {
-        question: "Do we need NOVA before we start an audit, or only once we are already compliant?",
+        question:
+          "Do we need NOVA before we start an audit, or only once we are already compliant?",
         answer:
           "NOVA can be used before, during and after assessment: define scope, establish controls, assign owners, collect evidence, identify gaps, prepare for external review and maintain the programme afterwards. NOVA supports the work but does not make an organisation compliant by itself.",
       },
@@ -369,14 +380,14 @@ export const faqCategories: FaqCategory[] = [
     category: "Frameworks & requirements",
     items: [
       {
-        question: "What does \"27 available frameworks\" mean?",
+        question: 'What does "27 available frameworks" mean?',
         answer: `The governed NOVA catalogue contains ${governedFrameworkCatalogue.availableCount} framework capabilities across native and configurable support. ${governedFrameworkCatalogue.availabilityNote} Activation also depends on applicable requirements, entitlement and the evidence available for the customer scope.`,
         shortAnswer: `NOVA's governed catalogue contains ${governedFrameworkCatalogue.availableCount} framework capabilities across native and configurable support. Activation depends on scope, customer data, evidence and entitlement; it does not mean every framework is active for every customer.`,
         links: [{ label: "View framework availability", to: "/frameworks" }],
       },
       {
         question: "Which frameworks are available today?",
-        answer: `${availableFrameworkNames} are available now in the governed inventory. ${configurableFrameworkNames} are available connected to your data or configuration. The wider catalogue contains additional capabilities, and activation depends on scope and evidence.`,
+        answer: `${availableFrameworkNames} are available now in the governed inventory. ${configurableFrameworkNames} are available by configuration. The wider catalogue contains additional capabilities, and activation depends on scope and evidence.`,
         links: [{ label: "Browse the framework library", to: "/frameworks" }],
       },
       {
@@ -395,7 +406,8 @@ export const faqCategories: FaqCategory[] = [
           "Yes, where it legitimately demonstrates the mapped control or requirement. The mapping remains explicit and reviewable; evidence is not reused automatically without validation.",
       },
       {
-        question: "Can we add a framework, regulation, customer requirement or internal standard that is not already listed?",
+        question:
+          "Can we add a framework, regulation, customer requirement or internal standard that is not already listed?",
         answer:
           "Yes, through the Custom Framework capability. Additional requirements can be modelled and connected to controls, evidence, risks, owners, policies and reporting. NOVA does not provide legal interpretation.",
         links: [{ label: "Learn about frameworks", to: "/frameworks" }],
@@ -564,7 +576,9 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         question: "Can we change plans later?",
-        answer: pricingFaqs.find((faq) => faq.question === "Can we change plan later?")?.answer ?? "Yes. Plans change entitlements in the same governed workspace rather than requiring the programme to be rebuilt.",
+        answer:
+          pricingFaqs.find((faq) => faq.question === "Can we change plan later?")?.answer ??
+          "Yes. Plans change entitlements in the same governed workspace rather than requiring the programme to be rebuilt.",
         links: [{ label: "Compare plans", to: "/pricing" }],
       },
       {
@@ -583,14 +597,17 @@ export const faqCategories: FaqCategory[] = [
 
 const homepageFaqQuestions = [
   "What does NOVA actually do that spreadsheets and shared folders do not?",
-  "What does \"27 available frameworks\" mean?",
+  'What does "27 available frameworks" mean?',
   "What does NOVA actually automate, and what still needs human approval?",
   "Do we still need an independent auditor or certification body?",
   "How does NOVA help us govern AI use?",
 ] as const;
 
 export const homepageFaqItems: FaqItem[] = homepageFaqQuestions.map((question) => {
-  const item = faqCategories.flatMap((category) => category.items).find((candidate) => candidate.question === question);
-  if (!item) throw new Error(`Homepage FAQ question is not in the governed FAQ library: ${question}`);
+  const item = faqCategories
+    .flatMap((category) => category.items)
+    .find((candidate) => candidate.question === question);
+  if (!item)
+    throw new Error(`Homepage FAQ question is not in the governed FAQ library: ${question}`);
   return { ...item, answer: item.shortAnswer ?? item.answer };
 });

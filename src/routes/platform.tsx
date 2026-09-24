@@ -20,7 +20,7 @@ import { pageMeta, ldScript, breadcrumbSchema } from "@/lib/seo";
 export const Route = createFileRoute("/platform")({
   head: () => ({
     ...pageMeta({
-      title: "The NOVA compliance, GRC and AI governance platform",
+      title: "NOVA Compliance Platform | Governed GRC & AI Governance",
       description:
         "NOVA is a connected compliance management and GRC platform for multi-framework compliance, control management, evidence management, AI governance, integrations and audit readiness.",
       path: "/platform",

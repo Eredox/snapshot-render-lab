@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { staticRoutes, dynamicRoutes } from "@/config/navigation";
 import { publishedResources, resourcePath, typeRoutes } from "@/data/resources";
+import { legalDocs } from "@/data/legal";
 import { siteUrl } from "@/config/site";
 
 /** Resource detail URLs are emitted only for published items, from one place. */
@@ -16,12 +17,22 @@ function sitemapUrls(): { loc: string; lastmod?: string }[] {
     "/resources/case-studies",
     "/resources/webinars",
   ]);
+  const excludedDynamicPrefixes = [
+    "/plans",
+    ...legalDocs
+      .filter((doc) => doc.status === "Approved content pending")
+      .map((doc) => `/legal/${doc.slug}`),
+  ];
 
   const staticUrls = staticRoutes.filter((r) => !excluded.has(r)).map((r) => ({ loc: r }));
 
   const dynamicUrls = dynamicRoutes
     .flatMap((d) => d.slugs.map((s) => `${d.pattern.replace("/$slug", "")}/${s}`))
     .filter((path) => !isResourceDetail(path))
+    .filter(
+      (path) =>
+        !excludedDynamicPrefixes.some((prefix) => path === prefix || path.startsWith(`${prefix}/`)),
+    )
     .map((loc) => ({ loc }));
 
   const resourceUrls = publishedResources.map((r) => ({

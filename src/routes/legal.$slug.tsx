@@ -14,16 +14,26 @@ export const Route = createFileRoute("/legal/$slug")({
     const doc = loaderData?.doc;
     if (!doc) {
       return {
-        meta: [{ title: "Document not found — NOVA Compliance" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Document not found — NOVA Compliance" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     const path = `/legal/${doc.slug}`;
+    const baseMeta = pageMeta({
+      title: `${doc.title} — NOVA Compliance`,
+      description: doc.summary,
+      path,
+    });
     return {
-      ...pageMeta({
-        title: `${doc.title} — NOVA Compliance`,
-        description: doc.summary,
-        path,
-      }),
+      ...baseMeta,
+      meta: [
+        ...baseMeta.meta,
+        ...(doc.status === "Approved content pending"
+          ? [{ name: "robots", content: "noindex, follow" }]
+          : []),
+      ],
       scripts: [
         ldScript(
           breadcrumbSchema([
@@ -41,9 +51,16 @@ export const Route = createFileRoute("/legal/$slug")({
 function LegalNotFound() {
   return (
     <main>
-      <PageHero eyebrow="Legal" title="Document not found" description="That legal document does not exist." breadcrumbs={[{ label: "Legal", to: "/legal" }]} />
+      <PageHero
+        eyebrow="Legal"
+        title="Document not found"
+        description="That legal document does not exist."
+        breadcrumbs={[{ label: "Legal", to: "/legal" }]}
+      />
       <Section>
-        <Link to="/legal" className="text-primary underline">Back to legal</Link>
+        <Link to="/legal" className="text-primary underline">
+          Back to legal
+        </Link>
       </Section>
     </main>
   );
@@ -72,7 +89,9 @@ function LegalDetail() {
             <Disclaimer className="mb-8">{legalPendingNote}</Disclaimer>
           ) : null}
           <Card>
-            {doc.lastReviewed ? <p className="text-sm text-muted-foreground">Last reviewed: {doc.lastReviewed}</p> : null}
+            {doc.lastReviewed ? (
+              <p className="text-sm text-muted-foreground">Last reviewed: {doc.lastReviewed}</p>
+            ) : null}
             <div className="mt-4 space-y-8">
               {doc.sections.map((section) => (
                 <section key={section.heading}>
@@ -81,7 +100,9 @@ function LegalDetail() {
                   {section.body?.length ? (
                     <div className="mt-3 space-y-3">
                       {section.body.map((para, i) => (
-                        <p key={i} className="text-sm text-muted-foreground">{para}</p>
+                        <p key={i} className="text-sm text-muted-foreground">
+                          {para}
+                        </p>
                       ))}
                     </div>
                   ) : null}
@@ -89,7 +110,15 @@ function LegalDetail() {
               ))}
             </div>
           </Card>
-          <RelatedLinks className="mt-8" title="Related documents" items={related.map((d) => ({ label: d.title, to: `/legal/${d.slug}`, description: d.summary }))} />
+          <RelatedLinks
+            className="mt-8"
+            title="Related documents"
+            items={related.map((d) => ({
+              label: d.title,
+              to: `/legal/${d.slug}`,
+              description: d.summary,
+            }))}
+          />
         </div>
       </Section>
 

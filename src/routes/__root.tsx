@@ -15,7 +15,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { site } from "@/config/site";
-import { ldScript, organizationSchema, websiteSchema } from "@/lib/seo";
+import { defaultShareImage, ldScript, organizationSchema, websiteSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -23,13 +23,20 @@ function NotFoundComponent() {
       <span className="eyebrow text-4xl font-bold md:text-6xl">404</span>
       <h1 className="mt-4 text-2xl font-semibold">Page not found</h1>
       <p className="mt-3 max-w-md text-muted-foreground">
-        The page you were looking for does not exist or has moved. Try the navigation or return home.
+        The page you were looking for does not exist or has moved. Try the navigation or return
+        home.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Link to="/" className="inline-flex min-h-11 items-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+        <Link
+          to="/"
+          className="inline-flex min-h-11 items-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
           Go home
         </Link>
-        <Link to="/contact" className="inline-flex min-h-11 items-center rounded-lg border border-border-strong px-5 text-sm font-medium hover:bg-surface">
+        <Link
+          to="/contact"
+          className="inline-flex min-h-11 items-center rounded-lg border border-border-strong px-5 text-sm font-medium hover:bg-surface"
+        >
           Contact us
         </Link>
       </div>
@@ -47,7 +54,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page did not load</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page did not load
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -85,17 +94,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: site.tagline },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: site.productName },
+      { property: "og:image", content: defaultShareImage },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Eredox" },
+      { name: "twitter:image", content: defaultShareImage },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "apple-touch-icon", href: "/media/brand/nova-shield.png" },
-      { rel: "preload", href: "/fonts/cirqua.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      {
+        rel: "preload",
+        href: "/fonts/cirqua.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
     ],
     scripts: [ldScript(organizationSchema()), ldScript(websiteSchema())],
   }),
@@ -124,7 +146,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
         Skip to main content
       </a>
       <Header />

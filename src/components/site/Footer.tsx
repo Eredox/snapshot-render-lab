@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import type { ComponentProps } from "react";
 import { Logo } from "@/components/site/Logo";
 import { footerColumns } from "@/config/navigation";
 import { site, socialLinks } from "@/config/site";
 import { CookiePreferencesButton } from "@/components/site/CookieConsent";
+
+type FooterRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+const footerRouteTo = (path: string): FooterRouteTo => path as FooterRouteTo;
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -20,13 +24,30 @@ export function Footer() {
           <nav aria-label="Footer" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {footerColumns.map((col) => (
               <div key={col.label}>
-                <h2 className="text-xs font-semibold uppercase tracking-wider text-ink-foreground/50">{col.label}</h2>
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-ink-foreground/50">
+                  {col.label}
+                </h2>
                 <ul className="mt-4 space-y-2.5">
                   {col.items.map((item) => (
                     <li key={item.to}>
-                      <Link to={item.to as any} className="text-sm text-ink-foreground/80 hover:text-ink-foreground hover:underline">
-                        {item.label}
-                      </Link>
+                      {item.external ? (
+                        <a
+                          href={item.to}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="text-sm text-ink-foreground/80 hover:text-ink-foreground hover:underline"
+                        >
+                          {item.label}
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </a>
+                      ) : (
+                        <Link
+                          to={footerRouteTo(item.to)}
+                          className="text-sm text-ink-foreground/80 hover:text-ink-foreground hover:underline"
+                        >
+                          {item.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -42,14 +63,22 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-4">
             <CookiePreferencesButton className="text-ink-foreground/70 hover:text-ink-foreground" />
             {socialLinks.map((s) => (
-              <a key={s.href} href={s.href} className="hover:text-ink-foreground" target="_blank" rel="noreferrer noopener">
+              <a
+                key={s.href}
+                href={s.href}
+                className="hover:text-ink-foreground"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 {s.label}
               </a>
             ))}
           </div>
         </div>
 
-        <p className="mt-6 text-xs leading-relaxed text-ink-foreground/50">{site.frameworkDisclaimer}</p>
+        <p className="mt-6 text-xs leading-relaxed text-ink-foreground/50">
+          {site.frameworkDisclaimer}
+        </p>
       </div>
     </footer>
   );

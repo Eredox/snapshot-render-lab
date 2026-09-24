@@ -8,7 +8,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 export const Route = createFileRoute("/security")({
   head: () => ({
     ...pageMeta({
-      title: "Security — NOVA Compliance",
+      title: "Security & Trust | NOVA Compliance",
       description: "Security practices and architecture choices that protect customer data inside the NOVA workspace.",
       path: "/security",
     }),

@@ -9,7 +9,7 @@ import { frameworks } from "@/data/frameworks";
 
 export type RoadmapStatus =
   | "Available now"
-  | "Available connected to your data"
+  | "Available by configuration"
   | "Custom framework available"
   | "Partly available"
   | "Planned";
@@ -41,7 +41,7 @@ export const roadmapEntries: RoadmapEntry[] = [
 
 export const roadmapStatusOrder: RoadmapStatus[] = [
   "Available now",
-  "Available connected to your data",
+  "Available by configuration",
   "Custom framework available",
   "Partly available",
   "Planned",
