@@ -28,8 +28,7 @@
 @theme inline {
   --font-sans:
     "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-display:
-    "Cirqua", "Roboto", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cirqua", "Roboto", ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -88,7 +87,6 @@
   --color-feature-4: var(--feature-4);
   --color-feature-5: var(--feature-5);
   --color-feature-6: var(--feature-6);
-
 
   --shadow-soft: 0 1px 2px oklch(0.2 0.02 150 / 0.05), 0 6px 18px oklch(0.2 0.02 150 / 0.06);
   --shadow-lift: 0 2px 6px oklch(0.2 0.02 150 / 0.07), 0 18px 40px oklch(0.2 0.02 150 / 0.1);
@@ -154,14 +152,13 @@
   --sidebar-ring: oklch(0.55 0.2 262);
 
   /* Feature highlight backgrounds — distinct pastels */
-  --feature-1: oklch(0.96 0.05 80);   /* soft yellow */
+  --feature-1: oklch(0.96 0.05 80); /* soft yellow */
   --feature-2: oklch(0.95 0.045 145); /* soft green */
-  --feature-3: oklch(0.95 0.04 250);  /* soft blue */
+  --feature-3: oklch(0.95 0.04 250); /* soft blue */
   --feature-4: oklch(0.94 0.05 300); /* soft purple */
-  --feature-5: oklch(0.95 0.045 25);  /* soft coral */
-  --feature-6: oklch(0.95 0.05 170);  /* soft turquoise */
+  --feature-5: oklch(0.95 0.045 25); /* soft coral */
+  --feature-6: oklch(0.95 0.05 170); /* soft turquoise */
 }
-
 
 .dark {
   --background: oklch(0.18 0.045 265);
@@ -202,14 +199,13 @@
   --sidebar-ring: oklch(0.68 0.17 262);
 
   /* Feature highlight backgrounds — distinct muted tones */
-  --feature-1: oklch(0.3 0.06 80);   /* muted yellow */
+  --feature-1: oklch(0.3 0.06 80); /* muted yellow */
   --feature-2: oklch(0.28 0.05 145); /* muted green */
   --feature-3: oklch(0.29 0.05 250); /* muted blue */
   --feature-4: oklch(0.28 0.05 300); /* muted purple */
-  --feature-5: oklch(0.29 0.05 25);  /* muted coral */
+  --feature-5: oklch(0.29 0.05 25); /* muted coral */
   --feature-6: oklch(0.28 0.05 170); /* muted turquoise */
 }
-
 
 @layer base {
   * {
@@ -259,6 +255,34 @@
   }
 }
 
+@media print {
+  .site-chrome,
+  .cookie-consent,
+  .print-hidden {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .legal-print-surface,
+  .legal-document {
+    color: #000 !important;
+  }
+
+  .legal-document p,
+  .legal-document dd,
+  .legal-document h2 {
+    color: #000 !important;
+  }
+
+  .legal-document section {
+    break-inside: avoid;
+  }
+}
+
 @utility wordmark {
   font-family: var(--font-display);
   letter-spacing: 0.01em;
@@ -295,16 +319,16 @@
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%)
-      translate3d(var(--nova-x, 0px), var(--nova-y, 0px), 130px) scale(1.02);
+    transform: translate(-50%, -50%) translate3d(var(--nova-x, 0px), var(--nova-y, 0px), 130px)
+      scale(1.02);
   }
 }
 
 @keyframes nova-feed {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%)
-      translate(var(--nova-from-x, 0px), var(--nova-from-y, 0px)) scale(0.94);
+    transform: translate(-50%, -50%) translate(var(--nova-from-x, 0px), var(--nova-from-y, 0px))
+      scale(0.94);
   }
   15% {
     opacity: 1;

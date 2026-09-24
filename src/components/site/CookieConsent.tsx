@@ -4,7 +4,12 @@ import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "nova-cookie-consent-v1";
 
-export type ConsentState = { necessary: true; analytics: boolean; marketing: boolean; decidedAt: string };
+export type ConsentState = {
+  necessary: true;
+  analytics: boolean;
+  marketing: boolean;
+  decidedAt: string;
+};
 
 export function readConsent(): ConsentState | null {
   if (typeof window === "undefined") return null;
@@ -60,7 +65,11 @@ export function CookieConsent() {
   if (!ready || !visible) return null;
 
   return (
-    <div role="region" aria-labelledby="cookie-consent-title" className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background shadow-lift">
+    <div
+      role="region"
+      aria-labelledby="cookie-consent-title"
+      className="cookie-consent fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background shadow-lift"
+    >
       <div className="container-page py-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-2xl">
@@ -68,8 +77,9 @@ export function CookieConsent() {
               Cookies and your choices
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Necessary cookies keep this site working. Analytics and marketing cookies stay switched off until you
-              choose to enable them, and no non-essential provider is loaded before consent. See the{" "}
+              Necessary cookies keep this site working. Analytics and marketing cookies stay
+              switched off until you choose to enable them, and no non-essential provider is loaded
+              before consent. See the{" "}
               <Link to={"/legal/cookies" as any} className="text-primary underline">
                 Cookie Policy
               </Link>
@@ -83,11 +93,18 @@ export function CookieConsent() {
                   <input type="checkbox" checked readOnly disabled className="mt-1 h-4 w-4" />
                   <span>
                     <span className="font-medium text-foreground">Necessary</span>
-                    <span className="block text-muted-foreground">Always active. Required for the site to work.</span>
+                    <span className="block text-muted-foreground">
+                      Always active. Required for the site to work.
+                    </span>
                   </span>
                 </label>
                 <label className="flex items-start gap-3 text-sm">
-                  <input type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} className="mt-1 h-4 w-4" />
+                  <input
+                    type="checkbox"
+                    checked={analytics}
+                    onChange={(e) => setAnalytics(e.target.checked)}
+                    className="mt-1 h-4 w-4"
+                  />
                   <span>
                     <span className="font-medium text-foreground">Analytics</span>
                     <span className="block text-muted-foreground">
@@ -96,7 +113,12 @@ export function CookieConsent() {
                   </span>
                 </label>
                 <label className="flex items-start gap-3 text-sm">
-                  <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1 h-4 w-4" />
+                  <input
+                    type="checkbox"
+                    checked={marketing}
+                    onChange={(e) => setMarketing(e.target.checked)}
+                    className="mt-1 h-4 w-4"
+                  />
                   <span>
                     <span className="font-medium text-foreground">Marketing</span>
                     <span className="block text-muted-foreground">
@@ -127,7 +149,11 @@ export function CookieConsent() {
             </button>
             <button
               type="button"
-              onClick={() => (showPrefs ? save({ analytics, marketing }) : save({ analytics: true, marketing: true }))}
+              onClick={() =>
+                showPrefs
+                  ? save({ analytics, marketing })
+                  : save({ analytics: true, marketing: true })
+              }
               className="inline-flex min-h-11 items-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
             >
               {showPrefs ? "Save choices" : "Accept all"}

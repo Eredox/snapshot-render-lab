@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
+import { industries } from "@/data/industries";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/industries/")({
@@ -15,34 +16,6 @@ export const Route = createFileRoute("/industries/")({
   }),
   component: IndustriesPage,
 });
-
-const industries = [
-  {
-    slug: "technology",
-    name: "Technology",
-    summary: "Move fast without losing track of security reviews, customer questionnaires and framework readiness.",
-  },
-  {
-    slug: "financial-services",
-    name: "Financial services",
-    summary: "Build a defensible record around data protection, operational resilience and regulatory expectations.",
-  },
-  {
-    slug: "healthcare",
-    name: "Healthcare",
-    summary: "Manage privacy, security and governance obligations with clear evidence ownership and reviewer validation.",
-  },
-  {
-    slug: "government-suppliers",
-    name: "Government suppliers",
-    summary: "Demonstrate capability and readiness through structured evidence rather than ad-hoc documentation.",
-  },
-  {
-    slug: "professional-services",
-    name: "Professional services",
-    summary: "Maintain assurance for clients across multiple engagements with reusable evidence and consistent controls.",
-  },
-];
 
 function IndustriesPage() {
   return (

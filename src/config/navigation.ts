@@ -1,10 +1,12 @@
 import { features } from "@/data/features";
 import { frameworks } from "@/data/frameworks";
 import { solutions } from "@/data/solutions";
-import { legalDocs, publicLegalDocs } from "@/data/legal";
+import { legalDocs } from "@/data/legal";
+import { industrySlugs } from "@/data/industries";
+import { publishedLegalRegistry } from "@/data/legal-registry";
 import { resources } from "@/data/resources";
 import { plans } from "@/data/pricing";
-import { appUrls, authoritativeLegalUrls } from "@/config/site";
+import { appUrls } from "@/config/site";
 
 /**
  * Central route and navigation registry.
@@ -40,6 +42,8 @@ export const staticRoutes = [
   "/industries",
   "/integrations",
   "/legal",
+  "/legal/terms",
+  "/legal/privacy",
   "/partners",
   "/platform",
   "/pricing",
@@ -69,7 +73,7 @@ export const dynamicRoutes: { pattern: string; slugs: string[] }[] = [
   { pattern: "/frameworks/$slug", slugs: frameworks.map((f) => f.slug) },
   {
     pattern: "/industries/$slug",
-    slugs: ["finance", "healthcare", "technology", "government", "legal", "startups"],
+    slugs: industrySlugs,
   },
   { pattern: "/solutions/$slug", slugs: solutions.map((s) => s.slug) },
   {
@@ -217,9 +221,10 @@ export const footerColumns: NavGroup[] = [
     label: "Legal",
     items: [
       { label: "Legal centre", to: "/legal" },
-      { label: "Terms", to: authoritativeLegalUrls.terms, external: true },
-      { label: "Privacy", to: authoritativeLegalUrls.privacy, external: true },
-      ...publicLegalDocs.map((d) => ({ label: d.navLabel, to: `/legal/${d.slug}` })),
+      ...publishedLegalRegistry.map((document) => ({
+        label: document.navLabel,
+        to: document.route,
+      })),
     ],
   },
 ];
