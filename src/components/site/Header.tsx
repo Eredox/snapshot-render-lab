@@ -46,7 +46,7 @@ export function Header() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="site-chrome sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container-page">
         <div className="flex h-24 items-center justify-between gap-4">
           <Link to="/" className="shrink-0" aria-label="NOVA Compliance home">
@@ -78,7 +78,10 @@ export function Header() {
                     {entry.label}
                     <ChevronDown
                       aria-hidden="true"
-                      className={cn("h-4 w-4 transition-transform", openId === entry.id && "rotate-180")}
+                      className={cn(
+                        "h-4 w-4 transition-transform",
+                        openId === entry.id && "rotate-180",
+                      )}
                     />
                   </button>
 
@@ -159,20 +162,30 @@ export function Header() {
             aria-controls="mobile-navigation"
             onClick={() => setMobileOpen((v) => !v)}
           >
-            {mobileOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X aria-hidden="true" className="h-5 w-5" />
+            ) : (
+              <Menu aria-hidden="true" className="h-5 w-5" />
+            )}
             <span className="sr-only">{mobileOpen ? "Close menu" : "Open menu"}</span>
           </button>
         </div>
       </div>
 
       {mobileOpen ? (
-        <div id="mobile-navigation" className="max-h-[calc(100vh-6rem)] overflow-y-auto border-t border-border bg-background lg:hidden">
+        <div
+          id="mobile-navigation"
+          className="max-h-[calc(100vh-6rem)] overflow-y-auto border-t border-border bg-background lg:hidden"
+        >
           <div className="container-page py-4">
             <ul className="space-y-1">
               {headerNav.map((entry) =>
                 entry.kind === "link" ? (
                   <li key={entry.to}>
-                    <Link to={entry.to} className="block rounded-lg px-3 py-3 font-medium hover:bg-surface">
+                    <Link
+                      to={entry.to}
+                      className="block rounded-lg px-3 py-3 font-medium hover:bg-surface"
+                    >
                       {entry.label}
                     </Link>
                   </li>
@@ -187,7 +200,10 @@ export function Header() {
                       {entry.label}
                       <ChevronDown
                         aria-hidden="true"
-                        className={cn("h-4 w-4 transition-transform", mobileSection === entry.id && "rotate-180")}
+                        className={cn(
+                          "h-4 w-4 transition-transform",
+                          mobileSection === entry.id && "rotate-180",
+                        )}
                       />
                     </button>
                     {mobileSection === entry.id ? (
@@ -200,7 +216,10 @@ export function Header() {
                             <ul>
                               {group.items.map((item) => (
                                 <li key={item.to}>
-                                  <Link to={item.to as any} className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface">
+                                  <Link
+                                    to={item.to as any}
+                                    className="block rounded-lg px-2 py-2.5 text-sm hover:bg-surface"
+                                  >
                                     {item.label}
                                     {item.badge ? (
                                       <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-[0.625rem] text-secondary-foreground">

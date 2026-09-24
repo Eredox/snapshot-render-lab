@@ -12,7 +12,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink text-ink-foreground">
+    <footer className="site-chrome bg-ink text-ink-foreground">
       <div className="container-page py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,2.4fr)]">
           <div>

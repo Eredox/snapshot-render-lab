@@ -4,7 +4,7 @@ import { solutions } from "@/data/solutions";
 import { legalDocs, publicLegalDocs } from "@/data/legal";
 import { resources } from "@/data/resources";
 import { plans } from "@/data/pricing";
-import { appUrls, authoritativeLegalUrls } from "@/config/site";
+import { appUrls, publicLegalRoutes } from "@/config/site";
 
 /**
  * Central route and navigation registry.
@@ -40,6 +40,8 @@ export const staticRoutes = [
   "/industries",
   "/integrations",
   "/legal",
+  "/legal/terms",
+  "/legal/privacy",
   "/partners",
   "/platform",
   "/pricing",
@@ -217,8 +219,8 @@ export const footerColumns: NavGroup[] = [
     label: "Legal",
     items: [
       { label: "Legal centre", to: "/legal" },
-      { label: "Terms", to: authoritativeLegalUrls.terms, external: true },
-      { label: "Privacy", to: authoritativeLegalUrls.privacy, external: true },
+      { label: "Terms", to: publicLegalRoutes.terms },
+      { label: "Privacy", to: publicLegalRoutes.privacy },
       ...publicLegalDocs.map((d) => ({ label: d.navLabel, to: `/legal/${d.slug}` })),
     ],
   },

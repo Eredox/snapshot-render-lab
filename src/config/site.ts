@@ -28,10 +28,10 @@ export const appUrls = {
   register: null as string | null,
 } as const;
 
-/** Authoritative legal documents hosted by the NOVA application. */
-export const authoritativeLegalUrls = {
-  terms: "https://nova.eredox.com/terms",
-  privacy: "https://nova.eredox.com/privacy",
+/** Customer-facing legal documents hosted by this public website. */
+export const publicLegalRoutes = {
+  terms: "/legal/terms",
+  privacy: "/legal/privacy",
 } as const;
 
 /**

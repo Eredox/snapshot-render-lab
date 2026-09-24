@@ -48,6 +48,8 @@ import { Route as IndustriesIndexRouteImport } from './routes/industries.index'
 import { Route as IndustriesSlugRouteImport } from './routes/industries.$slug'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
+import { Route as LegalTermsRouteImport } from './routes/legal.terms'
 import { Route as PlansSlugRouteImport } from './routes/plans.$slug'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesBlogRouteImport } from './routes/resources.blog'
@@ -265,6 +267,16 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => LegalRoute,
 } as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => LegalRoute,
+} as any)
 const PlansSlugRoute = PlansSlugRouteImport.update({
   id: '/plans/$slug',
   path: '/plans/$slug',
@@ -405,6 +417,8 @@ export interface FileRoutesByFullPath {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/plans/$slug': typeof PlansSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
@@ -459,6 +473,8 @@ export interface FileRoutesByTo {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/plans/$slug': typeof PlansSlugRoute
   '/resources/faq': typeof ResourcesFaqRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -516,6 +532,8 @@ export interface FileRoutesById {
   '/frameworks/$slug': typeof FrameworksSlugRoute
   '/industries/$slug': typeof IndustriesSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/plans/$slug': typeof PlansSlugRoute
   '/resources/blog': typeof ResourcesBlogRouteWithChildren
   '/resources/case-studies': typeof ResourcesCaseStudiesRouteWithChildren
@@ -579,6 +597,8 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/plans/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
@@ -633,6 +653,8 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/plans/$slug'
     | '/resources/faq'
     | '/solutions/$slug'
@@ -689,6 +711,8 @@ export interface FileRouteTypes {
     | '/frameworks/$slug'
     | '/industries/$slug'
     | '/legal/$slug'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/plans/$slug'
     | '/resources/blog'
     | '/resources/case-studies'
@@ -1023,6 +1047,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalSlugRouteImport
       parentRoute: typeof LegalRoute
     }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof LegalRoute
+    }
     '/plans/$slug': {
       id: '/plans/$slug'
       path: '/plans/$slug'
@@ -1226,11 +1264,15 @@ const IndustriesRouteWithChildren = IndustriesRoute._addFileChildren(
 
 interface LegalRouteChildren {
   LegalSlugRoute: typeof LegalSlugRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
   LegalIndexRoute: typeof LegalIndexRoute
 }
 
 const LegalRouteChildren: LegalRouteChildren = {
   LegalSlugRoute: LegalSlugRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
   LegalIndexRoute: LegalIndexRoute,
 }
 
