@@ -1,5 +1,4 @@
 import { createHash, createHmac, randomUUID } from "node:crypto";
-import { connect, type TLSSocket } from "node:tls";
 
 type FormType =
   | "general-enquiry"
@@ -21,11 +20,8 @@ export type FormSubmission = {
   timeSlot?: string;
 };
 
-type SmtpConfig = {
-  host: string;
-  port: number;
-  username: string;
-  password: string;
+type BrevoConfig = {
+  apiKey: string;
   from: string;
   to: string;
 };
@@ -70,18 +66,9 @@ function requiredEnvironment(name: string): string {
   return value;
 }
 
-function smtpConfig(): SmtpConfig {
-  const secure = requiredEnvironment("EREDOX_SMTP_SECURE");
-  const port = Number(requiredEnvironment("EREDOX_SMTP_PORT"));
-  if (secure.toLowerCase() !== "true" || port !== 465) {
-    throw new FormConfigurationError("SMTP must use implicit TLS on port 465");
-  }
-
+function brevoConfig(): BrevoConfig {
   return {
-    host: requiredEnvironment("EREDOX_SMTP_HOST"),
-    port,
-    username: requiredEnvironment("EREDOX_SMTP_USERNAME"),
-    password: requiredEnvironment("EREDOX_SMTP_PASSWORD"),
+    apiKey: requiredEnvironment("BREVO_API_KEY"),
     from: requiredEnvironment("NOVA_FORM_FROM_EMAIL"),
     to: requiredEnvironment("NOVA_FORM_TO_EMAIL"),
   };
@@ -161,10 +148,6 @@ function response(status: number, body: { ok: boolean; message: string }): Respo
   });
 }
 
-function escapeHeader(value: string): string {
-  return value.replace(/[\r\n]/g, " ");
-}
-
 function escapeHtml(value: string): string {
   return value.replace(
     /[&<>"']/g,
@@ -188,129 +171,45 @@ function formatSubmission(submission: FormSubmission): string {
   return entries.map(([label, value]) => `${label}:\n${value}`).join("\n\n");
 }
 
-function readSmtpResponse(socket: TLSSocket): Promise<{ code: number; lines: string[] }> {
-  return new Promise((resolve, reject) => {
-    let buffer = "";
-    const timer = setTimeout(() => finish(new Error("SMTP response timeout")), REQUEST_TIMEOUT_MS);
-
-    const cleanup = () => {
-      clearTimeout(timer);
-      socket.off("data", onData);
-      socket.off("error", onError);
-      socket.off("close", onClose);
-    };
-    const finish = (error: Error | null, result?: { code: number; lines: string[] }) => {
-      cleanup();
-      if (error) reject(error);
-      else resolve(result!);
-    };
-    const onError = () => finish(new Error("SMTP connection error"));
-    const onClose = () => finish(new Error("SMTP connection closed unexpectedly"));
-    const onData = (chunk: string | Buffer) => {
-      buffer += chunk.toString();
-      const lines = buffer.split("\r\n");
-      buffer = lines.pop() ?? "";
-      const complete = lines.filter((line) => /^\d{3}[ -]/.test(line));
-      const final = complete.find((line) => /^\d{3} /.test(line));
-      if (!final) return;
-      const code = Number(final.slice(0, 3));
-      finish(null, { code, lines: complete });
-    };
-
-    socket.on("data", onData);
-    socket.once("error", onError);
-    socket.once("close", onClose);
-  });
-}
-
-async function smtpCommand(socket: TLSSocket, command: string, expected: number | number[]) {
-  socket.write(`${command}\r\n`);
-  const result = await readSmtpResponse(socket);
-  const accepted = Array.isArray(expected) ? expected : [expected];
-  if (!accepted.includes(result.code))
-    throw new Error(`SMTP command failed with response ${result.code}`);
-  return result;
-}
-
-async function sendMail(submission: FormSubmission) {
-  const config = smtpConfig();
-  const socket = connect({
-    host: config.host,
-    port: config.port,
-    servername: config.host,
-    rejectUnauthorized: true,
-  });
-  socket.setEncoding("utf8");
-  socket.setTimeout(REQUEST_TIMEOUT_MS, () => socket.destroy(new Error("SMTP connection timeout")));
+async function sendBrevoEmail(submission: FormSubmission) {
+  const config = brevoConfig();
+  const subject =
+    submission.type === "demo-booking" ? "NOVA demo booking enquiry" : "NOVA website enquiry";
+  const plain = formatSubmission(submission);
+  const html = plain
+    .split("\n\n")
+    .map((part) => {
+      const [label, ...rest] = part.split("\n");
+      return `<p><strong>${escapeHtml(label ?? "")}</strong><br>${escapeHtml(rest.join("\n")).replace(/\n/g, "<br>")}</p>`;
+    })
+    .join("");
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
   try {
-    await new Promise<void>((resolve, reject) => {
-      socket.once("secureConnect", resolve);
-      socket.once("error", () => reject(new Error("SMTP TLS connection failed")));
+    const result = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "api-key": config.apiKey,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { email: config.from, name: "NOVA Compliance" },
+        to: [{ email: config.to }],
+        replyTo: { email: submission.email },
+        subject,
+        textContent: plain,
+        htmlContent: `<html><body>${html}</body></html>`,
+      }),
+      signal: controller.signal,
     });
-    const greeting = await readSmtpResponse(socket);
-    if (greeting.code !== 220)
-      throw new Error(`SMTP greeting failed with response ${greeting.code}`);
-    const ehlo = await smtpCommand(socket, "EHLO nova.eredox.com", 250);
-    const capabilities = ehlo.lines.join(" ").toUpperCase();
-    const encodedUser = Buffer.from(config.username).toString("base64");
-    const encodedPassword = Buffer.from(config.password).toString("base64");
-    if (capabilities.includes("AUTH PLAIN")) {
-      await smtpCommand(
-        socket,
-        `AUTH PLAIN ${Buffer.from(`\0${config.username}\0${config.password}`).toString("base64")}`,
-        235,
-      );
-    } else if (capabilities.includes("AUTH LOGIN")) {
-      await smtpCommand(socket, "AUTH LOGIN", 334);
-      await smtpCommand(socket, encodedUser, 334);
-      await smtpCommand(socket, encodedPassword, 235);
-    } else {
-      throw new Error("SMTP server does not advertise a supported authentication method");
+    if (!result.ok) {
+      await result.arrayBuffer();
+      throw new Error(`Brevo API returned ${result.status}`);
     }
-
-    await smtpCommand(socket, `MAIL FROM:<${escapeHeader(config.from)}>`, 250);
-    await smtpCommand(socket, `RCPT TO:<${escapeHeader(config.to)}>`, 250);
-    await smtpCommand(socket, "DATA", 354);
-    const subject =
-      submission.type === "demo-booking" ? "NOVA demo booking enquiry" : "NOVA website enquiry";
-    const plain = formatSubmission(submission);
-    const html = plain
-      .split("\n\n")
-      .map((part) => {
-        const [label, ...rest] = part.split("\n");
-        return `<p><strong>${escapeHtml(label ?? "")}</strong><br>${escapeHtml(rest.join("\n")).replace(/\n/g, "<br>")}</p>`;
-      })
-      .join("");
-    const message = [
-      `From: NOVA Compliance <${escapeHeader(config.from)}>`,
-      `To: ${escapeHeader(config.to)}`,
-      `Reply-To: ${escapeHeader(submission.email)}`,
-      `Subject: ${subject}`,
-      `Date: ${new Date().toUTCString()}`,
-      `Message-ID: <${randomUUID()}@nova.eredox.com>`,
-      "MIME-Version: 1.0",
-      'Content-Type: multipart/alternative; boundary="nova-form-boundary"',
-      "",
-      "--nova-form-boundary",
-      "Content-Type: text/plain; charset=utf-8",
-      "Content-Transfer-Encoding: 8bit",
-      "",
-      plain,
-      "--nova-form-boundary",
-      "Content-Type: text/html; charset=utf-8",
-      "Content-Transfer-Encoding: 8bit",
-      "",
-      `<html><body>${html}</body></html>`,
-      "--nova-form-boundary--",
-    ].join("\r\n");
-    const stuffed = message.replace(/\r?\n/g, "\r\n").replace(/^\./gm, "..");
-    await smtpCommand(socket, `${stuffed}\r\n.`, 250);
   } finally {
-    if (!socket.destroyed) {
-      socket.write("QUIT\r\n");
-      socket.end();
-    }
+    clearTimeout(timer);
   }
 }
 
@@ -489,7 +388,7 @@ export async function handleFormsRequest(request: Request): Promise<Response> {
     }
     const submission = normaliseSubmission(payload);
     await createCrmEnquiry(submission, sourcePathForRequest(request));
-    await sendMail(submission);
+    await sendBrevoEmail(submission);
     return response(202, { ok: true, message: "Submission received" });
   } catch (error) {
     if (error instanceof FormConfigurationError) {

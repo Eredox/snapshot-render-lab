@@ -1,18 +1,10 @@
-import { EventEmitter } from "node:events";
 import { createHash, createHmac } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
-
-const { connectMock } = vi.hoisted(() => ({ connectMock: vi.fn() }));
-vi.mock("node:tls", () => ({ connect: connectMock }));
 
 import { handleFormsRequest } from "@/lib/forms-server";
 
 const formEnvironment = [
-  "EREDOX_SMTP_HOST",
-  "EREDOX_SMTP_PORT",
-  "EREDOX_SMTP_SECURE",
-  "EREDOX_SMTP_USERNAME",
-  "EREDOX_SMTP_PASSWORD",
+  "BREVO_API_KEY",
   "NOVA_FORM_FROM_EMAIL",
   "NOVA_FORM_TO_EMAIL",
   "NOVA_CRM_ENQUIRY_URL",
@@ -22,49 +14,8 @@ const formEnvironment = [
 
 const originalEnvironment = new Map(formEnvironment.map((name) => [name, process.env[name]]));
 
-class MockSmtpSocket extends EventEmitter {
-  destroyed = false;
-
-  constructor(private readonly fail = false) {
-    super();
-  }
-
-  setEncoding() {
-    return this;
-  }
-
-  setTimeout() {
-    return this;
-  }
-
-  write(command: string | Uint8Array) {
-    const value = typeof command === "string" ? command : Buffer.from(command).toString("utf8");
-    let response = "250 OK\r\n";
-    if (value.startsWith("EHLO"))
-      response = this.fail ? "550 AUTH unavailable\r\n" : "250-AUTH PLAIN\r\n250 OK\r\n";
-    else if (value.startsWith("AUTH PLAIN")) response = "235 Authenticated\r\n";
-    else if (value.startsWith("DATA")) response = "354 End data with <CR><LF>.<CR><LF>\r\n";
-    queueMicrotask(() => this.emit("data", response));
-    return true;
-  }
-
-  end() {
-    this.destroyed = true;
-    this.emit("close");
-  }
-
-  destroy() {
-    this.destroyed = true;
-    return this;
-  }
-}
-
-function configureSmtp() {
-  process.env["EREDOX_SMTP_HOST"] = "mail.example.test";
-  process.env["EREDOX_SMTP_PORT"] = "465";
-  process.env["EREDOX_SMTP_SECURE"] = "true";
-  process.env["EREDOX_SMTP_USERNAME"] = "compliance@example.test";
-  process.env["EREDOX_SMTP_PASSWORD"] = "smtp-test-secret";
+function configureBrevo() {
+  process.env["BREVO_API_KEY"] = "brevo-test-key";
   process.env["NOVA_FORM_FROM_EMAIL"] = "compliance@example.test";
   process.env["NOVA_FORM_TO_EMAIL"] = "compliance@example.test";
 }
@@ -85,6 +36,10 @@ function successfulCrmResponse() {
     }),
     { status: 201 },
   );
+}
+
+function successfulBrevoResponse() {
+  return new Response(JSON.stringify({ messageId: "<brevo-test-message>" }), { status: 201 });
 }
 
 function request(body: Record<string, unknown>, referer?: string) {
@@ -123,7 +78,6 @@ afterEach(() => {
     else process.env[name] = value;
   }
   vi.restoreAllMocks();
-  connectMock.mockReset();
 });
 
 describe("public form endpoint", () => {
@@ -147,30 +101,21 @@ describe("public form endpoint", () => {
     expect(await result.text()).not.toContain("PASSWORD");
   });
 
-  it("signs the exact transmitted payload and sends CRM before SMTP", async () => {
+  it("signs CRM exactly and sends Brevo only after CRM succeeds", async () => {
     configureCrm();
-    configureSmtp();
+    configureBrevo();
     const events: string[] = [];
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockImplementation(async () => {
-      events.push("crm");
-      return successfulCrmResponse();
-    });
-    connectMock.mockImplementation(() => {
-      events.push("smtp");
-      const socket = new MockSmtpSocket();
-      queueMicrotask(() => {
-        socket.emit("secureConnect");
-        queueMicrotask(() => socket.emit("data", "220 mail.example.test ready\r\n"));
-      });
-      return socket;
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
+      const isBrevo = String(input).includes("api.brevo.com");
+      events.push(isBrevo ? "brevo" : "crm");
+      return isBrevo ? successfulBrevoResponse() : successfulCrmResponse();
     });
 
     const result = await handleFormsRequest(
       request(validContact(), "https://www.nova.eredox.com/contact"),
     );
     expect(result.status).toBe(202);
-    expect(events).toEqual(["crm", "smtp"]);
-    expect(connectMock).toHaveBeenCalledTimes(1);
+    expect(events).toEqual(["crm", "brevo"]);
 
     const captured = capturedRequest(fetchMock);
     const bodyHash = createHash("sha256").update(captured.body).digest("hex");
@@ -197,29 +142,30 @@ describe("public form endpoint", () => {
       organisation: "Example Pty Ltd",
       source_path: "/contact",
     });
+
+    const brevoInit = fetchMock.mock.calls[1]?.[1] as RequestInit;
+    expect((brevoInit.headers as Record<string, string>)["api-key"]).toBe("brevo-test-key");
+    expect(JSON.parse(String(brevoInit.body))).toMatchObject({
+      sender: { name: "NOVA Compliance", email: "compliance@example.test" },
+      to: [{ email: "compliance@example.test" }],
+      replyTo: { email: "visitor@example.com" },
+    });
   });
 
   it("retries transient CRM failures with stable operation ID and fresh signing values", async () => {
     configureCrm();
-    configureSmtp();
+    configureBrevo();
     const fetchMock = vi
       .spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(
         new Response(JSON.stringify({ error: "internal_error" }), { status: 503 }),
       )
-      .mockResolvedValueOnce(successfulCrmResponse());
-    connectMock.mockImplementation(() => {
-      const socket = new MockSmtpSocket();
-      queueMicrotask(() => {
-        socket.emit("secureConnect");
-        queueMicrotask(() => socket.emit("data", "220 mail.example.test ready\r\n"));
-      });
-      return socket;
-    });
+      .mockResolvedValueOnce(successfulCrmResponse())
+      .mockResolvedValueOnce(successfulBrevoResponse());
 
     const result = await handleFormsRequest(request(validContact()));
     expect(result.status).toBe(202);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
     const first = capturedRequest(fetchMock, 0);
     const second = capturedRequest(fetchMock, 1);
     expect(second.body.equals(first.body)).toBe(true);
@@ -230,7 +176,7 @@ describe("public form endpoint", () => {
   });
 
   it.each([400, 401, 409, 415, 500, 503])(
-    "does not send SMTP after CRM status %s",
+    "does not send Brevo after CRM status %s",
     async (status) => {
       configureCrm();
       const fetchMock = vi
@@ -239,22 +185,19 @@ describe("public form endpoint", () => {
       const result = await handleFormsRequest(request(validContact()));
       expect(result.status).toBe(502);
       expect(fetchMock).toHaveBeenCalledTimes(status >= 500 ? 2 : 1);
-      expect(connectMock).not.toHaveBeenCalled();
+      expect(
+        fetchMock.mock.calls.every(([input]) => !String(input).includes("api.brevo.com")),
+      ).toBe(true);
     },
   );
 
   it("maps demo booking fields to the Odoo payload", async () => {
     configureCrm();
-    configureSmtp();
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(successfulCrmResponse());
-    connectMock.mockImplementation(() => {
-      const socket = new MockSmtpSocket();
-      queueMicrotask(() => {
-        socket.emit("secureConnect");
-        queueMicrotask(() => socket.emit("data", "220 mail.example.test ready\r\n"));
-      });
-      return socket;
-    });
+    configureBrevo();
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(successfulCrmResponse())
+      .mockResolvedValueOnce(successfulBrevoResponse());
     const result = await handleFormsRequest(
       request({
         type: "demo-booking",
@@ -280,21 +223,15 @@ describe("public form endpoint", () => {
     });
   });
 
-  it("retains CRM-first semantics when SMTP fails", async () => {
+  it("retains CRM-first semantics when Brevo fails", async () => {
     configureCrm();
-    configureSmtp();
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(successfulCrmResponse());
-    connectMock.mockImplementation(() => {
-      const socket = new MockSmtpSocket(true);
-      queueMicrotask(() => {
-        socket.emit("secureConnect");
-        queueMicrotask(() => socket.emit("data", "220 mail.example.test ready\r\n"));
-      });
-      return socket;
-    });
+    configureBrevo();
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(successfulCrmResponse())
+      .mockResolvedValueOnce(new Response("{}", { status: 503 }));
     const result = await handleFormsRequest(request(validContact()));
     expect(result.status).toBe(502);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(connectMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });
