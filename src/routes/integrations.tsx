@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Github, Cloud, Database, Shield, FileText, MessageSquare, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { site } from "@/config/site";
+import { integrations } from "@/data/integrations";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/integrations")({
@@ -16,58 +17,6 @@ export const Route = createFileRoute("/integrations")({
   }),
   component: IntegrationsPage,
 });
-
-const connectors = [
-  {
-    name: "GitHub",
-    status: "Available now",
-    category: "Evidence",
-    description: "Pull engineering evidence such as pull requests, workflows and deployment records into the workspace for review.",
-    icon: Github,
-  },
-  {
-    name: "Manual upload",
-    status: "Available now",
-    category: "Evidence",
-    description: "Upload files, screenshots, exports and documents with structured metadata and control mapping.",
-    icon: FileText,
-  },
-  {
-    name: "Cloud identity providers",
-    status: "Planned",
-    category: "Access",
-    description: "SAML or OIDC sign-in for workforce access. Not available today.",
-    icon: Cloud,
-  },
-  {
-    name: "Ticketing and workflow tools",
-    status: "Planned",
-    category: "Operations",
-    description: "Link change approvals, incidents and tasks to controls and evidence. Not available today.",
-    icon: MessageSquare,
-  },
-  {
-    name: "Cloud infrastructure providers",
-    status: "Planned",
-    category: "Evidence",
-    description: "Collect configuration and logging evidence from cloud accounts. Not available today.",
-    icon: Database,
-  },
-  {
-    name: "Vulnerability and security tools",
-    status: "Planned",
-    category: "Security",
-    description: "Bring scan results and security findings in as evidence against relevant controls. Not available today.",
-    icon: Shield,
-  },
-  {
-    name: "Calendar and review systems",
-    status: "Planned",
-    category: "Governance",
-    description: "Schedule control reviews and policy attestations. Not available today.",
-    icon: Clock,
-  },
-];
 
 const related = [
   { label: "Evidence management", to: "/features/evidence", description: "How evidence is collected, mapped and reviewed" },
@@ -91,7 +40,7 @@ function IntegrationsPage() {
           description="Connectors reduce the manual work of collecting evidence. Every item is still mapped to controls and reviewed before it counts."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {connectors.map((c) => (
+          {integrations.map((c) => (
             <Card key={c.name}>
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -100,7 +49,7 @@ function IntegrationsPage() {
                   </span>
                   <h3 className="font-semibold">{c.name}</h3>
                 </div>
-                <AvailabilityBadge value={c.status as "Available now" | "Planned"} />
+                <AvailabilityBadge value={c.status} />
               </div>
               <p className="mt-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">{c.category}</p>
               <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>

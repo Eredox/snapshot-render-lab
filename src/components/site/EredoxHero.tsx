@@ -5,7 +5,7 @@ import { PulsingBorderBackground } from "@/components/site/PulsingBorderBackgrou
 import { site } from "@/config/site";
 
 /**
- * Eredox suite hero. Content is presentational only; the readiness values are
+ * NOVA Compliance hero. Content is presentational only; the readiness values are
  * explicitly labelled as illustrative demo data and must never be presented as
  * customer results.
  */
@@ -57,7 +57,7 @@ function Scene() {
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-ember" />
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            <span className="text-[0.6rem] uppercase tracking-[0.16em] text-ink-foreground/50">Eredox suite</span>
+            <span className="text-[0.6rem] uppercase tracking-[0.16em] text-ink-foreground/50">NOVA Compliance</span>
           </div>
           <div className="mt-3 space-y-2">
             <div className="h-1.5 w-3/4 rounded-full bg-ink-foreground/25" />
@@ -149,16 +149,16 @@ export function EredoxHero() {
 
       <div className="container-page relative z-10 grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center">
         <div>
-          <p className="eyebrow text-ember">The Eredox suite</p>
+          <p className="eyebrow text-ember">NOVA Compliance</p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
             Build Trust. Prove Compliance. Move Forward.
           </h1>
           <p className="mt-6 max-w-xl text-lg text-ink-foreground/75">
-            Eredox brings compliance, customer relationships, and business operations together in one connected suite of
-            intelligent applications.
+            NOVA Compliance brings compliance management, evidence, controls and human decisions together in one
+            governed workspace for growing and regulated organisations.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <CtaLink to="/platform">Explore the Eredox Suite</CtaLink>
+            <CtaLink to="/platform">Explore NOVA Compliance</CtaLink>
             <CtaLink to="/book-demo" variant="inverted">
               Book a Demo
             </CtaLink>

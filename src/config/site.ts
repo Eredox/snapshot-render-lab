@@ -7,14 +7,14 @@ export const site = {
   productName: "NOVA Compliance",
   shortName: "NOVA",
   company: "Eredox Pty Ltd",
-  tagline:
-    "Governed, evidence-led compliance management for growing and regulated organisations.",
+  tagline: "Governed, evidence-led compliance management for growing and regulated organisations.",
   ownership: "NOVA Compliance is developed and operated by Eredox Pty Ltd.",
   humanStatement:
     "NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
   frameworkDisclaimer:
     "NOVA assists with readiness and evidence management. Certification, attestation and regulatory conclusions remain with authorised independent, regulatory or customer-appointed parties.",
-  illustrativeCaption: "Illustrative interface concept. Values shown are examples, not customer data.",
+  illustrativeCaption:
+    "Illustrative interface concept. Values shown are examples, not customer data.",
   pricingApprovalNote:
     "Indicative amounts shown for planning purposes. All published prices require Eredox approval before they are contractually binding.",
 } as const;
@@ -26,6 +26,12 @@ export const appUrls = {
   ai: "https://ai.nova.eredox.com",
   /** Not supplied yet — keep null so no link is rendered until it exists. */
   register: null as string | null,
+} as const;
+
+/** Authoritative legal documents hosted by the NOVA application. */
+export const authoritativeLegalUrls = {
+  terms: "https://nova.eredox.com/terms",
+  privacy: "https://nova.eredox.com/privacy",
 } as const;
 
 /**

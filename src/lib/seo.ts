@@ -19,7 +19,12 @@ export const organizationId = `${siteUrl}/#organization`;
 export const websiteId = `${siteUrl}/#website`;
 export const softwareId = `${siteUrl}/#software`;
 
-export function pageMeta(opts: { title: string; description: string; path: string; image?: string }) {
+export function pageMeta(opts: {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}) {
   const { title, description, path } = opts;
   const url = absoluteUrl(path);
   const image = opts.image ?? defaultShareImage;
@@ -29,6 +34,8 @@ export function pageMeta(opts: { title: string; description: string; path: strin
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: site.productName },
       { property: "og:url", content: url },
       { property: "og:image", content: image },
       { property: "og:image:width", content: "1200" },
@@ -37,6 +44,7 @@ export function pageMeta(opts: { title: string; description: string; path: strin
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
       { name: "twitter:image", content: image },
+      { name: "twitter:site", content: "@Eredox" },
     ] as MetaEntry[],
     links: [{ rel: "canonical", href: url }],
   };
@@ -81,7 +89,7 @@ export function organizationSchema() {
     "@id": organizationId,
     name: site.company,
     url: siteUrl,
-    logo: { "@type": "ImageObject", url: defaultShareImage },
+    logo: { "@type": "ImageObject", url: absoluteUrl("/media/brand/nova-logo-full.png") },
     description: site.ownership,
   };
 }
@@ -119,7 +127,13 @@ export function softwareSchema() {
 /** Product + Offer schema for the subscription plans. */
 export function pricingSchema(opts: {
   currency: string;
-  plans: { slug: string; name: string; summary: string; monthly: number | null; quoteOnly?: boolean }[];
+  plans: {
+    slug: string;
+    name: string;
+    summary: string;
+    monthly: number | null;
+    quoteOnly?: boolean;
+  }[];
 }) {
   return {
     "@context": "https://schema.org",
@@ -138,7 +152,10 @@ export function pricingSchema(opts: {
       url: absoluteUrl("/pricing"),
       priceCurrency: opts.currency,
       ...(p.quoteOnly || p.monthly === null
-        ? { availability: "https://schema.org/InStock", priceSpecification: { "@type": "PriceSpecification", priceCurrency: opts.currency } }
+        ? {
+            availability: "https://schema.org/InStock",
+            priceSpecification: { "@type": "PriceSpecification", priceCurrency: opts.currency },
+          }
         : {
             price: String(p.monthly),
             availability: "https://schema.org/InStock",
@@ -161,7 +178,12 @@ export function absoluteUrl(path: string): string {
 }
 
 /** Page meta with absolute canonical/og:url, for indexable article pages. */
-export function articleMeta(opts: { title: string; description: string; path: string; image?: string }) {
+export function articleMeta(opts: {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}) {
   const url = absoluteUrl(opts.path);
   const image = opts.image ?? defaultShareImage;
   return {

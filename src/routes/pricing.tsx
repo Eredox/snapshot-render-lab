@@ -10,7 +10,7 @@ import { pageMeta, breadcrumbSchema, ldScript, faqSchema, pricingSchema, softwar
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     ...pageMeta({
-      title: "Pricing — NOVA Compliance",
+      title: "NOVA Compliance Pricing | Plans for Growing Teams to Enterprise",
       description: "NOVA Compliance subscription plans, indicative pricing in AUD, feature comparison and support levels.",
       path: "/pricing",
     }),
@@ -81,17 +81,23 @@ function PricingPage() {
                     <span className="text-3xl font-semibold">
                       ${billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
                     </span>
-                    <span className="text-muted-foreground">/month</span>
+                    <span className="text-muted-foreground">/{billing === "monthly" ? "month" : "year"}</span>
                   </>
                 )}
               </div>
+              {billing === "annual" && p.annual !== null && p.annual > 0 ? (
+                <p className="mt-1 text-xs text-muted-foreground">${Math.round(p.annual / 12)} {currency}/month effective when billed annually</p>
+              ) : null}
               {p.requiresApproval ? <p className="mt-1 text-xs text-muted-foreground">{site.pricingApprovalNote}</p> : null}
               <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Best for</p>
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>
               <FeatureList className="mt-5" items={p.includes} />
-              <CtaLink to={p.cta.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
-                {p.cta.label}
+              <CtaLink to={p.primaryAction.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
+                {p.primaryAction.label}
               </CtaLink>
+              <Link to={p.detailPath} className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-3 text-sm font-medium text-foreground hover:bg-surface">
+                Find out more
+              </Link>
             </Card>
           ))}
         </div>

@@ -9,12 +9,14 @@
  *   a category, which is where explanatory writing belongs
  */
 
-export type ResourceType =
-  | "Blog article"
-  | "Guide"
-  | "Product update"
-  | "Case study"
-  | "Webinar";
+import { site } from "@/config/site";
+import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
+import { frameworks } from "@/data/frameworks";
+import { integrations } from "@/data/integrations";
+import { features } from "@/data/features";
+import { pricingFaqs, supportComparison } from "@/data/pricing";
+
+export type ResourceType = "Blog article" | "Guide" | "Product update" | "Case study" | "Webinar";
 
 export type ResourceStatus = "Published" | "Coming soon";
 
@@ -91,7 +93,10 @@ export const plannedBlogTopics: { title: string; category: string }[] = [
   { title: "Preparing for a SOC 2 Type II period", category: "Frameworks" },
   { title: "Understanding Essential Eight maturity", category: "Frameworks" },
   { title: "ISO/IEC 42001 and AI management systems", category: "Responsible AI" },
-  { title: "How control mapping reduces duplicate compliance work", category: "Programme management" },
+  {
+    title: "How control mapping reduces duplicate compliance work",
+    category: "Programme management",
+  },
   { title: "What makes evidence audit-ready?", category: "Evidence" },
   { title: "What is risk acceptance?", category: "Risk" },
   { title: "Human oversight in AI-assisted compliance", category: "Responsible AI" },
@@ -174,7 +179,8 @@ export const resources: Resource[] = [
     type: "Blog article",
     category: "Responsible AI",
     status: "Coming soon",
-    summary: "Where the boundary sits between assistance and approval, and why it must be explicit.",
+    summary:
+      "Where the boundary sits between assistance and approval, and why it must be explicit.",
   },
   {
     slug: "evidence-that-survives-an-audit",
@@ -278,17 +284,47 @@ export const publishedResources = resources
  * normalised. Old path -> current canonical path.
  */
 export const legacyResourceRedirects: Record<string, string> = {
-  "/resources/case-studies/choosing-your-first-framework": "/resources/blog/choosing-your-first-framework",
-  "/resources/case-studies/risk-acceptance-that-holds-up": "/resources/blog/risk-acceptance-that-holds-up",
+  "/resources/case-studies/choosing-your-first-framework":
+    "/resources/blog/choosing-your-first-framework",
+  "/resources/case-studies/risk-acceptance-that-holds-up":
+    "/resources/blog/risk-acceptance-that-holds-up",
   "/resources/case-studies/human-oversight-in-ai-assisted-compliance":
     "/resources/blog/human-oversight-in-ai-assisted-compliance",
   "/resources/blog/nova-platform-update": "/resources/product-updates/nova-platform-update",
-  "/resources/webinars/evidence-that-survives-an-audit": "/resources/guides/evidence-that-survives-an-audit",
-  "/resources/webinars/control-ownership-in-small-teams": "/resources/guides/control-ownership-in-small-teams",
-  "/resources/webinars/preparing-for-a-type-ii-period": "/resources/guides/preparing-for-a-type-ii-period",
+  "/resources/webinars/evidence-that-survives-an-audit":
+    "/resources/guides/evidence-that-survives-an-audit",
+  "/resources/webinars/control-ownership-in-small-teams":
+    "/resources/guides/control-ownership-in-small-teams",
+  "/resources/webinars/preparing-for-a-type-ii-period":
+    "/resources/guides/preparing-for-a-type-ii-period",
 };
 
-export type FaqCategory = { category: string; items: { question: string; answer: string }[] };
+export type FaqLink = { label: string; to: string };
+export type FaqItem = { question: string; answer: string; shortAnswer?: string; links?: FaqLink[] };
+export type FaqCategory = { category: string; items: FaqItem[] };
+
+const availableFrameworkNames = frameworks
+  .filter((framework) => framework.availability === "Available now")
+  .map((framework) => framework.name)
+  .join(", ");
+const configurableFrameworkNames = frameworks
+  .filter((framework) => framework.availability === "Available by configuration")
+  .map((framework) => framework.name)
+  .join(", ");
+const availableIntegrationNames = integrations
+  .filter((integration) => integration.status === "Available now")
+  .map((integration) => integration.name)
+  .join(", ");
+const aiAssistant = features.find((feature) => feature.slug === "ai-assistant");
+const aiCapabilityNames =
+  aiAssistant?.capabilities.map((capability) => capability.title.toLowerCase()).join(", ") ??
+  "requirement explanation and drafting support";
+const planSupport = supportComparison
+  .map((support) => `${support.plan}: ${support.channel}`)
+  .join("; ");
+const auditorAccessAnswer =
+  pricingFaqs.find((faq) => faq.question === "Do you charge for auditor access?")?.answer ??
+  "Auditor access follows the entitlements shown on the pricing page.";
 
 export const faqCategories: FaqCategory[] = [
   {
@@ -297,123 +333,281 @@ export const faqCategories: FaqCategory[] = [
       {
         question: "What does NOVA Compliance do?",
         answer:
-          "NOVA brings frameworks, controls, evidence, policies, risks, assets, reporting and external assurance into one governed workspace. It helps an organisation understand what is ready, what needs attention and what should happen next.",
+          "NOVA brings frameworks, controls, evidence, policies, risks, assets, ownership, testing, reporting and external assurance into one governed workspace. It maintains one connected compliance record instead of separate spreadsheets, folders and point-in-time status reports.",
+        links: [{ label: "Explore the platform", to: "/platform" }],
+      },
+      {
+        question: "What does NOVA actually do that spreadsheets and shared folders do not?",
+        answer:
+          "Spreadsheets and folders can store information, but they do not naturally maintain the relationships between requirements, controls, evidence, owners, policies, risks, test results, framework mappings and readiness reporting. NOVA maintains those relationships as governed records so changes and gaps can be traced across the programme.",
+        shortAnswer:
+          "NOVA connects requirements, controls, evidence, owners and readiness reporting as governed records, so changes and gaps can be traced instead of being scattered across spreadsheets and folders.",
+        links: [{ label: "See the platform workflow", to: "/platform" }],
       },
       {
         question: "Who develops and operates NOVA?",
-        answer:
-          "NOVA Compliance is developed and operated by Eredox Pty Ltd. It is an independent Eredox product.",
+        answer: site.ownership,
       },
       {
         question: "Can NOVA be used outside Australia?",
         answer:
-          "Yes. The frameworks currently available include internationally recognised standards, and the workspace model is not jurisdiction-specific. Some frameworks are regional by nature, and each framework page states its jurisdiction.",
+          "Yes. NOVA is designed for organisations operating across multiple jurisdictions and supports global, regional and organisation-specific requirements. Some frameworks are jurisdiction-specific, so applicability must still be determined by the organisation.",
       },
     ],
   },
   {
-    category: "Frameworks",
+    category: "Getting started",
     items: [
       {
+        question:
+          "Do we need NOVA before we start an audit, or only once we are already compliant?",
+        answer:
+          "NOVA can be used before, during and after assessment: define scope, establish controls, assign owners, collect evidence, identify gaps, prepare for external review and maintain the programme afterwards. NOVA supports the work but does not make an organisation compliant by itself.",
+      },
+      {
+        question: "Can NOVA replace our compliance consultant, vCISO or internal compliance team?",
+        answer:
+          "No. NOVA provides the governed system, workflows, evidence structure, control mapping and reporting. Human expertise may still be needed for scope, security design, remediation, interpretation, risk decisions and certification or attestation preparation.",
+      },
+      {
+        question: "How long does it take to become audit-ready?",
+        answer:
+          "There is no fixed timeframe. Readiness depends on scope, existing controls, evidence history, remediation effort, staff availability, framework requirements and external assessor expectations. NOVA makes outstanding work visible and accountable but does not guarantee timing.",
+      },
+    ],
+  },
+  {
+    category: "Frameworks & requirements",
+    items: [
+      {
+        question: 'What does "27 available frameworks" mean?',
+        answer: `The governed NOVA catalogue contains ${governedFrameworkCatalogue.availableCount} framework capabilities across native and configurable support. ${governedFrameworkCatalogue.availabilityNote} Activation also depends on applicable requirements, entitlement and the evidence available for the customer scope.`,
+        shortAnswer: `NOVA's governed catalogue contains ${governedFrameworkCatalogue.availableCount} framework capabilities across native and configurable support. Activation depends on scope, customer data, evidence and entitlement; it does not mean every framework is active for every customer.`,
+        links: [{ label: "View framework availability", to: "/frameworks" }],
+      },
+      {
         question: "Which frameworks are available today?",
-        answer:
-          "SOC 2, ISO/IEC 27001, Essential Eight and ISO/IEC 42001 are available now.",
+        answer: `${availableFrameworkNames} are available now in the governed inventory. ${configurableFrameworkNames} are available by configuration. The wider catalogue contains additional capabilities, and activation depends on scope and evidence.`,
+        links: [{ label: "Browse the framework library", to: "/frameworks" }],
       },
       {
-        question: "Which frameworks are planned?",
+        question: "Can we manage several frameworks at the same time?",
         answer:
-          "The NIST Cybersecurity Framework, HIPAA and the Australian Government Information Security Manual are planned. They are labelled as planned throughout the site and are not operational today.",
+          "Yes. NOVA uses a shared control model so one legitimate control and its validated evidence can support multiple requirements where they are genuinely applicable.",
       },
       {
-        question: "Can one control satisfy several frameworks?",
+        question: "What happens when the same control applies to several frameworks?",
         answer:
-          "Yes. Controls are shared and mapped to the requirements they satisfy across every activated framework, so evidence is reused rather than collected repeatedly.",
+          "The control is maintained once and mapped to each applicable requirement. Ownership is maintained once, evidence can be reused where valid, testing affects every framework relying on the control, and gaps remain visible across mappings.",
+      },
+      {
+        question: "Can one evidence item support several frameworks?",
+        answer:
+          "Yes, where it legitimately demonstrates the mapped control or requirement. The mapping remains explicit and reviewable; evidence is not reused automatically without validation.",
+      },
+      {
+        question:
+          "Can we add a framework, regulation, customer requirement or internal standard that is not already listed?",
+        answer:
+          "Yes, through the Custom Framework capability. Additional requirements can be modelled and connected to controls, evidence, risks, owners, policies and reporting. NOVA does not provide legal interpretation.",
+        links: [{ label: "Learn about frameworks", to: "/frameworks" }],
       },
       {
         question: "Does NOVA certify our organisation?",
+        answer: site.frameworkDisclaimer,
+      },
+      {
+        question: "Does NOVA guarantee we will pass an audit?",
         answer:
-          "No. NOVA assists with readiness and evidence management. Certification, attestation and regulatory conclusions remain with authorised independent, regulatory or customer-appointed parties.",
+          "No. NOVA helps organisations understand and evidence readiness, but the outcome depends on actual controls, evidence, scope and the independent assessment.",
       },
     ],
   },
   {
-    category: "Evidence and workflow",
+    category: "Evidence & automation",
     items: [
       {
-        question: "How is evidence collected?",
+        question: "What does NOVA actually automate, and what still needs human approval?",
         answer:
-          "Evidence can be uploaded manually with structured metadata, and collected through available connectors. Manual upload with reviewer validation is the baseline; the integrations page states the status of each connector.",
+          "NOVA reduces repetitive collection, organisation and mapping work through governed connectors and evidence workflows. It can assist with collecting evidence, organising artefacts, mapping evidence to controls, surfacing gaps, reminders, review workflows and reporting from governed records. It does not approve evidence, accept risk, approve policies, certify the organisation or declare audit readiness. Human approval remains required.",
+        shortAnswer:
+          "NOVA can help collect, organise and map evidence, surface gaps and support review workflows. It does not approve evidence, accept risk or declare readiness; human approval remains required.",
+        links: [
+          { label: "Explore evidence management", to: "/features/evidence" },
+          { label: "See connector status", to: "/integrations" },
+        ],
       },
       {
-        question: "Does evidence count as soon as it is uploaded?",
-        answer:
-          "No. A reviewer validates each item against the control expectation. Until that review occurs the item is held but does not contribute to readiness.",
+        question: "Which integrations and connectors are available today?",
+        answer: `${availableIntegrationNames} are available now in the governed integration inventory. Other connector categories remain clearly marked with their source status, including Planned where they are not available today.`,
+        links: [{ label: "View integrations", to: "/integrations" }],
       },
       {
-        question: "What happens to old evidence?",
+        question: "What happens if NOVA does not have a connector for one of our systems?",
         answer:
-          "Evidence carries a freshness expectation. Items approaching or past that expectation are surfaced so they can be refreshed before an assessment.",
+          "Evidence can still be uploaded manually with structured metadata and mapped to the relevant controls. A missing connector does not prevent the programme from operating.",
+        links: [{ label: "See evidence management", to: "/features/evidence" }],
+      },
+      {
+        question: "Does evidence count as soon as it is uploaded or collected?",
+        answer:
+          "No. A reviewer validates that the evidence actually demonstrates the control before it contributes to readiness. Until review occurs, the item is held but does not count.",
+      },
+      {
+        question: "How does NOVA keep evidence current?",
+        answer:
+          "Evidence has freshness expectations and review history. Ageing or expired evidence is surfaced for refresh before assessment so the programme record reflects current operation rather than a historical snapshot.",
+      },
+      {
+        question: "Can one evidence item be reused across several frameworks?",
+        answer:
+          "Yes, where the evidence genuinely supports a shared control. The mapping remains explicit and reviewable across every framework that relies on it.",
       },
     ],
   },
   {
-    category: "AI and human approval",
+    category: "Audit & assurance",
     items: [
       {
-        question: "What does the AI assistant actually do?",
+        question: "Do we still need an independent auditor or certification body?",
         answer:
-          "It interprets and summarises evidence, prepares policy and control description drafts, identifies likely gaps against activated requirements and explains what a requirement is asking for. It works from the governed content in your workspace.",
+          "Yes, where the chosen framework requires independent assurance. NOVA organises the programme, evidence and readiness record but does not replace an external auditor, assessor or certification body.",
+        shortAnswer:
+          "Yes, where the chosen framework requires it. NOVA organises evidence and readiness but does not replace an independent auditor, assessor or certification body.",
+        links: [{ label: "Explore the Auditor Portal", to: "/features/auditor-portal" }],
       },
       {
-        question: "Can the assistant approve anything?",
+        question: "How does an auditor work with NOVA?",
         answer:
-          "No. Approval of policies, acceptance of risk, declarations of readiness and any external statement are human actions. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+          "The Auditor Portal provides scoped engagement access, evidence requests, findings and controlled collaboration inside the tenant boundary. It does not provide unrestricted access to the customer workspace.",
+        links: [{ label: "See Auditor Portal", to: "/features/auditor-portal" }],
       },
       {
-        question: "What are the assistant's limitations?",
+        question: "Can NOVA help reduce repeated security questionnaires?",
         answer:
-          "It can misinterpret an artefact, miss context that was never recorded in the workspace, or produce a draft that reads well but is not accurate for your environment. Every output requires review.",
+          "Yes. The Trust Centre can publish approved assurance content so common customer questions can be answered without exposing confidential underlying evidence. Publication requires explicit approval.",
+        links: [{ label: "Explore the Trust Centre", to: "/features/trust-centre" }],
+      },
+      {
+        question: "What does readiness percentage mean?",
+        answer:
+          "Readiness is a decision-support indicator derived from the underlying control, test and validated evidence state. It is not certification, an audit outcome or a guarantee.",
       },
     ],
   },
   {
-    category: "Security and access",
+    category: "AI governance & human oversight",
     items: [
       {
-        question: "Is our data separated from other organisations?",
+        question: "How does NOVA help us govern AI use?",
         answer:
-          "NOVA operates a tenant model. Evidence, controls, policies and reporting are scoped to your tenant, with role-based access inside it.",
+          "NOVA can connect AI requirements, policies, AI systems, risks, impact assessments, controls, owners, evidence, human oversight and monitoring. ISO/IEC 42001 is one relevant framework, but the same structure can support broader responsible-AI and organisational governance needs.",
+        shortAnswer:
+          "NOVA connects AI requirements, systems, risks, impact assessments, controls, evidence and human oversight in one governed record. ISO/IEC 42001 is one use case, not the only one.",
+        links: [
+          { label: "Explore AI governance", to: "/responsible-ai" },
+          { label: "See the AI Assistant", to: "/features/ai-assistant" },
+        ],
       },
       {
-        question: "Can auditors access our workspace?",
+        question: "Can NOVA help if we use AI but are not seeking ISO/IEC 42001 certification?",
         answer:
-          "Yes, through the Auditor Portal. Access is scoped to the engagement and stays inside your tenant boundary, with requests and findings tracked in one workflow.",
+          "Yes. Organisations can use the same governance structure for internal AI policy, customer requirements, risk management, responsible AI, contractual obligations and other governance requirements.",
+      },
+      {
+        question: "Can NOVA's AI Assistant approve policies, evidence or risks?",
+        answer: `No. ${site.humanStatement}`,
+        links: [{ label: "Read the responsible AI position", to: "/responsible-ai" }],
+      },
+      {
+        question: "What can the AI Assistant actually do?",
+        answer: `The governed AI Assistant supports ${aiCapabilityNames}. It works from the governed content in the workspace and presents output for human review rather than autonomous approval.`,
+        links: [{ label: "Explore the AI Assistant", to: "/features/ai-assistant" }],
+      },
+      {
+        question: "What are the AI Assistant's limitations?",
+        answer:
+          "It can misunderstand context, produce an incorrect draft or miss information that is not available in the governed workspace. Outputs require human review before they are used, approved or published.",
+      },
+    ],
+  },
+  {
+    category: "Security & trust",
+    items: [
+      {
+        question: "Is our information separated from other NOVA customers?",
+        answer:
+          "Yes. Evidence, controls, policies, risks and reporting are scoped to the customer tenant with role-based access inside that tenant.",
+        links: [{ label: "Read the security overview", to: "/security" }],
+      },
+      {
+        question: "Can auditors see all of our information?",
+        answer:
+          "No. Auditor access is scoped to the engagement through the Auditor Portal and remains within the tenant boundary.",
+        links: [{ label: "See scoped auditor access", to: "/features/auditor-portal" }],
+      },
+      {
+        question: "What can we safely publish through the Trust Centre?",
+        answer:
+          "Only explicitly approved assurance information should be published. Confidential underlying evidence remains internal unless separately authorised.",
+        links: [{ label: "Explore the Trust Centre", to: "/features/trust-centre" }],
       },
       {
         question: "Is Eredox certified?",
         answer:
-          "The security page describes the practices in place. We do not claim certifications that Eredox has not obtained, and no certification is asserted on this website.",
+          "The security and trust pages describe the practices in place. Eredox does not claim certifications that it has not obtained, and no unsupported certification is asserted on this website.",
+        links: [{ label: "Review security practices", to: "/security" }],
       },
     ],
   },
   {
-    category: "Commercial and support",
+    category: "Commercial & support",
     items: [
       {
         question: "How is NOVA priced?",
         answer:
-          "NOVA is a subscription with entitlements per plan. Indicative amounts are shown on the pricing page and require Eredox approval before they are contractually binding. Enterprise is quoted per organisation.",
+          "NOVA is priced as a subscription with entitlements per plan. The pricing page is the commercial authority for current indicative amounts, approval status, included capabilities and Enterprise scope.",
+        links: [{ label: "View pricing", to: "/pricing" }],
+      },
+      {
+        question: "Is the NOVA subscription the total cost of becoming certified?",
+        answer:
+          "No. External costs may include an auditor or certification body, consultants, remediation, internal staff time and technical implementation. The NOVA subscription covers the platform and plan entitlements.",
+      },
+      {
+        question: "Can we change plans later?",
+        answer:
+          pricingFaqs.find((faq) => faq.question === "Can we change plan later?")?.answer ??
+          "Yes. Plans change entitlements in the same governed workspace rather than requiring the programme to be rebuilt.",
+        links: [{ label: "Compare plans", to: "/pricing" }],
       },
       {
         question: "What support is included?",
-        answer:
-          "Support varies by plan, from documentation and community resources on Free through to agreed arrangements on Enterprise. The pricing page includes a support comparison.",
+        answer: `Support is plan-dependent: ${planSupport}. The pricing page remains the source of truth for current support arrangements.`,
+        links: [{ label: "Compare support", to: "/pricing" }],
       },
       {
-        question: "What is the Trust Centre?",
-        answer:
-          "It is where approved assurance information can be published to customers and prospects without exposing the underlying confidential evidence. Publication requires explicit approval.",
+        question: "Do you charge separately for auditor access?",
+        answer: auditorAccessAnswer,
+        links: [{ label: "See pricing entitlements", to: "/pricing" }],
       },
     ],
   },
 ];
+
+const homepageFaqQuestions = [
+  "What does NOVA actually do that spreadsheets and shared folders do not?",
+  'What does "27 available frameworks" mean?',
+  "What does NOVA actually automate, and what still needs human approval?",
+  "Do we still need an independent auditor or certification body?",
+  "How does NOVA help us govern AI use?",
+] as const;
+
+export const homepageFaqItems: FaqItem[] = homepageFaqQuestions.map((question) => {
+  const item = faqCategories
+    .flatMap((category) => category.items)
+    .find((candidate) => candidate.question === question);
+  if (!item)
+    throw new Error(`Homepage FAQ question is not in the governed FAQ library: ${question}`);
+  return { ...item, answer: item.shortAnswer ?? item.answer };
+});

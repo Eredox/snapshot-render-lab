@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { ContactForm } from "@/components/site/ContactForm";
@@ -25,6 +25,9 @@ const quoteFields = [
 ];
 
 function RequestQuotePage() {
+  const search = useSearch({ strict: false }) as { plan?: string };
+  const isEnterpriseRequest = search.plan === "enterprise";
+
   return (
     <>
       <PageHero
@@ -49,8 +52,15 @@ function RequestQuotePage() {
           </div>
           <Card>
             <h2 className="text-lg font-semibold">Quote request</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Fill in the form and our team will respond within two business days.</p>
-            <ContactForm className="mt-6" />
+            <p className="mt-2 text-sm text-muted-foreground">
+              {isEnterpriseRequest
+                ? "This request is for the NOVA Enterprise plan. Fill in the form and our team will respond within two business days."
+                : "Fill in the form and our team will respond within two business days."}
+            </p>
+            <ContactForm
+              className="mt-6"
+              defaultMessage={isEnterpriseRequest ? "Quote request for the NOVA Enterprise plan.\n\n" : ""}
+            />
           </Card>
         </div>
       </Section>

@@ -1,19 +1,37 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks, Disclaimer } from "@/components/site/primitives";
+import type { ComponentProps } from "react";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  AvailabilityBadge,
+  RelatedLinks,
+  Disclaimer,
+} from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
-import { frameworkRegister, registerNote, registerPriorityMeaning, type RegisterPriority } from "@/data/framework-register";
+import {
+  frameworkRegister,
+  registerNote,
+  registerPriorityMeaning,
+  type RegisterPriority,
+} from "@/data/framework-register";
 import { cn } from "@/lib/utils";
 import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
+type FrameworkRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
+const frameworkRouteTo = (path: string): FrameworkRouteTo => path as FrameworkRouteTo;
+
 export const Route = createFileRoute("/frameworks/")({
   head: () => ({
     ...pageMeta({
-      title: "Frameworks — NOVA Compliance",
-      description: "Compliance frameworks available and planned in NOVA, with availability status, readiness views and honest scope handling.",
+      title: "Compliance Frameworks | NOVA Compliance",
+      description:
+        "Compliance frameworks supported in NOVA, with availability status, readiness views and honest scope handling.",
       path: "/frameworks",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Frameworks", to: "/frameworks" }]))],
@@ -44,7 +62,7 @@ function PriorityBadge({ priority }: { priority: RegisterPriority }) {
 
 function FrameworksPage() {
   const available = frameworks.filter((f) => f.availability === "Available now");
-  const planned = frameworks.filter((f) => f.availability !== "Available now");
+  const configurable = frameworks.filter((f) => f.availability === "Available by configuration");
 
   return (
     <>
@@ -57,45 +75,127 @@ function FrameworksPage() {
 
       <Section>
         <SectionHeading eyebrow="Available now" title="Ready to activate" />
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {available.map((f) => (
-            <Card key={f.slug} interactive>
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold">{f.name}</h2>
-                <AvailabilityBadge value={f.availability} />
+            <Card key={f.slug} interactive className="h-full">
+              <div className="flex items-start gap-5">
+                {f.icon ? (
+                  <img
+                    src={f.icon}
+                    alt=""
+                    aria-hidden="true"
+                    width={72}
+                    height={72}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-[72px] w-[72px] shrink-0 object-contain"
+                  />
+                ) : null}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h2 className="text-lg font-semibold">{f.name}</h2>
+                    <AvailabilityBadge value={f.availability} />
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
+                    <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
+                    {f.jurisdictions.map((jurisdiction) => (
+                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                        {jurisdiction}
+                      </span>
+                    ))}
+                  </div>
+                  <Link
+                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  >
+                    Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-              <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
             </Card>
           ))}
         </div>
       </Section>
 
       <Section tone="surface">
-        <SectionHeading eyebrow="Roadmap" title="Planned frameworks" />
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {planned.map((f) => (
-            <Card key={f.slug} interactive>
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold">{f.name}</h2>
-                <AvailabilityBadge value={f.availability} />
+        <SectionHeading
+          eyebrow="Available by configuration"
+          title="Extend the programme to the requirements you govern"
+          description="These frameworks are available by configuration when the relevant systems, records and evidence are supplied for review."
+        />
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {configurable.map((f) => (
+            <Card key={f.slug} interactive className="h-full">
+              <div className="flex items-start gap-5">
+                {f.icon ? (
+                  <img
+                    src={f.icon}
+                    alt=""
+                    aria-hidden="true"
+                    width={72}
+                    height={72}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-[72px] w-[72px] shrink-0 object-contain"
+                  />
+                ) : null}
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <h2 className="text-lg font-semibold">{f.name}</h2>
+                    <AvailabilityBadge value={f.availability} />
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
+                  <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
+                    <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
+                    {f.jurisdictions.map((jurisdiction) => (
+                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                        {jurisdiction}
+                      </span>
+                    ))}
+                  </div>
+                  <Link
+                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  >
+                    Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-              <Link to={`/frameworks/${f.slug}` as any} className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
             </Card>
           ))}
         </div>
       </Section>
 
       <Section>
+        <Card>
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="eyebrow">Custom framework available</p>
+              <h2 className="mt-2 text-2xl font-semibold">
+                Bring requirements beyond the standard library
+              </h2>
+              <p className="mt-3 max-w-2xl text-muted-foreground">
+                NOVA can structure additional customer, contractual, regulatory or internal
+                requirements as a governed framework, with human-reviewed mappings and evidence
+                decisions.
+              </p>
+            </div>
+            <Link
+              to="/book-demo"
+              className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              Discuss your framework <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            </Link>
+          </div>
+        </Card>
+      </Section>
+
+      <Section>
         <SectionHeading
           eyebrow="Global register"
-          title="Planned frameworks by region"
-          description="A regional view of the major compliance frameworks and regulatory regimes NOVA may support. Eredox is headquartered in Australia and its service scope is worldwide."
+          title="Frameworks by region"
+          description="A regional view of the major compliance frameworks and regulatory regimes relevant to NOVA customers. Eredox is headquartered in Australia and its service scope is worldwide."
         />
         <Tabs defaultValue={frameworkRegister[0]!.id} className="mt-8">
           <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 bg-secondary p-1">
@@ -113,11 +213,21 @@ function FrameworksPage() {
                 <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
                   <thead className="bg-surface">
                     <tr>
-                      <th scope="col" className="px-4 py-3 font-semibold">Framework</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Jurisdiction</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Primary subject</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">NOVA relevance</th>
-                      <th scope="col" className="px-4 py-3 font-semibold">Priority</th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Framework
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Jurisdiction
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Primary subject
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        NOVA relevance
+                      </th>
+                      <th scope="col" className="px-4 py-3 font-semibold">
+                        Priority
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -183,7 +293,10 @@ function FrameworksPage() {
                     <span className="text-muted-foreground">{f.value}%</span>
                   </div>
                   <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary">
-                    <span className="block h-full rounded-full bg-primary" style={{ width: `${f.value}%` }} />
+                    <span
+                      className="block h-full rounded-full bg-primary"
+                      style={{ width: `${f.value}%` }}
+                    />
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground">{f.label}</p>
                 </div>
