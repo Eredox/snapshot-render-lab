@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { staticRoutes, dynamicRoutes } from "@/config/navigation";
 import { publishedResources, resourcePath, typeRoutes } from "@/data/resources";
-import { legalDocs } from "@/data/legal";
+import { publishedLegalRegistry } from "@/data/legal-registry";
 import { siteUrl } from "@/config/site";
 
 /** Resource detail URLs are emitted only for published items, from one place. */
-function sitemapUrls(): { loc: string; lastmod?: string }[] {
+export function sitemapUrls(): { loc: string; lastmod?: string }[] {
   const resourceSections = Object.values(typeRoutes);
   const isResourceDetail = (path: string) =>
     resourceSections.some((base) => path.startsWith(`${base}/`));
@@ -17,14 +17,11 @@ function sitemapUrls(): { loc: string; lastmod?: string }[] {
     "/resources/case-studies",
     "/resources/webinars",
   ]);
-  const excludedDynamicPrefixes = [
-    "/plans",
-    ...legalDocs
-      .filter((doc) => doc.status === "Approved content pending")
-      .map((doc) => `/legal/${doc.slug}`),
-  ];
+  const excludedDynamicPrefixes = ["/plans", "/legal"];
 
-  const staticUrls = staticRoutes.filter((r) => !excluded.has(r)).map((r) => ({ loc: r }));
+  const staticUrls = staticRoutes
+    .filter((r) => !excluded.has(r) && !r.startsWith("/legal/"))
+    .map((r) => ({ loc: r }));
 
   const dynamicUrls = dynamicRoutes
     .flatMap((d) => d.slugs.map((s) => `${d.pattern.replace("/$slug", "")}/${s}`))
@@ -40,8 +37,12 @@ function sitemapUrls(): { loc: string; lastmod?: string }[] {
     ...(r.modified || r.published ? { lastmod: r.modified ?? r.published } : {}),
   }));
 
+  const publishedLegalUrls = publishedLegalRegistry.map((document) => ({
+    loc: document.route,
+  }));
+
   const seen = new Set<string>();
-  return [...staticUrls, ...dynamicUrls, ...resourceUrls].filter((u) => {
+  return [...staticUrls, ...publishedLegalUrls, ...dynamicUrls, ...resourceUrls].filter((u) => {
     if (seen.has(u.loc)) return false;
     seen.add(u.loc);
     return true;

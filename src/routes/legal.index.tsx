@@ -3,8 +3,7 @@ import { ArrowRight } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { publicLegalDocs } from "@/data/legal";
-import { publishedLegalDocuments } from "@/data/legal-published";
+import { publishedLegalRegistry } from "@/data/legal-registry";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 type LegalRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
@@ -35,41 +34,50 @@ function LegalPage() {
 
       <Section>
         <div className="mb-8 rounded-xl border border-border bg-primary-soft/40 p-6">
-          <h2 className="text-lg font-semibold">Current customer documents</h2>
+          <h2 className="text-lg font-semibold">Published customer documents</h2>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-            The current Terms and Privacy Policy are published here in full, with their version,
-            effective date and global applicability shown on each document.
+            The documents below are the current public NOVA legal estate. Published Terms and
+            Privacy are available in full; supporting public policies describe their current scope
+            and status.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {publishedLegalDocuments.map((doc) => (
-            <Card key={doc.metadata.document_key} interactive>
-              <h2 className="text-lg font-semibold">{doc.metadata.title}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Version {doc.metadata.version} · Effective {doc.metadata.effective_date} · Global
-              </p>
-              <Link
-                to={legalRouteTo(
-                  `/legal/${doc.metadata.document_type === "terms_and_conditions" ? "terms" : "privacy"}`,
-                )}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Read in full <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
-            </Card>
-          ))}
-          {publicLegalDocs.map((doc) => (
-            <Card key={doc.slug} interactive>
-              <h2 className="text-lg font-semibold">{doc.title}</h2>
-              <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{doc.summary}</p>
-              <Link
-                to={legalRouteTo(`/legal/${doc.slug}`)}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Read <ArrowRight aria-hidden="true" className="h-4 w-4" />
-              </Link>
-            </Card>
-          ))}
+        <div className="space-y-10">
+          {[
+            { id: "core-agreements", title: "Core agreements", slugs: ["terms", "privacy"] },
+            { id: "data-technology", title: "Data & technology", slugs: ["cookies"] },
+            { id: "company-commitments", title: "Company commitments", slugs: ["accessibility"] },
+          ].map((group) => {
+            const documents = publishedLegalRegistry.filter((document) =>
+              group.slugs.includes(document.slug),
+            );
+            return (
+              <section key={group.id} aria-labelledby={`legal-group-${group.id}`}>
+                <h2 id={`legal-group-${group.id}`} className="text-xl font-semibold">
+                  {group.title}
+                </h2>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {documents.map((document) => (
+                    <Card key={document.route} interactive>
+                      <h3 className="text-lg font-semibold">{document.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{document.summary}</p>
+                      <p className="mt-3 text-xs text-muted-foreground">
+                        Version {document.version} · Effective {document.effectiveDate}
+                      </p>
+                      <Link
+                        to={legalRouteTo(document.route)}
+                        className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                      >
+                        {document.slug === "terms" || document.slug === "privacy"
+                          ? "Read in full"
+                          : "Read policy"}{" "}
+                        <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                      </Link>
+                    </Card>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       </Section>
 
