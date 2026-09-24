@@ -93,19 +93,26 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function AudienceVisual({ imagePath, imageAlt, tone, icon: Icon }: (typeof audiencePaths)[number]) {
+function AudienceVisual({
+  imagePath,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  tone,
+}: (typeof audiencePaths)[number]) {
   return (
-    <div
-      role="img"
-      aria-label={`${imageAlt}. Final documentary photography is still to be supplied.`}
-      data-image-path={imagePath}
-      className={`flex min-h-44 flex-col items-center justify-center gap-3 rounded-xl bg-gradient-to-br ${tone} p-6 text-center`}
-    >
-      <Icon aria-hidden="true" className="h-12 w-12 text-primary" strokeWidth={1.5} />
-      <span className="rounded-full border border-border/80 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground">
-        Photography placeholder
-      </span>
-    </div>
+    <figure className={`overflow-hidden rounded-xl bg-gradient-to-br ${tone}`}>
+      <img
+        src={imagePath}
+        alt={imageAlt}
+        width={imageWidth}
+        height={imageHeight}
+        loading="lazy"
+        decoding="async"
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+        className="block h-auto w-full object-cover"
+      />
+    </figure>
   );
 }
 

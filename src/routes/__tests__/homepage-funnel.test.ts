@@ -62,6 +62,8 @@ describe("homepage funnel contract", () => {
     for (const audience of audiencePaths) {
       expect(audience.imagePath).toMatch(/^\/media\/audience\/nova-[a-z0-9-]+\.webp$/);
       expect(audience.imageAlt.length).toBeGreaterThan(30);
+      expect(audience.imageWidth).toBe(1448);
+      expect(audience.imageHeight).toBe(1086);
     }
   });
 });
