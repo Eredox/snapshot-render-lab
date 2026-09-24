@@ -4,17 +4,26 @@ import { formsConfig } from "@/config/site";
 export function ContactForm({ className, defaultMessage = "" }: { className?: string; defaultMessage?: string }) {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: defaultMessage });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formsConfig.endpoint) {
-      fetch(formsConfig.endpoint, {
+    setSubmitting(true);
+    setError(null);
+    try {
+      const result = await fetch(formsConfig.endpoint ?? "/api/forms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
-      }).catch(() => undefined);
+      });
+      if (!result.ok) throw new Error("Form submission failed");
+      setSubmitted(true);
+    } catch {
+      setError("We could not send your message just now. Please try again or email us directly.");
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitted(true);
   };
 
   if (submitted) {
@@ -22,9 +31,7 @@ export function ContactForm({ className, defaultMessage = "" }: { className?: st
       <div className={`rounded-xl border border-border bg-card p-6 ${className ?? ""}`}>
         <p className="font-medium">Thanks for your message</p>
         <p className="mt-2 text-sm text-muted-foreground">
-          {formsConfig.endpoint
-            ? "We will be in touch soon."
-            : `Form submissions are not yet configured. Please email ${formsConfig.fallbackEmail} directly.`}
+          We will be in touch soon.
         </p>
       </div>
     );
@@ -85,13 +92,12 @@ export function ContactForm({ className, defaultMessage = "" }: { className?: st
       </div>
       <button
         type="submit"
+        disabled={submitting}
         className="inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
-        Send message
+        {submitting ? "Sending…" : "Send message"}
       </button>
-      {!formsConfig.endpoint ? (
-        <p className="text-xs text-muted-foreground">Forms are not connected yet. Please email {formsConfig.fallbackEmail}.</p>
-      ) : null}
+      {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
     </form>
   );
 }

@@ -102,7 +102,7 @@ export const legalDocs: LegalDoc[] = [
         description: "External resources and embedded services verified in the public site.",
         body: [
           "The public website loads the Roboto font stylesheet from Google Fonts domains through a stylesheet and preconnect links. This is an external resource request, not an analytics or marketing provider configured by NOVA; this policy does not assert what cookies, if any, a visitor's browser or that provider may apply outside the NOVA website.",
-          "No third-party embedded forms, video players, social widgets, CRM submission endpoint, analytics provider or marketing provider is configured. Public forms validate in the browser and show a configuration notice while the form endpoint is unset. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site.",
+          "No third-party embedded forms, video players, social widgets, analytics provider or marketing provider is configured. Public forms submit to a same-origin server endpoint, which can forward enquiries to configured Eredox CRM/mail systems. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site.",
         ],
       },
       {
@@ -281,7 +281,7 @@ export const legalDocs: LegalDoc[] = [
         heading: "Forms and labels",
         description: "Public form implementation practices.",
         body: [
-          "Public contact and booking forms use visible labels, native inputs and buttons, keyboard-focusable controls and validation messaging. Form delivery is not currently connected to a CRM or external submission provider in this repository; visitors are shown a configuration notice when a delivery endpoint is unavailable.",
+          "Public contact and booking forms use visible labels, native inputs and buttons, keyboard-focusable controls and validation messaging. Form delivery is handled server-side and depends on the production CRM and mail runtime configuration; visitors receive an error message if delivery is temporarily unavailable.",
         ],
       },
       {
