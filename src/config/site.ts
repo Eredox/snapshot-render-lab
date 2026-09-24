@@ -35,12 +35,10 @@ export const publicLegalRoutes = {
 } as const;
 
 /**
- * Client-side forms post here. While `endpoint` is null the forms validate
- * fully but never claim a successful submission — they show the configuration
- * notice instead. Set this to your form service endpoint to enable delivery.
+ * Client-side forms post here. Delivery and all credentials remain server-side.
  */
 export const formsConfig = {
-  endpoint: null as string | null,
+  endpoint: "/api/forms" as string | null,
   fallbackEmail: "compliance@eredox.com",
 } as const;
 

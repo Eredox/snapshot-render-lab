@@ -22,6 +22,7 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
     message: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const set = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [key]: e.target.value });
@@ -29,18 +30,14 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    if (formsConfig.endpoint) {
-      try {
-        await fetch(formsConfig.endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "demo-booking", ...form }),
-        });
-      } catch {
-        // Delivery is best-effort; the confirmation page still shows the slot.
-      }
-    }
+    setError(null);
     try {
+      const result = await fetch(formsConfig.endpoint ?? "/api/forms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "demo-booking", ...form }),
+      });
+      if (!result.ok) throw new Error("Form submission failed");
       await navigate({
         to: "/book-demo/confirmed",
         search: {
@@ -55,6 +52,7 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
       });
     } catch {
       setSubmitting(false);
+      setError("We could not send your booking just now. Please try again or email us directly.");
     }
   };
 
@@ -162,10 +160,9 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
       >
         {submitting ? "Booking…" : "Request demo booking"}
       </button>
+      {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
       <p className="text-xs text-muted-foreground">
-        {formsConfig.endpoint
-          ? "We will confirm the time by email. Demos are run by the Eredox team."
-          : `Booking delivery is not connected yet. Please email ${formsConfig.fallbackEmail} directly.`}
+        We will confirm the time by email. Demos are run by the Eredox team.
       </p>
     </form>
   );
