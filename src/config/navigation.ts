@@ -1,7 +1,7 @@
 import { features } from "@/data/features";
 import { frameworks } from "@/data/frameworks";
 import { solutions } from "@/data/solutions";
-import { legalDocs } from "@/data/legal";
+import { legalDocs, publicLegalDocs } from "@/data/legal";
 import { resources } from "@/data/resources";
 import { plans } from "@/data/pricing";
 import { appUrls, authoritativeLegalUrls } from "@/config/site";
@@ -219,7 +219,7 @@ export const footerColumns: NavGroup[] = [
       { label: "Legal centre", to: "/legal" },
       { label: "Terms", to: authoritativeLegalUrls.terms, external: true },
       { label: "Privacy", to: authoritativeLegalUrls.privacy, external: true },
-      ...legalDocs.map((d) => ({ label: d.navLabel, to: `/legal/${d.slug}` })),
+      ...publicLegalDocs.map((d) => ({ label: d.navLabel, to: `/legal/${d.slug}` })),
     ],
   },
 ];

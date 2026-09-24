@@ -201,6 +201,9 @@ export const legalDocs: LegalDoc[] = [
   },
 ];
 
+/** Only governed, published documents appear in public navigation. */
+export const publicLegalDocs = legalDocs.filter((doc) => doc.status === "Published");
+
 /** No subprocessor list has been approved for publication yet. */
 export const subprocessors: Array<{ name: string; purpose: string; location: string }> = [];
 

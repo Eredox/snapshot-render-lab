@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { legalDocs } from "@/data/legal";
+import { publicLegalDocs } from "@/data/legal";
 import { authoritativeLegalUrls } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
@@ -60,7 +60,7 @@ function LegalPage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {legalDocs.map((doc) => (
+          {publicLegalDocs.map((doc) => (
             <Card key={doc.slug} interactive>
               <h2 className="text-lg font-semibold">{doc.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{doc.summary}</p>

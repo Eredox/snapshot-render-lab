@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Section, PageHero, Card, RelatedLinks, Disclaimer } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { legalDocs, getLegalDoc, legalPendingNote } from "@/data/legal";
+import { getLegalDoc, legalPendingNote, publicLegalDocs } from "@/data/legal";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/legal/$slug")({
@@ -68,7 +68,7 @@ function LegalNotFound() {
 
 function LegalDetail() {
   const { doc } = Route.useLoaderData();
-  const related = legalDocs.filter((d) => d.slug !== doc.slug).slice(0, 3);
+  const related = publicLegalDocs.filter((d) => d.slug !== doc.slug).slice(0, 3);
   const path = `/legal/${doc.slug}`;
 
   return (
