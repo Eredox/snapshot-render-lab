@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { sitemapUrls } from "@/routes/sitemap[.]xml";
+import { appUrls } from "@/config/site";
 
 describe("public launch invariants", () => {
   it("keeps sitemap URLs unique and canonical", () => {
@@ -29,5 +30,12 @@ describe("public launch invariants", () => {
       expect(nginx).toContain(`add_header ${header}`);
     }
     expect(nginx).not.toMatch(/unsafe-eval/);
+  });
+
+  it("keeps the Free-start CTA on the verified application registration route", () => {
+    expect(appUrls.register).toBe("https://nova.eredox.com/register");
+    const start = readFileSync(resolve(process.cwd(), "src/routes/start.tsx"), "utf8");
+    expect(start).toContain("to={appUrls.register}");
+    expect(start).toContain("Create Free workspace");
   });
 });

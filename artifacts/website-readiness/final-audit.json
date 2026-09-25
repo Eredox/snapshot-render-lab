@@ -606,14 +606,14 @@
     "sourceTests": {
       "lint": "PASS with 7 existing warnings",
       "typecheck": "PASS",
-      "vitest": "PASS — 17 files / 96 tests",
+      "vitest": "PASS — 17 files / 97 tests",
       "build": "PASS"
     },
     "csp": "Prepared in source Nginx configuration; not deployed",
     "accessibility": "Source semantic review completed; rendered accessibility tree unavailable",
     "mobileCookie": "Flow-positioned remediation implemented; responsive browser verification unavailable",
     "bookDemoE2E": "BLOCKED — no browser session or authorized isolated delivery environment",
-    "startFreeE2E": "BLOCKED — no production-ready Free registration/provisioning route exists",
+    "startFreeE2E": "BLOCKED — registration route implemented on paired application branch; no deployment, disposable DB/browser E2E, or production mutation performed",
     "performance": "BLOCKED — no reproducible browser lab metrics available"
   }
 }

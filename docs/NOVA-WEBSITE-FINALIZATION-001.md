@@ -1,5 +1,9 @@
 # NOVA-WEBSITE-FINALIZATION-001
 
+> Historical evidence snapshot. The current Free registration closure is recorded in
+> [NOVA-GO-LIVE-CLOSURE-001](NOVA-GO-LIVE-CLOSURE-001.md); its source changes supersede the
+> historical “no registration route” disposition below.
+
 ## Executive decision
 
 **HOLD**
@@ -283,4 +287,3 @@ GitHub Actions has not been run from this environment.
 ## Final recommendation
 
 **HOLD** until blockers 1–5 are resolved or explicitly accepted by the launch authority.
-

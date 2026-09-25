@@ -2,14 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { plans } from "@/data/pricing";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/start")({
   head: () => ({
     ...pageMeta({
       title: "Explore Free access | NOVA Compliance",
-      description: "Review NOVA's Free entitlement and governed access path. Self-service registration is not currently connected on the public website.",
+      description: "Create a Free NOVA workspace, review the entitlement and continue through the governed onboarding path.",
       path: "/start",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Explore Free access", to: "/start" }]))],
@@ -18,10 +18,9 @@ export const Route = createFileRoute("/start")({
 });
 
 const steps = [
-  "Review the Free entitlement and current access route",
-  "Confirm whether the governed onboarding path meets your needs",
-  "Bring your framework, controls and evidence requirements to the NOVA team",
-  "Use the approved onboarding route when it is available",
+  "Create a Free NOVA workspace",
+  "Choose a framework and record your initial onboarding context",
+  "Review your workspace, evidence and readiness requirements",
   "Move to a governed paid-plan discussion when broader entitlements are required",
 ];
 
@@ -41,7 +40,7 @@ function StartPage() {
       <PageHero
         eyebrow="Get started"
         title="Explore Free access"
-        description="Review the no-subscription Free entitlement and the current governed access path. The public self-service registration route is not connected yet."
+        description="Create a no-subscription Free workspace, then continue through the governed onboarding path in NOVA."
         breadcrumbs={[{ label: "Explore Free access", to: "/start" }]}
       />
 
@@ -68,13 +67,9 @@ function StartPage() {
             <h2 className="text-lg font-semibold">Free tier includes</h2>
             <FeatureList className="mt-4" items={freeLimits} />
             <p className="mt-6 text-sm text-muted-foreground">{site.humanStatement}</p>
-            <button
-              type="button"
-              disabled
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground opacity-60"
-            >
-              Free onboarding route not connected yet
-            </button>
+            <CtaLink to={appUrls.register} external className="mt-6 w-full">
+              Create Free workspace
+            </CtaLink>
             <div className="mt-4 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
               <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
