@@ -1,0 +1,619 @@
+{
+  "audit": "NOVA-WEBSITE-FINALIZATION-001",
+  "generatedAt": "2026-09-26",
+  "repository": "Eredox/snapshot-render-lab",
+  "branch": "feat/nova-website-finalization-001",
+  "baselineMainCommit": "27518b317870cc858a696eaba19708ed4c48ccce",
+  "implementationCommit": "7de06a6",
+  "productionModified": false,
+  "publicHost": "https://www.nova.eredox.com",
+  "baseline": {
+    "sitemapPages": 65,
+    "averagePageScore": 93.9,
+    "auditedAt": "2026-09-25"
+  },
+  "inventory": [
+    {
+      "number": 1,
+      "url": "https://www.nova.eredox.com/",
+      "path": "/",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 2,
+      "url": "https://www.nova.eredox.com/about",
+      "path": "/about",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 3,
+      "url": "https://www.nova.eredox.com/book-demo",
+      "path": "/book-demo",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 4,
+      "url": "https://www.nova.eredox.com/compare",
+      "path": "/compare",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 5,
+      "url": "https://www.nova.eredox.com/contact",
+      "path": "/contact",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 6,
+      "url": "https://www.nova.eredox.com/customers",
+      "path": "/customers",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 7,
+      "url": "https://www.nova.eredox.com/features",
+      "path": "/features",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 8,
+      "url": "https://www.nova.eredox.com/frameworks",
+      "path": "/frameworks",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 9,
+      "url": "https://www.nova.eredox.com/industries",
+      "path": "/industries",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 10,
+      "url": "https://www.nova.eredox.com/integrations",
+      "path": "/integrations",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 11,
+      "url": "https://www.nova.eredox.com/legal",
+      "path": "/legal",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 12,
+      "url": "https://www.nova.eredox.com/partners",
+      "path": "/partners",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 13,
+      "url": "https://www.nova.eredox.com/platform",
+      "path": "/platform",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 14,
+      "url": "https://www.nova.eredox.com/pricing",
+      "path": "/pricing",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 15,
+      "url": "https://www.nova.eredox.com/request-quote",
+      "path": "/request-quote",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 16,
+      "url": "https://www.nova.eredox.com/resources",
+      "path": "/resources",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 17,
+      "url": "https://www.nova.eredox.com/roadmap",
+      "path": "/roadmap",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 18,
+      "url": "https://www.nova.eredox.com/resources/blog",
+      "path": "/resources/blog",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 19,
+      "url": "https://www.nova.eredox.com/resources/faq",
+      "path": "/resources/faq",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 20,
+      "url": "https://www.nova.eredox.com/resources/guides",
+      "path": "/resources/guides",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 21,
+      "url": "https://www.nova.eredox.com/resources/product-updates",
+      "path": "/resources/product-updates",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 22,
+      "url": "https://www.nova.eredox.com/responsible-ai",
+      "path": "/responsible-ai",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 23,
+      "url": "https://www.nova.eredox.com/security",
+      "path": "/security",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 24,
+      "url": "https://www.nova.eredox.com/solutions",
+      "path": "/solutions",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 25,
+      "url": "https://www.nova.eredox.com/start",
+      "path": "/start",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 26,
+      "url": "https://www.nova.eredox.com/status",
+      "path": "/status",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 27,
+      "url": "https://www.nova.eredox.com/support",
+      "path": "/support",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 28,
+      "url": "https://www.nova.eredox.com/testimonials",
+      "path": "/testimonials",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 29,
+      "url": "https://www.nova.eredox.com/trust",
+      "path": "/trust",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 30,
+      "url": "https://www.nova.eredox.com/legal/terms",
+      "path": "/legal/terms",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 31,
+      "url": "https://www.nova.eredox.com/legal/privacy",
+      "path": "/legal/privacy",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 32,
+      "url": "https://www.nova.eredox.com/legal/cookies",
+      "path": "/legal/cookies",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 33,
+      "url": "https://www.nova.eredox.com/legal/accessibility",
+      "path": "/legal/accessibility",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 34,
+      "url": "https://www.nova.eredox.com/features/framework-management",
+      "path": "/features/framework-management",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 35,
+      "url": "https://www.nova.eredox.com/features/controls",
+      "path": "/features/controls",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 36,
+      "url": "https://www.nova.eredox.com/features/evidence",
+      "path": "/features/evidence",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 37,
+      "url": "https://www.nova.eredox.com/features/policies",
+      "path": "/features/policies",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 38,
+      "url": "https://www.nova.eredox.com/features/risk-management",
+      "path": "/features/risk-management",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 39,
+      "url": "https://www.nova.eredox.com/features/asset-governance",
+      "path": "/features/asset-governance",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 40,
+      "url": "https://www.nova.eredox.com/features/reporting",
+      "path": "/features/reporting",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 41,
+      "url": "https://www.nova.eredox.com/features/trust-centre",
+      "path": "/features/trust-centre",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 42,
+      "url": "https://www.nova.eredox.com/features/auditor-portal",
+      "path": "/features/auditor-portal",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 43,
+      "url": "https://www.nova.eredox.com/features/ai-assistant",
+      "path": "/features/ai-assistant",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 44,
+      "url": "https://www.nova.eredox.com/frameworks/soc-2",
+      "path": "/frameworks/soc-2",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 45,
+      "url": "https://www.nova.eredox.com/frameworks/iso-27001",
+      "path": "/frameworks/iso-27001",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 46,
+      "url": "https://www.nova.eredox.com/frameworks/essential-eight",
+      "path": "/frameworks/essential-eight",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 47,
+      "url": "https://www.nova.eredox.com/frameworks/iso-42001",
+      "path": "/frameworks/iso-42001",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 48,
+      "url": "https://www.nova.eredox.com/frameworks/gdpr",
+      "path": "/frameworks/gdpr",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 49,
+      "url": "https://www.nova.eredox.com/frameworks/pci-dss",
+      "path": "/frameworks/pci-dss",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 50,
+      "url": "https://www.nova.eredox.com/frameworks/hipaa",
+      "path": "/frameworks/hipaa",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 51,
+      "url": "https://www.nova.eredox.com/frameworks/cmmc",
+      "path": "/frameworks/cmmc",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 52,
+      "url": "https://www.nova.eredox.com/industries/technology",
+      "path": "/industries/technology",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 53,
+      "url": "https://www.nova.eredox.com/industries/financial-services",
+      "path": "/industries/financial-services",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 54,
+      "url": "https://www.nova.eredox.com/industries/healthcare",
+      "path": "/industries/healthcare",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 55,
+      "url": "https://www.nova.eredox.com/industries/government-suppliers",
+      "path": "/industries/government-suppliers",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 56,
+      "url": "https://www.nova.eredox.com/industries/professional-services",
+      "path": "/industries/professional-services",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 57,
+      "url": "https://www.nova.eredox.com/solutions/startups-saas",
+      "path": "/solutions/startups-saas",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 58,
+      "url": "https://www.nova.eredox.com/solutions/technology-smes",
+      "path": "/solutions/technology-smes",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 59,
+      "url": "https://www.nova.eredox.com/solutions/regulated-organisations",
+      "path": "/solutions/regulated-organisations",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 60,
+      "url": "https://www.nova.eredox.com/solutions/service-providers",
+      "path": "/solutions/service-providers",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 61,
+      "url": "https://www.nova.eredox.com/solutions/compliance-teams",
+      "path": "/solutions/compliance-teams",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 62,
+      "url": "https://www.nova.eredox.com/solutions/executives",
+      "path": "/solutions/executives",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 63,
+      "url": "https://www.nova.eredox.com/solutions/auditors",
+      "path": "/solutions/auditors",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 64,
+      "url": "https://www.nova.eredox.com/resources/blog/choosing-your-first-framework",
+      "path": "/resources/blog/choosing-your-first-framework",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    },
+    {
+      "number": 65,
+      "url": "https://www.nova.eredox.com/resources/guides/evidence-that-survives-an-audit",
+      "path": "/resources/guides/evidence-that-survives-an-audit",
+      "liveBaselineHttpStatus": 200,
+      "redirectTarget": null,
+      "sourceRouteValidation": "PASS",
+      "deployedAfterFixes": false
+    }
+  ],
+  "results": {
+    "sitemapUrlsHttp200LiveBaseline": 65,
+    "unintended404or5xx": 0,
+    "brokenInternalLinks": 0,
+    "sourceTests": {
+      "lint": "PASS with 7 existing warnings",
+      "typecheck": "PASS",
+      "vitest": "PASS — 17 files / 96 tests",
+      "build": "PASS"
+    },
+    "csp": "Prepared in source Nginx configuration; not deployed",
+    "accessibility": "Source semantic review completed; rendered accessibility tree unavailable",
+    "mobileCookie": "Flow-positioned remediation implemented; responsive browser verification unavailable",
+    "bookDemoE2E": "BLOCKED — no browser session or authorized isolated delivery environment",
+    "startFreeE2E": "BLOCKED — no production-ready Free registration/provisioning route exists",
+    "performance": "BLOCKED — no reproducible browser lab metrics available"
+  }
+}
