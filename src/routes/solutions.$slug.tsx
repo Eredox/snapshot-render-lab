@@ -160,7 +160,7 @@ function SolutionDetail() {
         <SectionHeading eyebrow="Next steps" title="Get started" />
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/start" className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-            Start free
+            Explore Free access
           </Link>
           <Link to="/book-demo" className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface">
             Book a demo

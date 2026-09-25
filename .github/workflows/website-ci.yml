@@ -1,0 +1,28 @@
+name: NOVA public website CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, "feat/nova-website-finalization-001"]
+
+permissions:
+  contents: read
+
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Lint
+        run: bun run lint
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Unit and route tests
+        run: bun run test
+      - name: Production build
+        run: bun run build

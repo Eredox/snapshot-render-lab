@@ -152,12 +152,12 @@ function RootComponent() {
       >
         Skip to main content
       </a>
+      <CookieConsent />
       <Header />
       <main id="main-content">
         <Outlet />
       </main>
       <Footer />
-      <CookieConsent />
     </QueryClientProvider>
   );
 }

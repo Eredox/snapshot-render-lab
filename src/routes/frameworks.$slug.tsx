@@ -24,7 +24,14 @@ export const Route = createFileRoute("/frameworks/$slug")({
     }
     return {
       ...pageMeta({
-        title: `${framework.name} — NOVA Compliance`,
+        title:
+          framework.slug === "pci-dss"
+            ? "PCI DSS v4.0.1 | NOVA Compliance"
+            : framework.slug === "gdpr"
+              ? "GDPR Compliance | NOVA Compliance"
+              : framework.slug === "cmmc"
+                ? "CMMC Compliance | NOVA Compliance"
+                : `${framework.name} — NOVA Compliance`,
         description: framework.description,
         path: `/frameworks/${framework.slug}`,
       }),
@@ -322,7 +329,7 @@ function FrameworkDetail() {
           ))}
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
-          <CtaLink to="/start">Start free</CtaLink>
+          <CtaLink to="/start">Explore Free access</CtaLink>
           <CtaLink to={`/book-demo?framework=${encodeURIComponent(framework.name)}`} variant="outline">
             Book a demo
           </CtaLink>

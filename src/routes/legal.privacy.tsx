@@ -7,7 +7,7 @@ export const Route = createFileRoute("/legal/privacy")({
   head: () => ({
     ...pageMeta({
       title: "Privacy Policy | NOVA Compliance",
-      description: "NOVA Global Privacy Policy, version 1.1.",
+      description: "Read how Eredox and NOVA handle personal information, privacy choices, customer data and individual rights across the service.",
       path: "/legal/privacy",
     }),
     scripts: [

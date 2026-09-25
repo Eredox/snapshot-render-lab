@@ -8,21 +8,21 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 export const Route = createFileRoute("/start")({
   head: () => ({
     ...pageMeta({
-      title: "Start free — NOVA Compliance",
-      description: "Create a free NOVA Compliance workspace to explore the platform, activate a framework and start collecting evidence.",
+      title: "Explore Free access | NOVA Compliance",
+      description: "Review NOVA's Free entitlement and governed access path. Self-service registration is not currently connected on the public website.",
       path: "/start",
     }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "Start free", to: "/start" }]))],
+    scripts: [ldScript(breadcrumbSchema([{ label: "Explore Free access", to: "/start" }]))],
   }),
   component: StartPage,
 });
 
 const steps = [
-  "Create your workspace and tenant",
-  "Activate one framework",
-  "Map initial controls and assign owners",
-  "Upload or connect your first evidence",
-  "Invite a reviewer and see readiness reporting",
+  "Review the Free entitlement and current access route",
+  "Confirm whether the governed onboarding path meets your needs",
+  "Bring your framework, controls and evidence requirements to the NOVA team",
+  "Use the approved onboarding route when it is available",
+  "Move to a governed paid-plan discussion when broader entitlements are required",
 ];
 
 const freePlan = plans.find((plan) => plan.slug === "free");
@@ -40,9 +40,9 @@ function StartPage() {
     <>
       <PageHero
         eyebrow="Get started"
-        title="Start free"
-        description="Begin with a no-commitment workspace. Explore the platform, import a framework and collect your first evidence before deciding to upgrade."
-        breadcrumbs={[{ label: "Start free", to: "/start" }]}
+        title="Explore Free access"
+        description="Review the no-subscription Free entitlement and the current governed access path. The public self-service registration route is not connected yet."
+        breadcrumbs={[{ label: "Explore Free access", to: "/start" }]}
       />
 
       <Section>
@@ -73,7 +73,7 @@ function StartPage() {
               disabled
               className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground opacity-60"
             >
-              Sign-up form coming soon
+              Free onboarding route not connected yet
             </button>
             <div className="mt-4 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>

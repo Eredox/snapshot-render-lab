@@ -25,7 +25,7 @@ export const Route = createFileRoute("/pricing")({
 });
 
 const related = [
-  { label: "Start free", to: "/start", description: "Begin a free workspace" },
+  { label: "Explore Free access", to: "/start", description: "Review the governed Free path" },
   { label: "Book a demo", to: "/book-demo", description: "Walk through with us" },
   { label: "Contact sales", to: "/contact", description: "Ask about Enterprise" },
 ];
