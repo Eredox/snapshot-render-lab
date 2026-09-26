@@ -82,8 +82,7 @@ function FrameworksPage() {
                 {f.icon ? (
                   <img
                     src={f.icon}
-                    alt=""
-                    aria-hidden="true"
+                    alt={`${f.name} logo`}
                     width={72}
                     height={72}
                     loading="lazy"
@@ -131,8 +130,7 @@ function FrameworksPage() {
                 {f.icon ? (
                   <img
                     src={f.icon}
-                    alt=""
-                    aria-hidden="true"
+                    alt={`${f.name} logo`}
                     width={72}
                     height={72}
                     loading="lazy"
