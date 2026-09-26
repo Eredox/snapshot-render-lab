@@ -151,7 +151,7 @@ export function Header() {
               Book a demo
             </CtaLink>
             <CtaLink to="/start" variant="primary">
-              Start free
+              Explore Free
             </CtaLink>
           </div>
 
@@ -241,7 +241,7 @@ export function Header() {
 
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
               <CtaLink to="/start" variant="primary">
-                Start free
+                Explore Free
               </CtaLink>
               <CtaLink to="/book-demo" variant="outline">
                 Book a demo

@@ -1,15 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Quote } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
+import { Section, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { testimonials } from "@/data/testimonials";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     ...pageMeta({
       title: "Testimonials — NOVA Compliance",
-      description: "What customers say about using NOVA Compliance for evidence-led compliance programmes.",
+      description: "Customer feedback will be published here only after Eredox has approved genuine, attributable public feedback.",
       path: "/testimonials",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Testimonials", to: "/testimonials" }]))],
@@ -22,23 +20,19 @@ function TestimonialsPage() {
     <main>
       <PageHero
         eyebrow="Customers"
-        title="What customers say"
-        description="Feedback from teams using NOVA to run compliance programmes and prepare for assessments."
+        title="Customer feedback"
+        description="Eredox does not publish unattributed or unapproved customer quotations. This page will be updated when genuine public feedback is approved."
         breadcrumbs={[{ label: "Testimonials", to: "/testimonials" }]}
       />
 
       <Section>
-        <div className="grid gap-5 md:grid-cols-2">
-          {testimonials.map((t) => (
-            <Card key={t.slug}>
-              <Quote aria-hidden="true" className="h-6 w-6 text-primary" />
-              <blockquote className="mt-3 text-lg font-medium">{t.quote}</blockquote>
-              <p className="mt-4 text-sm font-semibold">{t.author}</p>
-              <p className="text-sm text-muted-foreground">{t.role}</p>
-              <p className="mt-2 text-xs text-muted-foreground">{t.context}</p>
-            </Card>
-          ))}
-        </div>
+        <Card>
+          <h2 className="text-lg font-semibold">No approved testimonials published</h2>
+          <p className="mt-3 text-muted-foreground">
+            Illustrative customer scenarios are not testimonials and are kept separate from genuine
+            attributable feedback. Speak with the NOVA team to discuss your own requirements.
+          </p>
+        </Card>
       </Section>
 
       <Section tone="surface">

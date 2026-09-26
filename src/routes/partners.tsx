@@ -9,7 +9,7 @@ export const Route = createFileRoute("/partners")({
   head: () => ({
     ...pageMeta({
       title: "Partners — NOVA Compliance",
-      description: "Partner with Eredox to deliver compliance consulting, auditing, implementation and advisory services powered by NOVA.",
+      description: "Explore potential partner discussions with Eredox for compliance, assurance, implementation and advisory work around NOVA.",
       path: "/partners",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Partners", to: "/partners" }]))],
@@ -47,13 +47,13 @@ function PartnersPage() {
     <>
       <PageHero
         eyebrow="Partners"
-        title="Partner with Eredox"
-        description="Work with us to deliver compliance services, audits, integrations and advisory engagements through the NOVA platform."
+        title="Explore a partner discussion"
+        description="Eredox is open to discussing consulting, assurance, implementation, advisory and technology relationships around NOVA."
         breadcrumbs={[{ label: "Partners", to: "/partners" }]}
       />
 
       <Section>
-        <SectionHeading title="Partner programmes" />
+        <SectionHeading title="Areas we can explore" />
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {partnerTypes.map((p) => (
             <Card key={p.title}>
@@ -73,10 +73,11 @@ function PartnersPage() {
           <Card>
             <h2 className="text-lg font-semibold">Apply to partner</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Tell us about your practice and the clients you serve. We will respond within a few business days.
+              Tell us about your practice and the relationship you have in mind. Any programme,
+              referral, co-marketing or commercial arrangement remains subject to separate review.
             </p>
             <Link to="/contact" className="mt-4 inline-flex items-center gap-1 text-primary underline">
-              Contact partnerships <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              Contact Eredox <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </Link>
           </Card>
         </div>

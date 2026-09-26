@@ -115,7 +115,7 @@ export const resources: Resource[] = [
     modified: "2026-08-05",
     readingTime: "5 min read",
     featured: true,
-    seoTitle: "Choosing your first compliance framework — SOC 2, ISO 27001 or Essential Eight",
+    seoTitle: "Choosing Your First Compliance Framework | NOVA",
     seoDescription:
       "How organisations usually choose between SOC 2, ISO/IEC 27001 and Essential Eight, and the questions worth answering before committing to one.",
     summary:
