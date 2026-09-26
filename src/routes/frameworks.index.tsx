@@ -25,6 +25,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 type FrameworkRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
 const frameworkRouteTo = (path: string): FrameworkRouteTo => path as FrameworkRouteTo;
+type FrameworkRecord = (typeof frameworks)[number];
 
 export const Route = createFileRoute("/frameworks/")({
   head: () => ({
@@ -60,6 +61,30 @@ function PriorityBadge({ priority }: { priority: RegisterPriority }) {
   );
 }
 
+function FrameworkName({ framework }: { framework: FrameworkRecord }) {
+  return (
+    <h2
+      className={cn(
+        "text-lg font-semibold",
+        framework.icon && "relative flex min-h-[72px] items-center pl-[92px]",
+      )}
+    >
+      {framework.icon ? (
+        <img
+          src={framework.icon}
+          alt={`${framework.name} logo`}
+          width={72}
+          height={72}
+          loading="lazy"
+          decoding="async"
+          className="absolute left-0 top-0 h-[72px] w-[72px] shrink-0 object-contain"
+        />
+      ) : null}
+      <span aria-hidden={framework.icon ? "true" : undefined}>{framework.name}</span>
+    </h2>
+  );
+}
+
 function FrameworksPage() {
   const available = frameworks.filter((f) => f.availability === "Available now");
   const configurable = frameworks.filter((f) => f.availability === "Available by configuration");
@@ -78,39 +103,26 @@ function FrameworksPage() {
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {available.map((f) => (
             <Card key={f.slug} interactive className="h-full">
-              <div className="flex items-start gap-5">
-                {f.icon ? (
-                  <img
-                    src={f.icon}
-                    alt={`${f.name} logo`}
-                    width={72}
-                    height={72}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-[72px] w-[72px] shrink-0 object-contain"
-                  />
-                ) : null}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <h2 className="text-lg font-semibold">{f.name}</h2>
-                    <AvailabilityBadge value={f.availability} />
-                  </div>
-                  <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-                  <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
-                    <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
-                    {f.jurisdictions.map((jurisdiction) => (
-                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
-                        {jurisdiction}
-                      </span>
-                    ))}
-                  </div>
-                  <Link
-                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
-                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                  >
-                    Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                  </Link>
+              <div className="min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <FrameworkName framework={f} />
+                  <AvailabilityBadge value={f.availability} />
                 </div>
+                <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
+                  <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
+                  {f.jurisdictions.map((jurisdiction) => (
+                    <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                      {jurisdiction}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
+                  Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
               </div>
             </Card>
           ))}
@@ -126,39 +138,26 @@ function FrameworksPage() {
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {configurable.map((f) => (
             <Card key={f.slug} interactive className="h-full">
-              <div className="flex items-start gap-5">
-                {f.icon ? (
-                  <img
-                    src={f.icon}
-                    alt={`${f.name} logo`}
-                    width={72}
-                    height={72}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-[72px] w-[72px] shrink-0 object-contain"
-                  />
-                ) : null}
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <h2 className="text-lg font-semibold">{f.name}</h2>
-                    <AvailabilityBadge value={f.availability} />
-                  </div>
-                  <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
-                  <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
-                    <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
-                    {f.jurisdictions.map((jurisdiction) => (
-                      <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
-                        {jurisdiction}
-                      </span>
-                    ))}
-                  </div>
-                  <Link
-                    to={frameworkRouteTo(`/frameworks/${f.slug}`)}
-                    className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                  >
-                    Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                  </Link>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <FrameworkName framework={f} />
+                  <AvailabilityBadge value={f.availability} />
                 </div>
+                <p className="mt-3 text-sm text-muted-foreground">{f.description}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-muted-foreground">
+                  <span className="rounded-full bg-secondary px-2 py-1">{f.category}</span>
+                  {f.jurisdictions.map((jurisdiction) => (
+                    <span key={jurisdiction} className="rounded-full bg-secondary px-2 py-1">
+                      {jurisdiction}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  to={frameworkRouteTo(`/frameworks/${f.slug}`)}
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
+                  Explore <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
               </div>
             </Card>
           ))}

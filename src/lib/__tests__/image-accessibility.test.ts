@@ -45,10 +45,11 @@ describe("website image accessibility invariants", () => {
     );
     const frameworkImages = frameworks.match(/<img\b[^>]*>/g) ?? [];
 
-    expect(frameworkImages).toHaveLength(2);
-    expect(frameworkImages.every((image) => /alt=\{`\$\{f\.name\} logo`\}/.test(image))).toBe(
-      true,
-    );
+    expect(frameworkImages).toHaveLength(1);
+    expect(
+      frameworkImages.every((image) => /alt=\{`\$\{framework\.name\} logo`\}/.test(image)),
+    ).toBe(true);
     expect(frameworkImages.some((image) => /\baria-hidden\s*=/.test(image))).toBe(false);
+    expect(frameworks.match(/<FrameworkName framework=\{f\} \/>/g)).toHaveLength(2);
   });
 });
