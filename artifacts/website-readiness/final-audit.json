@@ -4,7 +4,7 @@
   "repository": "Eredox/snapshot-render-lab",
   "branch": "feat/nova-website-finalization-001",
   "baselineMainCommit": "27518b317870cc858a696eaba19708ed4c48ccce",
-  "implementationCommit": "92b65462ffc1994a8ff8c7996bbda7a1ee59d29b",
+  "implementationCommit": "dd940c685fc31081a684ab58df7ccde2b8b1ce54",
   "productionModified": false,
   "publicHost": "https://www.nova.eredox.com",
   "currentClosure": {
