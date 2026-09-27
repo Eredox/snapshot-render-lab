@@ -115,7 +115,9 @@ function PlanPage() {
         ]}
       >
         <div className="flex flex-wrap items-center gap-4">
-          <CtaLink to={plan.primaryAction.to}>{plan.primaryAction.label}</CtaLink>
+          <CtaLink to={plan.primaryAction.to} external={plan.primaryAction.external}>
+            {plan.primaryAction.label}
+          </CtaLink>
           <Link
             to="/pricing"
             className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border-strong bg-background px-5 text-sm font-medium hover:bg-surface"
@@ -145,9 +147,15 @@ function PlanPage() {
                 items={[
                   plan.frameworkEntitlement,
                   plan.githubRepositoryEntitlement,
-                  plan.maxUsers === null ? "User capacity defined by the agreed plan scope" : `Up to ${plan.maxUsers} users`,
-                  plan.maxControls === null ? "Controls defined by the governed plan scope" : `Up to ${plan.maxControls} controls`,
-                  plan.crossFrameworkReuseEnabled ? "Cross-framework control and evidence reuse" : "Cross-framework reuse is not included",
+                  plan.maxUsers === null
+                    ? "User capacity defined by the agreed plan scope"
+                    : `Up to ${plan.maxUsers} users`,
+                  plan.maxControls === null
+                    ? "Controls defined by the governed plan scope"
+                    : `Up to ${plan.maxControls} controls`,
+                  plan.crossFrameworkReuseEnabled
+                    ? "Cross-framework control and evidence reuse"
+                    : "Cross-framework reuse is not included",
                 ]}
               />
               <p className="mt-3 text-sm text-muted-foreground">
@@ -170,7 +178,11 @@ function PlanPage() {
             {plan.requiresApproval ? (
               <p className="mt-4 text-xs text-muted-foreground">{site.pricingApprovalNote}</p>
             ) : null}
-            <CtaLink to={plan.primaryAction.to} className="mt-6 w-full">
+            <CtaLink
+              to={plan.primaryAction.to}
+              external={plan.primaryAction.external}
+              className="mt-6 w-full"
+            >
               {plan.primaryAction.label}
             </CtaLink>
             <Link
@@ -228,7 +240,9 @@ function PlanPage() {
             description="Choose the plan action that matches your intent, or compare the full commercial journey before deciding."
           />
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink to={plan.primaryAction.to}>{plan.primaryAction.label}</CtaLink>
+            <CtaLink to={plan.primaryAction.to} external={plan.primaryAction.external}>
+              {plan.primaryAction.label}
+            </CtaLink>
             <CtaLink to="/pricing" variant="outline">
               Compare plans
             </CtaLink>

@@ -9,7 +9,8 @@ export const Route = createFileRoute("/start")({
   head: () => ({
     ...pageMeta({
       title: "Explore Free access | NOVA Compliance",
-      description: "Create a Free NOVA workspace, review the entitlement and continue through the governed onboarding path.",
+      description:
+        "Create a Free NOVA workspace, review the entitlement and continue through the governed onboarding path.",
       path: "/start",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Explore Free access", to: "/start" }]))],
@@ -29,8 +30,10 @@ const freePlan = plans.find((plan) => plan.slug === "free");
 const freeLimits = [
   "One workspace",
   `Up to ${freePlan?.maxUsers ?? 2} users, including one administrator`,
-  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ?? "One active framework",
-  freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ?? "Manual evidence upload",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ??
+    "One active framework",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ??
+    "Manual evidence upload",
   freePlan?.support ?? "Community support",
 ];
 
@@ -60,7 +63,9 @@ function StartPage() {
             </ol>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
-              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">
+                Book a demo
+              </CtaLink>
             </div>
           </div>
           <Card>
@@ -72,7 +77,9 @@ function StartPage() {
             </CtaLink>
             <div className="mt-4 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
-              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">
+                Book a demo
+              </CtaLink>
             </div>
           </Card>
         </div>

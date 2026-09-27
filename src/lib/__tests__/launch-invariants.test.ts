@@ -38,4 +38,30 @@ describe("public launch invariants", () => {
     expect(start).toContain("to={appUrls.register}");
     expect(start).toContain("Create Free workspace");
   });
+
+  it("keeps every customer-facing Free signup surface on the centralized registration URL", () => {
+    const sourceFiles = [
+      "src/components/site/Header.tsx",
+      "src/components/site/cta.tsx",
+      "src/data/pricing.ts",
+      "src/routes/contact.tsx",
+      "src/routes/frameworks.$slug.tsx",
+      "src/routes/index.tsx",
+      "src/routes/pricing.tsx",
+      "src/routes/solutions.$slug.tsx",
+      "src/routes/start.tsx",
+    ];
+
+    for (const relativePath of sourceFiles) {
+      const source = readFileSync(resolve(process.cwd(), relativePath), "utf8");
+      expect(source, relativePath).toContain("appUrls.register");
+    }
+
+    expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
+      'label: "Start Free", to: appUrls.register, external: true',
+    );
+    expect(readFileSync(resolve(process.cwd(), "src/components/site/cta.tsx"), "utf8")).toContain(
+      'primary = { label: "Start Free", to: appUrls.register, external: true }',
+    );
+  });
 });

@@ -1,4 +1,4 @@
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import {
   canonicalPlanManifest,
   frameworkEntitlementLabel,
@@ -23,7 +23,7 @@ export type Plan = {
   bestFor: string;
   includes: string[];
   support: string;
-  primaryAction: { label: string; to: string };
+  primaryAction: { label: string; to: string; external?: boolean };
   detailPath: string;
   frameworkEntitlement: string;
   githubRepositoryEntitlement: string;
@@ -48,7 +48,7 @@ export const plans: Plan[] = [
       "Up to 2 users, including one administrator",
     ],
     support: "Documentation and community resources",
-    primaryAction: { label: "Explore Free access", to: "/start" },
+    primaryAction: { label: "Start Free", to: appUrls.register, external: true },
     detailPath: "/plans/free",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.free),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.free),
@@ -76,7 +76,9 @@ export const plans: Plan[] = [
     primaryAction: { label: "Contact sales", to: "/contact?plan=launch" },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
-    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.launch),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
+      canonicalPlanManifest.plans.launch,
+    ),
     maxUsers: canonicalPlanManifest.plans.launch.max_users,
     maxControls: canonicalPlanManifest.plans.launch.max_controls,
     crossFrameworkReuseEnabled: canonicalPlanManifest.plans.launch.cross_framework_reuse_enabled,
@@ -102,7 +104,9 @@ export const plans: Plan[] = [
     primaryAction: { label: "Contact sales", to: "/contact?plan=growth" },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
-    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.growth),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
+      canonicalPlanManifest.plans.growth,
+    ),
     maxUsers: canonicalPlanManifest.plans.growth.max_users,
     maxControls: canonicalPlanManifest.plans.growth.max_controls,
     crossFrameworkReuseEnabled: canonicalPlanManifest.plans.growth.cross_framework_reuse_enabled,
@@ -127,10 +131,13 @@ export const plans: Plan[] = [
     primaryAction: { label: "Contact sales", to: "/contact?plan=professional" },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
-    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.professional),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
+      canonicalPlanManifest.plans.professional,
+    ),
     maxUsers: canonicalPlanManifest.plans.professional.max_users,
     maxControls: canonicalPlanManifest.plans.professional.max_controls,
-    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.professional.cross_framework_reuse_enabled,
+    crossFrameworkReuseEnabled:
+      canonicalPlanManifest.plans.professional.cross_framework_reuse_enabled,
   },
   {
     slug: "business",
@@ -152,7 +159,9 @@ export const plans: Plan[] = [
     primaryAction: { label: "Contact sales", to: "/contact?plan=business" },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
-    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.business),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
+      canonicalPlanManifest.plans.business,
+    ),
     maxUsers: canonicalPlanManifest.plans.business.max_users,
     maxControls: canonicalPlanManifest.plans.business.max_controls,
     crossFrameworkReuseEnabled: canonicalPlanManifest.plans.business.cross_framework_reuse_enabled,
@@ -176,10 +185,13 @@ export const plans: Plan[] = [
     primaryAction: { label: "Request a quote", to: "/request-quote?plan=enterprise" },
     detailPath: "/plans/enterprise",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.enterprise),
-    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.enterprise),
+    githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
+      canonicalPlanManifest.plans.enterprise,
+    ),
     maxUsers: canonicalPlanManifest.plans.enterprise.max_users,
     maxControls: canonicalPlanManifest.plans.enterprise.max_controls,
-    crossFrameworkReuseEnabled: canonicalPlanManifest.plans.enterprise.cross_framework_reuse_enabled,
+    crossFrameworkReuseEnabled:
+      canonicalPlanManifest.plans.enterprise.cross_framework_reuse_enabled,
   },
 ];
 
@@ -194,64 +206,169 @@ export type ComparisonGroup = {
 
 const y = "Included";
 const n = "—";
-const planBySlug = Object.fromEntries(plans.map((plan) => [plan.slug, plan])) as Record<string, Plan>;
-const frameworkComparisonValue = (slug: string) => planBySlug[slug]!.frameworkEntitlement.replace(" activated", "");
+const planBySlug = Object.fromEntries(plans.map((plan) => [plan.slug, plan])) as Record<
+  string,
+  Plan
+>;
+const frameworkComparisonValue = (slug: string) =>
+  planBySlug[slug]!.frameworkEntitlement.replace(" activated", "");
 const githubComparisonValue = (slug: string) => planBySlug[slug]!.githubRepositoryEntitlement;
 
 export const comparison: ComparisonGroup[] = [
   {
     group: "Frameworks and controls",
     rows: [
-      { label: "Activated frameworks", values: { free: frameworkComparisonValue("free"), launch: frameworkComparisonValue("launch"), growth: frameworkComparisonValue("growth"), professional: frameworkComparisonValue("professional"), business: frameworkComparisonValue("business"), enterprise: frameworkComparisonValue("enterprise") } },
-      { label: "Shared control library", values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Cross-framework control reuse", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Control testing records", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
+      {
+        label: "Activated frameworks",
+        values: {
+          free: frameworkComparisonValue("free"),
+          launch: frameworkComparisonValue("launch"),
+          growth: frameworkComparisonValue("growth"),
+          professional: frameworkComparisonValue("professional"),
+          business: frameworkComparisonValue("business"),
+          enterprise: frameworkComparisonValue("enterprise"),
+        },
+      },
+      {
+        label: "Shared control library",
+        values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Cross-framework control reuse",
+        values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Control testing records",
+        values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
     ],
   },
   {
     group: "Evidence and policy",
     rows: [
-      { label: "Manual evidence upload", values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Reviewer validation", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "GitHub repositories", values: { free: githubComparisonValue("free"), launch: githubComparisonValue("launch"), growth: githubComparisonValue("growth"), professional: githubComparisonValue("professional"), business: githubComparisonValue("business"), enterprise: githubComparisonValue("enterprise") } },
-      { label: "Policy versioning and approval", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
+      {
+        label: "Manual evidence upload",
+        values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Reviewer validation",
+        values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "GitHub repositories",
+        values: {
+          free: githubComparisonValue("free"),
+          launch: githubComparisonValue("launch"),
+          growth: githubComparisonValue("growth"),
+          professional: githubComparisonValue("professional"),
+          business: githubComparisonValue("business"),
+          enterprise: githubComparisonValue("enterprise"),
+        },
+      },
+      {
+        label: "Policy versioning and approval",
+        values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
     ],
   },
   {
     group: "Risk and assets",
     rows: [
-      { label: "Risk register", values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Explicit acceptance records", values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Asset register", values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y } },
+      {
+        label: "Risk register",
+        values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Explicit acceptance records",
+        values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Asset register",
+        values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y },
+      },
     ],
   },
   {
     group: "Assurance and external review",
     rows: [
-      { label: "Readiness reporting", values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Trust Centre publication", values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y } },
-      { label: "Auditor Portal", values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y } },
-      { label: "Executive and board views", values: { free: n, launch: n, growth: n, professional: n, business: y, enterprise: y } },
+      {
+        label: "Readiness reporting",
+        values: { free: n, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Trust Centre publication",
+        values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Auditor Portal",
+        values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Executive and board views",
+        values: { free: n, launch: n, growth: n, professional: n, business: y, enterprise: y },
+      },
     ],
   },
   {
     group: "AI assistance",
     rows: [
-      { label: "Requirement explanation", values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Evidence interpretation", values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y } },
-      { label: "Policy and control drafting", values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y } },
-      { label: "Gap identification", values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y } },
+      {
+        label: "Requirement explanation",
+        values: { free: y, launch: y, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Evidence interpretation",
+        values: { free: n, launch: n, growth: y, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Policy and control drafting",
+        values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y },
+      },
+      {
+        label: "Gap identification",
+        values: { free: n, launch: n, growth: n, professional: y, business: y, enterprise: y },
+      },
     ],
   },
 ];
 
 export const supportComparison = [
-  { plan: "Free", channel: "Documentation and community resources", response: "No response commitment", onboarding: "Self-service" },
-  { plan: "Launch", channel: "Email during business hours", response: "Best-effort within business hours", onboarding: "Self-service with guided setup material" },
-  { plan: "Growth", channel: "Email with prioritised queue", response: "Prioritised over standard queue", onboarding: "Guided setup session" },
-  { plan: "Professional", channel: "Priority support with a named contact", response: "Prioritised handling", onboarding: "Structured onboarding" },
-  { plan: "Business", channel: "Priority support with onboarding assistance", response: "Prioritised handling", onboarding: "Structured onboarding with programme review" },
-  { plan: "Enterprise", channel: "Agreed support arrangements", response: "Agreed with Eredox", onboarding: "Agreed programme" },
+  {
+    plan: "Free",
+    channel: "Documentation and community resources",
+    response: "No response commitment",
+    onboarding: "Self-service",
+  },
+  {
+    plan: "Launch",
+    channel: "Email during business hours",
+    response: "Best-effort within business hours",
+    onboarding: "Self-service with guided setup material",
+  },
+  {
+    plan: "Growth",
+    channel: "Email with prioritised queue",
+    response: "Prioritised over standard queue",
+    onboarding: "Guided setup session",
+  },
+  {
+    plan: "Professional",
+    channel: "Priority support with a named contact",
+    response: "Prioritised handling",
+    onboarding: "Structured onboarding",
+  },
+  {
+    plan: "Business",
+    channel: "Priority support with onboarding assistance",
+    response: "Prioritised handling",
+    onboarding: "Structured onboarding with programme review",
+  },
+  {
+    plan: "Enterprise",
+    channel: "Agreed support arrangements",
+    response: "Agreed with Eredox",
+    onboarding: "Agreed programme",
+  },
 ];
 
 export const pricingFaqs = [

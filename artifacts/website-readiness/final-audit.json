@@ -4,9 +4,21 @@
   "repository": "Eredox/snapshot-render-lab",
   "branch": "feat/nova-website-finalization-001",
   "baselineMainCommit": "27518b317870cc858a696eaba19708ed4c48ccce",
-  "implementationCommit": "7de06a6",
+  "implementationCommit": "92b65462ffc1994a8ff8c7996bbda7a1ee59d29b",
   "productionModified": false,
   "publicHost": "https://www.nova.eredox.com",
+  "currentClosure": {
+    "applicationDependency": "PASS",
+    "liveRegistration": "https://nova.eredox.com/register",
+    "founderBrowserUat": "PASS",
+    "freeCtaAuthority": "appUrls.register",
+    "freeCtaBehavior": "direct external registration",
+    "startPageBehavior": "informational page with direct Create Free workspace action",
+    "paidCommercialAuthority": "contact/commercial/Odoo governed",
+    "tenantFacingStripeCheckout": false,
+    "websiteProductionDeployed": false,
+    "historicalRegistrationHolds": "superseded by production-live application evidence"
+  },
   "baseline": {
     "sitemapPages": 65,
     "averagePageScore": 93.9,
@@ -613,7 +625,7 @@
     "accessibility": "Source semantic review completed; rendered accessibility tree unavailable",
     "mobileCookie": "Flow-positioned remediation implemented; responsive browser verification unavailable",
     "bookDemoE2E": "BLOCKED — no browser session or authorized isolated delivery environment",
-    "startFreeE2E": "BLOCKED — registration route implemented on paired application branch; no deployment, disposable DB/browser E2E, or production mutation performed",
+    "startFreeE2E": "SOURCE PASS — all customer-facing Free signup CTAs use appUrls.register; website deployment/browser acceptance remains separate",
     "performance": "BLOCKED — no reproducible browser lab metrics available"
   }
 }

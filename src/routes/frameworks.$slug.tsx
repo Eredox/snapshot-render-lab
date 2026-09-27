@@ -1,12 +1,21 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Section, SectionHeading, PageHero, Card, AvailabilityBadge, RelatedLinks, Disclaimer, FeatureList } from "@/components/site/primitives";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  AvailabilityBadge,
+  RelatedLinks,
+  Disclaimer,
+  FeatureList,
+} from "@/components/site/primitives";
 import { ConversionCta, CtaLink } from "@/components/site/cta";
 import { ContactForm } from "@/components/site/ContactForm";
 import { getFramework } from "@/data/frameworks";
 import { getFrameworkDetail } from "@/data/framework-detail";
 import { plans, currency } from "@/data/pricing";
 import { features } from "@/data/features";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/frameworks/$slug")({
@@ -19,7 +28,10 @@ export const Route = createFileRoute("/frameworks/$slug")({
     const framework = loaderData?.framework;
     if (!framework) {
       return {
-        meta: [{ title: "Framework not found — NOVA Compliance" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Framework not found — NOVA Compliance" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     return {
@@ -52,11 +64,18 @@ export const Route = createFileRoute("/frameworks/$slug")({
 function FrameworkNotFound() {
   return (
     <main>
-      <PageHero eyebrow="Frameworks" title="Framework not found" description="That framework page does not exist." breadcrumbs={[{ label: "Frameworks", to: "/frameworks" }]} />
+      <PageHero
+        eyebrow="Frameworks"
+        title="Framework not found"
+        description="That framework page does not exist."
+        breadcrumbs={[{ label: "Frameworks", to: "/frameworks" }]}
+      />
       <Section>
         <p className="text-muted-foreground">Browse available and planned frameworks.</p>
         <div className="mt-4">
-          <Link to="/frameworks" className="text-primary underline">View all frameworks</Link>
+          <Link to="/frameworks" className="text-primary underline">
+            View all frameworks
+          </Link>
         </div>
       </Section>
     </main>
@@ -67,7 +86,9 @@ function FrameworkDetail() {
   const { framework } = Route.useLoaderData();
   const relatedFeatures = features.filter((f) => f.relatedFrameworks?.includes(framework.slug));
   const detail = getFrameworkDetail(framework.slug);
-  const planShortlist = plans.filter((p) => ["launch", "growth", "professional", "enterprise"].includes(p.slug));
+  const planShortlist = plans.filter((p) =>
+    ["launch", "growth", "professional", "enterprise"].includes(p.slug),
+  );
   const gettingStarted = [
     {
       title: "Activate the framework",
@@ -156,7 +177,9 @@ function FrameworkDetail() {
           </div>
 
           <aside className="space-y-6 rounded-2xl border border-border bg-card p-6">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Framework details</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              Framework details
+            </h2>
             <div className="space-y-4 text-sm">
               <div>
                 <span className="block text-muted-foreground">Availability</span>
@@ -173,8 +196,13 @@ function FrameworkDetail() {
             </div>
             <div className="rounded-lg bg-surface p-4 text-sm">
               <p className="font-medium">Need help deciding?</p>
-              <p className="mt-1 text-muted-foreground">Book a demo to map your obligations to the right frameworks.</p>
-              <Link to="/book-demo" className="mt-3 inline-flex items-center gap-1 font-medium text-primary hover:underline">
+              <p className="mt-1 text-muted-foreground">
+                Book a demo to map your obligations to the right frameworks.
+              </p>
+              <Link
+                to="/book-demo"
+                className="mt-3 inline-flex items-center gap-1 font-medium text-primary hover:underline"
+              >
                 Book a demo
               </Link>
             </div>
@@ -185,7 +213,11 @@ function FrameworkDetail() {
       {detail ? (
         <>
           <Section tone="surface">
-            <SectionHeading eyebrow="Structure" title={detail.structure.label} description={detail.structure.intro} />
+            <SectionHeading
+              eyebrow="Structure"
+              title={detail.structure.label}
+              description={detail.structure.intro}
+            />
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {detail.structure.items.map((item) => (
                 <Card key={item.code}>
@@ -199,11 +231,20 @@ function FrameworkDetail() {
 
           {detail.maturity ? (
             <Section>
-              <SectionHeading eyebrow="Assessment" title={detail.maturity.label} description={detail.maturity.intro} />
+              <SectionHeading
+                eyebrow="Assessment"
+                title={detail.maturity.label}
+                description={detail.maturity.intro}
+              />
               <ol className="mt-8 space-y-4">
                 {detail.maturity.levels.map((level, i) => (
-                  <li key={level.name} className="flex gap-4 rounded-2xl border border-border bg-card p-5">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold">{i}</span>
+                  <li
+                    key={level.name}
+                    className="flex gap-4 rounded-2xl border border-border bg-card p-5"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold">
+                      {i}
+                    </span>
                     <div>
                       <h3 className="font-semibold">{level.name}</h3>
                       <p className="mt-1 text-sm text-muted-foreground">{level.body}</p>
@@ -215,14 +256,24 @@ function FrameworkDetail() {
           ) : null}
 
           <Section tone={detail.maturity ? "surface" : "default"}>
-            <SectionHeading eyebrow="Evidence" title="Typical evidence held in NOVA" description={detail.evidence.intro} />
+            <SectionHeading
+              eyebrow="Evidence"
+              title="Typical evidence held in NOVA"
+              description={detail.evidence.intro}
+            />
             <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card">
               <table className="w-full text-left text-sm">
                 <thead className="border-b border-border text-muted-foreground">
                   <tr>
-                    <th scope="col" className="px-5 py-3 font-medium">Artefact</th>
-                    <th scope="col" className="px-5 py-3 font-medium">Typical source</th>
-                    <th scope="col" className="px-5 py-3 font-medium">Expected cadence</th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Artefact
+                    </th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Typical source
+                    </th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Expected cadence
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -240,7 +291,10 @@ function FrameworkDetail() {
           </Section>
 
           <Section>
-            <SectionHeading eyebrow="How it runs" title={`Working through ${framework.name} in NOVA`} />
+            <SectionHeading
+              eyebrow="How it runs"
+              title={`Working through ${framework.name} in NOVA`}
+            />
             <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {detail.journey.map((step, i) => (
                 <li key={step.phase}>
@@ -255,7 +309,10 @@ function FrameworkDetail() {
           </Section>
 
           <Section tone="surface">
-            <SectionHeading eyebrow="Questions" title={`${framework.shortName} questions we are asked`} />
+            <SectionHeading
+              eyebrow="Questions"
+              title={`${framework.shortName} questions we are asked`}
+            />
             <dl className="mt-8 grid gap-5 md:grid-cols-2">
               {detail.faqs.map((faq) => (
                 <div key={faq.question} className="rounded-2xl border border-border bg-card p-6">
@@ -272,7 +329,11 @@ function FrameworkDetail() {
         <Section tone="surface">
           <RelatedLinks
             title="Capabilities that support this framework"
-            items={relatedFeatures.map((f) => ({ label: f.name, to: f.path, description: f.summary }))}
+            items={relatedFeatures.map((f) => ({
+              label: f.name,
+              to: f.path,
+              description: f.summary,
+            }))}
           />
         </Section>
       ) : null}
@@ -302,7 +363,10 @@ function FrameworkDetail() {
               </p>
               <p className="mt-3 text-sm text-muted-foreground">{plan.summary}</p>
               <FeatureList items={plan.includes.slice(0, 4)} className="mt-4" />
-              <Link to="/pricing" className="mt-5 inline-flex text-sm font-medium text-primary hover:underline">
+              <Link
+                to="/pricing"
+                className="mt-5 inline-flex text-sm font-medium text-primary hover:underline"
+              >
                 Compare plans
               </Link>
             </Card>
@@ -329,8 +393,13 @@ function FrameworkDetail() {
           ))}
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
-          <CtaLink to="/start">Explore Free access</CtaLink>
-          <CtaLink to={`/book-demo?framework=${encodeURIComponent(framework.name)}`} variant="outline">
+          <CtaLink to={appUrls.register} external>
+            Start Free
+          </CtaLink>
+          <CtaLink
+            to={`/book-demo?framework=${encodeURIComponent(framework.name)}`}
+            variant="outline"
+          >
             Book a demo
           </CtaLink>
         </div>
@@ -348,7 +417,9 @@ function FrameworkDetail() {
             <Disclaimer className="mt-6">{site.frameworkDisclaimer}</Disclaimer>
           </div>
           <div className="rounded-2xl border border-border bg-card p-6">
-            <ContactForm defaultMessage={`I would like to discuss ${framework.name} readiness in NOVA. `} />
+            <ContactForm
+              defaultMessage={`I would like to discuss ${framework.name} readiness in NOVA. `}
+            />
           </div>
         </div>
       </Section>

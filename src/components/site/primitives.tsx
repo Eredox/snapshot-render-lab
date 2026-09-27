@@ -216,7 +216,7 @@ export function RelatedLinks({
   className,
 }: {
   title?: string;
-  items: { label: string; to: string; description?: string }[];
+  items: { label: string; to: string; description?: string; external?: boolean }[];
   className?: string;
 }) {
   if (items.length === 0) return null;
@@ -226,21 +226,39 @@ export function RelatedLinks({
         {title}
       </h2>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          <Link
-            key={item.to}
-            to={primitiveRouteTo(item.to)}
-            className="group rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-soft"
-          >
-            <span className="flex items-center justify-between gap-2 font-medium group-hover:text-primary">
-              {item.label}
-              <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
-            </span>
-            {item.description ? (
-              <span className="mt-1 block text-sm text-muted-foreground">{item.description}</span>
-            ) : null}
-          </Link>
-        ))}
+        {items.map((item) =>
+          item.external ? (
+            <a
+              key={item.to}
+              href={item.to}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-soft"
+            >
+              <span className="flex items-center justify-between gap-2 font-medium group-hover:text-primary">
+                {item.label}
+                <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
+              </span>
+              {item.description ? (
+                <span className="mt-1 block text-sm text-muted-foreground">{item.description}</span>
+              ) : null}
+            </a>
+          ) : (
+            <Link
+              key={item.to}
+              to={primitiveRouteTo(item.to)}
+              className="group rounded-lg border border-border bg-card p-4 transition-shadow hover:shadow-soft"
+            >
+              <span className="flex items-center justify-between gap-2 font-medium group-hover:text-primary">
+                {item.label}
+                <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
+              </span>
+              {item.description ? (
+                <span className="mt-1 block text-sm text-muted-foreground">{item.description}</span>
+              ) : null}
+            </Link>
+          ),
+        )}
       </div>
     </div>
   );

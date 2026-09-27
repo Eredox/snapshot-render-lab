@@ -12,7 +12,7 @@ import {
 } from "@/components/site/primitives";
 import { EredoxHero } from "@/components/site/EredoxHero";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
 import { audiencePaths, outcomePaths } from "@/data/homepage-funnel";
@@ -476,8 +476,8 @@ function Index() {
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to="/pricing">View Plans & Pricing</CtaLink>
-          <CtaLink to="/start" variant="outline">
-            Explore Free access
+          <CtaLink to={appUrls.register} external variant="outline">
+            Start Free
           </CtaLink>
           <CtaLink to="/book-demo" variant="ghost">
             Book a Demo
@@ -489,7 +489,7 @@ function Index() {
       <ConversionCta
         title="Ready to see what your compliance program looks like in NOVA?"
         description="Explore the platform, compare plans or speak with us about your compliance requirements."
-        primary={{ label: "Explore Free access", to: "/start" }}
+        primary={{ label: "Start Free", to: appUrls.register, external: true }}
         secondary={{ label: "Book a Demo", to: "/book-demo" }}
         tertiary={{ label: "View Pricing", to: "/pricing" }}
       />

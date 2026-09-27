@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 
 const variants = {
   primary: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -13,6 +13,7 @@ const variants = {
 } as const;
 
 export type CtaVariant = keyof typeof variants;
+export type CtaAction = { label: string; to: string; external?: boolean };
 type RouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
 
 const routeTo = (path: string): RouteTo => path as RouteTo;
@@ -28,7 +29,7 @@ export function CtaLink({
   children: ReactNode;
   variant?: CtaVariant;
   className?: string;
-  external?: boolean;
+  external?: boolean | undefined;
 }) {
   const classes = cn(
     "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 text-sm font-medium transition-colors",
@@ -56,15 +57,15 @@ export function CtaLink({
 export function ConversionCta({
   title = "See NOVA against your own compliance obligations",
   description = "Explore the governed Free access path, or walk through your framework, evidence and reporting requirements with us.",
-  primary = { label: "Explore Free access", to: "/start" },
+  primary = { label: "Start Free", to: appUrls.register, external: true },
   secondary = { label: "Book a demo", to: "/book-demo" },
   tertiary,
 }: {
   title?: string;
   description?: string;
-  primary?: { label: string; to: string };
-  secondary?: { label: string; to: string };
-  tertiary?: { label: string; to: string };
+  primary?: CtaAction;
+  secondary?: CtaAction;
+  tertiary?: CtaAction;
 }) {
   return (
     <section className="bg-ink py-16 text-ink-foreground md:py-20">
@@ -76,15 +77,16 @@ export function ConversionCta({
             <p className="mt-6 text-sm text-ink-foreground/60">{site.humanStatement}</p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink to={primary.to} variant="primary">
+            <CtaLink to={primary.to} external={primary.external} variant="primary">
               {primary.label}
             </CtaLink>
-            <CtaLink to={secondary.to} variant="inverted">
+            <CtaLink to={secondary.to} external={secondary.external} variant="inverted">
               {secondary.label}
             </CtaLink>
             {tertiary ? (
               <CtaLink
                 to={tertiary.to}
+                external={tertiary.external}
                 variant="ghost"
                 className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
               >
