@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
 import { CtaLink } from "@/components/site/cta";
 import { headerNav, externalNav } from "@/config/navigation";
+import { appUrls } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -150,8 +151,8 @@ export function Header() {
             <CtaLink to="/book-demo" variant="outline">
               Book a demo
             </CtaLink>
-            <CtaLink to="/start" variant="primary">
-              Start free
+            <CtaLink to={appUrls.register} external variant="primary">
+              Start Free
             </CtaLink>
           </div>
 
@@ -240,8 +241,8 @@ export function Header() {
             </ul>
 
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-              <CtaLink to="/start" variant="primary">
-                Start free
+              <CtaLink to={appUrls.register} external variant="primary">
+                Start Free
               </CtaLink>
               <CtaLink to="/book-demo" variant="outline">
                 Book a demo

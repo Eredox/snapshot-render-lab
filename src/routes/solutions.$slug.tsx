@@ -1,11 +1,19 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks, Disclaimer } from "@/components/site/primitives";
-import { ConversionCta } from "@/components/site/cta";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  FeatureList,
+  RelatedLinks,
+  Disclaimer,
+} from "@/components/site/primitives";
+import { ConversionCta, CtaLink } from "@/components/site/cta";
 import { solutions, getSolution } from "@/data/solutions";
 import { frameworks } from "@/data/frameworks";
 import { features } from "@/data/features";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/solutions/$slug")({
@@ -18,7 +26,10 @@ export const Route = createFileRoute("/solutions/$slug")({
     const solution = loaderData?.solution;
     if (!solution) {
       return {
-        meta: [{ title: "Solution not found — NOVA Compliance" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Solution not found — NOVA Compliance" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     return {
@@ -44,11 +55,18 @@ export const Route = createFileRoute("/solutions/$slug")({
 function SolutionNotFound() {
   return (
     <main>
-      <PageHero eyebrow="Solutions" title="Solution not found" description="That solution page does not exist." breadcrumbs={[{ label: "Solutions", to: "/solutions" }]} />
+      <PageHero
+        eyebrow="Solutions"
+        title="Solution not found"
+        description="That solution page does not exist."
+        breadcrumbs={[{ label: "Solutions", to: "/solutions" }]}
+      />
       <Section>
         <p className="text-muted-foreground">Browse the available solutions.</p>
         <div className="mt-4">
-          <Link to="/solutions" className="text-primary underline">View all solutions</Link>
+          <Link to="/solutions" className="text-primary underline">
+            View all solutions
+          </Link>
         </div>
       </Section>
     </main>
@@ -101,7 +119,9 @@ function SolutionDetail() {
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {solution.workflow.map((step) => (
             <Card key={step.step}>
-              <span className="text-xs font-semibold uppercase tracking-wider text-primary">{step.step}</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                {step.step}
+              </span>
               <h3 className="mt-2 font-semibold">{step.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
             </Card>
@@ -130,7 +150,10 @@ function SolutionDetail() {
               <Card key={f!.slug} interactive>
                 <h3 className="font-semibold">{f!.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{f!.description}</p>
-                <Link to={`/frameworks/${f!.slug}` as any} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                <Link
+                  to={`/frameworks/${f!.slug}` as any}
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
                   Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Card>
@@ -147,7 +170,10 @@ function SolutionDetail() {
               <Card key={f.slug} interactive>
                 <h3 className="font-semibold">{f.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{f.summary}</p>
-                <Link to={f.path as any} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                <Link
+                  to={f.path as any}
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
                   Read more <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Link>
               </Card>
@@ -159,10 +185,13 @@ function SolutionDetail() {
       <Section tone="surface">
         <SectionHeading eyebrow="Next steps" title="Get started" />
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/start" className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-            Start free
-          </Link>
-          <Link to="/book-demo" className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface">
+          <CtaLink to={appUrls.register} external>
+            Start Free
+          </CtaLink>
+          <Link
+            to="/book-demo"
+            className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface"
+          >
             Book a demo
           </Link>
         </div>

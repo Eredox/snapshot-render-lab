@@ -12,7 +12,7 @@ import {
 } from "@/components/site/primitives";
 import { EredoxHero } from "@/components/site/EredoxHero";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
 import { audiencePaths, outcomePaths } from "@/data/homepage-funnel";
@@ -131,7 +131,7 @@ function Index() {
           <div>
             <SectionHeading
               eyebrow="AI Governance"
-              title="AI assistance grounded in your workspace, always for human approval"
+              title="AI governance with human oversight"
               description="NOVA supports AI governance with governed controls, policies and evidence: explain requirements, draft descriptions, summarise artefacts and identify likely gaps while keeping human oversight in the approval loop. It does not approve anything."
             />
             <FeatureList
@@ -274,7 +274,7 @@ function Index() {
           <div>
             <SectionHeading
               eyebrow="Frameworks"
-              title="Work with the frameworks that matter to your organisation"
+              title="SOC 2 readiness and multi-framework compliance"
               description={`${governedFrameworkCatalogue.availableCount} framework capabilities are represented in the governed NOVA catalogue. The public cards distinguish what is available now from what is available by configuration; activation still depends on customer scope and evidence.`}
             />
             <div className="mt-8 space-y-4">
@@ -476,7 +476,7 @@ function Index() {
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to="/pricing">View Plans & Pricing</CtaLink>
-          <CtaLink to="/start" variant="outline">
+          <CtaLink to={appUrls.register} external variant="outline">
             Start Free
           </CtaLink>
           <CtaLink to="/book-demo" variant="ghost">
@@ -489,7 +489,7 @@ function Index() {
       <ConversionCta
         title="Ready to see what your compliance program looks like in NOVA?"
         description="Explore the platform, compare plans or speak with us about your compliance requirements."
-        primary={{ label: "Start with NOVA", to: "/start" }}
+        primary={{ label: "Start Free", to: appUrls.register, external: true }}
         secondary={{ label: "Book a Demo", to: "/book-demo" }}
         tertiary={{ label: "View Pricing", to: "/pricing" }}
       />

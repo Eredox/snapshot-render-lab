@@ -1,17 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, ArrowRight, Info } from "lucide-react";
-import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks, Disclaimer } from "@/components/site/primitives";
+import {
+  Section,
+  SectionHeading,
+  PageHero,
+  Card,
+  FeatureList,
+  RelatedLinks,
+  Disclaimer,
+} from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { plans, comparison, supportComparison, pricingFaqs, currency } from "@/data/pricing";
-import { site } from "@/config/site";
-import { pageMeta, breadcrumbSchema, ldScript, faqSchema, pricingSchema, softwareSchema } from "@/lib/seo";
+import { appUrls, site } from "@/config/site";
+import {
+  pageMeta,
+  breadcrumbSchema,
+  ldScript,
+  faqSchema,
+  pricingSchema,
+  softwareSchema,
+} from "@/lib/seo";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     ...pageMeta({
       title: "NOVA Compliance Pricing | Plans for Growing Teams to Enterprise",
-      description: "NOVA Compliance subscription plans, indicative pricing in AUD, feature comparison and support levels.",
+      description:
+        "NOVA Compliance subscription plans, indicative pricing in AUD, feature comparison and support levels.",
       path: "/pricing",
     }),
     scripts: [
@@ -25,7 +41,12 @@ export const Route = createFileRoute("/pricing")({
 });
 
 const related = [
-  { label: "Start free", to: "/start", description: "Begin a free workspace" },
+  {
+    label: "Start Free",
+    to: appUrls.register,
+    external: true,
+    description: "Create a Free NOVA workspace",
+  },
   { label: "Book a demo", to: "/book-demo", description: "Walk through with us" },
   { label: "Contact sales", to: "/contact", description: "Ask about Enterprise" },
 ];
@@ -81,21 +102,37 @@ function PricingPage() {
                     <span className="text-3xl font-semibold">
                       ${billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
                     </span>
-                    <span className="text-muted-foreground">/{billing === "monthly" ? "month" : "year"}</span>
+                    <span className="text-muted-foreground">
+                      /{billing === "monthly" ? "month" : "year"}
+                    </span>
                   </>
                 )}
               </div>
               {billing === "annual" && p.annual !== null && p.annual > 0 ? (
-                <p className="mt-1 text-xs text-muted-foreground">${Math.round(p.annual / 12)} {currency}/month effective when billed annually</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  ${Math.round(p.annual / 12)} {currency}/month effective when billed annually
+                </p>
               ) : null}
-              {p.requiresApproval ? <p className="mt-1 text-xs text-muted-foreground">{site.pricingApprovalNote}</p> : null}
-              <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Best for</p>
+              {p.requiresApproval ? (
+                <p className="mt-1 text-xs text-muted-foreground">{site.pricingApprovalNote}</p>
+              ) : null}
+              <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Best for
+              </p>
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>
               <FeatureList className="mt-5" items={p.includes} />
-              <CtaLink to={p.primaryAction.to} variant={p.highlight ? "primary" : "outline"} className="mt-6 w-full">
+              <CtaLink
+                to={p.primaryAction.to}
+                external={p.primaryAction.external}
+                variant={p.highlight ? "primary" : "outline"}
+                className="mt-6 w-full"
+              >
                 {p.primaryAction.label}
               </CtaLink>
-              <Link to={p.detailPath} className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-3 text-sm font-medium text-foreground hover:bg-surface">
+              <Link
+                to={p.detailPath}
+                className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-3 text-sm font-medium text-foreground hover:bg-surface"
+              >
                 Find out more
               </Link>
             </Card>
@@ -103,7 +140,8 @@ function PricingPage() {
         </div>
 
         <Disclaimer className="mt-8">
-          {site.pricingApprovalNote} Enterprise is quoted per organisation based on scope, users and assurance requirements.
+          {site.pricingApprovalNote} Enterprise is quoted per organisation based on scope, users and
+          assurance requirements.
         </Disclaimer>
       </Section>
 
@@ -125,7 +163,10 @@ function PricingPage() {
               {comparison.map((group) => (
                 <>
                   <tr key={group.group} className="bg-surface/50">
-                    <td colSpan={plans.length + 1} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    <td
+                      colSpan={plans.length + 1}
+                      className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                    >
                       {group.group}
                     </td>
                   </tr>
@@ -180,11 +221,20 @@ function PricingPage() {
         <SectionHeading eyebrow="FAQ" title="Pricing questions" />
         <div className="mt-8 space-y-4">
           {pricingFaqs.map((faq) => (
-            <details key={faq.question} className="group rounded-xl border border-border bg-card p-5">
+            <details
+              key={faq.question}
+              className="group rounded-xl border border-border bg-card p-5"
+            >
               <summary className="flex cursor-pointer list-none items-center justify-between text-base font-medium">
                 {faq.question}
-                <Info aria-hidden="true" className="h-4 w-4 text-muted-foreground group-open:hidden" />
-                <ArrowRight aria-hidden="true" className="hidden h-4 w-4 rotate-90 text-muted-foreground group-open:block" />
+                <Info
+                  aria-hidden="true"
+                  className="h-4 w-4 text-muted-foreground group-open:hidden"
+                />
+                <ArrowRight
+                  aria-hidden="true"
+                  className="hidden h-4 w-4 rotate-90 text-muted-foreground group-open:block"
+                />
               </summary>
               <p className="mt-3 text-sm text-muted-foreground">{faq.answer}</p>
             </details>

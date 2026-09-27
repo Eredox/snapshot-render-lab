@@ -3,24 +3,25 @@ import { cn } from "@/lib/utils";
 /**
  * Shared NOVA brand lockup using the approved multicolour shield mark.
  *
- * The mark is decorative here because the adjacent text provides the
- * accessible brand name. The wordmark uses the `wordmark` utility, which maps
- * to Cirqua (the only place Cirqua is used) with a geometric sans fallback
- * until the licensed `public/fonts/cirqua.woff2` file is present.
+ * The shield carries the single accessible brand name. The visible wordmark
+ * is retained for the visual lockup but hidden from assistive technology so
+ * "NOVA Compliance" is not announced twice. The wordmark uses the `wordmark`
+ * utility, which maps to Cirqua (the only place Cirqua is used) with a
+ * geometric sans fallback until the licensed `public/fonts/cirqua.woff2`
+ * file is present.
  */
 export function Logo({ className, inverted = false }: { className?: string; inverted?: boolean }) {
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <img
         src="/media/brand/nova-shield.png"
-        alt=""
-        aria-hidden="true"
+        alt="NOVA Compliance"
         width={80}
         height={80}
         decoding="async"
         className="h-20 w-20 shrink-0 object-contain"
       />
-      <span className="leading-none">
+      <span className="leading-none" aria-hidden="true">
         <span
           className={cn(
             "wordmark block text-2xl font-bold tracking-tight",

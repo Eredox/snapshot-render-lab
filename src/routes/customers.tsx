@@ -44,13 +44,13 @@ function CustomersPage() {
     <>
       <PageHero
         eyebrow="Customers"
-        title="How teams use NOVA"
-        description="NOVA is used by startups, technology SMEs, regulated organisations and compliance teams to keep their programmes coherent and ready for review."
+        title="Illustrative ways teams may use NOVA"
+        description="These are illustrative scenarios, not named customer results or testimonials. They show the types of compliance workflows NOVA is designed to support."
         breadcrumbs={[{ label: "Customers", to: "/customers" }]}
       />
 
       <Section>
-        <SectionHeading title="Common use cases" />
+        <SectionHeading title="Illustrative scenarios" />
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {scenarios.map((s) => (
             <Card key={s.title}>
@@ -64,7 +64,7 @@ function CustomersPage() {
       <Section tone="surface">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <SectionHeading title="Outcomes teams report" />
+            <SectionHeading title="Potential workflow outcomes" />
             <FeatureList className="mt-6" items={outcomes} />
           </div>
           <div>
@@ -86,7 +86,7 @@ function CustomersPage() {
           title="Explore further"
           items={[
             { label: "Solutions", to: "/solutions", description: "By organisation and role" },
-            { label: "Testimonials", to: "/testimonials", description: "What customers say" },
+            { label: "Customer feedback", to: "/testimonials", description: "Approved public feedback" },
             { label: "Case studies", to: "/resources/case-studies", description: "Detailed stories" },
             { label: "Book a demo", to: "/book-demo", description: "See NOVA in action" },
           ]}

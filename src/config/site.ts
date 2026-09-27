@@ -24,8 +24,7 @@ export const appUrls = {
   app: "https://nova.eredox.com",
   crm: "https://crm.nova.eredox.com",
   ai: "https://ai.nova.eredox.com",
-  /** Not supplied yet — keep null so no link is rendered until it exists. */
-  register: null as string | null,
+  register: "https://nova.eredox.com/register",
 } as const;
 
 /** Customer-facing legal documents hosted by this public website. */

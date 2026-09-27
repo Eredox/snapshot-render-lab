@@ -22,7 +22,7 @@ export const Route = createFileRoute("/platform")({
     ...pageMeta({
       title: "NOVA Compliance Platform | Governed GRC & AI Governance",
       description:
-        "NOVA is a connected compliance management and GRC platform for multi-framework compliance, control management, evidence management, AI governance, integrations and audit readiness.",
+        "GRC platform for AI governance and multi-framework compliance, connecting controls, evidence, risk and human-reviewed readiness in one governed workspace.",
       path: "/platform",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Platform overview", to: "/platform" }]))],

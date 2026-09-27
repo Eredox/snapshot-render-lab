@@ -3,7 +3,7 @@ import { Calendar, Mail, ShieldQuestion } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { ContactForm } from "@/components/site/ContactForm";
-import { formsConfig, site } from "@/config/site";
+import { appUrls, formsConfig, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
@@ -26,9 +26,10 @@ function ContactPage() {
     professional: "Professional",
     business: "Business",
   } as const;
-  const selectedPlan = search.plan && search.plan in planLabels
-    ? planLabels[search.plan as keyof typeof planLabels]
-    : undefined;
+  const selectedPlan =
+    search.plan && search.plan in planLabels
+      ? planLabels[search.plan as keyof typeof planLabels]
+      : undefined;
 
   return (
     <>
@@ -45,12 +46,14 @@ function ContactPage() {
             <SectionHeading title={selectedPlan ? `Ask about ${selectedPlan}` : "Send a message"} />
             {selectedPlan ? (
               <p className="mt-3 text-sm text-muted-foreground">
-                Your message will be treated as a sales enquiry about the NOVA {selectedPlan} plan. You can add your
-                organisation, scope and timing below.
+                Your message will be treated as a sales enquiry about the NOVA {selectedPlan} plan.
+                You can add your organisation, scope and timing below.
               </p>
             ) : null}
             <ContactForm
-              defaultMessage={selectedPlan ? `Sales enquiry about the NOVA ${selectedPlan} plan.\n\n` : ""}
+              defaultMessage={
+                selectedPlan ? `Sales enquiry about the NOVA ${selectedPlan} plan.\n\n` : ""
+              }
             />
           </div>
           <div className="space-y-6">
@@ -78,9 +81,14 @@ function ContactPage() {
                   Book a demo
                 </Link>{" "}
                 or use the form and we will arrange a time. Ready to begin?{" "}
-                <Link to="/start" className="text-primary underline">
-                  Start here
-                </Link>
+                <a
+                  href={appUrls.register}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-primary underline"
+                >
+                  Start Free
+                </a>
                 .
               </p>
             </Card>
@@ -90,7 +98,8 @@ function ContactPage() {
                 <h2 className="text-lg font-semibold">Support</h2>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                Existing customers can reach support through the channel provided in their onboarding, or via the{" "}
+                Existing customers can reach support through the channel provided in their
+                onboarding, or via the{" "}
                 <Link to="/support" className="text-primary underline">
                   support page
                 </Link>
@@ -112,8 +121,8 @@ function ContactPage() {
           <Card>
             <h3 className="font-semibold">Evaluating NOVA</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Tell us which frameworks you are working towards and your rough timeline, and we can walk you through
-              what is available today.
+              Tell us which frameworks you are working towards and your rough timeline, and we can
+              walk you through what is available today.
             </p>
           </Card>
           <Card>

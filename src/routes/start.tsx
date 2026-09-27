@@ -2,27 +2,27 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Section, SectionHeading, PageHero, Card, FeatureList } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { plans } from "@/data/pricing";
-import { site } from "@/config/site";
+import { appUrls, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/start")({
   head: () => ({
     ...pageMeta({
-      title: "Start free — NOVA Compliance",
-      description: "Create a free NOVA Compliance workspace to explore the platform, activate a framework and start collecting evidence.",
+      title: "Explore Free access | NOVA Compliance",
+      description:
+        "Create a Free NOVA workspace, review the entitlement and continue through the governed onboarding path.",
       path: "/start",
     }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "Start free", to: "/start" }]))],
+    scripts: [ldScript(breadcrumbSchema([{ label: "Explore Free access", to: "/start" }]))],
   }),
   component: StartPage,
 });
 
 const steps = [
-  "Create your workspace and tenant",
-  "Activate one framework",
-  "Map initial controls and assign owners",
-  "Upload or connect your first evidence",
-  "Invite a reviewer and see readiness reporting",
+  "Create a Free NOVA workspace",
+  "Choose a framework and record your initial onboarding context",
+  "Review your workspace, evidence and readiness requirements",
+  "Move to a governed paid-plan discussion when broader entitlements are required",
 ];
 
 const freePlan = plans.find((plan) => plan.slug === "free");
@@ -30,8 +30,10 @@ const freePlan = plans.find((plan) => plan.slug === "free");
 const freeLimits = [
   "One workspace",
   `Up to ${freePlan?.maxUsers ?? 2} users, including one administrator`,
-  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ?? "One active framework",
-  freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ?? "Manual evidence upload",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ??
+    "One active framework",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ??
+    "Manual evidence upload",
   freePlan?.support ?? "Community support",
 ];
 
@@ -40,9 +42,9 @@ function StartPage() {
     <>
       <PageHero
         eyebrow="Get started"
-        title="Start free"
-        description="Begin with a no-commitment workspace. Explore the platform, import a framework and collect your first evidence before deciding to upgrade."
-        breadcrumbs={[{ label: "Start free", to: "/start" }]}
+        title="Explore Free access"
+        description="Create a no-subscription Free workspace, then continue through the governed onboarding path in NOVA."
+        breadcrumbs={[{ label: "Explore Free access", to: "/start" }]}
       />
 
       <Section>
@@ -61,23 +63,23 @@ function StartPage() {
             </ol>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
-              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">
+                Book a demo
+              </CtaLink>
             </div>
           </div>
           <Card>
             <h2 className="text-lg font-semibold">Free tier includes</h2>
             <FeatureList className="mt-4" items={freeLimits} />
             <p className="mt-6 text-sm text-muted-foreground">{site.humanStatement}</p>
-            <button
-              type="button"
-              disabled
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground opacity-60"
-            >
-              Sign-up form coming soon
-            </button>
+            <CtaLink to={appUrls.register} external className="mt-6 w-full">
+              Create Free workspace
+            </CtaLink>
             <div className="mt-4 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
-              <CtaLink to="/book-demo" variant="outline">Book a demo</CtaLink>
+              <CtaLink to="/book-demo" variant="outline">
+                Book a demo
+              </CtaLink>
             </div>
           </Card>
         </div>

@@ -62,15 +62,23 @@ export function CookieConsent() {
     setShowPrefs(false);
   }
 
-  if (!ready || !visible) return null;
+  if (!ready) {
+    return (
+      <div
+        aria-hidden="true"
+        className="cookie-consent min-h-[19rem] border-b border-border sm:min-h-[15rem] lg:min-h-[10rem]"
+      />
+    );
+  }
+  if (!visible) return null;
 
   return (
     <div
       role="region"
       aria-labelledby="cookie-consent-title"
-      className="cookie-consent fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background shadow-lift"
+      className="cookie-consent border-b border-border bg-background shadow-lift"
     >
-      <div className="container-page py-5">
+      <div className="container-page py-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-2xl">
             <h2 id="cookie-consent-title" className="text-base font-semibold">
