@@ -8,7 +8,6 @@ import {
   Card,
   FeatureList,
   RelatedLinks,
-  Disclaimer,
 } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { plans, comparison, supportComparison, pricingFaqs, currency } from "@/data/pricing";
@@ -59,7 +58,7 @@ function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         title="Plans that scale with your programme"
-        description="Indicative pricing for planning. All published prices require Eredox approval before they are contractually binding."
+        description="Our agentic trust platform helps you reach your goals at any scale. Request a free demo today to discuss your business needs and get personalised pricing."
         breadcrumbs={[{ label: "Pricing", to: "/pricing" }]}
       />
 
@@ -138,11 +137,6 @@ function PricingPage() {
             </Card>
           ))}
         </div>
-
-        <Disclaimer className="mt-8">
-          {site.pricingApprovalNote} Enterprise is quoted per organisation based on scope, users and
-          assurance requirements.
-        </Disclaimer>
       </Section>
 
       <Section tone="surface">
