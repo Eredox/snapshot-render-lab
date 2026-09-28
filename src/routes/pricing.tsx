@@ -17,7 +17,6 @@ import {
   breadcrumbSchema,
   ldScript,
   faqSchema,
-  pricingSchema,
   softwareSchema,
 } from "@/lib/seo";
 
@@ -33,7 +32,6 @@ export const Route = createFileRoute("/pricing")({
       ldScript(faqSchema(pricingFaqs)),
       ldScript(breadcrumbSchema([{ label: "Pricing", to: "/pricing" }])),
       ldScript(softwareSchema()),
-      ldScript(pricingSchema({ currency, plans })),
     ],
   }),
   component: PricingPage,
