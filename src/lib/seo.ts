@@ -124,54 +124,6 @@ export function softwareSchema() {
   };
 }
 
-/** Product + Offer schema for the subscription plans. */
-export function pricingSchema(opts: {
-  currency: string;
-  plans: {
-    slug: string;
-    name: string;
-    summary: string;
-    monthly: number | null;
-    quoteOnly?: boolean;
-  }[];
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "@id": `${siteUrl}/pricing#product`,
-    name: site.productName,
-    description: site.tagline,
-    url: absoluteUrl("/pricing"),
-    image: defaultShareImage,
-    brand: { "@id": organizationId },
-    isSimilarTo: { "@id": softwareId },
-    offers: opts.plans.map((p) => ({
-      "@type": "Offer",
-      name: p.name,
-      description: p.summary,
-      url: absoluteUrl("/pricing"),
-      priceCurrency: opts.currency,
-      ...(p.quoteOnly || p.monthly === null
-        ? {
-            availability: "https://schema.org/InStock",
-            priceSpecification: { "@type": "PriceSpecification", priceCurrency: opts.currency },
-          }
-        : {
-            price: String(p.monthly),
-            availability: "https://schema.org/InStock",
-            priceSpecification: {
-              "@type": "UnitPriceSpecification",
-              price: String(p.monthly),
-              priceCurrency: opts.currency,
-              unitCode: "MON",
-              billingIncrement: 1,
-            },
-          }),
-      seller: { "@id": organizationId },
-    })),
-  };
-}
-
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path: string): string {
   return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
