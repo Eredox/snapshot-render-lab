@@ -18,6 +18,12 @@ dist-ssr
 
 # Wrangler / Cloudflare
 .wrangler/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+!.env.template
 .dev.vars
 
 # Editor directories and files
