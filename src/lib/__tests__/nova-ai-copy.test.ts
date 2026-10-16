@@ -43,4 +43,32 @@ describe("NOVA AI teammate positioning", () => {
     expect(featureRoute).toContain("Availability");
     expect(featureRoute).toContain("Relevant frameworks");
   });
+
+  it("adds the EU AI Act disclosure only before the feature conversion CTA", () => {
+    const featureRoute = readFileSync(
+      resolve(process.cwd(), "src/routes/features.$slug.tsx"),
+      "utf8",
+    );
+    const disclosureStart = featureRoute.indexOf(
+      '{feature.slug === "ai-assistant" ? <AiActDisclosure /> : null}',
+    );
+    const conversionCta = featureRoute.indexOf("<ConversionCta />");
+
+    expect(disclosureStart).toBeGreaterThan(-1);
+    expect(disclosureStart).toBeLessThan(conversionCta);
+    expect(featureRoute).toContain('title="Responsible AI and the EU AI Act"');
+    expect(featureRoute).toContain(
+      'description="Your compliance teammate, with transparency and accountability."',
+    );
+    expect(featureRoute).toContain(
+      "NOVA AI provides AI-generated guidance and suggestions, not independent audit opinions or",
+    );
+    expect(featureRoute).toContain(
+      "Eredox is assessing the requirements of the European Union Artificial Intelligence Act",
+    );
+    expect(featureRoute).toContain("does not constitute a declaration of");
+    expect(featureRoute).toContain("full EU AI Act compliance.");
+    expect(featureRoute).not.toContain("NOVA AI is fully compliant with the EU AI Act");
+    expect(featureRoute).not.toContain("NOVA AI is certified under the EU AI Act");
+  });
 });
