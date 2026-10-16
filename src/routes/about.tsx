@@ -28,7 +28,7 @@ const values = [
   },
   {
     title: "Human decisions",
-    body: "Technology can prepare, suggest and summarise. Launch, risk acceptance and certification decisions remain human.",
+    body: "Technology can prepare, suggest and summarise. You retain authority for launch, risk acceptance and certification decisions.",
   },
   {
     title: "Sustainable compliance",
@@ -101,7 +101,7 @@ function AboutPage() {
               available, partly available and planned.
             </p>
             <p className="mt-4 text-muted-foreground">
-              Where NOVA uses AI, it does so to prepare, suggest and summarise under human oversight.{" "}
+              Where NOVA uses AI, it works alongside you to prepare, suggest and summarise under human oversight.{" "}
               {site.humanStatement}
             </p>
           </div>

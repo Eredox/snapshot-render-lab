@@ -9,7 +9,7 @@
  *   a category, which is where explanatory writing belongs
  */
 
-import { site } from "@/config/site";
+import { novaAiCopy, site } from "@/config/site";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { frameworks } from "@/data/frameworks";
 import { integrations } from "@/data/integrations";
@@ -160,7 +160,7 @@ export const resources: Resource[] = [
         heading: "Expect to reuse the work",
         paragraphs: [
           "Access control, change management, incident response and backup evidence carry across frameworks. The second framework is substantially cheaper than the first when the control set is shared rather than rebuilt.",
-          "NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+          "NOVA accelerates your launch preparation, but final decisions remain human.",
         ],
       },
     ],
@@ -223,7 +223,7 @@ export const resources: Resource[] = [
         heading: "Review is what makes it count",
         paragraphs: [
           "Evidence that nobody has examined is a file, not assurance. A short review step — does this artefact actually demonstrate the control as described — catches mismatches while there is still time to correct them.",
-          "NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+          "NOVA accelerates your launch preparation, but final decisions remain human.",
         ],
       },
       {
@@ -516,7 +516,7 @@ export const faqCategories: FaqCategory[] = [
       },
       {
         question: "Can NOVA's AI Assistant approve policies, evidence or risks?",
-        answer: `No. ${site.humanStatement}`,
+        answer: `No. ${novaAiCopy.authorityStatement} ${novaAiCopy.whatYouControl}`,
         links: [{ label: "Read the responsible AI position", to: "/responsible-ai" }],
       },
       {

@@ -98,6 +98,24 @@ function FrameworksPage() {
         breadcrumbs={[{ label: "Frameworks", to: "/frameworks" }]}
       />
 
+      <Section tone="soft">
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <SectionHeading
+              eyebrow="Choosing a starting point"
+              title="Not sure which framework to explore first?"
+              description="Answer a few practical questions and receive preliminary framework suggestions based on the verified public catalogue."
+            />
+          </div>
+          <Link
+            to="/compliance-journey"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Start the guided journey <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </Link>
+        </div>
+      </Section>
+
       <Section>
         <SectionHeading eyebrow="Available now" title="Ready to activate" />
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -3,14 +3,29 @@
  * form/analytics configuration. Nothing here may be invented in a component.
  */
 
+export const novaAiCopy = {
+  heroTitle: "Meet NOVA AI. Your compliance teammate.",
+  heroDescription: "Working alongside you, every step of your compliance journey.",
+  positioningTitle: "Your goals. Your decisions. NOVA AI by your side.",
+  positioningBody:
+    "NOVA AI works alongside you to understand requirements, explore evidence, prepare policies, investigate gaps and help achieve your compliance goals. You review suggestions together before they enter a governed approval path.",
+  readinessStatement: "NOVA accelerates your launch preparation, but final decisions remain human.",
+  whatNovaDoes:
+    "What NOVA does: Supports and accelerates compliance readiness preparation by helping organise evidence, identify gaps, and inform decision-making.",
+  whatYouControl:
+    "What you control: You retain final authority and accountability for policy approvals, risk acceptance, launch decisions, and all statements made to auditors, regulators, or customers.",
+  authorityStatement:
+    "You retain final authority over approvals, risk acceptance, policies, readiness and all decisions made for your organisation.",
+  availabilityNote: "NOVA AI availability follows the plan entitlement shown on the Pricing page.",
+} as const;
+
 export const site = {
   productName: "NOVA Compliance",
   shortName: "NOVA",
   company: "Eredox Pty Ltd",
   tagline: "Governed, evidence-led compliance management for growing and regulated organisations.",
   ownership: "NOVA Compliance is developed and operated by Eredox Pty Ltd.",
-  humanStatement:
-    "NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+  humanStatement: novaAiCopy.readinessStatement,
   frameworkDisclaimer:
     "NOVA assists with readiness and evidence management. Certification, attestation and regulatory conclusions remain with authorised independent, regulatory or customer-appointed parties.",
   illustrativeCaption:

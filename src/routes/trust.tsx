@@ -27,13 +27,13 @@ const trustCards = [
   {
     icon: Lock,
     title: "Responsible AI",
-    body: "AI assists with drafting, interpretation and gap detection. Final decisions remain with accountable people.",
+    body: "NOVA AI works alongside you with drafting, interpretation and gap detection. You retain authority for final decisions.",
     to: "/responsible-ai",
   },
   {
     icon: FileCheck,
     title: "Honest readiness",
-    body: "NOVA supports the readiness decision. It does not issue certifications or guarantee compliance outcomes.",
+    body: "NOVA accelerates your launch preparation, but final decisions remain human. It does not issue certifications or guarantee compliance outcomes.",
     to: "/platform",
   },
   {

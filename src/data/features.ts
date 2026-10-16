@@ -1,3 +1,5 @@
+import { novaAiCopy } from "@/config/site";
+
 export type FeatureSection = { title: string; body: string; points?: string[] };
 
 export type Feature = {
@@ -13,6 +15,9 @@ export type Feature = {
   humanResponsibilities: string[];
   related: string[];
   relatedFrameworks?: string[];
+  heroTitle?: string;
+  heroDescription?: string;
+  positioning?: { title: string; body: string };
 };
 
 export const features: Feature[] = [
@@ -411,41 +416,51 @@ export const features: Feature[] = [
     name: "NOVA AI Assistant",
     navLabel: "NOVA AI Assistant",
     availability: "Available now",
-    summary:
-      "Assistance grounded in your governed workspace content: interpretation, drafting and gap identification, always for human approval.",
+    summary: novaAiCopy.heroDescription,
+    heroTitle: novaAiCopy.heroTitle,
+    heroDescription: novaAiCopy.heroDescription,
+    positioning: {
+      title: novaAiCopy.positioningTitle,
+      body: novaAiCopy.positioningBody,
+    },
     problem:
-      "Compliance work contains a large amount of reading, summarising and drafting. Doing it by hand is slow; doing it with an ungoverned general-purpose tool creates content nobody can trace or defend.",
+      "Compliance work asks you to interpret requirements, explore evidence, prepare policy and control drafts, and investigate gaps. NOVA AI helps with that preparation inside the governed context of your workspace.",
     workflow: [
       {
-        title: "Grounded in your records",
-        body: "The assistant works from the governed content in your workspace — activated requirements, controls, policies and evidence — rather than from generic material.",
+        title: "Understand requirements",
+        body: "Ask NOVA AI to explain activated framework requirements in plain language and connect them to the controls in your workspace.",
       },
       {
-        title: "Drafts, not decisions",
-        body: "Output is presented as a draft for review. Nothing is approved, published or marked as satisfied by the assistant.",
+        title: "Explore evidence and supporting records",
+        body: "Work through uploaded evidence, policies, controls and related records to understand what an artefact may demonstrate and where context is missing.",
+      },
+      {
+        title: "Prepare drafts and investigate gaps",
+        body: "Use workspace context to prepare first drafts and surface likely gaps for your team to investigate.",
         points: [
           "Interprets and summarises uploaded evidence",
           "Prepares policy and control description drafts",
           "Identifies likely gaps against activated requirements",
-          "Explains what a requirement is asking for",
+          "Supports risk and readiness preparation",
         ],
       },
       {
-        title: "Human approval is required",
-        body: "Approval of policies, acceptance of risk, declaration of readiness and any external statement remain human actions. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+        title: "Review suggestions together",
+        body: "NOVA AI presents suggestions for you to check, edit or reject. Approval of policies, risk acceptance, readiness and external statements stays with you.",
       },
     ],
     capabilities: [
-      { title: "Evidence interpretation", body: "Summarise what an artefact shows and which control it may support." },
+      { title: "Requirement understanding", body: "Explain what an activated requirement is asking for in plain language." },
+      { title: "Evidence exploration", body: "Explore what an artefact may show and which control it may support." },
       { title: "Drafting support", body: "Policy and control description drafts for review." },
       { title: "Gap identification", body: "Likely gaps against activated requirements." },
-      { title: "Requirement explanation", body: "Plain-language explanation of what a requirement asks for." },
+      { title: "Readiness preparation", body: "Support risk and readiness preparation from governed workspace records." },
     ],
     humanResponsibilities: [
-      "Reviewing and approving every AI-produced draft",
-      "Accepting or treating risk",
-      "Declaring readiness for assessment",
-      "Any statement made to a customer, auditor or regulator",
+      "Reviewing, editing and approving AI-produced suggestions",
+      "Validating evidence and interpreting suggestions in context",
+      "Accepting risk and deciding when to proceed to assessment or launch",
+      "Approving any statement made to a customer, auditor or regulator",
     ],
     related: ["policies", "evidence", "reporting"],
     relatedFrameworks: ["iso-42001"],

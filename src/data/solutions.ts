@@ -1,3 +1,5 @@
+import { novaAiCopy } from "@/config/site";
+
 export type Solution = {
   slug: string;
   path: string;
@@ -44,7 +46,7 @@ export const solutions: Solution[] = [
       "Trust Centre publication to shorten questionnaire cycles",
     ],
     governance:
-      "A small team benefits most from clear approval boundaries. NOVA drafts; a named person approves. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `A small team benefits most from clear approval boundaries. NOVA AI works alongside you to prepare drafts; a named person approves. ${novaAiCopy.whatYouControl}`,
     implementation: [
       { title: "Weeks 1–2", body: "Activate the framework, agree scope and assign control ownership." },
       { title: "Weeks 3–6", body: "Describe controls, upload existing evidence and close obvious gaps." },
@@ -81,7 +83,7 @@ export const solutions: Solution[] = [
       "Readiness reporting derived from live records",
     ],
     governance:
-      "Consolidation increases the consequence of each control, so ownership and approval must be explicit. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `Consolidation increases the consequence of each control, so ownership and approval must be explicit. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "Phase 1", body: "Inventory existing controls and remove duplicates across programmes." },
       { title: "Phase 2", body: "Activate all applicable frameworks and complete requirement mapping." },
@@ -118,7 +120,7 @@ export const solutions: Solution[] = [
       "Auditor Portal for scoped external review",
     ],
     governance:
-      "Accountability cannot be delegated to software. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `Accountability cannot be delegated to software. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "Establish", body: "Define scope, ownership and the evidence standard the organisation will hold itself to." },
       { title: "Operate", body: "Run control testing, evidence review and risk cycles on a fixed cadence." },
@@ -155,7 +157,7 @@ export const solutions: Solution[] = [
       "Readiness reporting suitable for client updates",
     ],
     governance:
-      "Advisory output remains advice. The client organisation owns its decisions. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `Advisory output remains advice. The client organisation owns its decisions. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "Define", body: "Agree the standard engagement structure your team will use." },
       { title: "Deliver", body: "Onboard clients into isolated workspaces with scoped access." },
@@ -192,7 +194,7 @@ export const solutions: Solution[] = [
       "Live readiness and gap reporting",
     ],
     governance:
-      "The assistant speeds preparation; it does not carry accountability. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `NOVA AI works alongside you to speed preparation; you retain accountability for the decisions that follow. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "First month", body: "Assign ownership across the control set and set review cadences." },
       { title: "Second month", body: "Backfill evidence and validate it against control expectations." },
@@ -229,7 +231,7 @@ export const solutions: Solution[] = [
       "Trend history for board reporting",
     ],
     governance:
-      "Automation does not transfer accountability. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `Automation does not transfer accountability. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "Define", body: "Agree the reporting scope and cadence with the compliance function." },
       { title: "Operate", body: "Review readiness and gap ownership at each meeting." },
@@ -266,7 +268,7 @@ export const solutions: Solution[] = [
       "Findings recorded against controls",
     ],
     governance:
-      "The client organisation approves what is released and remains responsible for its assertions. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions.",
+      `The client organisation approves what is released and remains responsible for its assertions. ${novaAiCopy.readinessStatement}`,
     implementation: [
       { title: "Engagement setup", body: "The client grants scoped access for the defined engagement." },
       { title: "Fieldwork", body: "Requests, submissions and clarifications run in one tracked workflow." },

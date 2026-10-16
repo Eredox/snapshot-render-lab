@@ -34,6 +34,7 @@ export const staticRoutes = [
   "/about",
   "/book-demo",
   "/book-demo/confirmed",
+  "/compliance-journey",
   "/compare",
   "/contact",
   "/customers",

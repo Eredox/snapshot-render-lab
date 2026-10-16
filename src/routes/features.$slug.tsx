@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, FeatureList, AvailabilityBadge, RelatedLinks, Disclaimer } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { features, getFeature } from "@/data/features";
-import { site } from "@/config/site";
+import { novaAiCopy, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/features/$slug")({
@@ -63,14 +63,20 @@ function FeatureDetail() {
     <>
       <PageHero
         eyebrow="Features"
-        title={feature.name}
-        description={feature.summary}
+        title={feature.heroTitle ?? feature.name}
+        description={feature.heroDescription ?? feature.summary}
         breadcrumbs={[
           { label: "Features", to: "/features" },
           { label: feature.name, to: feature.path },
         ]}
         badge={<AvailabilityBadge value={feature.availability} />}
       />
+
+      {feature.positioning ? (
+        <Section tone="soft">
+          <SectionHeading title={feature.positioning.title} description={feature.positioning.body} />
+        </Section>
+      ) : null}
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start">
@@ -120,7 +126,7 @@ function FeatureDetail() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold">What people remain responsible for</h2>
+              <h2 className="text-2xl font-semibold">What you remain responsible for</h2>
               <FeatureList className="mt-6" items={feature.humanResponsibilities} />
             </div>
           </div>
@@ -131,6 +137,9 @@ function FeatureDetail() {
               <div>
                 <span className="block text-muted-foreground">Availability</span>
                 <AvailabilityBadge value={feature.availability} />
+                {feature.slug === "ai-assistant" ? (
+                  <p className="mt-2 text-xs text-muted-foreground">{novaAiCopy.availabilityNote}</p>
+                ) : null}
               </div>
               {feature.relatedFrameworks?.length ? (
                 <div>
@@ -147,7 +156,9 @@ function FeatureDetail() {
                 </div>
               ) : null}
             </div>
-            <Disclaimer>{site.humanStatement}</Disclaimer>
+            {feature.slug !== "ai-assistant" ? (
+              <Disclaimer>{site.humanStatement}</Disclaimer>
+            ) : null}
           </aside>
         </div>
       </Section>
