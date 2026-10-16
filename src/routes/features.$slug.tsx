@@ -169,7 +169,40 @@ function FeatureDetail() {
         </Section>
       ) : null}
 
+      {feature.slug === "ai-assistant" ? <AiActDisclosure /> : null}
+
       <ConversionCta />
     </>
+  );
+}
+
+function AiActDisclosure() {
+  return (
+    <Section tone="soft" id="responsible-ai-eu-ai-act">
+      <SectionHeading
+        eyebrow="Responsible AI"
+        title="Responsible AI and the EU AI Act"
+        description="Your compliance teammate, with transparency and accountability."
+      />
+      <div className="mt-8 max-w-4xl space-y-4 text-muted-foreground">
+        <p>
+          NOVA AI is an artificial intelligence assistant designed to work alongside you and your
+          compliance team. It helps you understand requirements, explore evidence, prepare
+          documentation and identify potential gaps.
+        </p>
+        <p>
+          NOVA AI provides AI-generated guidance and suggestions, not independent audit opinions or
+          certification. Its responses may be incomplete or inaccurate, so you should review
+          important conclusions against the underlying evidence.
+        </p>
+        <p>You remain in control of policy approvals, risk acceptance and final compliance decisions.</p>
+        <p>
+          Eredox is assessing the requirements of the European Union Artificial Intelligence Act
+          (EU AI Act) applicable to NOVA&apos;s AI capabilities, including transparency, oversight and
+          AI-generated content. This assessment is ongoing and does not constitute a declaration of
+          full EU AI Act compliance.
+        </p>
+      </div>
+    </Section>
   );
 }
