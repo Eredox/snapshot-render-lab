@@ -9,7 +9,7 @@ import {
   RelatedLinks,
 } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { site } from "@/config/site";
+import { novaAiCopy } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 type ResponsibleRouteTo = NonNullable<ComponentProps<typeof Link>["to"]>;
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/responsible-ai")({
     ...pageMeta({
       title: "Responsible AI Governance | NOVA Compliance",
       description:
-        "How NOVA uses AI to assist compliance work, the boundaries we keep, and the accountabilities that remain with people.",
+        "How NOVA AI works alongside you in compliance work, the boundaries we keep, and the authority you retain for decisions.",
       path: "/responsible-ai",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Responsible AI", to: "/responsible-ai" }]))],
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/responsible-ai")({
 const commitments = [
   {
     title: "Assist, do not decide",
-    body: "NOVA's AI assistant prepares, explains, summarises and flags likely gaps. It does not approve controls, accept risk, issue certifications or make launch decisions.",
+    body: "NOVA AI works alongside you to prepare, explain, summarise and flag likely gaps. You retain authority for approvals, risk acceptance, certification decisions and launch decisions.",
   },
   {
     title: "Grounded in your records",
@@ -68,7 +68,7 @@ function ResponsibleAIPage() {
       <PageHero
         eyebrow="Trust"
         title="Responsible AI in NOVA"
-        description="AI is used as an assistant, not an authority. The human team remains accountable for every compliance decision."
+        description="NOVA AI works alongside you as a compliance teammate, while you retain authority for every compliance decision."
         breadcrumbs={[{ label: "Responsible AI", to: "/responsible-ai" }]}
       />
 
@@ -113,7 +113,7 @@ function ResponsibleAIPage() {
             "Access data or tenants outside the authenticated session",
           ]}
         />
-        <p className="mt-6 text-sm text-muted-foreground">{site.humanStatement}</p>
+        <p className="mt-6 text-sm text-muted-foreground">{novaAiCopy.whatYouControl}</p>
       </Section>
 
       <Section tone="surface">

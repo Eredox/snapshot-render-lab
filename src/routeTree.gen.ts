@@ -15,6 +15,7 @@ import { Route as R404RouteImport } from './routes/404'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ComplianceJourneyRouteImport } from './routes/compliance-journey'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as FeaturesRouteImport } from './routes/features'
@@ -99,6 +100,11 @@ const BookDemoRoute = BookDemoRouteImport.update({
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComplianceJourneyRoute = ComplianceJourneyRouteImport.update({
+  id: '/compliance-journey',
+  path: '/compliance-journey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -389,6 +395,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
+  '/compliance-journey': typeof ComplianceJourneyRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
@@ -451,6 +458,7 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/compliance-journey': typeof ComplianceJourneyRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/integrations': typeof IntegrationsRoute
@@ -504,6 +512,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
+  '/compliance-journey': typeof ComplianceJourneyRoute
   '/contact': typeof ContactRoute
   '/customers': typeof CustomersRoute
   '/features': typeof FeaturesRouteWithChildren
@@ -569,6 +578,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/book-demo'
     | '/compare'
+    | '/compliance-journey'
     | '/contact'
     | '/customers'
     | '/features'
@@ -631,6 +641,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/about'
     | '/compare'
+    | '/compliance-journey'
     | '/contact'
     | '/customers'
     | '/integrations'
@@ -683,6 +694,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/book-demo'
     | '/compare'
+    | '/compliance-journey'
     | '/contact'
     | '/customers'
     | '/features'
@@ -747,6 +759,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BookDemoRoute: typeof BookDemoRouteWithChildren
   CompareRoute: typeof CompareRoute
+  ComplianceJourneyRoute: typeof ComplianceJourneyRoute
   ContactRoute: typeof ContactRoute
   CustomersRoute: typeof CustomersRoute
   FeaturesRoute: typeof FeaturesRouteWithChildren
@@ -814,6 +827,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compliance-journey': {
+      id: '/compliance-journey'
+      path: '/compliance-journey'
+      fullPath: '/compliance-journey'
+      preLoaderRoute: typeof ComplianceJourneyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -1393,6 +1413,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BookDemoRoute: BookDemoRouteWithChildren,
   CompareRoute: CompareRoute,
+  ComplianceJourneyRoute: ComplianceJourneyRoute,
   ContactRoute: ContactRoute,
   CustomersRoute: CustomersRoute,
   FeaturesRoute: FeaturesRouteWithChildren,

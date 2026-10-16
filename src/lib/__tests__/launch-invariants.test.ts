@@ -7,7 +7,7 @@ import { appUrls } from "@/config/site";
 describe("public launch invariants", () => {
   it("keeps sitemap URLs unique and canonical", () => {
     const urls = sitemapUrls();
-    expect(urls.length).toBe(65);
+    expect(urls.length).toBe(66);
     expect(new Set(urls.map((url) => url.loc)).size).toBe(urls.length);
     expect(urls.every((url) => url.loc.startsWith("/"))).toBe(true);
     expect(urls.some((url) => url.loc === "/404")).toBe(false);

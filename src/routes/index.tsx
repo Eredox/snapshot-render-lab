@@ -12,7 +12,7 @@ import {
 } from "@/components/site/primitives";
 import { EredoxHero } from "@/components/site/EredoxHero";
 import { PlatformFlow } from "@/components/site/PlatformFlow";
-import { appUrls, site } from "@/config/site";
+import { appUrls, novaAiCopy, site } from "@/config/site";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { frameworks, illustrativeReadiness } from "@/data/frameworks";
 import { audiencePaths, outcomePaths } from "@/data/homepage-funnel";
@@ -84,7 +84,7 @@ const pricingStages = [
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageMeta({
-      title: "NOVA Compliance | AI-Assisted Governance, Risk & Compliance",
+      title: "NOVA Compliance | Governed Compliance with NOVA AI",
       description: site.tagline,
       path: "/",
     }),
@@ -132,7 +132,7 @@ function Index() {
             <SectionHeading
               eyebrow="AI Governance"
               title="AI governance with human oversight"
-              description="NOVA supports AI governance with governed controls, policies and evidence: explain requirements, draft descriptions, summarise artefacts and identify likely gaps while keeping human oversight in the approval loop. It does not approve anything."
+              description="NOVA supports AI governance with governed controls, policies and evidence: explain requirements, draft descriptions, summarise artefacts and identify likely gaps while keeping human oversight in the approval loop. You're in control."
             />
             <FeatureList
               className="mt-6"
@@ -162,13 +162,10 @@ function Index() {
             />
             <div className="p-6">
               <blockquote className="text-lg font-medium leading-relaxed text-foreground">
-                “NOVA supports the readiness decision. Final launch and risk decisions remain human
-                decisions.”
+                “{novaAiCopy.readinessStatement}”
               </blockquote>
-              <p className="mt-4 text-sm text-muted-foreground">
-                The assistant speeds preparation. It does not carry accountability for policies,
-                risk acceptance or any statement made to an auditor, regulator or customer.
-              </p>
+              <p className="mt-4 text-sm text-muted-foreground">{novaAiCopy.whatNovaDoes}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{novaAiCopy.whatYouControl}</p>
             </div>
           </div>
         </div>

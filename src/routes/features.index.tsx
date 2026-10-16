@@ -10,7 +10,7 @@ export const Route = createFileRoute("/features/")({
   head: () => ({
     ...pageMeta({
       title: "Features — NOVA Compliance",
-      description: "Every capability in the NOVA workspace, from framework management and evidence to AI assistance, reporting and auditor collaboration.",
+      description: "Every capability in the NOVA workspace, from framework management and evidence to NOVA AI, your compliance teammate, reporting and auditor collaboration.",
       path: "/features",
     }),
     scripts: [ldScript(breadcrumbSchema([{ label: "Features", to: "/features" }]))],
@@ -31,7 +31,7 @@ function FeaturesPage() {
       <PageHero
         eyebrow="Features"
         title="Everything you need to run a governed compliance programme"
-        description="Each feature area is described with its workflow, capabilities, and what the human team remains responsible for."
+        description="Each feature area is described with its workflow, capabilities, and what your team remains responsible for."
         breadcrumbs={[{ label: "Features", to: "/features" }]}
       />
 

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, Disclaimer } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
+import { novaAiCopy } from "@/config/site";
 import { publishedByType, plannedBlogTopics, resourcePath, publisher } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
@@ -100,8 +101,7 @@ function BlogIndex() {
           ))}
         </ul>
         <Disclaimer className="mt-6">
-          Articles are published by {publisher}. NOVA supports the readiness decision. Final launch and risk
-          decisions remain human decisions.
+          Articles are published by {publisher}. {novaAiCopy.readinessStatement}
         </Disclaimer>
       </Section>
 

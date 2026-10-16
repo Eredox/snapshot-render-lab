@@ -7,3 +7,8 @@ coverage
 dist
 *.log
 Dockerfile*
+
+# Environment / secrets
+.env
+.env.*
+.dev.vars

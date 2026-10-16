@@ -47,6 +47,21 @@ function StartPage() {
         breadcrumbs={[{ label: "Explore Free access", to: "/start" }]}
       />
 
+      <Section tone="soft">
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <SectionHeading
+              eyebrow="Not sure where to begin?"
+              title="Build your first compliance outline"
+              description="Use the guided journey to think through your organisation, context and framework interests before creating your Free NOVA workspace."
+            />
+          </div>
+          <CtaLink to="/compliance-journey" variant="outline" className="shrink-0">
+            Start the guided journey
+          </CtaLink>
+        </div>
+      </Section>
+
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div>

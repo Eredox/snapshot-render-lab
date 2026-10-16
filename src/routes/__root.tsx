@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
   HeadContent,
   Scripts,
@@ -13,8 +14,13 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { ComplianceJourneyCta } from "@/components/site/ComplianceJourneyCta";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { site } from "@/config/site";
+import {
+  normalizePathname,
+  shouldRenderRootComplianceJourneyCta,
+} from "@/lib/compliance-journey-cta";
 import { defaultShareImage, ldScript, organizationSchema, websiteSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
@@ -143,6 +149,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = normalizePathname(useLocation().pathname);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -157,6 +164,9 @@ function RootComponent() {
       <main id="main-content">
         <Outlet />
       </main>
+      {shouldRenderRootComplianceJourneyCta(pathname) ? (
+        <ComplianceJourneyCta pathname={pathname} selfLink={pathname === "/compliance-journey"} />
+      ) : null}
       <Footer />
     </QueryClientProvider>
   );

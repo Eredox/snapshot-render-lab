@@ -192,7 +192,7 @@ export const frameworkDetails: FrameworkDetail[] = [
       {
         question: "Does the NOVA assistant make compliance decisions?",
         answer:
-          "No. The assistant drafts and summarises. NOVA supports the readiness decision. Final launch and risk decisions remain human decisions, and those approvals are recorded.",
+          "No. NOVA AI drafts and summarises alongside you. You retain authority for readiness, launch and risk decisions, and those approvals are recorded.",
       },
       {
         question: "What counts as an AI system for the inventory?",

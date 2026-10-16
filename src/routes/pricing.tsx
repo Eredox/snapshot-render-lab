@@ -10,15 +10,10 @@ import {
   RelatedLinks,
 } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
+import { ComplianceJourneyCta } from "@/components/site/ComplianceJourneyCta";
 import { plans, comparison, supportComparison, pricingFaqs, currency } from "@/data/pricing";
 import { appUrls, site } from "@/config/site";
-import {
-  pageMeta,
-  breadcrumbSchema,
-  ldScript,
-  faqSchema,
-  softwareSchema,
-} from "@/lib/seo";
+import { pageMeta, breadcrumbSchema, ldScript, faqSchema, softwareSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -208,6 +203,8 @@ function PricingPage() {
           </table>
         </div>
       </Section>
+
+      <ComplianceJourneyCta pathname="/pricing" />
 
       <Section tone="surface">
         <SectionHeading eyebrow="FAQ" title="Pricing questions" />
