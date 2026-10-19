@@ -104,7 +104,7 @@ function PlanPage() {
   const { plan, detail } = Route.useLoaderData();
   const actionTo = plan.quoteOnly ? plan.primaryAction.to : registrationUrl(plan, "monthly");
   const actionExternal = !plan.quoteOnly;
-  const actionLabel = plan.quoteOnly ? "Contact Sales" : plan.slug === "free" ? "Get Started Free" : "Get Started";
+  const actionLabel = plan.primaryAction.label;
 
   return (
     <main>

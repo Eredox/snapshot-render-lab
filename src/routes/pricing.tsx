@@ -130,7 +130,7 @@ function PricingPage() {
                 variant={p.highlight ? "primary" : "outline"}
                 className="mt-6 w-full"
               >
-                {p.quoteOnly ? "Contact Sales" : p.slug === "free" ? "Get Started Free" : "Get Started"}
+                {p.primaryAction.label}
               </CtaLink>
               <Link
                 to={p.detailPath}

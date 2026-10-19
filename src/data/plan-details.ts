@@ -28,7 +28,9 @@ export const planDetails: Record<string, PlanDetail> = {
       "Validate mapped evidence before it counts towards readiness.",
       "Record policy approvals and readiness decisions with human accountability.",
     ],
-    limitations: ["Paid activation remains subject to the governed NOVA and Eredox/Odoo commercial authority path."],
+    limitations: [
+      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+    ],
     upgradePath:
       "Move to Growth when you need the higher authorised-repository allowance, risk treatment and deeper evidence operations.",
     commercialNote:
@@ -42,7 +44,9 @@ export const planDetails: Record<string, PlanDetail> = {
       "Reuse evidence only where the mapping genuinely satisfies each requirement.",
       "Keep reviewer validation and final readiness decisions human-led.",
     ],
-    limitations: ["Paid activation remains subject to the governed NOVA and Eredox/Odoo commercial authority path."],
+    limitations: [
+      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+    ],
     upgradePath:
       "Move to Professional when you need recurring external review workflows, Trust Centre publication and broader assurance operations.",
   },
@@ -54,7 +58,10 @@ export const planDetails: Record<string, PlanDetail> = {
       "Approve what is shared with auditors and external audiences.",
       "Use readiness reporting to support, not replace, the human decision to proceed.",
     ],
-    limitations: ["Broader business-unit scope and executive views follow the Business entitlement."],
+    limitations: [
+      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+      "Broader business-unit scope and executive views follow the Business entitlement.",
+    ],
     upgradePath:
       "Move to Business when you need broader users, scopes, AI assistance across the programme and executive reporting views.",
   },
@@ -66,7 +73,9 @@ export const planDetails: Record<string, PlanDetail> = {
       "Keep AI assistance advisory and subject to human review and approval.",
       "Use executive reporting to inform accountable governance decisions.",
     ],
-    limitations: ["Paid activation remains subject to the governed NOVA and Eredox/Odoo commercial authority path."],
+    limitations: [
+      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+    ],
     upgradePath:
       "Move to Enterprise when your scope, users, business units or assurance obligations need a tailored commercial and onboarding arrangement.",
   },

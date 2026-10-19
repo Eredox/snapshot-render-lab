@@ -73,7 +73,7 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
+    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -101,7 +101,7 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
+    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -128,7 +128,7 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
+    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -156,7 +156,7 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
+    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(

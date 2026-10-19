@@ -29,6 +29,17 @@ describe("public pricing acquisition contract", () => {
     }
   });
 
+  it("uses the governed acquisition labels for every plan", () => {
+    expect(plans.map((plan) => [plan.slug, plan.primaryAction.label])).toEqual([
+      ["free", "Get Started Free"],
+      ["launch", "Buy Now"],
+      ["growth", "Buy Now"],
+      ["professional", "Buy Now"],
+      ["business", "Buy Now"],
+      ["enterprise", "Contact Sales"],
+    ]);
+  });
+
   it("keeps Enterprise on the quote path", () => {
     const enterprise = getPlan("enterprise");
     expect(enterprise).toBeDefined();
