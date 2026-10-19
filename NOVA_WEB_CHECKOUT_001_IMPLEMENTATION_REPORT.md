@@ -14,14 +14,15 @@ Repositories and commits used for this change:
 
 | Repository | Branch | Baseline | Implementation commit |
 |---|---|---|---|
-| `Eredox/snapshot-render-lab` | `codex/nova-web-checkout-001` | `ee67bdb0fb5a02f404dc3d2871a90f763d19cde9` | `52aa5a3` (implementation commit; this report correction is documentation-only) |
-| `Eredox/nova-compliance-os` | `codex/nova-comm-001-stage1` | `509bdcdabfff0e7acf3171c6f24112890b8d59bb` | `ec8eeffaaef2a179af2e5e5b01404cda149484b7` |
+| `Eredox/snapshot-render-lab` | `codex/nova-web-checkout-001` | `ee67bdb0fb5a02f404dc3d2871a90f763d19cde9` | `52aa5a3`, `b9fe860` (implementation; `de10f1b` is documentation-only) |
+| `Eredox/nova-compliance-os` | `codex/nova-web-checkout-002-app` | `e30be6487533e85eb846fe41e67488c35260d5b5` | `41ff812`, `8382a8b` |
 
 The NOVA worktree also contains five pre-existing untracked governance and
 discovery documents. They were not staged or modified.
 
-No provider requests, live payments, production changes, credentials, pushes,
-merges or deployments were performed.
+No provider requests, live payments, production changes, credentials, merges or
+deployments were performed. Publishing the isolated review branches, if done,
+does not constitute a production release.
 
 ## Implemented changes
 
@@ -35,6 +36,9 @@ Changed files:
 - `src/routes/plans.$slug.tsx`
 - `src/data/pricing.test.ts`
 - `src/lib/__tests__/launch-invariants.test.ts`
+- `src/data/plan-details.ts`
+- `src/data/resources.ts`
+- `src/routes/contact.tsx`
 
 The public catalogue now presents the Founder-approved USD values:
 
@@ -85,6 +89,10 @@ unchanged.
 
 The implementation deliberately ignores client-supplied prices. It does not
 add a public checkout-session creator or a second billing authority.
+
+Remaining public commercial copy was aligned with the same boundary: fixed
+prices are described as USD, paid activation remains Odoo-governed, and the
+website does not claim that payment checkout is already connected.
 
 ## Existing backend boundaries verified
 
@@ -138,8 +146,10 @@ delivery was exercised.
 - Focused plan-selection and registration tests: **8 passed** across 2 files.
 - Application production build: **passed**.
 - Lint: **passed**, with 2 pre-existing fast-refresh warnings and no errors.
+- Disposable PostgreSQL migration upgrade to the current Alembic head: **passed**.
+- Backend commercial/subscription tests on disposable services: **53 passed**, with 1 pre-existing Starlette/httpx deprecation warning.
 - Full application suite: **not a passing result**. The attempted run reported unrelated existing failures in `TrustQuestionnaires.test.tsx` (bounded page-two request) and `App.portal.test.tsx` (ordinary customer portal access), then was stopped after no further progress. It must not be represented as a full-suite pass.
-- No backend test was required by this change because no backend source was modified; the existing backend authority was inspected rather than replaced.
+- The isolated app branch was created from `origin/main` and contains only the handoff and canonical-USD metadata changes; the unrelated 36-commit development branch was not published.
 
 ## Security and governance assessment
 
@@ -162,6 +172,10 @@ Not implemented or not proven:
 - Payment failure, delayed webhook, refund, cancellation and retry behaviour
   remain provider/runtime acceptance work.
 - No production entitlement activation was tested.
+
+The isolated app correction makes commercial snapshots, proration metadata,
+the public plan manifest and the subscription UI consistently identify USD. It
+does not change the separate AUD accounting model.
 
 Therefore this change is a **routing and governed handoff correction**, not a
 completed payment integration and not production-release approval.
@@ -190,7 +204,7 @@ but the purchase flow remains not complete.
 ## Release status
 
 The website branch contains only the intended pricing, CTA, routing, tests and
-this evidence report. The NOVA application commit is local and unpushed. No
-merge, deployment, live payment, production mutation or release approval was
-performed. NOVA-COMM-001, DR-169 and DR-170 remain under their existing HOLD
-gates.
+this evidence report. The isolated NOVA application candidate is reviewable
+against `origin/main`; it is not a production release. No merge, deployment,
+live payment, production mutation or release approval was performed.
+NOVA-COMM-001, DR-169 and DR-170 remain under their existing HOLD gates.
