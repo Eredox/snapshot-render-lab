@@ -14,7 +14,7 @@ Repositories and commits used for this change:
 
 | Repository | Branch | Baseline | Implementation commit |
 |---|---|---|---|
-| `Eredox/snapshot-render-lab` | `codex/nova-web-checkout-001` | `ee67bdb0fb5a02f404dc3d2871a90f763d19cde9` | recorded after this report is committed |
+| `Eredox/snapshot-render-lab` | `codex/nova-web-checkout-001` | `ee67bdb0fb5a02f404dc3d2871a90f763d19cde9` | `52aa5a3` (implementation commit; this report correction is documentation-only) |
 | `Eredox/nova-compliance-os` | `codex/nova-comm-001-stage1` | `509bdcdabfff0e7acf3171c6f24112890b8d59bb` | `ec8eeffaaef2a179af2e5e5b01404cda149484b7` |
 
 The NOVA worktree also contains five pre-existing untracked governance and
