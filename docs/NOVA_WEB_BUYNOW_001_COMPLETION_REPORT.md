@@ -78,7 +78,7 @@ The tests cover the Founder-approved USD values, Free's non-billed monthly hando
 
 ## Published versus local
 
-The verified website PR #16 baseline was `e1fb6f6e591062e56fe5e3a23cb830d78de545ad` before this correction. The correction is committed locally on `codex/nova-web-checkout-001` as `8aaf21b41dca7ca3d40d2af31f3b39aeda2cb5a5`; it has not been pushed, merged, deployed, or published by this task.
+The verified website PR #16 baseline was `e1fb6f6e591062e56fe5e3a23cb830d78de545ad` before this correction. The implementation is committed locally on `codex/nova-web-checkout-001` as `34434b557309355b354dbb9caab59718648e8840`; it has not been pushed, merged, deployed, or published by this task.
 
 The NOVA checkout source was inspected in its existing local checkout only. No NOVA branch, Odoo runtime, production database, Stripe account, webhook, customer record, credential, or entitlement was accessed or changed.
 
