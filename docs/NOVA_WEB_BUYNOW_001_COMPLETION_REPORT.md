@@ -76,6 +76,12 @@ Executed in the PR #16 website worktree with existing dependencies and no extern
 
 The tests cover the Founder-approved USD values, Free's non-billed monthly handoff, paid monthly/annual selection, exclusion of client-supplied price/amount/currency parameters, Enterprise quote routing, and the new six-plan acquisition labels.
 
+Cross-repository checkout validation was attempted separately and was not counted as passed:
+
+- NOVA backend checkout tests were blocked before collection by the repository's safety guard because `NOVA_TEST_DATABASE_URL` was not configured for a disposable test service. No database was selected or contacted.
+- The NOVA frontend checkout worktree has no `typecheck` script, and its local `vitest` executable was unavailable. The relevant frontend checkout tests were therefore not executed.
+- No Odoo test runtime, Stripe Sandbox provider, webhook, or production service was contacted.
+
 ## Published versus local
 
 The verified website PR #16 baseline was `e1fb6f6e591062e56fe5e3a23cb830d78de545ad` before this correction. The implementation is committed locally on `codex/nova-web-checkout-001` as `34434b557309355b354dbb9caab59718648e8840`; it has not been pushed, merged, deployed, or published by this task.
