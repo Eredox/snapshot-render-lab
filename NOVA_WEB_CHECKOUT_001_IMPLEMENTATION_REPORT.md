@@ -208,3 +208,11 @@ this evidence report. The isolated NOVA application candidate is reviewable
 against `origin/main`; it is not a production release. No merge, deployment,
 live payment, production mutation or release approval was performed.
 NOVA-COMM-001, DR-169 and DR-170 remain under their existing HOLD gates.
+
+Review branches published without merge:
+
+- Website PR #16: https://github.com/Eredox/snapshot-render-lab/pull/16
+- NOVA app PR #179: https://github.com/Eredox/nova-compliance-os/pull/179
+
+Website CI passed. At report update, the NOVA app PR had 18 passing checks and
+2 pending checks (backend and frontend).

@@ -100,10 +100,21 @@ Live verification: **NO — deployment did not occur**. There is no deployed
 release SHA, live corrected pricing evidence, rollback reference for a new
 release, or live checkout evidence to report.
 
-## 6. Remaining release gates
+## 6. Review publication and remaining release gates
 
-1. Push the two isolated branches through GitHub pull requests and wait for
-   required CI checks.
+The isolated review branches are published as:
+
+- Website PR #16: https://github.com/Eredox/snapshot-render-lab/pull/16
+- NOVA app PR #179: https://github.com/Eredox/nova-compliance-os/pull/179
+
+At this evidence capture:
+
+- Website CI: **passed**.
+- NOVA app CI: **18 checks passed; backend and frontend checks pending**.
+
+The remaining release gates are:
+
+1. Complete and review all required NOVA app CI checks.
 2. Review and approve the isolated NOVA app candidate before the website can
    depend on its query-preserving registration behaviour.
 3. Provide the approved Odoo-mediated Stripe Sandbox checkout initiation
@@ -121,7 +132,7 @@ gates pass. Enterprise remains Contact Sales. Free remains non-billed.
 
 ## 7. Next single engineering action
 
-Open reviewable PRs for the website branch and the isolated NOVA app branch,
-then wait for protected CI. Do not deploy the public website until both the
-application handoff candidate and the approved payment/accounting acceptance
-gates are complete.
+Wait for the remaining protected application CI checks, then conduct the
+application and payment/runtime review. Do not deploy the public website until
+both the application handoff candidate and the approved payment/accounting
+acceptance gates are complete.
