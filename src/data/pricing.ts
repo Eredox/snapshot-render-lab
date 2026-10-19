@@ -6,19 +6,19 @@ import {
   type CanonicalPlan,
 } from "@/data/canonical-plan-manifest";
 
-export const currency = "AUD";
+export const currency = "USD";
 
 export type Plan = {
   slug: string;
   name: string;
   summary: string;
-  /** Indicative monthly amount in AUD, or null when the plan is quote-only. */
+  /** Founder-approved monthly amount in USD, or null when the plan is quote-only. */
   monthly: CanonicalPlan["price_monthly"];
-  /** Indicative annual total in AUD when billed annually. */
+  /** Founder-approved annual total in USD when billed annually. */
   annual: CanonicalPlan["price_annual"];
   quoteOnly?: boolean;
   highlight?: boolean;
-  /** True while the amount has not been approved by Eredox. */
+  /** Retained for the governed content contract; approved plans are false here. */
   requiresApproval: boolean;
   bestFor: string;
   includes: string[];
@@ -48,7 +48,7 @@ export const plans: Plan[] = [
       "Up to 2 users, including one administrator",
     ],
     support: "Documentation and community resources",
-    primaryAction: { label: "Start Free", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started Free", to: appUrls.register, external: true },
     detailPath: "/plans/free",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.free),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.free),
@@ -62,7 +62,7 @@ export const plans: Plan[] = [
     summary: "A first certification or attestation programme run properly from the start.",
     monthly: canonicalPlanManifest.plans.launch.price_monthly,
     annual: canonicalPlanManifest.plans.launch.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Startups preparing for their first enterprise security review",
     includes: [
       "3 activated frameworks",
@@ -73,7 +73,7 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=launch" },
+    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -90,7 +90,7 @@ export const plans: Plan[] = [
     monthly: canonicalPlanManifest.plans.growth.price_monthly,
     annual: canonicalPlanManifest.plans.growth.price_annual,
     highlight: true,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Technology SMEs maintaining more than one obligation",
     includes: [
       "3 activated frameworks",
@@ -101,7 +101,7 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=growth" },
+    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -117,7 +117,7 @@ export const plans: Plan[] = [
     summary: "Assurance-grade operation with external review workflows included.",
     monthly: canonicalPlanManifest.plans.professional.price_monthly,
     annual: canonicalPlanManifest.plans.professional.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Organisations undergoing recurring external assessment",
     includes: [
       "All available frameworks",
@@ -128,7 +128,7 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=professional" },
+    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -145,7 +145,7 @@ export const plans: Plan[] = [
     summary: "Broader scope, more users and deeper governance across business units.",
     monthly: canonicalPlanManifest.plans.business.price_monthly,
     annual: canonicalPlanManifest.plans.business.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Regulated organisations with several teams inside one programme",
     includes: [
       "All available frameworks",
@@ -156,7 +156,7 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=business" },
+    primaryAction: { label: "Get Started", to: appUrls.register, external: true },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -182,7 +182,7 @@ export const plans: Plan[] = [
       "Structured onboarding programme",
     ],
     support: "Agreed support arrangements",
-    primaryAction: { label: "Request a quote", to: "/request-quote?plan=enterprise" },
+    primaryAction: { label: "Contact Sales", to: "/request-quote?plan=enterprise" },
     detailPath: "/plans/enterprise",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.enterprise),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -197,6 +197,19 @@ export const plans: Plan[] = [
 
 export function getPlan(slug: string): Plan | undefined {
   return plans.find((plan) => plan.slug === slug);
+}
+
+/**
+ * Carry only the governed plan identity and billing interval into the NOVA
+ * application. Prices are never supplied by the public website.
+ */
+export function registrationUrl(plan: Plan, billing: "monthly" | "annual"): string {
+  if (plan.quoteOnly) return plan.primaryAction.to;
+  const params = new URLSearchParams({
+    plan: plan.slug,
+    billing_cycle: plan.slug === "free" ? "monthly" : billing,
+  });
+  return `${appUrls.register}?${params.toString()}`;
 }
 
 export type ComparisonGroup = {
@@ -373,18 +386,18 @@ export const supportComparison = [
 
 export const pricingFaqs = [
   {
-    question: "Are these prices final?",
+    question: "How are these prices charged?",
     answer: site.pricingApprovalNote,
   },
   {
     question: "What does annual billing change?",
     answer:
-      "Annual billing shows a lower effective monthly amount for the same entitlements. The plan contents do not change between billing periods.",
+      "Monthly plans are charged each month. Annual plans are charged as the full annual USD amount shown, with the effective monthly equivalent displayed for comparison only.",
   },
   {
     question: "Can we change plan later?",
     answer:
-      "Yes. Plans are subscription entitlements rather than separate products, so moving between them changes what is enabled in the same workspace.",
+      "Yes. Use the governed NOVA subscription journey to select a plan and billing interval. Commercial confirmation remains subject to the Eredox/Odoo authority path.",
   },
   {
     question: "Why is Enterprise quote-only?",

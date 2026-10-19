@@ -9,7 +9,7 @@ import {
   Disclaimer,
 } from "@/components/site/primitives";
 import { CtaLink } from "@/components/site/cta";
-import { getPlan, currency } from "@/data/pricing";
+import { getPlan, currency, registrationUrl } from "@/data/pricing";
 import { getPlanDetail } from "@/data/plan-details";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
 import { site } from "@/config/site";
@@ -102,6 +102,9 @@ function PlanPrice({
 
 function PlanPage() {
   const { plan, detail } = Route.useLoaderData();
+  const actionTo = plan.quoteOnly ? plan.primaryAction.to : registrationUrl(plan, "monthly");
+  const actionExternal = !plan.quoteOnly;
+  const actionLabel = plan.quoteOnly ? "Contact Sales" : plan.slug === "free" ? "Get Started Free" : "Get Started";
 
   return (
     <main>
@@ -115,8 +118,8 @@ function PlanPage() {
         ]}
       >
         <div className="flex flex-wrap items-center gap-4">
-          <CtaLink to={plan.primaryAction.to} external={plan.primaryAction.external}>
-            {plan.primaryAction.label}
+          <CtaLink to={actionTo} external={actionExternal}>
+            {actionLabel}
           </CtaLink>
           <Link
             to="/pricing"
@@ -179,11 +182,11 @@ function PlanPage() {
               <p className="mt-4 text-xs text-muted-foreground">{site.pricingApprovalNote}</p>
             ) : null}
             <CtaLink
-              to={plan.primaryAction.to}
-              external={plan.primaryAction.external}
+              to={actionTo}
+              external={actionExternal}
               className="mt-6 w-full"
             >
-              {plan.primaryAction.label}
+              {actionLabel}
             </CtaLink>
             <Link
               to="/pricing"
@@ -240,8 +243,8 @@ function PlanPage() {
             description="Choose the plan action that matches your intent, or compare the full commercial journey before deciding."
           />
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink to={plan.primaryAction.to} external={plan.primaryAction.external}>
-              {plan.primaryAction.label}
+            <CtaLink to={actionTo} external={actionExternal}>
+              {actionLabel}
             </CtaLink>
             <CtaLink to="/pricing" variant="outline">
               Compare plans
