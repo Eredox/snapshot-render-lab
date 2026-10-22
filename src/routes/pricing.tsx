@@ -20,7 +20,7 @@ export const Route = createFileRoute("/pricing")({
     ...pageMeta({
       title: "NOVA Compliance Pricing | Plans for Growing Teams to Enterprise",
       description:
-        "NOVA Compliance subscription plans, indicative pricing in AUD, feature comparison and support levels.",
+        "NOVA Compliance subscription plans, USD pricing, feature comparison and support levels.",
       path: "/pricing",
     }),
     scripts: [
@@ -44,7 +44,7 @@ const related = [
 ];
 
 function PricingPage() {
-  const [billing, setBilling] = useState<"monthly" | "annual">("annual");
+  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
   return (
     <>
@@ -114,7 +114,7 @@ function PricingPage() {
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>
               <FeatureList className="mt-5" items={p.includes} />
               <CtaLink
-                to={p.primaryAction.to}
+                to={p.primaryAction.label === "Get Started" ? `${appUrls.register}?plan=${p.slug}&billing_cycle=${billing}` : p.primaryAction.to}
                 external={p.primaryAction.external}
                 variant={p.highlight ? "primary" : "outline"}
                 className="mt-6 w-full"

@@ -31,7 +31,7 @@ export const site = {
   illustrativeCaption:
     "Illustrative interface concept. Values shown are examples, not customer data.",
   pricingApprovalNote:
-    "Indicative amounts shown for planning purposes. All published prices require Eredox approval before they are contractually binding.",
+    "Published NOVA plan prices are shown in USD.",
 } as const;
 
 /** External application destinations. These are real applications, not site routes. */

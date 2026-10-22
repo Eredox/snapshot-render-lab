@@ -6,19 +6,19 @@ import {
   type CanonicalPlan,
 } from "@/data/canonical-plan-manifest";
 
-export const currency = "AUD";
+export const currency = "USD";
 
 export type Plan = {
   slug: string;
   name: string;
   summary: string;
-  /** Indicative monthly amount in AUD, or null when the plan is quote-only. */
+  /** Published monthly amount in USD, or null when quote-only. */
   monthly: CanonicalPlan["price_monthly"];
-  /** Indicative annual total in AUD when billed annually. */
+  /** Published annual amount in USD when billed annually. */
   annual: CanonicalPlan["price_annual"];
   quoteOnly?: boolean;
   highlight?: boolean;
-  /** True while the amount has not been approved by Eredox. */
+  /** Whether additional pricing approval messaging is required. */
   requiresApproval: boolean;
   bestFor: string;
   includes: string[];
@@ -62,7 +62,7 @@ export const plans: Plan[] = [
     summary: "A first certification or attestation programme run properly from the start.",
     monthly: canonicalPlanManifest.plans.launch.price_monthly,
     annual: canonicalPlanManifest.plans.launch.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Startups preparing for their first enterprise security review",
     includes: [
       "3 activated frameworks",
@@ -73,7 +73,7 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=launch" },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=launch&billing_cycle=monthly`, external: true },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -90,7 +90,7 @@ export const plans: Plan[] = [
     monthly: canonicalPlanManifest.plans.growth.price_monthly,
     annual: canonicalPlanManifest.plans.growth.price_annual,
     highlight: true,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Technology SMEs maintaining more than one obligation",
     includes: [
       "3 activated frameworks",
@@ -101,7 +101,7 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=growth" },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=growth&billing_cycle=monthly`, external: true },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -117,7 +117,7 @@ export const plans: Plan[] = [
     summary: "Assurance-grade operation with external review workflows included.",
     monthly: canonicalPlanManifest.plans.professional.price_monthly,
     annual: canonicalPlanManifest.plans.professional.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Organisations undergoing recurring external assessment",
     includes: [
       "All available frameworks",
@@ -128,7 +128,7 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=professional" },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=professional&billing_cycle=monthly`, external: true },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -145,7 +145,7 @@ export const plans: Plan[] = [
     summary: "Broader scope, more users and deeper governance across business units.",
     monthly: canonicalPlanManifest.plans.business.price_monthly,
     annual: canonicalPlanManifest.plans.business.price_annual,
-    requiresApproval: true,
+    requiresApproval: false,
     bestFor: "Regulated organisations with several teams inside one programme",
     includes: [
       "All available frameworks",
@@ -156,7 +156,7 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    primaryAction: { label: "Contact sales", to: "/contact?plan=business" },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=business&billing_cycle=monthly`, external: true },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -374,7 +374,7 @@ export const supportComparison = [
 export const pricingFaqs = [
   {
     question: "Are these prices final?",
-    answer: site.pricingApprovalNote,
+    answer: "The published monthly and annual plan prices are shown in USD. Enterprise pricing is quoted for each organisation.",
   },
   {
     question: "What does annual billing change?",

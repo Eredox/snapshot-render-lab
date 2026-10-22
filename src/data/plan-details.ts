@@ -28,11 +28,11 @@ export const planDetails: Record<string, PlanDetail> = {
       "Validate mapped evidence before it counts towards readiness.",
       "Record policy approvals and readiness decisions with human accountability.",
     ],
-    limitations: ["Commercial onboarding is handled through the governed Launch sales handoff."],
+    limitations: ["Paid onboarding follows the governed NOVA registration and checkout process."],
     upgradePath:
       "Move to Growth when you need the higher authorised-repository allowance, risk treatment and deeper evidence operations.",
     commercialNote:
-      "Secure paid checkout is not currently connected on the public website. Start now opens the governed Launch sales handoff with the selected plan preserved.",
+      "Get Started opens NOVA registration with the selected plan and billing cycle preserved.",
   },
   growth: {
     evidenceAndAutomation:
@@ -42,7 +42,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Reuse evidence only where the mapping genuinely satisfies each requirement.",
       "Keep reviewer validation and final readiness decisions human-led.",
     ],
-    limitations: ["Commercial terms require sales contact."],
+    limitations: ["Checkout follows the governed NOVA registration and subscription process."],
     upgradePath:
       "Move to Professional when you need recurring external review workflows, Trust Centre publication and broader assurance operations.",
   },
@@ -66,7 +66,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Keep AI assistance advisory and subject to human review and approval.",
       "Use executive reporting to inform accountable governance decisions.",
     ],
-    limitations: ["Commercial terms require sales contact."],
+    limitations: ["Checkout follows the governed NOVA registration and subscription process."],
     upgradePath:
       "Move to Enterprise when your scope, users, business units or assurance obligations need a tailored commercial and onboarding arrangement.",
   },
