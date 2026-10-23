@@ -12,13 +12,13 @@ export type Plan = {
   slug: string;
   name: string;
   summary: string;
-  /** Founder-approved monthly amount in USD, or null when the plan is quote-only. */
+  /** Published monthly amount in USD, or null when quote-only. */
   monthly: CanonicalPlan["price_monthly"];
-  /** Founder-approved annual total in USD when billed annually. */
+  /** Published annual amount in USD when billed annually. */
   annual: CanonicalPlan["price_annual"];
   quoteOnly?: boolean;
   highlight?: boolean;
-  /** Retained for the governed content contract; approved plans are false here. */
+  /** Whether additional pricing approval messaging is required. */
   requiresApproval: boolean;
   bestFor: string;
   includes: string[];
@@ -73,7 +73,7 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=launch&billing_cycle=monthly`, external: true },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -101,7 +101,7 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=growth&billing_cycle=monthly`, external: true },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -128,7 +128,7 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=professional&billing_cycle=monthly`, external: true },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -156,7 +156,7 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    primaryAction: { label: "Buy Now", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=business&billing_cycle=monthly`, external: true },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(

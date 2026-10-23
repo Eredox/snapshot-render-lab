@@ -51,7 +51,7 @@ const related = [
 ];
 
 function PricingPage() {
-  const [billing, setBilling] = useState<"monthly" | "annual">("annual");
+  const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
   return (
     <>
