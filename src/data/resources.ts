@@ -566,7 +566,7 @@ export const faqCategories: FaqCategory[] = [
       {
         question: "How is NOVA priced?",
         answer:
-          "NOVA is priced as a subscription with entitlements per plan. The pricing page is the commercial authority for current indicative amounts, approval status, included capabilities and Enterprise scope.",
+          "NOVA is priced in USD as a subscription with entitlements per plan. The pricing page shows the current monthly and full annual amounts for fixed-price plans; Enterprise remains quote-led and commercial activation follows the governed authority path.",
         links: [{ label: "View pricing", to: "/pricing" }],
       },
       {

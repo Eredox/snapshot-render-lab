@@ -11,7 +11,14 @@ import {
 } from "@/components/site/primitives";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { ComplianceJourneyCta } from "@/components/site/ComplianceJourneyCta";
-import { plans, comparison, supportComparison, pricingFaqs, currency } from "@/data/pricing";
+import {
+  plans,
+  comparison,
+  supportComparison,
+  pricingFaqs,
+  currency,
+  registrationUrl,
+} from "@/data/pricing";
 import { appUrls, site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript, faqSchema, softwareSchema } from "@/lib/seo";
 
@@ -20,7 +27,7 @@ export const Route = createFileRoute("/pricing")({
     ...pageMeta({
       title: "NOVA Compliance Pricing | Plans for Growing Teams to Enterprise",
       description:
-        "NOVA Compliance subscription plans, USD pricing, feature comparison and support levels.",
+        "NOVA Compliance subscription plans, approved USD pricing, feature comparison and support levels.",
       path: "/pricing",
     }),
     scripts: [
@@ -51,17 +58,19 @@ function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         title="Plans that scale with your programme"
-        description="Our agentic trust platform helps you reach your goals at any scale. Request a free demo today to discuss your business needs and get personalised pricing."
+        description="Choose a Free workspace or start the governed self-service journey for a paid plan. Enterprise remains a contract-specific quotation."
         breadcrumbs={[{ label: "Pricing", to: "/pricing" }]}
       />
 
       <Section>
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">Prices shown in {currency}.</p>
-          <div className="inline-flex rounded-lg border border-border bg-surface p-1">
+          <div className="inline-flex rounded-lg border border-border bg-surface p-1" aria-label="Billing interval">
             <button
               type="button"
               onClick={() => setBilling("monthly")}
+              aria-pressed={billing === "monthly"}
+              aria-label="Show monthly pricing"
               className={`rounded-md px-4 py-1.5 text-sm font-medium ${billing === "monthly" ? "bg-background shadow-sm" : "text-muted-foreground"}`}
             >
               Monthly
@@ -69,6 +78,8 @@ function PricingPage() {
             <button
               type="button"
               onClick={() => setBilling("annual")}
+              aria-pressed={billing === "annual"}
+              aria-label="Show annual pricing"
               className={`rounded-md px-4 py-1.5 text-sm font-medium ${billing === "annual" ? "bg-background shadow-sm" : "text-muted-foreground"}`}
             >
               Annual
@@ -114,8 +125,8 @@ function PricingPage() {
               <p className="mt-1 text-sm text-muted-foreground">{p.bestFor}</p>
               <FeatureList className="mt-5" items={p.includes} />
               <CtaLink
-                to={p.primaryAction.label === "Get Started" ? `${appUrls.register}?plan=${p.slug}&billing_cycle=${billing}` : p.primaryAction.to}
-                external={p.primaryAction.external}
+                to={p.quoteOnly ? p.primaryAction.to : registrationUrl(p, billing)}
+                external={!p.quoteOnly}
                 variant={p.highlight ? "primary" : "outline"}
                 className="mt-6 w-full"
               >

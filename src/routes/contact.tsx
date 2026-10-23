@@ -132,7 +132,7 @@ function ContactPage() {
               <Link to="/request-quote" className="text-primary underline">
                 quote request form
               </Link>
-              . All pricing is indicative and subject to Eredox approval.
+              . Published fixed-price plans are shown in USD; annual plans are charged as the full annual amount shown. Enterprise remains quote-led.
             </p>
           </Card>
           <Card>

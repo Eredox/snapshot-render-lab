@@ -48,7 +48,7 @@ export const plans: Plan[] = [
       "Up to 2 users, including one administrator",
     ],
     support: "Documentation and community resources",
-    primaryAction: { label: "Start Free", to: appUrls.register, external: true },
+    primaryAction: { label: "Get Started Free", to: appUrls.register, external: true },
     detailPath: "/plans/free",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.free),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.free),
@@ -182,7 +182,7 @@ export const plans: Plan[] = [
       "Structured onboarding programme",
     ],
     support: "Agreed support arrangements",
-    primaryAction: { label: "Request a quote", to: "/request-quote?plan=enterprise" },
+    primaryAction: { label: "Contact Sales", to: "/request-quote?plan=enterprise" },
     detailPath: "/plans/enterprise",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.enterprise),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -197,6 +197,19 @@ export const plans: Plan[] = [
 
 export function getPlan(slug: string): Plan | undefined {
   return plans.find((plan) => plan.slug === slug);
+}
+
+/**
+ * Carry only the governed plan identity and billing interval into the NOVA
+ * application. Prices are never supplied by the public website.
+ */
+export function registrationUrl(plan: Plan, billing: "monthly" | "annual"): string {
+  if (plan.quoteOnly) return plan.primaryAction.to;
+  const params = new URLSearchParams({
+    plan: plan.slug,
+    billing_cycle: plan.slug === "free" ? "monthly" : billing,
+  });
+  return `${appUrls.register}?${params.toString()}`;
 }
 
 export type ComparisonGroup = {
@@ -373,18 +386,18 @@ export const supportComparison = [
 
 export const pricingFaqs = [
   {
-    question: "Are these prices final?",
-    answer: "The published monthly and annual plan prices are shown in USD. Enterprise pricing is quoted for each organisation.",
+    question: "How are these prices charged?",
+    answer: site.pricingApprovalNote,
   },
   {
     question: "What does annual billing change?",
     answer:
-      "Annual billing shows a lower effective monthly amount for the same entitlements. The plan contents do not change between billing periods.",
+      "Monthly plans are charged each month. Annual plans are charged as the full annual USD amount shown, with the effective monthly equivalent displayed for comparison only.",
   },
   {
     question: "Can we change plan later?",
     answer:
-      "Yes. Plans are subscription entitlements rather than separate products, so moving between them changes what is enabled in the same workspace.",
+      "Yes. Use the governed NOVA subscription journey to select a plan and billing interval. Commercial confirmation remains subject to the Eredox/Odoo authority path.",
   },
   {
     question: "Why is Enterprise quote-only?",

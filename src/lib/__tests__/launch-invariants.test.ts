@@ -58,7 +58,10 @@ describe("public launch invariants", () => {
     }
 
     expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
-      'label: "Start Free", to: appUrls.register, external: true',
+      'label: "Get Started Free", to: appUrls.register, external: true',
+    );
+    expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
+      "billing_cycle",
     );
     expect(readFileSync(resolve(process.cwd(), "src/components/site/cta.tsx"), "utf8")).toContain(
       'primary = { label: "Start Free", to: appUrls.register, external: true }',

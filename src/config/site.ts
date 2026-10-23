@@ -31,7 +31,7 @@ export const site = {
   illustrativeCaption:
     "Illustrative interface concept. Values shown are examples, not customer data.",
   pricingApprovalNote:
-    "Published NOVA plan prices are shown in USD.",
+    "Prices are shown in USD. Annual plans are charged as the full annual amount shown; the monthly equivalent is for comparison only.",
 } as const;
 
 /** External application destinations. These are real applications, not site routes. */
