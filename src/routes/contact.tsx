@@ -87,7 +87,7 @@ function ContactPage() {
                   rel="noreferrer noopener"
                   className="text-primary underline"
                 >
-                  Start Free
+                  Create Free Workspace
                 </a>
                 .
               </p>

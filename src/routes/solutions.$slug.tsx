@@ -186,7 +186,7 @@ function SolutionDetail() {
         <SectionHeading eyebrow="Next steps" title="Get started" />
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to={appUrls.register} external>
-            Start Free
+            Create Free Workspace
           </CtaLink>
           <Link
             to="/book-demo"

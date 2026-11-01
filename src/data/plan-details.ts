@@ -18,7 +18,7 @@ export const planDetails: Record<string, PlanDetail> = {
     ],
     limitations: ["The Free entitlement is intended for evaluation and initial readiness work."],
     upgradePath:
-      "Move to a paid plan when you need broader framework scope, deeper control workflows, additional evidence capabilities or more structured support.",
+      "Move to a paid plan when you need deeper control workflows, additional evidence capabilities or more structured support.",
   },
   launch: {
     evidenceAndAutomation:
@@ -29,23 +29,23 @@ export const planDetails: Record<string, PlanDetail> = {
       "Record policy approvals and readiness decisions with human accountability.",
     ],
     limitations: [
-      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+      "Subscribing opens the governed NOVA purchase journey with your plan and billing interval preserved; paid activation remains subject to the Eredox/Odoo commercial authority path.",
     ],
     upgradePath:
       "Move to Growth when you need the higher authorised-repository allowance, risk treatment and deeper evidence operations.",
     commercialNote:
-      "Start now opens the governed NOVA plan journey with the selected plan preserved. Payment completion is not enabled until the approved Odoo/Stripe sandbox and release gates are satisfied.",
+      "Subscribe to Launch opens secure registration with Launch and your billing interval preserved; you review the order in NOVA before any payment. Paid plans begin only when payment is completed. Payment completion is not enabled until the approved Odoo/Stripe release gates are satisfied.",
   },
   growth: {
     evidenceAndAutomation:
-      "Use one shared control set across three frameworks, with evidence reuse and the GitHub evidence connector available as governed capabilities in this plan.",
+      "Use one shared control set across the frameworks you activate, with evidence reuse and the GitHub evidence connector available as governed capabilities in this plan.",
     governanceAndHumanApproval: [
       "Track control ownership, risk treatment and explicit acceptance decisions.",
       "Reuse evidence only where the mapping genuinely satisfies each requirement.",
       "Keep reviewer validation and final readiness decisions human-led.",
     ],
     limitations: [
-      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+      "Subscribing opens the governed NOVA purchase journey with your plan and billing interval preserved; paid activation remains subject to the Eredox/Odoo commercial authority path.",
     ],
     upgradePath:
       "Move to Professional when you need recurring external review workflows, Trust Centre publication and broader assurance operations.",
@@ -59,7 +59,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Use readiness reporting to support, not replace, the human decision to proceed.",
     ],
     limitations: [
-      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+      "Subscribing opens the governed NOVA purchase journey with your plan and billing interval preserved; paid activation remains subject to the Eredox/Odoo commercial authority path.",
       "Broader business-unit scope and executive views follow the Business entitlement.",
     ],
     upgradePath:
@@ -74,7 +74,7 @@ export const planDetails: Record<string, PlanDetail> = {
       "Use executive reporting to inform accountable governance decisions.",
     ],
     limitations: [
-      "Buy Now opens the governed NOVA purchase journey; paid activation remains subject to the Eredox/Odoo commercial authority path.",
+      "Subscribing opens the governed NOVA purchase journey with your plan and billing interval preserved; paid activation remains subject to the Eredox/Odoo commercial authority path.",
     ],
     upgradePath:
       "Move to Enterprise when your scope, users, business units or assurance obligations need a tailored commercial and onboarding arrangement.",

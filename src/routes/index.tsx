@@ -474,7 +474,7 @@ function Index() {
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to="/pricing">View Plans & Pricing</CtaLink>
           <CtaLink to={appUrls.register} external variant="outline">
-            Start Free
+            Create Free Workspace
           </CtaLink>
           <CtaLink to="/book-demo" variant="ghost">
             Book a Demo
@@ -486,7 +486,7 @@ function Index() {
       <ConversionCta
         title="Ready to see what your compliance program looks like in NOVA?"
         description="Explore the platform, compare plans or speak with us about your compliance requirements."
-        primary={{ label: "Start Free", to: appUrls.register, external: true }}
+        primary={{ label: "Create Free Workspace", to: appUrls.register, external: true }}
         secondary={{ label: "Book a Demo", to: "/book-demo" }}
         tertiary={{ label: "View Pricing", to: "/pricing" }}
       />

@@ -5,9 +5,10 @@ import { comparison, getPlan, plans } from "./pricing";
 
 describe("canonical public plan manifest", () => {
   it("contains the six governed plan identities and bound manifest metadata", () => {
-    expect(canonicalPlanManifest.version).toBe("2026-09-22");
+    expect(canonicalPlanManifest.version).toBe("2026-10-26");
+    expect(canonicalPlanManifest.currency_code).toBe("USD");
     expect(canonicalPlanManifestSha256).toBe(
-      "54a41affccca6cb8a209b3bb72e974b6db2d62ab2692ab2660a4d8e1b44eceec",
+      "4361bfe4df719a85519cc4cef96bbf56fd7161f29209dd7e0a6d1e3607b692cf",
     );
     expect(Object.keys(canonicalPlanManifest.plans)).toEqual([
       "free",
@@ -28,11 +29,11 @@ describe("canonical public plan manifest", () => {
       ["business", 799, 7990],
       ["enterprise", null, null],
     ]);
-    expect(getPlan("launch")?.frameworkEntitlement).toBe("3 activated frameworks");
+    for (const slug of ["free", "launch", "growth", "professional", "business", "enterprise"]) {
+      expect(getPlan(slug)?.frameworkEntitlement, slug).toBe("All available frameworks");
+    }
     expect(getPlan("launch")?.githubRepositoryEntitlement).toBe("Up to 1 authorised repository");
     expect(getPlan("growth")?.githubRepositoryEntitlement).toBe("Up to 3 authorised repositories");
-    expect(getPlan("professional")?.frameworkEntitlement).toBe("All available frameworks");
-    expect(getPlan("enterprise")?.frameworkEntitlement).toBe("Frameworks defined by agreed scope");
   });
 
   it("uses the governed matrix in comparison rows", () => {
@@ -42,12 +43,12 @@ describe("canonical public plan manifest", () => {
     const reuse = rows.find((row) => row.label === "Cross-framework control reuse");
 
     expect(frameworks?.values).toEqual({
-      free: "1 framework",
-      launch: "3 frameworks",
-      growth: "3 frameworks",
+      free: "All available frameworks",
+      launch: "All available frameworks",
+      growth: "All available frameworks",
       professional: "All available frameworks",
       business: "All available frameworks",
-      enterprise: "Frameworks defined by agreed scope",
+      enterprise: "All available frameworks",
     });
     expect(github?.values).toEqual({
       free: "No GitHub connector",

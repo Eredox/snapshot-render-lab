@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import {
@@ -16,6 +17,10 @@ import { site } from "@/config/site";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/plans/$slug")({
+  // The billing interval chosen on the pricing page travels with the visitor to the plan page and on to registration.
+  validateSearch: (search: Record<string, unknown>): { billing: "monthly" | "annual" } => ({
+    billing: search["billing"] === "annual" ? "annual" : "monthly",
+  }),
   loader: ({ params }) => {
     const plan = getPlan(params.slug);
     const detail = getPlanDetail(params.slug);
@@ -102,7 +107,10 @@ function PlanPrice({
 
 function PlanPage() {
   const { plan, detail } = Route.useLoaderData();
-  const actionTo = plan.quoteOnly ? plan.primaryAction.to : registrationUrl(plan, "monthly");
+  const search = Route.useSearch();
+  const [billing, setBilling] = useState<"monthly" | "annual">(search.billing);
+  const hasBilling = !plan.quoteOnly && plan.slug !== "free";
+  const actionTo = plan.quoteOnly ? plan.primaryAction.to : registrationUrl(plan, billing);
   const actionExternal = !plan.quoteOnly;
   const actionLabel = plan.primaryAction.label;
 
@@ -117,6 +125,25 @@ function PlanPage() {
           { label: `${plan.name} plan`, to: plan.detailPath },
         ]}
       >
+        {hasBilling ? (
+          <div
+            role="group"
+            aria-label="Billing interval"
+            className="mb-4 inline-flex rounded-lg border border-border bg-surface p-1"
+          >
+            {(["monthly", "annual"] as const).map((interval) => (
+              <button
+                key={interval}
+                type="button"
+                aria-pressed={billing === interval}
+                onClick={() => setBilling(interval)}
+                className={`rounded-md px-4 py-1.5 text-sm font-medium ${billing === interval ? "bg-background shadow-sm" : "text-muted-foreground"}`}
+              >
+                {interval === "monthly" ? "Monthly" : "Annual"}
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className="flex flex-wrap items-center gap-4">
           <CtaLink to={actionTo} external={actionExternal}>
             {actionLabel}

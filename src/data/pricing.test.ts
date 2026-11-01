@@ -31,12 +31,12 @@ describe("public pricing acquisition contract", () => {
 
   it("uses the governed acquisition labels for every plan", () => {
     expect(plans.map((plan) => [plan.slug, plan.primaryAction.label])).toEqual([
-      ["free", "Get Started Free"],
-      ["launch", "Get Started"],
-      ["growth", "Get Started"],
-      ["professional", "Get Started"],
-      ["business", "Get Started"],
-      ["enterprise", "Contact Sales"],
+      ["free", "Create Free Workspace"],
+      ["launch", "Subscribe to Launch"],
+      ["growth", "Subscribe to Growth"],
+      ["professional", "Subscribe to Professional"],
+      ["business", "Subscribe to Business"],
+      ["enterprise", "Request a Quote"],
     ]);
   });
 

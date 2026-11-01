@@ -41,13 +41,13 @@ export const Route = createFileRoute("/pricing")({
 
 const related = [
   {
-    label: "Start Free",
+    label: "Create Free Workspace",
     to: appUrls.register,
     external: true,
-    description: "Create a Free NOVA workspace",
+    description: "The Free plan: no payment required",
   },
   { label: "Book a demo", to: "/book-demo", description: "Walk through with us" },
-  { label: "Contact sales", to: "/contact", description: "Ask about Enterprise" },
+  { label: "Request a Quote", to: "/request-quote?plan=enterprise", description: "Enterprise is quoted per organisation" },
 ];
 
 function PricingPage() {
@@ -103,10 +103,10 @@ function PricingPage() {
                 ) : (
                   <>
                     <span className="text-3xl font-semibold">
-                      ${billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
+                      ${p.slug === "free" || billing === "monthly" ? (p.monthly ?? "-") : (p.annual ?? "-")}
                     </span>
                     <span className="text-muted-foreground">
-                      /{billing === "monthly" ? "month" : "year"}
+                      /{p.slug === "free" || billing === "monthly" ? "month" : "year"}
                     </span>
                   </>
                 )}
@@ -134,6 +134,7 @@ function PricingPage() {
               </CtaLink>
               <Link
                 to={p.detailPath}
+                search={{ billing }}
                 className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-border px-5 py-3 text-sm font-medium text-foreground hover:bg-surface"
               >
                 Find out more

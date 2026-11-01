@@ -36,19 +36,19 @@ export const plans: Plan[] = [
   {
     slug: "free",
     name: "Free",
-    summary: "Evaluate the workflow with a single framework and a small control set.",
+    summary: "Evaluate the workflow with every available framework and a small control set.",
     monthly: canonicalPlanManifest.plans.free.price_monthly,
     annual: canonicalPlanManifest.plans.free.price_annual,
     requiresApproval: false,
     bestFor: "Teams assessing whether the workflow fits before committing",
     includes: [
-      "One activated framework",
+      "All available frameworks",
       "Core control library",
       "Manual evidence upload",
       "Up to 2 users, including one administrator",
     ],
     support: "Documentation and community resources",
-    primaryAction: { label: "Get Started Free", to: appUrls.register, external: true },
+    primaryAction: { label: "Create Free Workspace", to: registrationUrlFor("free", "monthly"), external: true },
     detailPath: "/plans/free",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.free),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(canonicalPlanManifest.plans.free),
@@ -65,7 +65,7 @@ export const plans: Plan[] = [
     requiresApproval: false,
     bestFor: "Startups preparing for their first enterprise security review",
     includes: [
-      "3 activated frameworks",
+      "All available frameworks",
       "Up to 1 authorised GitHub repository",
       "Control ownership and review cadence",
       "Evidence mapping and reviewer validation",
@@ -73,7 +73,7 @@ export const plans: Plan[] = [
       "Readiness reporting",
     ],
     support: "Email support during business hours",
-    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=launch&billing_cycle=monthly`, external: true },
+    primaryAction: { label: "Subscribe to Launch", to: registrationUrlFor("launch", "monthly"), external: true },
     detailPath: "/plans/launch",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.launch),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -86,14 +86,14 @@ export const plans: Plan[] = [
   {
     slug: "growth",
     name: "Growth",
-    summary: "Three frameworks on one shared control set, with reuse across requirements.",
+    summary: "All available frameworks on one shared control set, with reuse across requirements.",
     monthly: canonicalPlanManifest.plans.growth.price_monthly,
     annual: canonicalPlanManifest.plans.growth.price_annual,
     highlight: true,
     requiresApproval: false,
     bestFor: "Technology SMEs maintaining more than one obligation",
     includes: [
-      "3 activated frameworks",
+      "All available frameworks",
       "Cross-framework control and evidence reuse",
       "Up to 3 authorised GitHub repositories",
       "Risk register with treatment and acceptance",
@@ -101,7 +101,7 @@ export const plans: Plan[] = [
       "Trend and gap reporting",
     ],
     support: "Email support with prioritised response",
-    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=growth&billing_cycle=monthly`, external: true },
+    primaryAction: { label: "Subscribe to Growth", to: registrationUrlFor("growth", "monthly"), external: true },
     detailPath: "/plans/growth",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.growth),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -128,7 +128,7 @@ export const plans: Plan[] = [
       "Advanced role-based access",
     ],
     support: "Priority support with a named contact",
-    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=professional&billing_cycle=monthly`, external: true },
+    primaryAction: { label: "Subscribe to Professional", to: registrationUrlFor("professional", "monthly"), external: true },
     detailPath: "/plans/professional",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.professional),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -156,7 +156,7 @@ export const plans: Plan[] = [
       "Executive and board reporting views",
     ],
     support: "Priority support with onboarding assistance",
-    primaryAction: { label: "Get Started", to: `${appUrls.register}?plan=business&billing_cycle=monthly`, external: true },
+    primaryAction: { label: "Subscribe to Business", to: registrationUrlFor("business", "monthly"), external: true },
     detailPath: "/plans/business",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.business),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -182,7 +182,7 @@ export const plans: Plan[] = [
       "Structured onboarding programme",
     ],
     support: "Agreed support arrangements",
-    primaryAction: { label: "Contact Sales", to: "/request-quote?plan=enterprise" },
+    primaryAction: { label: "Request a Quote", to: "/request-quote?plan=enterprise" },
     detailPath: "/plans/enterprise",
     frameworkEntitlement: frameworkEntitlementLabel(canonicalPlanManifest.plans.enterprise),
     githubRepositoryEntitlement: githubRepositoryEntitlementLabel(
@@ -195,6 +195,12 @@ export const plans: Plan[] = [
   },
 ];
 
+/** The only place a registration link is built; it carries the plan identity and billing interval and nothing else. */
+function registrationUrlFor(slug: string, billing: "monthly" | "annual"): string {
+  const params = new URLSearchParams({ plan: slug, billing_cycle: slug === "free" ? "monthly" : billing });
+  return `${appUrls.register}?${params.toString()}`;
+}
+
 export function getPlan(slug: string): Plan | undefined {
   return plans.find((plan) => plan.slug === slug);
 }
@@ -205,11 +211,7 @@ export function getPlan(slug: string): Plan | undefined {
  */
 export function registrationUrl(plan: Plan, billing: "monthly" | "annual"): string {
   if (plan.quoteOnly) return plan.primaryAction.to;
-  const params = new URLSearchParams({
-    plan: plan.slug,
-    billing_cycle: plan.slug === "free" ? "monthly" : billing,
-  });
-  return `${appUrls.register}?${params.toString()}`;
+  return registrationUrlFor(plan.slug, billing);
 }
 
 export type ComparisonGroup = {

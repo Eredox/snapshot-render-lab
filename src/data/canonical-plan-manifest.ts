@@ -1,8 +1,9 @@
 /**
- * Public-safe snapshot generated from backend/app/core/plans.py.
+ * Public-safe snapshot generated from backend/app/core/plans.py (get_public_plan_manifest).
+ * Regenerate it from the NOVA repository whenever PUBLIC_PLAN_MANIFEST_VERSION changes; never edit values here.
  *
- * Source manifest version: 2026-09-22
- * Source manifest SHA-256: 54a41affccca6cb8a209b3bb72e974b6db2d62ab2692ab2660a4d8e1b44eceec
+ * Source manifest version: 2026-10-26
+ * Source manifest SHA-256: 4361bfe4df719a85519cc4cef96bbf56fd7161f29209dd7e0a6d1e3607b692cf
  *
  * This file intentionally excludes internal billing and model details. The
  * entitlement modes are authoritative; consumers must not infer meaning from
@@ -38,22 +39,23 @@ export type CanonicalPlan = {
   quote_required: boolean;
 };
 
-export const canonicalPlanManifestVersion = "2026-09-22";
+export const canonicalPlanManifestVersion = "2026-10-26";
 export const canonicalPlanManifestSha256 =
-  "54a41affccca6cb8a209b3bb72e974b6db2d62ab2692ab2660a4d8e1b44eceec";
+  "4361bfe4df719a85519cc4cef96bbf56fd7161f29209dd7e0a6d1e3607b692cf";
 
 export const canonicalPlanManifest = {
   version: canonicalPlanManifestVersion,
+  currency_code: "USD",
   plans: {
     free: {
       label: "Free",
       price_monthly: 0,
       price_annual: 0,
       max_users: 2,
-      max_frameworks: 1,
+      max_frameworks: null,
       max_controls: 10,
       max_connectors: 1,
-      framework_entitlement: { mode: "capped", limit: 1 },
+      framework_entitlement: { mode: "all_available", limit: null },
       github_repository_entitlement: { mode: "none", limit: 0 },
       cross_framework_reuse_enabled: false,
       ai_agents_enabled: false,
@@ -70,10 +72,10 @@ export const canonicalPlanManifest = {
       price_monthly: 99,
       price_annual: 990,
       max_users: 5,
-      max_frameworks: 3,
+      max_frameworks: null,
       max_controls: 50,
       max_connectors: 1,
-      framework_entitlement: { mode: "capped", limit: 3 },
+      framework_entitlement: { mode: "all_available", limit: null },
       github_repository_entitlement: { mode: "capped", limit: 1 },
       cross_framework_reuse_enabled: true,
       ai_agents_enabled: false,
@@ -90,10 +92,10 @@ export const canonicalPlanManifest = {
       price_monthly: 249,
       price_annual: 2490,
       max_users: 15,
-      max_frameworks: 3,
+      max_frameworks: null,
       max_controls: 200,
       max_connectors: 3,
-      framework_entitlement: { mode: "capped", limit: 3 },
+      framework_entitlement: { mode: "all_available", limit: null },
       github_repository_entitlement: { mode: "capped", limit: 3 },
       cross_framework_reuse_enabled: true,
       ai_agents_enabled: true,
@@ -153,7 +155,7 @@ export const canonicalPlanManifest = {
       max_frameworks: null,
       max_controls: null,
       max_connectors: null,
-      framework_entitlement: { mode: "agreed_scope", limit: null },
+      framework_entitlement: { mode: "all_available", limit: null },
       github_repository_entitlement: { mode: "all_authorised", limit: null },
       cross_framework_reuse_enabled: true,
       ai_agents_enabled: true,
@@ -168,6 +170,7 @@ export const canonicalPlanManifest = {
   },
 } as const satisfies {
   version: string;
+  currency_code: string;
   plans: Record<string, CanonicalPlan>;
 };
 

@@ -342,7 +342,7 @@ function FrameworkDetail() {
         <SectionHeading
           eyebrow="Pricing"
           title={`Plans that cover ${framework.shortName}`}
-          description="Plans are subscription entitlements on one workspace, so you can start with a single framework and widen scope later."
+          description="Plans are subscription entitlements on one workspace, and every plan can use all available frameworks, so you can start with the one your buyers ask for."
         />
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {planShortlist.map((plan) => (
@@ -394,7 +394,7 @@ function FrameworkDetail() {
         </ol>
         <div className="mt-8 flex flex-wrap gap-3">
           <CtaLink to={appUrls.register} external>
-            Start Free
+            Create Free Workspace
           </CtaLink>
           <CtaLink
             to={`/book-demo?framework=${encodeURIComponent(framework.name)}`}
