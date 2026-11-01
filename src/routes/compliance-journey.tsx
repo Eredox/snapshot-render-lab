@@ -581,7 +581,7 @@ function GuidanceResults({
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <CtaLink to={appUrls.register} external>
-            Start Free
+            Create Free Workspace
           </CtaLink>
           <CtaLink to="/book-demo" variant="outline">
             Book a Demo

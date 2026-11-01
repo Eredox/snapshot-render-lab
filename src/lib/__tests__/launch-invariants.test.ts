@@ -36,7 +36,7 @@ describe("public launch invariants", () => {
     expect(appUrls.register).toBe("https://nova.eredox.com/register");
     const start = readFileSync(resolve(process.cwd(), "src/routes/start.tsx"), "utf8");
     expect(start).toContain("to={appUrls.register}");
-    expect(start).toContain("Create Free workspace");
+    expect(start).toContain("Create Free Workspace");
   });
 
   it("keeps every customer-facing Free signup surface on the centralized registration URL", () => {
@@ -58,13 +58,16 @@ describe("public launch invariants", () => {
     }
 
     expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
-      'label: "Get Started Free", to: appUrls.register, external: true',
+      'label: "Create Free Workspace", to: registrationUrlFor("free", "monthly"), external: true',
+    );
+    expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
+      "const params = new URLSearchParams({ plan: slug, billing_cycle:",
     );
     expect(readFileSync(resolve(process.cwd(), "src/data/pricing.ts"), "utf8")).toContain(
       "billing_cycle",
     );
     expect(readFileSync(resolve(process.cwd(), "src/components/site/cta.tsx"), "utf8")).toContain(
-      'primary = { label: "Start Free", to: appUrls.register, external: true }',
+      'primary = { label: "Create Free Workspace", to: appUrls.register, external: true }',
     );
   });
 });

@@ -152,7 +152,7 @@ export function Header() {
               Book a demo
             </CtaLink>
             <CtaLink to={appUrls.register} external variant="primary">
-              Start Free
+              Create Free Workspace
             </CtaLink>
           </div>
 
@@ -242,7 +242,7 @@ export function Header() {
 
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
               <CtaLink to={appUrls.register} external variant="primary">
-                Start Free
+                Create Free Workspace
               </CtaLink>
               <CtaLink to="/book-demo" variant="outline">
                 Book a demo

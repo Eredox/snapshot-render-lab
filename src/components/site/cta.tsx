@@ -57,7 +57,7 @@ export function CtaLink({
 export function ConversionCta({
   title = "See NOVA against your own compliance obligations",
   description = "Explore the governed Free access path, or walk through your framework, evidence and reporting requirements with us.",
-  primary = { label: "Start Free", to: appUrls.register, external: true },
+  primary = { label: "Create Free Workspace", to: appUrls.register, external: true },
   secondary = { label: "Book a demo", to: "/book-demo" },
   tertiary,
 }: {

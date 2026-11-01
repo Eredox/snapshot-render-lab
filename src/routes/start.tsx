@@ -88,7 +88,7 @@ function StartPage() {
             <FeatureList className="mt-4" items={freeLimits} />
             <p className="mt-6 text-sm text-muted-foreground">{site.humanStatement}</p>
             <CtaLink to={appUrls.register} external className="mt-6 w-full">
-              Create Free workspace
+              Create Free Workspace
             </CtaLink>
             <div className="mt-4 flex flex-wrap gap-3">
               <CtaLink to="/pricing">Compare plans</CtaLink>
