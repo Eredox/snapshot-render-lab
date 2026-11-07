@@ -50,7 +50,21 @@ describe("application-owned security headers", () => {
     expect(out.headers.get("content-security-policy")).toContain("upgrade-insecure-requests");
     expect(out.headers.get("cross-origin-opener-policy")).toBe("same-origin");
     expect(out.headers.get("referrer-policy")).toBe("no-referrer");
-    expect(out.headers.get("x-content-type-options")).toBe("nosniff");
+    // Behind the edge (X-Forwarded-Proto present) nginx owns nosniff; the app must not add a duplicate.
+    expect(out.headers.get("x-content-type-options")).toBeNull();
+  });
+
+  it("falls back to nosniff and Referrer-Policy only for direct access without the edge", () => {
+    const direct = withSecurityHeaders(new Response("x"), "n", new Request("http://127.0.0.1:3000/"));
+    expect(direct.headers.get("x-content-type-options")).toBe("nosniff");
+    expect(direct.headers.get("referrer-policy")).toBe("strict-origin-when-cross-origin");
+  });
+
+  it("marks nonce-bearing responses non-shareable by caches unless the handler chose its own policy", () => {
+    const req = new Request("https://www.nova.eredox.com/");
+    expect(withSecurityHeaders(new Response("<html></html>"), createNonce(), req).headers.get("cache-control")).toBe("private, no-cache");
+    const kept = withSecurityHeaders(new Response("{}", { headers: { "cache-control": "no-store" } }), createNonce(), req);
+    expect(kept.headers.get("cache-control")).toBe("no-store");
   });
 
   it("does not upgrade insecure requests for local http development", () => {

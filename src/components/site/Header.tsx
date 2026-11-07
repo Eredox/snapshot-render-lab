@@ -54,7 +54,7 @@ export function Header() {
             <Logo />
           </Link>
 
-          <div ref={navRef} className="hidden items-center gap-1 lg:flex">
+          <div ref={navRef} className="hidden items-center gap-1 xl:flex">
             {headerNav.map((entry) =>
               entry.kind === "link" ? (
                 <Link
@@ -134,7 +134,7 @@ export function Header() {
             )}
           </div>
 
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden items-center gap-2 xl:flex">
             {externalNav.map((item) => (
               <a
                 key={item.to}
@@ -158,7 +158,7 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border xl:hidden"
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMobileOpen((v) => !v)}
@@ -176,7 +176,7 @@ export function Header() {
       {mobileOpen ? (
         <div
           id="mobile-navigation"
-          className="max-h-[calc(100vh-6rem)] overflow-y-auto border-t border-border bg-background lg:hidden"
+          className="max-h-[calc(100vh-6rem)] overflow-y-auto border-t border-border bg-background xl:hidden"
         >
           <div className="container-page py-4">
             <ul className="space-y-1">

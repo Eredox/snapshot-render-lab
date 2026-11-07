@@ -52,8 +52,14 @@ export function withSecurityHeaders(response: Response, nonce: string, request: 
   const headers = new Headers(response.headers);
   headers.set("content-security-policy", buildContentSecurityPolicy(nonce, { upgradeInsecure: isHttpsRequest(request) }));
   headers.set("cross-origin-opener-policy", "same-origin");
-  // Applied by the app only when nginx has not already supplied the equivalent (single source per header).
-  if (!headers.has("x-content-type-options")) headers.set("x-content-type-options", "nosniff");
-  if (!headers.has("referrer-policy")) headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  // Fallbacks for direct (edge-less) access only. Behind the nginx edge (which sets X-Forwarded-Proto and owns these two headers)
+  // the app stays silent so the browser never receives a duplicated header.
+  if (!request.headers.has("x-forwarded-proto")) {
+    if (!headers.has("x-content-type-options")) headers.set("x-content-type-options", "nosniff");
+    if (!headers.has("referrer-policy")) headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  }
+  // Every response carries a per-request nonce, so it must never be stored by a shared cache (CDN, proxy_cache) and replayed to another visitor.
+  // A handler that sets its own Cache-Control (e.g. no-store on /api/forms) is left alone.
+  if (!headers.has("cache-control")) headers.set("cache-control", "private, no-cache");
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
