@@ -50,7 +50,7 @@ export function Header() {
     <header className="site-chrome sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container-page">
         <div className="flex h-24 items-center justify-between gap-4">
-          <Link to="/" className="shrink-0" aria-label="NOVA Compliance home">
+          <Link to="/" className="shrink-0">
             <Logo />
           </Link>
 

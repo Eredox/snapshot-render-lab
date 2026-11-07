@@ -182,7 +182,6 @@ function Index() {
             <Link
               key={audience.key}
               to={routeTo(audience.to)}
-              aria-label={audience.cta}
               className="group rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:p-5"
             >
               <AudienceVisual {...audience} />
