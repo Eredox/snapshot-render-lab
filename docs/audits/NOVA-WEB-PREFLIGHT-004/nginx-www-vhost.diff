@@ -1,0 +1,44 @@
+--- nginx.conf (live, sha256 660e4f8b6a29139dd3eb929d2ddc09074ccf661835540c768265c22ffa3c2815)
++++ nginx.conf (patched)
+@@ -35,6 +35,8 @@
+     # capping sustained abuse.
+     limit_req_zone $binary_remote_addr zone=health_probe:1m rate=2r/s;
+     limit_req_status 429;
++    # Public website enquiry/booking form abuse bound (NOVA-WEB); per source IP, the app adds per-client limits.
++    limit_req_zone $binary_remote_addr zone=nova_forms:10m rate=6r/m;
+ 
+     upstream backend_upstream {
+         server backend:8000;
+@@ -313,6 +315,10 @@
+         http2 on;
+         server_name www.nova.eredox.com;
+ 
++        server_tokens off;
++        # Permanent canonical form for trailing slashes (the app would answer 307).
++        rewrite ^/(.+)/$ /$1 permanent;
++
+         ssl_certificate     /etc/nginx/certs/www.nova.eredox.com.fullchain.pem;
+         ssl_certificate_key /etc/nginx/certs/www.nova.eredox.com.privkey.pem;
+         ssl_protocols       TLSv1.2 TLSv1.3;
+@@ -333,6 +339,21 @@
+             try_files $uri =404;
+         }
+ 
++        location = /api/forms {
++            limit_req zone=nova_forms burst=3 nodelay;
++            client_max_body_size 40k;
++            proxy_pass http://nova-public-website:3000;
++            proxy_http_version 1.1;
++            proxy_set_header Host $host;
++            proxy_set_header X-Real-IP $remote_addr;
++            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
++            proxy_set_header X-Forwarded-Proto $scheme;
++            proxy_set_header X-Forwarded-Host $host;
++            proxy_set_header Connection "";
++            proxy_read_timeout 30s;
++            proxy_send_timeout 30s;
++        }
++
+         location / {
+             proxy_pass http://nova-public-website:3000;
+             proxy_http_version 1.1;

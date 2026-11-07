@@ -48,8 +48,19 @@ scaled beyond one replica, move the counters to a shared store or rely on the ed
 from `X-Real-IP` (set by nginx from the TCP peer); never publish the container port. Optional
 `NOVA_FORM_ALLOWED_HOSTS` (comma-separated hosts) extends the permitted `Origin` hosts.
 
-**Release dependency.** Plan and billing-interval links assume the NOVA application release that reads `plan` and
-`billing_cycle` on `/register` (see `docs/NOVA_WEB_SIGNUP_001.md`). Publish this website together with that release.
+**Application dependency (verified 2026-11-08).** Plan and billing-interval links use `plan` and `billing_cycle` on
+`https://nova.eredox.com/register`; the production NOVA application already reads them (read-only check of the live
+pages, `scripts/journey/verify-signup-journeys.mjs`). Paid checkout inside the application is a separate commercial
+dependency with its own release decision; see `docs/audits/NOVA-WEB-PREFLIGHT-004/`.
+
+**Live edge layout (inspected read-only 2026-11-08).** The `www.nova.eredox.com` server blocks are not in the NOVA
+application repository: they are appended by hand to the single `nginx.conf` that the shared `nova_compliance_nginx`
+container bind-mounts from an application release directory
+(`/opt/nova/app/releases/<sha>/docker/nginx/nginx.conf`, root-owned). Consequences: (1) edit that file **in place**
+(`cat new > file`, never `mv`/`sed -i`, which creates a new inode the container will not see) and `nginx -s reload`;
+(2) the container resolves `nova-public-website` when nginx loads, so **reload nginx after every website container
+replacement**; (3) an application release that points the mount at a newer release directory must carry the www
+blocks across or the website goes offline. The exact minimal change is `docs/audits/NOVA-WEB-PREFLIGHT-004/nginx-www-vhost.diff`.
 
 **security.txt.** `public/.well-known/security.txt` expires on 2027-05-01; renew it before then and confirm the
 published contact mailbox is monitored.

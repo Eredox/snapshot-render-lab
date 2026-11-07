@@ -1,0 +1,32 @@
+--- a/src/data/legal.ts
++++ b/src/data/legal.ts
+@@ -39,6 +39,7 @@
+         body: [
+           "A cookie is a small value stored by a website in a browser and sent back with later requests. Similar technologies include browser local storage, session storage, pixels, scripts and other client-side mechanisms that remember a choice or recognise a browser.",
+           "The public website currently uses browser local storage for its consent record. Repository inspection found no public-site session storage, tracking pixel, analytics tag, marketing tag or embedded third-party application.",
++          "After you submit a demo-booking request, the confirmation page shows the details you entered (name, e-mail, company, framework, team size and preferred slot). To do this without placing them in the page address, the website keeps them in your browser's history entry for that tab. They are not stored in a cookie, local storage or session storage, are not sent to the website's server with later page requests, and may remain available only for as long as your browser keeps that tab's history (for example across a page refresh or a restored tab). Closing the tab or clearing your browsing history removes them.",
+         ],
+       },
+       {
+@@ -101,8 +102,10 @@
+         heading: "Third-party technologies",
+         description: "External resources and embedded services verified in the public site.",
+         body: [
+-          "The public website loads the Roboto font stylesheet from Google Fonts domains through a stylesheet and preconnect links. This is an external resource request, not an analytics or marketing provider configured by NOVA; this policy does not assert what cookies, if any, a visitor's browser or that provider may apply outside the NOVA website.",
+-          "No third-party embedded forms, video players, social widgets, analytics provider or marketing provider is configured. Public forms submit to a same-origin server endpoint, which can forward enquiries to configured Eredox CRM/mail systems. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site.",
++          "The public website serves its fonts (Roboto) and all of its scripts, styles and images from its own domain, www.nova.eredox.com. Loading a page does not request resources from third-party domains, and no analytics or marketing provider is configured.",
++          "No third-party embedded forms, video players or social widgets are configured. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site. The booking confirmation page includes an optional \"Add to Google Calendar\" link that opens Google Calendar in a new tab only if you select it; it passes the event title (which includes the framework you chose), date and time to Google, and does not include your name or e-mail address.",
++          "Where enquiry delivery is enabled, the public contact, quote and demo-booking forms send what you enter (name, work e-mail, company, message and, for demo requests, framework, team size and preferred date and time) to a same-origin server endpoint. Eredox forwards the enquiry to its CRM and sends a notification e-mail to an Eredox mailbox through Brevo, a transactional e-mail service provider that processes that content on Eredox's behalf in order to deliver the message.",
++          "To protect the forms from abuse, the server temporarily uses the network address of each request in memory to apply rate limits and records only a short non-reversible reference, never your name, e-mail address or message, in operational logs. The web server that hosts the site also keeps standard access logs that include the network address and browser user agent of each request.",
+         ],
+       },
+       {
+@@ -295,7 +298,7 @@
+         heading: "Downloads, external and third-party content",
+         description: "Content outside the public site's direct control.",
+         body: [
+-          "The public site does not claim accessibility conformance for external sites, the separate authenticated NOVA application, the Google Fonts resource, or any future third-party content. Any downloadable or linked material should be assessed for accessibility in its source format; the Legal Centre currently presents HTML documents on the public site.",
++          "The public site does not claim accessibility conformance for external sites, the separate authenticated NOVA application, or any future third-party content. Any downloadable or linked material should be assessed for accessibility in its source format; the Legal Centre currently presents HTML documents on the public site.",
+         ],
+       },
+       {

@@ -1,0 +1,6 @@
+crawler            requests  ips verified  method / statuses / sample website paths (verified only)
+googlebot               200   14      190  reverse DNS + forward confirm; statuses={'200': 186, '401': 4}; days=31/Oct/2026..07/Nov/2026; paths=['/robots.txt', '/', '/pricing', '/register']
+bingbot                  13   10       13  reverse DNS + forward confirm; statuses={'200': 13}; days=01/Nov/2026..07/Nov/2026; paths=['/sitemap.xml', '/robots.txt']
+oai-searchbot            21   16       21  vendor-published IP ranges; statuses={'200': 21}; days=31/Oct/2026..07/Nov/2026; paths=['/robots.txt']
+claude-user               8    1        0  no official method available (not counted as verified); statuses={}; days=-..-; paths=[]
+perplexitybot             2    2        2  vendor-published IP ranges; statuses={'200': 2}; days=04/Nov/2026..04/Nov/2026; paths=['/robots.txt', '/responsible-ai']

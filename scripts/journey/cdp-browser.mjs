@@ -49,7 +49,7 @@ export async function openBrowser({ edge, out, viewport = { width: 1440, height:
   };
   await call('Page.enable'); await call('Runtime.enable'); await call('Network.enable');
   await call('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: viewport.mobile });
-  const state = () => evaluate("({path:location.pathname, hash:location.hash, len:document.body.innerText.length, head:document.body.innerText.slice(0,140).replace(/\\s+/g,' ')})");
+  const state = () => evaluate("({path:location.pathname, hash:location.hash, len:(document.body?document.body.innerText.length:0), head:(document.body?document.body.innerText:'').slice(0,140).replace(/\\s+/g,' ')})");
   const waitFor = async (label, predicateSrc, timeoutMs = 20000, stepMs = 250) => {
     const start = Date.now();
     while (Date.now() - start < timeoutMs) {
