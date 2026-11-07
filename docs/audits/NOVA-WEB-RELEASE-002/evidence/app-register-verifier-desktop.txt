@@ -1,0 +1,66 @@
+STEP site pricing monthly desktop loads PASS 
+STEP site pricing monthly Free button+link PASS https://nova.eredox.com/register?plan=free&billing_cycle=monthly
+STEP site pricing monthly Launch button+link PASS https://nova.eredox.com/register?plan=launch&billing_cycle=monthly
+STEP site pricing monthly Growth button+link PASS https://nova.eredox.com/register?plan=growth&billing_cycle=monthly
+STEP site pricing monthly Professional button+link PASS https://nova.eredox.com/register?plan=professional&billing_cycle=monthly
+STEP site pricing monthly Business button+link PASS https://nova.eredox.com/register?plan=business&billing_cycle=monthly
+STEP site pricing monthly Enterprise Request a Quote PASS http://127.0.0.1:5193/request-quote?plan=enterprise
+STEP site pricing monthly no trial wording PASS 
+STEP site pricing monthly no AUD or outdated framework caps PASS 
+STEP site pricing annual desktop loads PASS 
+STEP site pricing annual Free button+link PASS https://nova.eredox.com/register?plan=free&billing_cycle=monthly
+STEP site pricing annual Launch button+link PASS https://nova.eredox.com/register?plan=launch&billing_cycle=annual
+STEP site pricing annual Growth button+link PASS https://nova.eredox.com/register?plan=growth&billing_cycle=annual
+STEP site pricing annual Professional button+link PASS https://nova.eredox.com/register?plan=professional&billing_cycle=annual
+STEP site pricing annual Business button+link PASS https://nova.eredox.com/register?plan=business&billing_cycle=annual
+STEP site pricing annual Enterprise Request a Quote PASS http://127.0.0.1:5193/request-quote?plan=enterprise
+STEP site pricing annual no trial wording PASS 
+STEP site pricing annual no AUD or outdated framework caps PASS 
+STEP app register Free monthly desktop loads PASS 
+STEP app register Free monthly button "Create Free Workspace" PASS 
+STEP app register Free monthly no trial wording PASS 
+STEP app register Launch monthly desktop loads PASS 
+STEP app register Launch monthly button "Continue to subscribe to Launch" PASS 
+STEP app register Launch monthly states billing interval PASS 
+STEP app register Launch monthly no trial wording PASS 
+STEP app register Launch annual desktop loads PASS 
+STEP app register Launch annual button "Continue to subscribe to Launch" PASS 
+STEP app register Launch annual states billing interval PASS 
+STEP app register Launch annual no trial wording PASS 
+STEP app register Growth monthly desktop loads PASS 
+STEP app register Growth monthly button "Continue to subscribe to Growth" PASS 
+STEP app register Growth monthly states billing interval PASS 
+STEP app register Growth monthly no trial wording PASS 
+STEP app register Growth annual desktop loads PASS 
+STEP app register Growth annual button "Continue to subscribe to Growth" PASS 
+STEP app register Growth annual states billing interval PASS 
+STEP app register Growth annual no trial wording PASS 
+STEP app register Professional monthly desktop loads PASS 
+STEP app register Professional monthly button "Continue to subscribe to Professional" PASS 
+STEP app register Professional monthly states billing interval PASS 
+STEP app register Professional monthly no trial wording PASS 
+STEP app register Professional annual desktop loads PASS 
+STEP app register Professional annual button "Continue to subscribe to Professional" PASS 
+STEP app register Professional annual states billing interval PASS 
+STEP app register Professional annual no trial wording PASS 
+STEP app register Business monthly desktop loads PASS 
+STEP app register Business monthly button "Continue to subscribe to Business" PASS 
+STEP app register Business monthly states billing interval PASS 
+STEP app register Business monthly no trial wording PASS 
+STEP app register Business annual desktop loads PASS 
+STEP app register Business annual button "Continue to subscribe to Business" PASS 
+STEP app register Business annual states billing interval PASS 
+STEP app register Business annual no trial wording PASS 
+STEP app register Enterprise quotation page PASS 
+STEP app register Enterprise has Request a Quote link PASS 
+STEP app register Enterprise has no sign-up form PASS 
+STEP app register ?plan=growth stops instead of Free PASS 
+STEP app register ?plan=growth&billing_cycle=weekly stops instead of Free PASS 
+STEP app register ?plan=gold&billing_cycle=monthly stops instead of Free PASS 
+STEP app register ?billing_cycle=annual stops instead of Free PASS 
+STEP app register ?plan=Growth&billing_cycle=annual stops instead of Free PASS 
+STEP app register with no selection is the explicit Free form PASS 
+STEP app login Growth annual notice PASS 
+STEP app login Free notice PASS 
+STEP app login unreadable selection warns PASS 
+RESULT PASS view=desktop app=https://nova.eredox.com site=http://127.0.0.1:5193
