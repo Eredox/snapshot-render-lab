@@ -47,7 +47,8 @@ function FrameworkManagementPage() {
 
       <Section>
         <p className="text-lg text-muted-foreground">{feature.problem}</p>
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <h2 className="mt-10 text-2xl font-semibold">Key capabilities</h2>
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           {feature.capabilities.map((c) => (
             <Card key={c.title}>
               <h3 className="text-lg font-semibold">{c.title}</h3>

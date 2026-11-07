@@ -23,6 +23,8 @@ export const site = {
   productName: "NOVA Compliance",
   shortName: "NOVA",
   company: "Eredox Pty Ltd",
+  /** Australian Business Number as published in the NOVA Terms (src/data/legal-published.ts). */
+  abn: "32 634 165 941",
   tagline: "Governed, evidence-led compliance management for growing and regulated organisations.",
   ownership: "NOVA Compliance is developed and operated by Eredox Pty Ltd.",
   humanStatement: novaAiCopy.readinessStatement,

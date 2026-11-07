@@ -1,0 +1,324 @@
+{
+  "base": "https://www.nova.eredox.com",
+  "live": true,
+  "generated": "2026-11-07T15:19:16.033Z",
+  "matrix": [
+    {
+      "token": "Googlebot",
+      "platform": "Google Search",
+      "category": "search",
+      "via": "googlebot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Bingbot",
+      "platform": "Microsoft Bing",
+      "category": "search",
+      "via": "bingbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "DuckDuckBot",
+      "platform": "DuckDuckGo",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Applebot",
+      "platform": "Apple (Spotlight/Siri search)",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "YandexBot",
+      "platform": "Yandex",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Baiduspider",
+      "platform": "Baidu",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "OAI-SearchBot",
+      "platform": "OpenAI ChatGPT search",
+      "category": "ai-search",
+      "via": "oai-searchbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Claude-SearchBot",
+      "platform": "Anthropic Claude search",
+      "category": "ai-search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "PerplexityBot",
+      "platform": "Perplexity search index",
+      "category": "ai-search",
+      "via": "perplexitybot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "ChatGPT-User",
+      "platform": "OpenAI user-initiated fetch",
+      "category": "user-initiated",
+      "via": "chatgpt-user",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Claude-User",
+      "platform": "Anthropic user-initiated fetch",
+      "category": "user-initiated",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Perplexity-User",
+      "platform": "Perplexity user-initiated fetch",
+      "category": "user-initiated",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "GPTBot",
+      "platform": "OpenAI model training",
+      "category": "training",
+      "via": "gptbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "ClaudeBot",
+      "platform": "Anthropic model training",
+      "category": "training",
+      "via": "claudebot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Google-Extended",
+      "platform": "Google Gemini training/grounding control (robots token only; no separate UA)",
+      "category": "training",
+      "via": "google-extended",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Applebot-Extended",
+      "platform": "Apple AI training control (robots token only)",
+      "category": "training",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "CCBot",
+      "platform": "Common Crawl (training corpora)",
+      "category": "training",
+      "via": "ccbot",
+      "homeRule": "Disallow: /",
+      "blockedSitemapUrls": 66,
+      "allowedHome": false
+    },
+    {
+      "token": "Twitterbot",
+      "platform": "X link previews",
+      "category": "social",
+      "via": "twitterbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "facebookexternalhit",
+      "platform": "Meta link previews",
+      "category": "social",
+      "via": "facebookexternalhit",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    }
+  ],
+  "results": [
+    {
+      "area": "robots",
+      "name": "robots.txt returns 200 text/plain",
+      "status": "PASS",
+      "detail": "200 text/plain; charset=utf-8"
+    },
+    {
+      "area": "robots",
+      "name": "robots.txt references the sitemap (absolute https)",
+      "status": "PASS",
+      "detail": "https://www.nova.eredox.com/sitemap.xml"
+    },
+    {
+      "area": "robots",
+      "name": "robots.txt < 500 KiB (Google limit)",
+      "status": "PASS",
+      "detail": "640 bytes"
+    },
+    {
+      "area": "sitemap",
+      "name": "sitemap.xml 200 application/xml",
+      "status": "PASS",
+      "detail": "200 application/xml; charset=utf-8"
+    },
+    {
+      "area": "sitemap",
+      "name": "XML well-formed, sitemaps.org namespace, balanced <url>",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "entry count",
+      "status": "INFO",
+      "detail": "66 URLs (RELEASE-002 expectation: 69)"
+    },
+    {
+      "area": "sitemap",
+      "name": "every <loc> is absolute https on the canonical host, no query/fragment, unique",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "≤ 50,000 URLs and ≤ 50 MiB",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "lastmod (where present) is valid W3C date, not in the future",
+      "status": "PASS",
+      "detail": "2 of 66 entries carry lastmod"
+    },
+    {
+      "area": "sitemap",
+      "name": "lastmod is not a single repeated build date",
+      "status": "PASS",
+      "detail": "2 distinct values"
+    },
+    {
+      "area": "robots-policy",
+      "name": "Googlebot (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Bingbot (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "DuckDuckBot (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Applebot (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "YandexBot (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Baiduspider (search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "OAI-SearchBot (ai-search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Claude-SearchBot (ai-search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "PerplexityBot (ai-search) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "ChatGPT-User (user-initiated) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Claude-User (user-initiated) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Perplexity-User (user-initiated) may crawl all 66 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "http-ua-sim",
+      "name": "no User-Agent-dependent status or content difference (simulation only — NOT proof of real crawler acceptance)",
+      "status": "PASS",
+      "detail": "34 requests identical"
+    },
+    {
+      "area": "http",
+      "name": "no X-Robots-Tag header on any response probed",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

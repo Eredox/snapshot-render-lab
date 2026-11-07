@@ -1,4 +1,4 @@
-import { site, siteUrl } from "@/config/site";
+import { formsConfig, site, siteUrl } from "@/config/site";
 
 /**
  * SEO helpers.
@@ -91,9 +91,19 @@ export function organizationSchema() {
     "@type": "Organization",
     "@id": organizationId,
     name: site.company,
+    legalName: site.company,
     url: siteUrl,
     logo: { "@type": "ImageObject", url: absoluteUrl("/media/brand/nova-logo-full.png") },
     description: site.ownership,
+    // NOVA Compliance is the product brand of Eredox Pty Ltd (see the Terms and the About page).
+    brand: { "@type": "Brand", name: site.productName },
+    identifier: { "@type": "PropertyValue", propertyID: "ABN", value: site.abn },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "general enquiries",
+      email: formsConfig.fallbackEmail,
+      availableLanguage: "en",
+    },
   };
 }
 
@@ -103,6 +113,7 @@ export function websiteSchema() {
     "@type": "WebSite",
     "@id": websiteId,
     name: site.productName,
+    alternateName: site.shortName,
     url: siteUrl,
     description: site.tagline,
     inLanguage: "en-AU",
@@ -124,6 +135,21 @@ export function softwareSchema() {
     isPartOf: { "@id": websiteId },
     publisher: { "@id": organizationId },
     provider: { "@id": organizationId },
+  };
+}
+
+/** AboutPage / ContactPage nodes: tie a page to the organisation and website entities already declared site-wide. */
+export function webPageSchema(opts: { type: "AboutPage" | "ContactPage"; path: string; name: string; description: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": opts.type,
+    "@id": `${absoluteUrl(opts.path)}#webpage`,
+    url: absoluteUrl(opts.path),
+    name: opts.name,
+    description: opts.description,
+    inLanguage: "en-AU",
+    isPartOf: { "@id": websiteId },
+    about: { "@id": organizationId },
   };
 }
 

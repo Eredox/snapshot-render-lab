@@ -194,6 +194,7 @@ export const footerColumns: NavGroup[] = [
       { label: "Integrations", to: "/integrations" },
       { label: "Frameworks", to: "/frameworks" },
       { label: "Solutions", to: "/solutions" },
+      { label: "Industries", to: "/industries" },
       { label: "Pricing", to: "/pricing" },
       { label: "Free access", to: "/start" },
       { label: "Compare approaches", to: "/compare" },

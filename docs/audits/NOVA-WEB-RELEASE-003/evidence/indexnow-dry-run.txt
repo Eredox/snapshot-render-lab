@@ -1,0 +1,18 @@
+IndexNow DRY-RUN: 2 URL(s) to https://api.indexnow.org/indexnow
+  key file: https://www.nova.eredox.com/2695136d30af499e9ced4742ab0d9681.txt
+  https://www.nova.eredox.com/industries
+  https://www.nova.eredox.com/about
+  live key file check: OK (served as text/plain, content matches)
+Dry-run only. Nothing sent.
+exit 0
+--- negative: URL not in sitemap
+ERROR not in the sitemap / wrong host / has query: https://www.nova.eredox.com/status
+exit 1
+--- negative: submit without approval
+IndexNow SUBMIT: 2 URL(s) to https://api.indexnow.org/indexnow
+  key file: https://www.nova.eredox.com/2695136d30af499e9ced4742ab0d9681.txt
+  https://www.nova.eredox.com/industries
+  https://www.nova.eredox.com/about
+  live key file check: OK (served as text/plain, content matches)
+ERROR refusing to submit: set NOVA_INDEXNOW_APPROVED=yes after release approval
+exit 1

@@ -4,16 +4,22 @@ import { Section, SectionHeading, PageHero, Card } from "@/components/site/primi
 import { ConversionCta } from "@/components/site/cta";
 import { ContactForm } from "@/components/site/ContactForm";
 import { appUrls, formsConfig, site } from "@/config/site";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+import { pageMeta, breadcrumbSchema, ldScript, webPageSchema } from "@/lib/seo";
+
+const contactTitle = "Contact Eredox | NOVA Compliance Sales and Support";
+const contactDescription = "Contact the Eredox team about NOVA Compliance, demos, pricing and support.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     ...pageMeta({
-      title: "Contact Eredox | NOVA Compliance Sales and Support",
-      description: "Contact the Eredox team about NOVA Compliance, demos, pricing and support.",
+      title: contactTitle,
+      description: contactDescription,
       path: "/contact",
     }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "Contact", to: "/contact" }]))],
+    scripts: [
+      ldScript(webPageSchema({ type: "ContactPage", path: "/contact", name: contactTitle, description: contactDescription })),
+      ldScript(breadcrumbSchema([{ label: "Contact", to: "/contact" }])),
+    ],
   }),
   component: ContactPage,
 });

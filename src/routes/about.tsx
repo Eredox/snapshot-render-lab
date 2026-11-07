@@ -3,16 +3,22 @@ import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
 import { site } from "@/config/site";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+import { pageMeta, breadcrumbSchema, ldScript, webPageSchema } from "@/lib/seo";
+
+const aboutTitle = "About Eredox and NOVA Compliance | NOVA Compliance";
+const aboutDescription = "NOVA is built by Eredox to help growing organisations keep their compliance programmes coherent, traceable and human-led.";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     ...pageMeta({
-      title: "About Eredox and NOVA Compliance | NOVA Compliance",
-      description: "NOVA is built by Eredox to help growing organisations keep their compliance programmes coherent, traceable and human-led.",
+      title: aboutTitle,
+      description: aboutDescription,
       path: "/about",
     }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "About", to: "/about" }]))],
+    scripts: [
+      ldScript(webPageSchema({ type: "AboutPage", path: "/about", name: aboutTitle, description: aboutDescription })),
+      ldScript(breadcrumbSchema([{ label: "About", to: "/about" }])),
+    ],
   }),
   component: AboutPage,
 });

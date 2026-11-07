@@ -1,26 +1,37 @@
+# NOVA Compliance - robots.txt
+# Policy is kept in four separate sections so each purpose can be decided on its own.
+# Standard-compliant crawlers not named here follow the final "*" group (allowed).
+# robots.txt is a request, not access control: crawler identity is verified from server logs, never from the User-Agent alone.
+
+# 1. Search indexing - allowed.
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-# AI search and answer engines — allowed, so NOVA can be cited in answers.
+# 2. AI search and answer citations - allowed, so NOVA can be found and cited in AI answers.
 User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Claude-Web
+# 3. User-initiated page retrieval (a person asked an assistant to read a page) - allowed.
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# 4. Generative-AI model training - existing policy, UNCHANGED. Any change needs an explicit Founder decision.
+User-agent: GPTBot
 Allow: /
 
 User-agent: ClaudeBot
@@ -29,12 +40,19 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Model training crawlers — kept separate from search so the policy is explicit.
-User-agent: GPTBot
-Allow: /
-
 User-agent: CCBot
 Disallow: /
+
+# Deprecated Anthropic token retained unchanged (no effect on current crawlers).
+User-agent: Claude-Web
+Allow: /
+
+# Link previews
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
 
 User-agent: *
 Allow: /
