@@ -40,6 +40,7 @@ async function get(p, init = {}) {
 }
 
 // ---------- HTTP checks ----------
+const home0 = await get("/");
 const sitemap = (await get("/sitemap.xml")).text;
 const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 check("sitemap lists URLs", locs.length > 0, `${locs.length} URLs`);
@@ -98,8 +99,17 @@ check("security.txt served as text/plain", sec.res.status === 200 && /text\/plai
 const exp = (sec.text.match(/^Expires:\s*(.+)$/m) || [])[1];
 check("security.txt has Contact and a future Expires < 1 year", /^Contact:\s*mailto:/m.test(sec.text) && !!exp && new Date(exp) > new Date() && new Date(exp) < new Date(Date.now() + 366 * 864e5), exp);
 
+// Static asset caching and fonts
+const assetPath = (home0.text.match(/href="(\/assets\/styles-[^"]+\.css)"/) || [])[1];
+const cacheOf = async (p) => (await get(p, { method: "HEAD" })).res.headers.get("cache-control") || "";
+check("hashed /assets are immutable", /immutable/.test(await cacheOf(assetPath)), assetPath);
+check("/media, /fonts, /og have cache headers", /max-age=\d{6,}/.test(await cacheOf("/media/brand/nova-shield.png")) && /max-age=\d{6,}/.test(await cacheOf("/fonts/roboto/roboto-latin-400-normal.woff2")) && /max-age=\d{6,}/.test(await cacheOf("/og/nova-share.jpg")));
+const fontRes = await get("/fonts/roboto/roboto-latin-400-normal.woff2", { method: "HEAD" });
+check("preloaded Roboto is a real font file", /font\/woff2/.test(fontRes.res.headers.get("content-type") || ""));
+check("home preloads only fonts that exist (no cirqua)", !/cirqua/.test(home0.text));
+
 // Security headers on HTML, 404 and API
-const home = await get("/");
+const home = home0;
 const csp = home.res.headers.get("content-security-policy") || "";
 check("CSP present on HTML", !!csp);
 check("CSP has no unsafe-eval / wildcard / unsafe-inline script", !/unsafe-eval|script-src[^;]*unsafe-inline|\*(?=[ ;]|$)/.test(csp), csp);

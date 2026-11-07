@@ -155,14 +155,11 @@ function PlatformPage() {
             </div>
           </div>
           <figure className="overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-soft">
-            <img
-              src="/media/integrations/nova-integrations-connectors-evidence-workflow.png"
+            <ResponsiveDiagram
+              base="/media/integrations/nova-integrations-connectors-evidence-workflow"
               alt="NOVA integrations and connectors workflow showing business systems feeding evidence into controls, frameworks, human review and compliance reporting."
               title="NOVA Integrations & Connectors Evidence Workflow"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
+              sizes="(min-width: 1024px) 560px, 100vw"
               className="h-auto w-full rounded-xl object-contain"
             />
             <figcaption className="px-3 pb-2 pt-3 text-sm text-muted-foreground">
