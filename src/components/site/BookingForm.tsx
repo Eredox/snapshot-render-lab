@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { formsConfig } from "@/config/site";
 import { frameworks } from "@/data/frameworks";
+import { bookingConfirmationState } from "@/lib/booking-confirmation";
+import { HoneypotField } from "@/components/site/HoneypotField";
 
 const timeSlots = ["09:00", "10:30", "13:00", "15:30"] as const;
 const teamSizes = ["1–10", "11–50", "51–200", "201–1000", "1000+"] as const;
@@ -21,6 +23,7 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
     timeSlot: "",
     message: "",
   });
+  const [trap, setTrap] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,20 +38,13 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
       const result = await fetch(formsConfig.endpoint ?? "/api/forms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "demo-booking", ...form }),
+        body: JSON.stringify({ type: "demo-booking", ...form, website: trap }),
       });
       if (!result.ok) throw new Error("Form submission failed");
+      // Personal details travel in history state only - never in the URL (see src/lib/booking-confirmation.ts).
       await navigate({
         to: "/book-demo/confirmed",
-        search: {
-          name: form.name,
-          email: form.email,
-          company: form.company,
-          framework: form.framework,
-          teamSize: form.teamSize,
-          date: form.date,
-          timeSlot: form.timeSlot,
-        },
+        state: bookingConfirmationState(form) as never,
       });
     } catch {
       setSubmitting(false);
@@ -57,7 +53,8 @@ export function BookingForm({ className, defaultFramework = "" }: { className?: 
   };
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-4 ${className ?? ""}`}>
+    <form onSubmit={handleSubmit} className={`relative space-y-4 ${className ?? ""}`}>
+      <HoneypotField value={trap} onChange={setTrap} />
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="booking-name" className="mb-1 block text-sm font-medium">

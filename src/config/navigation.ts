@@ -65,7 +65,6 @@ export const staticRoutes = [
   "/support",
   "/testimonials",
   "/trust",
-  "/404",
 ] as const;
 
 /** Dynamic route templates and the slugs configured for each. */

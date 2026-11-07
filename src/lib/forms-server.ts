@@ -1,5 +1,18 @@
 import { createHash, createHmac, randomUUID } from "node:crypto";
 
+import {
+  attemptLimiter,
+  clientDeliveryLimiter,
+  clientKey,
+  globalDeliveryLimiter,
+  isRecentDuplicate,
+  logFormEvent,
+  originAllowed,
+  readBodyCapped,
+  rememberSubmission,
+  submissionFingerprint,
+} from "./form-guards";
+
 type FormType =
   | "general-enquiry"
   | "plan-enquiry"
@@ -51,6 +64,8 @@ const formFields = new Set([
   "teamSize",
   "date",
   "timeSlot",
+  // Honeypot: real visitors never see or fill this field (hidden in the form components).
+  "website",
 ]);
 
 class FormConfigurationError extends Error {}
@@ -141,11 +156,26 @@ function normaliseSubmission(value: unknown): FormSubmission {
   return submission;
 }
 
-function response(status: number, body: { ok: boolean; message: string }): Response {
+function response(
+  status: number,
+  body: { ok: boolean; message: string },
+  extraHeaders: Record<string, string> = {},
+): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      ...extraHeaders,
+    },
   });
+}
+
+function extraAllowedHosts(): string[] {
+  return (environment("NOVA_FORM_ALLOWED_HOSTS") ?? "")
+    .split(",")
+    .map((host) => host.trim())
+    .filter(Boolean);
 }
 
 function escapeHtml(value: string): string {
@@ -371,13 +401,37 @@ async function createCrmEnquiry(submission: FormSubmission, sourcePath: string):
 }
 
 export async function handleFormsRequest(request: Request): Promise<Response> {
-  if (request.method === "OPTIONS")
-    return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
-  if (request.method !== "POST") return response(405, { ok: false, message: "Method not allowed" });
+  const client = clientKey(request);
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: { "cache-control": "no-store", allow: "POST, OPTIONS" },
+    });
+  }
+  if (request.method !== "POST") {
+    return response(405, { ok: false, message: "Method not allowed" }, { allow: "POST, OPTIONS" });
+  }
+
+  // Cheap rejections first. Origin / Fetch-Metadata only stop other websites driving a visitor's
+  // browser; they are NOT relied on for abuse protection (non-browser clients can forge them).
+  if (!originAllowed(request, extraAllowedHosts())) {
+    logFormEvent("rejected", { status: 403, reason: "origin", client });
+    return response(403, { ok: false, message: "Request not permitted" });
+  }
+  if (!/^application\/json(\s*;|$)/i.test(request.headers.get("content-type") ?? "")) {
+    logFormEvent("rejected", { status: 415, reason: "content-type", client });
+    return response(415, { ok: false, message: "Unsupported content type" });
+  }
+  const attempt = attemptLimiter.take(client);
+  if (!attempt.allowed) {
+    logFormEvent("rate-limited", { status: 429, reason: "attempts", client });
+    return response(429, { ok: false, message: "Too many requests. Please try again later." }, { "retry-after": String(attempt.retryAfterSeconds) });
+  }
 
   try {
-    const rawBody = await request.text();
-    if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+    const rawBody = await readBodyCapped(request, MAX_BODY_BYTES);
+    if (rawBody === null) {
+      logFormEvent("rejected", { status: 413, reason: "too-large", client });
       return response(413, { ok: false, message: "Form submission is too large" });
     }
     let payload: unknown;
@@ -386,19 +440,40 @@ export async function handleFormsRequest(request: Request): Promise<Response> {
     } catch {
       return response(400, { ok: false, message: "Please check the form details and try again" });
     }
+    // Honeypot: acknowledge identically to success so automation learns nothing, deliver nothing.
+    const trap = payload && typeof payload === "object" ? (payload as Record<string, unknown>)["website"] : undefined;
+    if (typeof trap === "string" && trap.trim() !== "") {
+      logFormEvent("honeypot", { status: 202, client });
+      return response(202, { ok: true, message: "Submission received" });
+    }
     const submission = normaliseSubmission(payload);
+
+    const fingerprint = submissionFingerprint([submission.type, submission.email, submission.message, submission.date ?? "", submission.timeSlot ?? ""]);
+    if (isRecentDuplicate(fingerprint)) {
+      logFormEvent("duplicate", { status: 202, client });
+      return response(202, { ok: true, message: "Submission received" });
+    }
+    const perClient = clientDeliveryLimiter.take(client);
+    const overall = perClient.allowed ? globalDeliveryLimiter.take("all") : perClient;
+    if (!perClient.allowed || !overall.allowed) {
+      const retry = !perClient.allowed ? perClient.retryAfterSeconds : (overall as { retryAfterSeconds: number }).retryAfterSeconds;
+      logFormEvent("rate-limited", { status: 429, reason: perClient.allowed ? "global" : "client", client });
+      return response(429, { ok: false, message: "Too many requests. Please try again later." }, { "retry-after": String(retry) });
+    }
+
     await createCrmEnquiry(submission, sourcePathForRequest(request));
     await sendBrevoEmail(submission);
+    rememberSubmission(fingerprint);
     return response(202, { ok: true, message: "Submission received" });
   } catch (error) {
     if (error instanceof FormConfigurationError) {
-      console.error("Form delivery is not configured");
+      logFormEvent("unavailable", { status: 503, reason: "not-configured" });
       return response(503, { ok: false, message: "Form delivery is temporarily unavailable" });
     }
     if (error instanceof Error && /Invalid |Missing |Incomplete /.test(error.message)) {
       return response(400, { ok: false, message: "Please check the form details and try again" });
     }
-    console.error("Form delivery failed");
+    logFormEvent("delivery-failed", { status: 502, reason: error instanceof CrmResponseError ? `crm-${error.status}` : "delivery", client });
     return response(502, { ok: false, message: "Form delivery is temporarily unavailable" });
   }
 }

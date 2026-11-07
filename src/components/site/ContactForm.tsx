@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { formsConfig } from "@/config/site";
+import { HoneypotField } from "@/components/site/HoneypotField";
 
 export function ContactForm({ className, defaultMessage = "" }: { className?: string; defaultMessage?: string }) {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: defaultMessage });
+  const [trap, setTrap] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +17,7 @@ export function ContactForm({ className, defaultMessage = "" }: { className?: st
       const result = await fetch(formsConfig.endpoint ?? "/api/forms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website: trap }),
       });
       if (!result.ok) throw new Error("Form submission failed");
       setSubmitted(true);
@@ -38,7 +40,8 @@ export function ContactForm({ className, defaultMessage = "" }: { className?: st
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-4 ${className ?? ""}`}>
+    <form onSubmit={handleSubmit} className={`relative space-y-4 ${className ?? ""}`}>
+      <HoneypotField value={trap} onChange={setTrap} />
       <div>
         <label htmlFor="contact-name" className="mb-1 block text-sm font-medium">
           Name

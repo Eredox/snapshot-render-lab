@@ -2,6 +2,7 @@ import { createHash, createHmac } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { handleFormsRequest } from "@/lib/forms-server";
+import { resetFormGuardsForTests } from "@/lib/form-guards";
 
 const formEnvironment = [
   "BREVO_API_KEY",
@@ -72,6 +73,7 @@ function capturedRequest(fetchMock: { mock: { calls: readonly unknown[][] } }, i
 }
 
 afterEach(() => {
+  resetFormGuardsForTests();
   for (const name of formEnvironment) {
     const value = originalEnvironment.get(name);
     if (value === undefined) delete process.env[name];

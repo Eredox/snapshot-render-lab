@@ -14,7 +14,7 @@ describe("public launch invariants", () => {
     expect(urls.some((url) => url.loc === "/book-demo/confirmed")).toBe(false);
   });
 
-  it("keeps the public edge security baseline and CSP together", () => {
+  it("keeps the edge transport headers at nginx and the CSP at the application (no duplicate CSP)", () => {
     const nginx = readFileSync(
       resolve(process.cwd(), "ops/nginx/www.nova.eredox.com.conf"),
       "utf8",
@@ -25,10 +25,13 @@ describe("public launch invariants", () => {
       "X-Content-Type-Options",
       "Referrer-Policy",
       "Permissions-Policy",
-      "Content-Security-Policy",
     ]) {
       expect(nginx).toContain(`add_header ${header}`);
     }
+    // The nonce-based CSP is application-owned (src/lib/security-headers.ts); a second static edge CSP would conflict.
+    expect(nginx).not.toMatch(/add_header\s+Content-Security-Policy/);
+    expect(nginx).toMatch(/limit_req zone=nova_forms/);
+    expect(nginx).toMatch(/server_tokens off/);
     expect(nginx).not.toMatch(/unsafe-eval/);
   });
 

@@ -12,7 +12,6 @@ export function sitemapUrls(): { loc: string; lastmod?: string }[] {
 
   /** Empty sections are noindex, so they stay out of the sitemap. */
   const excluded = new Set<string>([
-    "/404",
     "/book-demo/confirmed",
     "/resources/case-studies",
     "/resources/webinars",

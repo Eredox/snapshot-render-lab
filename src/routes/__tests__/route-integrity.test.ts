@@ -14,8 +14,6 @@ const routesDir = join(here, "..");
 
 function staticRouteToFile(route: string): string {
   if (route === "/") return "index.tsx";
-  if (route === "/404") return "404.tsx";
-  if (route === "/$") return "$.tsx";
   return route.slice(1).replace(/\//g, ".") + ".tsx";
 }
 

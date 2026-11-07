@@ -12,18 +12,52 @@
  * cool light grey borders, slate blue secondary text.
  *
  * Typography: Roboto for all site text. Cirqua is reserved for the
- * NOVA/Eredox wordmark only — drop `cirqua.woff2` into `public/fonts/`
- * and the @font-face below picks it up automatically.
+ * NOVA/Eredox wordmark only — add the licensed `cirqua.woff2` to `public/fonts/`
+ * and restore the commented @font-face below.
  *
  * Never hard-code colour values in components; use the semantic tokens.
  */
 
+/*
+ * Roboto (latin subset, 400/500/700) is self-hosted from /fonts/roboto so the
+ * public site makes no third-party font requests. Licence: public/fonts/roboto/LICENSE.txt.
+ */
 @font-face {
-  font-family: "Cirqua";
-  src: url("/fonts/cirqua.woff2") format("woff2");
-  font-weight: 400 700;
+  font-family: "Roboto";
+  src: url("/fonts/roboto/roboto-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/roboto/roboto-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/roboto/roboto-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * Cirqua (licensed wordmark face) is intentionally NOT declared: the font file
+ * was never added to the repository, so declaring it only produced a failing
+ * request on every page. When the licensed file is available, add it as
+ * public/fonts/cirqua.woff2, restore the block below and the preload in
+ * src/routes/__root.tsx. --font-display falls back to Roboto until then.
+ *
+ * @font-face {
+ *   font-family: "Cirqua";
+ *   src: url("/fonts/cirqua.woff2") format("woff2");
+ *   font-weight: 400 700;
+ *   font-display: swap;
+ * }
+ */
 
 @theme inline {
   --font-sans:

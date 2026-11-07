@@ -26,6 +26,8 @@ import { defaultShareImage, ldScript, organizationSchema, websiteSchema } from "
 function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-background px-4 text-center">
+      {/* Hoisted into <head> by React 19; the response status is a genuine 404. */}
+      <meta name="robots" content="noindex" />
       <span className="eyebrow text-4xl font-bold md:text-6xl">404</span>
       <h1 className="mt-4 text-2xl font-semibold">Page not found</h1>
       <p className="mt-3 max-w-md text-muted-foreground">
@@ -110,17 +112,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap",
-      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "apple-touch-icon", href: "/media/brand/nova-shield.png" },
       {
         rel: "preload",
-        href: "/fonts/cirqua.woff2",
+        href: "/fonts/roboto/roboto-latin-400-normal.woff2",
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",

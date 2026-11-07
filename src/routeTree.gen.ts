@@ -10,8 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SplatRouteImport } from './routes/$'
-import { Route as R404RouteImport } from './routes/404'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -75,16 +73,6 @@ import { Route as ResourcesWebinarsSlugRouteImport } from './routes/resources.we
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SplatRoute = SplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const R404Route = R404RouteImport.update({
-  id: '/404',
-  path: '/404',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -390,8 +378,6 @@ const ResourcesWebinarsSlugRoute = ResourcesWebinarsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
-  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
@@ -454,8 +440,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
-  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
   '/compliance-journey': typeof ComplianceJourneyRoute
@@ -507,8 +491,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
-  '/404': typeof R404Route
   '/about': typeof AboutRoute
   '/book-demo': typeof BookDemoRouteWithChildren
   '/compare': typeof CompareRoute
@@ -573,8 +555,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/$'
-    | '/404'
     | '/about'
     | '/book-demo'
     | '/compare'
@@ -637,8 +617,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$'
-    | '/404'
     | '/about'
     | '/compare'
     | '/compliance-journey'
@@ -689,8 +667,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/$'
-    | '/404'
     | '/about'
     | '/book-demo'
     | '/compare'
@@ -754,8 +730,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SplatRoute: typeof SplatRoute
-  R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
   BookDemoRoute: typeof BookDemoRouteWithChildren
   CompareRoute: typeof CompareRoute
@@ -792,20 +766,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$': {
-      id: '/$'
-      path: '/$'
-      fullPath: '/$'
-      preLoaderRoute: typeof SplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/404': {
-      id: '/404'
-      path: '/404'
-      fullPath: '/404'
-      preLoaderRoute: typeof R404RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -1408,8 +1368,6 @@ const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SplatRoute: SplatRoute,
-  R404Route: R404Route,
   AboutRoute: AboutRoute,
   BookDemoRoute: BookDemoRouteWithChildren,
   CompareRoute: CompareRoute,

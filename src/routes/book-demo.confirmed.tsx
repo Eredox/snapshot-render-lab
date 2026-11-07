@@ -1,28 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { z } from "zod";
+import { useEffect, useState } from "react";
+import { createFileRoute, Link, useLocation } from "@tanstack/react-router";
 import { CalendarCheck, Mail, Clock, Users, Layers, Building2 } from "lucide-react";
 import { Section, PageHero, Card } from "@/components/site/primitives";
 import { CtaLink } from "@/components/site/cta";
 import { formsConfig, site } from "@/config/site";
 import { pageMeta, ldScript, breadcrumbSchema } from "@/lib/seo";
-
-const confirmationSearchSchema = z.object({
-  name: z.string().trim().max(100).optional().default(""),
-  email: z.string().trim().email().max(255).optional().or(z.literal("")).default(""),
-  company: z.string().trim().max(100).optional().default(""),
-  framework: z.string().trim().max(100).optional().default(""),
-  teamSize: z.string().trim().max(20).optional().default(""),
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional()
-    .or(z.literal(""))
-    .default(""),
-  timeSlot: z.string().trim().max(10).optional().default(""),
-});
+import { readBookingConfirmation, type BookingConfirmation } from "@/lib/booking-confirmation";
 
 export const Route = createFileRoute("/book-demo/confirmed")({
-  validateSearch: (search: Record<string, unknown>) => confirmationSearchSchema.parse(search),
+  // No validateSearch on purpose: this page must never read or echo personal details from the URL.
   head: () => {
     const base = pageMeta({
       title: "Demo booking received — NOVA Compliance",
@@ -62,8 +48,15 @@ function googleCalendarUrl(date: string, timeSlot: string, framework: string) {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
+const emptyBooking: BookingConfirmation = { name: "", email: "", company: "", framework: "", teamSize: "", date: "", timeSlot: "" };
+
 function BookingConfirmedPage() {
-  const booking = Route.useSearch();
+  // Server render and first client render are identical (generic); details appear after mount from this tab's history state.
+  const historyState = useLocation({ select: (location) => location.state });
+  const [booking, setBooking] = useState<BookingConfirmation>(emptyBooking);
+  useEffect(() => {
+    setBooking(readBookingConfirmation(historyState) ?? emptyBooking);
+  }, [historyState]);
   const calendarUrl = googleCalendarUrl(booking.date, booking.timeSlot, booking.framework);
 
   const details = [
