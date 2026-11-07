@@ -148,6 +148,34 @@ for (const p of paths) {
 const orphans = [...inbound].filter(([, n]) => n === 0).map(([p]) => p);
 check("no sitemap page is orphaned", orphans.length === 0, orphans.join(", "));
 
+// Commercial journey: every external link must be a known NOVA/Eredox destination; registration links may only
+// carry a governed plan slug and billing interval (never prices or personal data).
+const externals = new Map();
+for (const p of paths) {
+  const { text } = await get(p);
+  for (const m of text.matchAll(/<a [^>]*href="(https?:\/\/[^"]+)"/g)) externals.set(m[1].replace(/&amp;/g, "&"), p);
+}
+const knownHosts = new Set(["nova.eredox.com", "crm.nova.eredox.com", "ai.nova.eredox.com", "calendar.google.com"]);
+const planSlugs = new Set(["free", "launch", "growth", "professional", "business"]);
+const badExternal = [];
+const registerLinks = [];
+for (const [href] of externals) {
+  const u = new URL(href);
+  if (!knownHosts.has(u.host) && !/^(www\.)?(linkedin|x|twitter)\.com$/.test(u.host)) badExternal.push(href);
+  if (u.host === "nova.eredox.com" && u.pathname === "/register") {
+    registerLinks.push(href);
+    const keys = [...u.searchParams.keys()];
+    const plan = u.searchParams.get("plan");
+    const cycle = u.searchParams.get("billing_cycle");
+    if (keys.some((k) => !["plan", "billing_cycle"].includes(k)) || (plan && !planSlugs.has(plan)) || (cycle && !["monthly", "annual"].includes(cycle)) || (plan && !cycle)) badExternal.push(href);
+  }
+}
+check("external links go only to known NOVA/Eredox destinations", badExternal.length === 0, badExternal.join(", ") || `${externals.size} external URLs`);
+check("registration links carry only governed plan + billing interval", registerLinks.length > 0 && !badExternal.some((b) => b.includes("/register")), `${registerLinks.length} register links: ${[...new Set(registerLinks)].join(" | ")}`);
+const legalLinks = ["/legal/terms", "/legal/privacy", "/legal/cookies"];
+const footerHtml = (await get("/")).text;
+check("footer links to terms, privacy and cookie policy", legalLinks.every((l) => footerHtml.includes(`href="${l}"`)));
+
 // ---------- Browser checks ----------
 if (BROWSER) {
   const port = 9340 + Math.floor(Math.random() * 50);

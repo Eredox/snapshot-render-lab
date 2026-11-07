@@ -78,6 +78,11 @@ const availableIntegrations = integrations.filter(
   (integration) => integration.status === "Available now",
 );
 
+/** Manual upload is evidence capture, not automation, so it is excluded from the automation claim. */
+const automatedConnectors = availableIntegrations.filter(
+  (integration) => integration.name !== "Manual upload",
+);
+
 function PlatformPage() {
   return (
     <>
@@ -312,6 +317,57 @@ function PlatformPage() {
               Explore pricing
             </CtaLink>
           </div>
+        </div>
+      </Section>
+
+      <Section id="grc-and-automation">
+        <SectionHeading
+          eyebrow="Governance, risk and compliance"
+          title="A GRC platform that automates the evidence work, not the decisions"
+          description="Governance, risk and compliance (GRC) work breaks down when policies, risks, controls and evidence live in separate tools. NOVA keeps them in one record so a change is made once and flows through every framework that depends on it."
+        />
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <Card>
+            <h3 className="text-lg font-semibold">Compliance management in one record</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Frameworks, requirements, controls, policies and owners are maintained together, so
+              multi-framework programmes such as SOC 2, ISO/IEC 27001, ISO/IEC 42001 and the
+              Essential Eight reuse the same controls where the underlying expectation is the same.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-lg font-semibold">Risk and evidence management</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Risks have owners, treatments and explicit acceptance decisions. Evidence is mapped to
+              the controls it supports and a person validates it before it counts towards readiness.
+            </p>
+          </Card>
+          <Card>
+            <h3 className="text-lg font-semibold">Compliance automation with human review</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Evidence collection is automated where a connector is available
+              {automatedConnectors.length > 0
+                ? ` today (${automatedConnectors.map((integration) => integration.name).join(", ")})`
+                : ""}
+              ; NOVA AI helps draft and summarise. Approvals, risk acceptance and statements to
+              auditors stay with your people.
+            </p>
+          </Card>
+        </div>
+        <p className="mt-6 max-w-3xl text-sm text-muted-foreground">{site.frameworkDisclaimer}</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <CtaLink to="/features/evidence" variant="outline">
+            Evidence management
+          </CtaLink>
+          <CtaLink to="/features/risk-management" variant="outline">
+            Risk management
+          </CtaLink>
+          <CtaLink to="/frameworks/iso-27001" variant="ghost">
+            ISO 27001
+          </CtaLink>
+          <CtaLink to="/frameworks/iso-42001" variant="ghost">
+            ISO 42001
+          </CtaLink>
         </div>
       </Section>
 
