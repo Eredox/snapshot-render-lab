@@ -8,7 +8,7 @@ import { pageMeta, breadcrumbSchema, ldScript, faqSchema } from "@/lib/seo";
 export const Route = createFileRoute("/resources/faq")({
   head: () => ({
     ...pageMeta({
-      title: "FAQ — NOVA Compliance",
+      title: "Compliance Software FAQ | NOVA Compliance",
       description: "Answers to common questions about NOVA Compliance, frameworks, evidence, AI, security and pricing.",
       path: "/resources/faq",
     }),

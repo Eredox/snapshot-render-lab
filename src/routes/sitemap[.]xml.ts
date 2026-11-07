@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { staticRoutes, dynamicRoutes } from "@/config/navigation";
-import { publishedResources, resourcePath, typeRoutes } from "@/data/resources";
+import { publishedByType, publishedResources, resourcePath, typeRoutes } from "@/data/resources";
+import { testimonials } from "@/data/testimonials";
 import { publishedLegalRegistry } from "@/data/legal-registry";
 import { siteUrl } from "@/config/site";
 
@@ -10,13 +11,20 @@ export function sitemapUrls(): { loc: string; lastmod?: string }[] {
   const isResourceDetail = (path: string) =>
     resourceSections.some((base) => path.startsWith(`${base}/`));
 
-  /** Empty sections are noindex, so they stay out of the sitemap. */
+  /**
+   * Empty sections and non-content pages are noindex, so they stay out of the sitemap. Sections
+   * join the sitemap automatically (and lose their noindex) as soon as real content is published.
+   */
   const excluded = new Set<string>([
     "/book-demo/confirmed",
-    "/resources/case-studies",
-    "/resources/webinars",
+    // No live status feed is connected; the page says so and is noindex.
+    "/status",
+    ...(testimonials.length === 0 ? ["/testimonials"] : []),
+    ...(publishedByType("Product update").length === 0 ? ["/resources/product-updates"] : []),
+    ...(publishedByType("Case study").length === 0 ? ["/resources/case-studies"] : []),
+    ...(publishedByType("Webinar").length === 0 ? ["/resources/webinars"] : []),
   ]);
-  const excludedDynamicPrefixes = ["/plans", "/legal"];
+  const excludedDynamicPrefixes = ["/legal"];
 
   const staticUrls = staticRoutes
     .filter((r) => !excluded.has(r) && !r.startsWith("/legal/"))

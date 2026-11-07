@@ -7,7 +7,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 export const Route = createFileRoute("/compare")({
   head: () => ({
     ...pageMeta({
-      title: "Compare — NOVA Compliance",
+      title: "NOVA vs Spreadsheets and Checklists | NOVA Compliance",
       description: "Compare NOVA Compliance to spreadsheet-driven, checklist-only and auditor-led approaches to compliance management.",
       path: "/compare",
     }),

@@ -16,6 +16,7 @@ import { getFrameworkDetail } from "@/data/framework-detail";
 import { plans, currency } from "@/data/pricing";
 import { features } from "@/data/features";
 import { appUrls, site } from "@/config/site";
+import { frameworkSeo } from "@/data/seo-overrides";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/frameworks/$slug")({
@@ -36,15 +37,8 @@ export const Route = createFileRoute("/frameworks/$slug")({
     }
     return {
       ...pageMeta({
-        title:
-          framework.slug === "pci-dss"
-            ? "PCI DSS v4.0.1 | NOVA Compliance"
-            : framework.slug === "gdpr"
-              ? "GDPR Compliance | NOVA Compliance"
-              : framework.slug === "cmmc"
-                ? "CMMC Compliance | NOVA Compliance"
-                : `${framework.name} — NOVA Compliance`,
-        description: framework.description,
+        title: frameworkSeo[framework.slug]?.title ?? `${framework.name} | NOVA Compliance`,
+        description: frameworkSeo[framework.slug]?.description ?? framework.description,
         path: `/frameworks/${framework.slug}`,
       }),
       scripts: [

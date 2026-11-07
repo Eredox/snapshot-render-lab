@@ -25,7 +25,7 @@ import { pageMeta, breadcrumbSchema, ldScript, faqSchema, softwareSchema } from 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     ...pageMeta({
-      title: "NOVA Compliance Pricing | Plans for Growing Teams to Enterprise",
+      title: "NOVA Compliance Pricing | Free to Enterprise Plans",
       description:
         "NOVA Compliance subscription plans, approved USD pricing, feature comparison and support levels.",
       path: "/pricing",

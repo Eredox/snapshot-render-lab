@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type ComponentProps } from "react";
 import { ArrowRight, Check } from "lucide-react";
 
+import { ResponsiveDiagram } from "@/components/site/ResponsiveDiagram";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import {
   Card,
@@ -84,8 +85,9 @@ const pricingStages = [
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageMeta({
-      title: "NOVA Compliance | Governed Compliance with NOVA AI",
-      description: site.tagline,
+      title: "NOVA Compliance | Compliance Management Software with AI",
+      description:
+        "Manage frameworks, controls, evidence and risk in one governed workspace. NOVA AI assists readiness work; your people make every decision.",
       path: "/",
     }),
     scripts: [ldScript(softwareSchema())],
@@ -104,6 +106,7 @@ function AudienceVisual({
     <figure className={`overflow-hidden rounded-xl bg-gradient-to-br ${tone}`}>
       <img
         src={imagePath}
+        srcSet={`${imagePath.replace(/\.webp$/, "-480.webp")} 480w, ${imagePath.replace(/\.webp$/, "-960.webp")} 960w, ${imagePath} ${imageWidth}w`}
         alt={imageAlt}
         width={imageWidth}
         height={imageHeight}
@@ -151,13 +154,9 @@ function Index() {
             </div>
           </div>
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
-            <img
-              src="/media/ai-governance/nova-ai-governance-human-review-workflow.png"
+            <ResponsiveDiagram
+              base="/media/ai-governance/nova-ai-governance-human-review-workflow"
               alt="NOVA AI governance workflow showing policies, controls, evidence and requirements feeding into AI-assisted review with human approval."
-              width={1672}
-              height={941}
-              loading="lazy"
-              decoding="async"
               className="h-auto w-full object-contain"
             />
             <div className="p-6">
@@ -232,13 +231,10 @@ function Index() {
         />
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start">
           <figure className="overflow-hidden rounded-2xl border border-border bg-card">
-            <img
-              src="/media/evidence-automation/nova-evidence-automation-human-review-workflow.png"
+            <ResponsiveDiagram
+              base="/media/evidence-automation/nova-evidence-automation-human-review-workflow"
               alt="NOVA evidence workflow showing connected systems and evidence mapped to controls and frameworks before human review and reporting."
-              width={1672}
-              height={941}
-              loading="lazy"
-              decoding="async"
+              sizes="(min-width: 1024px) 640px, 100vw"
               className="h-auto w-full object-contain"
             />
             <figcaption className="border-t border-border px-5 py-4 text-sm text-muted-foreground">

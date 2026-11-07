@@ -2,11 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { byType, resourcePath } from "@/data/resources";
+import { byType, publishedByType, resourcePath } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 const base = pageMeta({
-  title: "Webinars — NOVA Compliance",
+  title: "Webinars | NOVA Compliance",
   description:
     "Live and on-demand NOVA Compliance sessions will be listed here once sessions are scheduled and approved for publication.",
   path: "/resources/webinars",
@@ -15,7 +15,7 @@ const base = pageMeta({
 export const Route = createFileRoute("/resources/webinars/")({
   head: () => ({
     ...base,
-    meta: [...base.meta, { name: "robots", content: "noindex, follow" }],
+    meta: publishedByType("Webinar").length === 0 ? [...base.meta, { name: "robots", content: "noindex, follow" }] : base.meta,
     scripts: [
       ldScript(
         breadcrumbSchema([

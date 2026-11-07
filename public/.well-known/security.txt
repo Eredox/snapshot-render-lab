@@ -1,0 +1,9 @@
+# Security contact for the public NOVA Compliance website (RFC 9116).
+# The address below is already published on the site (contact page); Eredox must keep it monitored.
+# Review and renew before the Expires date - an expired file is treated as absent.
+Contact: mailto:compliance@eredox.com
+Contact: https://www.nova.eredox.com/contact
+Expires: 2027-05-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.nova.eredox.com/.well-known/security.txt
+Policy: https://www.nova.eredox.com/security

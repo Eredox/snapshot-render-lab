@@ -15,7 +15,7 @@ const sections = [
 export const Route = createFileRoute("/resources/")({
   head: () => ({
     ...pageMeta({
-      title: "Resources — NOVA Compliance",
+      title: "Compliance Resources and Guides | NOVA Compliance",
       description:
         "Blog articles, guides, product updates and FAQs to help you run a governed, evidence-led compliance programme with NOVA.",
       path: "/resources",

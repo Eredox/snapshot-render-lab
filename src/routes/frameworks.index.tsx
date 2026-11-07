@@ -30,7 +30,7 @@ type FrameworkRecord = (typeof frameworks)[number];
 export const Route = createFileRoute("/frameworks/")({
   head: () => ({
     ...pageMeta({
-      title: "Compliance Frameworks | NOVA Compliance",
+      title: "Compliance Frameworks: SOC 2, ISO 27001, ISO 42001 | NOVA",
       description:
         "Compliance frameworks supported in NOVA, with availability status, readiness views and honest scope handling.",
       path: "/frameworks",

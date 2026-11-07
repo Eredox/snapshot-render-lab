@@ -2,17 +2,22 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertCircle } from "lucide-react";
 import { Section, SectionHeading, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+import { pageMeta, breadcrumbSchema, ldScript, noindexFollow } from "@/lib/seo";
 
 export const Route = createFileRoute("/status")({
-  head: () => ({
-    ...pageMeta({
-      title: "System status — NOVA Compliance",
+  head: () => {
+    const base = pageMeta({
+      title: "System Status | NOVA Compliance",
       description: "Current status of the NOVA Compliance service and recent incident history.",
       path: "/status",
-    }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "System status", to: "/status" }]))],
-  }),
+    });
+    return {
+      ...base,
+      // The page states that no live monitoring feed is connected. Remove this noindex when a real feed is wired in.
+      meta: [...base.meta, noindexFollow],
+      scripts: [ldScript(breadcrumbSchema([{ label: "System status", to: "/status" }]))],
+    };
+  },
   component: StatusPage,
 });
 

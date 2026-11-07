@@ -8,7 +8,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 export const Route = createFileRoute("/customers")({
   head: () => ({
     ...pageMeta({
-      title: "Customers — NOVA Compliance",
+      title: "Illustrative Compliance Scenarios | NOVA Compliance",
       description: "How teams use NOVA Compliance to run evidence-led compliance programmes and prepare for assessments.",
       path: "/customers",
     }),
@@ -24,7 +24,7 @@ const scenarios = [
   },
   {
     title: "Consolidating frameworks",
-    body: "A technology SME mapped ISO 27001 and Essential Eight onto shared controls, halving the evidence duplication between assessments.",
+    body: "A technology SME mapped ISO 27001 and Essential Eight onto shared controls so the same evidence could support both assessments.",
   },
   {
     title: "Audit preparation",

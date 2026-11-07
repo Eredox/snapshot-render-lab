@@ -4,6 +4,7 @@ import { ConversionCta } from "@/components/site/cta";
 import { features } from "@/data/features";
 import { site } from "@/config/site";
 import { getFeature } from "@/data/features";
+import { featureSeo } from "@/data/seo-overrides";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/features/framework-management")({
@@ -11,8 +12,8 @@ export const Route = createFileRoute("/features/framework-management")({
     const feature = getFeature("framework-management")!;
     return {
       ...pageMeta({
-        title: `${feature.name} — NOVA Compliance`,
-        description: feature.summary,
+        title: featureSeo[feature.slug]?.title ?? `${feature.name} | NOVA Compliance`,
+        description: featureSeo[feature.slug]?.description ?? feature.summary,
         path: feature.path,
       }),
       scripts: [

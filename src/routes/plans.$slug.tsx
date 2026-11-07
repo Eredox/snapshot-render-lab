@@ -18,8 +18,9 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/plans/$slug")({
   // The billing interval chosen on the pricing page travels with the visitor to the plan page and on to registration.
-  validateSearch: (search: Record<string, unknown>): { billing: "monthly" | "annual" } => ({
-    billing: search["billing"] === "annual" ? "annual" : "monthly",
+  // billing stays OPTIONAL: normalising a bare /plans/<plan> to ?billing=monthly would make every sitemap URL answer 307.
+  validateSearch: (search: Record<string, unknown>): { billing?: "monthly" | "annual" } => ({
+    ...(search["billing"] === "annual" ? { billing: "annual" as const } : search["billing"] === "monthly" ? { billing: "monthly" as const } : {}),
   }),
   loader: ({ params }) => {
     const plan = getPlan(params.slug);
@@ -39,8 +40,8 @@ export const Route = createFileRoute("/plans/$slug")({
     }
     return {
       ...pageMeta({
-        title: `NOVA ${plan.name} plan — Pricing and entitlements`,
-        description: `${plan.summary} Review NOVA ${plan.name} plan entitlements, framework scope, evidence workflow and next steps.`,
+        title: `NOVA ${plan.name} Plan | Pricing and Entitlements`,
+        description: `${plan.summary} Review the ${plan.name} plan entitlements, billing options and next steps.`,
         path: plan.detailPath,
       }),
       scripts: [
@@ -108,7 +109,7 @@ function PlanPrice({
 function PlanPage() {
   const { plan, detail } = Route.useLoaderData();
   const search = Route.useSearch();
-  const [billing, setBilling] = useState<"monthly" | "annual">(search.billing);
+  const [billing, setBilling] = useState<"monthly" | "annual">(search.billing ?? "monthly");
   const hasBilling = !plan.quoteOnly && plan.slug !== "free";
   const actionTo = plan.quoteOnly ? plan.primaryAction.to : registrationUrl(plan, billing);
   const actionExternal = !plan.quoteOnly;

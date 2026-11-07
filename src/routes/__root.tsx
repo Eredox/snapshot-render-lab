@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useMemo, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -53,7 +53,7 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error: rawError, reset }: { error: unknown; reset: () => void }) {
-  const error = rawError instanceof Error ? rawError : new Error(String(rawError));
+  const error = useMemo(() => (rawError instanceof Error ? rawError : new Error(String(rawError))), [rawError]);
   console.error(error);
   const router = useRouter();
   useEffect(() => {

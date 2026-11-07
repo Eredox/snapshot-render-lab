@@ -10,6 +10,7 @@ import {
   Disclaimer,
   AvailabilityBadge,
 } from "@/components/site/primitives";
+import { ResponsiveDiagram } from "@/components/site/ResponsiveDiagram";
 import { CtaLink, ConversionCta } from "@/components/site/cta";
 import { features } from "@/data/features";
 import { governedFrameworkCatalogue } from "@/data/framework-catalogue";
@@ -196,14 +197,10 @@ function PlatformPage() {
             </div>
           </div>
           <div className="rounded-2xl border border-border bg-card p-3">
-            <img
-              src="/media/ai-governance/nova-ai-governance-human-review-workflow.png"
+            <ResponsiveDiagram
+              base="/media/ai-governance/nova-ai-governance-human-review-workflow"
               alt="NOVA AI governance workflow showing policies, controls, evidence and requirements feeding into AI-assisted review with human approval."
               title="NOVA AI Governance Human Review Workflow"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
               className="h-auto w-full rounded-xl object-contain"
             />
           </div>

@@ -30,8 +30,8 @@ const freePlan = plans.find((plan) => plan.slug === "free");
 const freeLimits = [
   "One workspace",
   `Up to ${freePlan?.maxUsers ?? 2} users, including one administrator`,
-  freePlan?.includes.find((item) => item.toLowerCase().includes("activated framework")) ??
-    "One active framework",
+  freePlan?.includes.find((item) => item.toLowerCase().includes("framework")) ??
+    "All available frameworks",
   freePlan?.includes.find((item) => item.toLowerCase().includes("manual evidence upload")) ??
     "Manual evidence upload",
   freePlan?.support ?? "Community support",

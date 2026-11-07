@@ -4,6 +4,7 @@ import { Section, SectionHeading, PageHero, Card, FeatureList, RelatedLinks } fr
 import { ConversionCta } from "@/components/site/cta";
 import { industries } from "@/data/industries";
 import { frameworks } from "@/data/frameworks";
+import { industrySeo } from "@/data/seo-overrides";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/industries/$slug")({
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/industries/$slug")({
     }
     return {
       ...pageMeta({
-        title: `${industry.name} — NOVA Compliance`,
+        title: industrySeo[industry.slug]?.title ?? `${industry.name} | NOVA Compliance`,
         description: industry.summary,
         path: `/industries/${industry.slug}`,
       }),

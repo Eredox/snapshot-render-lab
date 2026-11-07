@@ -9,6 +9,13 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   nitro: {
     preset: "node-server",
+    // Unhashed public files: cache for 30 days (hashed /assets/* already get a 1-year immutable header from Nitro).
+    routeRules: {
+      "/media/**": { headers: { "cache-control": "public, max-age=2592000" } },
+      "/fonts/**": { headers: { "cache-control": "public, max-age=2592000" } },
+      "/og/**": { headers: { "cache-control": "public, max-age=2592000" } },
+      "/favicon.ico": { headers: { "cache-control": "public, max-age=86400" } },
+    },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).

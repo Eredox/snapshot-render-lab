@@ -11,7 +11,7 @@ export const Route = createFileRoute("/book-demo/confirmed")({
   // No validateSearch on purpose: this page must never read or echo personal details from the URL.
   head: () => {
     const base = pageMeta({
-      title: "Demo booking received — NOVA Compliance",
+      title: "Demo Booking Received | NOVA Compliance",
       description: "Your NOVA Compliance demo booking has been received. Review your preferred slot and what happens next.",
       path: "/book-demo/confirmed",
     });

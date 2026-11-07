@@ -1,25 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero, Section, SectionHeading, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { byType, resourcePath } from "@/data/resources";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+import { byType, publishedByType, resourcePath } from "@/data/resources";
+import { pageMeta, breadcrumbSchema, ldScript, noindexFollow } from "@/lib/seo";
 
 export const Route = createFileRoute("/resources/product-updates/")({
-  head: () => ({
-    ...pageMeta({
-      title: "Product updates — NOVA Compliance",
+  head: () => {
+    const base = pageMeta({
+      title: "Product Updates | NOVA Compliance",
       description: "Release notes and platform updates for NOVA Compliance, published once each release is approved.",
       path: "/resources/product-updates",
-    }),
-    scripts: [
-      ldScript(
-        breadcrumbSchema([
-          { label: "Resources", to: "/resources" },
-          { label: "Product updates", to: "/resources/product-updates" },
-        ]),
-      ),
-    ],
-  }),
+    });
+    return {
+      ...base,
+      // Indexable automatically once the first release note is published.
+      meta: publishedByType("Product update").length === 0 ? [...base.meta, noindexFollow] : base.meta,
+      scripts: [
+        ldScript(
+          breadcrumbSchema([
+            { label: "Resources", to: "/resources" },
+            { label: "Product updates", to: "/resources/product-updates" },
+          ]),
+        ),
+      ],
+    };
+  },
   component: ProductUpdatesPage,
 });
 

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/legal/$slug")({
     }
     const path = `/legal/${doc.slug}`;
     const baseMeta = pageMeta({
-      title: `${doc.title} — NOVA Compliance`,
+      title: `${doc.title} | NOVA Compliance`,
       description: doc.summary,
       path,
     });

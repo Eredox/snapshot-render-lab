@@ -7,7 +7,8 @@ export const Route = createFileRoute("/legal/terms")({
   head: () => ({
     ...pageMeta({
       title: "Terms and Conditions | NOVA Compliance",
-      description: "NOVA Global Master SaaS Terms and Conditions, version 1.1.",
+      description:
+        "NOVA Global Master SaaS Terms and Conditions (version 1.1) governing access to and use of the NOVA Compliance service.",
       path: "/legal/terms",
     }),
     scripts: [

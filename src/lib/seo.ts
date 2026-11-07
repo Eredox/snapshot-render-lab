@@ -50,6 +50,9 @@ export function pageMeta(opts: {
   };
 }
 
+/** Robots directive for sections that have no publishable content yet (never advertised in the sitemap either). */
+export const noindexFollow: MetaEntry = { name: "robots", content: "noindex, follow" };
+
 export function ldScript(data: unknown) {
   return { type: "application/ld+json", children: JSON.stringify(data) };
 }

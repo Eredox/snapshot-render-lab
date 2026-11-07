@@ -1,17 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Section, PageHero, Card, RelatedLinks } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
+import { testimonials } from "@/data/testimonials";
+import { pageMeta, breadcrumbSchema, ldScript, noindexFollow } from "@/lib/seo";
 
 export const Route = createFileRoute("/testimonials")({
-  head: () => ({
-    ...pageMeta({
-      title: "Testimonials — NOVA Compliance",
+  head: () => {
+    const base = pageMeta({
+      title: "Customer Feedback | NOVA Compliance",
       description: "Customer feedback will be published here only after Eredox has approved genuine, attributable public feedback.",
       path: "/testimonials",
-    }),
-    scripts: [ldScript(breadcrumbSchema([{ label: "Testimonials", to: "/testimonials" }]))],
-  }),
+    });
+    return {
+      ...base,
+      // No approved testimonials exist yet: keep the placeholder out of search until real content is published.
+      meta: testimonials.length === 0 ? [...base.meta, noindexFollow] : base.meta,
+      scripts: [ldScript(breadcrumbSchema([{ label: "Testimonials", to: "/testimonials" }]))],
+    };
+  },
   component: TestimonialsPage,
 });
 

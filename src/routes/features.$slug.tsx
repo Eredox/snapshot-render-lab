@@ -4,6 +4,7 @@ import { Section, SectionHeading, PageHero, Card, FeatureList, AvailabilityBadge
 import { ConversionCta } from "@/components/site/cta";
 import { features, getFeature } from "@/data/features";
 import { novaAiCopy, site } from "@/config/site";
+import { featureSeo } from "@/data/seo-overrides";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/features/$slug")({
@@ -21,8 +22,8 @@ export const Route = createFileRoute("/features/$slug")({
     }
     return {
       ...pageMeta({
-        title: `${feature.name} — NOVA Compliance`,
-        description: feature.summary,
+        title: featureSeo[feature.slug]?.title ?? `${feature.name} | NOVA Compliance`,
+        description: featureSeo[feature.slug]?.description ?? feature.summary,
         path: feature.path,
       }),
       scripts: [

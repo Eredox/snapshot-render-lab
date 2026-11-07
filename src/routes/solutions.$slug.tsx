@@ -14,6 +14,7 @@ import { solutions, getSolution } from "@/data/solutions";
 import { frameworks } from "@/data/frameworks";
 import { features } from "@/data/features";
 import { appUrls, site } from "@/config/site";
+import { solutionSeo } from "@/data/seo-overrides";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/solutions/$slug")({
@@ -34,7 +35,7 @@ export const Route = createFileRoute("/solutions/$slug")({
     }
     return {
       ...pageMeta({
-        title: `${solution.name} — NOVA Compliance`,
+        title: solutionSeo[solution.slug]?.title ?? `${solution.name} | NOVA Compliance`,
         description: solution.summary,
         path: solution.path,
       }),

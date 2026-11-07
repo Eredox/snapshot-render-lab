@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Section, PageHero, Card } from "@/components/site/primitives";
 import { ConversionCta } from "@/components/site/cta";
-import { byType, resourcePath } from "@/data/resources";
+import { byType, publishedByType, resourcePath } from "@/data/resources";
 import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 
 const base = pageMeta({
-  title: "Case studies — NOVA Compliance",
+  title: "Case Studies | NOVA Compliance",
   description:
     "Customer case studies for NOVA Compliance will be published here once organisations have approved their stories for publication.",
   path: "/resources/case-studies",
@@ -14,7 +14,7 @@ const base = pageMeta({
 export const Route = createFileRoute("/resources/case-studies/")({
   head: () => ({
     ...base,
-    meta: [...base.meta, { name: "robots", content: "noindex, follow" }],
+    meta: publishedByType("Case study").length === 0 ? [...base.meta, { name: "robots", content: "noindex, follow" }] : base.meta,
     scripts: [
       ldScript(
         breadcrumbSchema([

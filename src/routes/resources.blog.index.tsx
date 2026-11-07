@@ -9,7 +9,7 @@ import { pageMeta, breadcrumbSchema, ldScript } from "@/lib/seo";
 export const Route = createFileRoute("/resources/blog/")({
   head: () => ({
     ...pageMeta({
-      title: "NOVA Compliance Blog — Compliance, GRC & Assurance Insights",
+      title: "Compliance and GRC Insights Blog | NOVA Compliance",
       description:
         "Articles from Eredox on compliance frameworks, evidence management, control mapping, risk decisions and responsible AI-assisted assurance.",
       path: "/resources/blog",
