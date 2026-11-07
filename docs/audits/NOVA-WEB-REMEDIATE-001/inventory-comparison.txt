@@ -1,0 +1,46 @@
+## Canonical pages
+old 73 new 73
+removed: []
+added: []
+
+## Issue counts (crawled pages)
+SEO-001                                    old   0  new   0
+SEO-004 orphan                             old   2  new   6
+SEO-004 weakly                             old  13  new   4
+SEO-004 indexable but not in sitemap       old   6  new   0
+SEO-005                                    old  45  new   0
+SEO-006                                    old   3  new   0
+SEO-008 title                              old   2  new   0
+SEO-008 meta                               old   7  new   0
+SEO-014                                    old   1  new   0
+Thin unique                                old   5  new   4
+noindex page listed in sitemap             old   0  new   0
+
+sitemap rows old 66 new 69
+priority old Counter({'P2': 50, '-': 16, 'P3': 9, 'P1': 7})
+priority new Counter({'-': 58, 'P2': 15, 'P3': 15})
+status codes new Counter({'200': 88})
+titles new unique 73 of 73
+
+## Probes (old live -> corrected local)
+/this-page-does-not-exist-audit               was 200  now 404  text/html  
+/404                                          was 200  now 404  text/html  
+/index.html                                   was 200  now 404  text/html  
+/llms.txt                                     was 200  now 404  text/html  
+/security.txt                                 was 200  now 404  text/html  
+/.well-known/security.txt                     was 200  now 200  text/plain  
+/assets/index-Cg_7u5k9.js.map                 was 200  now 404  text/html  
+/fonts/cirqua.woff2                           was 200  now 404  text/html  
+/Pricing                                      was 200  now 200  text/html  
+/pricing/                                     was 307  now 307    /pricing
+/resources/webinars                           was 200  now 200  text/html  
+/resources/blog/not-a-post                    was 404  now 404  text/html  
+/api/forms                                    was 405  now 405  application/json  
+/_serverFn/audit-nonexistent                  was 403  now 403  text/plain  
+/robots.txt                                   was 200  now 200  text/plain  
+/sitemap.xml                                  was 200  now 200  application/xml  
+/favicon.ico                                  was 200  now 200  image/vnd.microsoft.icon  
+/og/nova-share.jpg                            was 200  now 200  image/jpeg  
+/google09b732402a3c6243.html                  was 200  now 200  text/html  
+/2695136d30af499e9ced4742ab0d9681.txt         was 200  now 200  text/plain  
+/book-demo/confirmed                          was 307  now 200  text/html  

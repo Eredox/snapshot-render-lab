@@ -1,0 +1,192 @@
+[
+ {
+  "run": "live-mobile-home",
+  "target": "live (22 Oct build)",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "https://www.nova.eredox.com/",
+  "performance": 63,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 2663,
+  "lcp_ms": 2663,
+  "tbt_ms": 1534,
+  "cls": 0.027,
+  "totalKB": 2207,
+  "failedAudits": [
+   "valid-source-maps",
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "local-mobile-home",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "LOCAL/",
+  "performance": 75,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 959,
+  "lcp_ms": 959,
+  "tbt_ms": 1244,
+  "cls": 0,
+  "totalKB": 576,
+  "failedAudits": [
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "local2-mobile-home",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "LOCAL/",
+  "performance": 72,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 987,
+  "lcp_ms": 987,
+  "tbt_ms": 1750,
+  "cls": 0,
+  "totalKB": 576,
+  "failedAudits": []
+ },
+ {
+  "run": "live-desktop-home",
+  "target": "live (22 Oct build)",
+  "lighthouse": "13.6.0",
+  "formFactor": "desktop",
+  "url": "https://www.nova.eredox.com/",
+  "performance": 69,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 1419,
+  "lcp_ms": 1419,
+  "tbt_ms": 394,
+  "cls": 0.028,
+  "totalKB": 4012,
+  "failedAudits": [
+   "valid-source-maps",
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "local-desktop-home",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "desktop",
+  "url": "LOCAL/",
+  "performance": 85,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 296,
+  "lcp_ms": 296,
+  "tbt_ms": 333,
+  "cls": 0.027,
+  "totalKB": 507,
+  "failedAudits": [
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "live-mobile-pricing",
+  "target": "live (22 Oct build)",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "https://www.nova.eredox.com/pricing",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 2385,
+  "lcp_ms": 2385,
+  "tbt_ms": 5,
+  "cls": 0,
+  "totalKB": 368,
+  "failedAudits": [
+   "valid-source-maps",
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "local-mobile-pricing",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "LOCAL/pricing",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 952,
+  "lcp_ms": 952,
+  "tbt_ms": 22,
+  "cls": 0,
+  "totalKB": 344,
+  "failedAudits": [
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "live-mobile-iso27001",
+  "target": "live (22 Oct build)",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "https://www.nova.eredox.com/frameworks/iso-27001",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 2329,
+  "lcp_ms": 2329,
+  "tbt_ms": 12,
+  "cls": 0.027,
+  "totalKB": 378,
+  "failedAudits": [
+   "valid-source-maps",
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "local-mobile-iso27001",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "LOCAL/frameworks/iso-27001",
+  "performance": 87,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 963,
+  "lcp_ms": 3834,
+  "tbt_ms": 140,
+  "cls": 0.0,
+  "totalKB": 354,
+  "failedAudits": [
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "run": "lA",
+  "target": "corrected local build via gzip lab proxy",
+  "lighthouse": "13.6.0",
+  "formFactor": "mobile",
+  "url": "LOCAL/frameworks/iso-27001",
+  "performance": 88,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "fcp_ms": 938,
+  "lcp_ms": 3795,
+  "tbt_ms": 77,
+  "cls": 0.027,
+  "totalKB": 354,
+  "failedAudits": []
+ }
+]
