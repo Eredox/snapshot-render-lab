@@ -213,6 +213,7 @@ export const footerColumns: NavGroup[] = [
     label: "Company",
     items: [
       { label: "About", to: "/about" },
+      { label: "Partners", to: "/partners" },
       { label: "Resources", to: "/resources" },
       { label: "FAQ", to: "/resources/faq" },
       { label: "Customer scenarios", to: "/customers" },
