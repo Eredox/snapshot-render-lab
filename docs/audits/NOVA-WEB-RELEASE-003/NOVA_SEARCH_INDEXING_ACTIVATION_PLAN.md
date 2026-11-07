@@ -15,13 +15,14 @@ All existing verification files are kept exactly as they are; no verification fi
 ## 2. Pre-activation gate (all must be true)
 1. RELEASE-002 conditions cleared and the website deployed with the approved build (robots.txt, 69-URL sitemap, genuine 404s).
 2. `node scripts/discovery/check-discovery.mjs --base https://www.nova.eredox.com --live --delay 400` → `RESULT PASS` with **69** sitemap entries (bounded: robots, sitemap, UA simulation). Optionally the full crawl on a staging copy.
-3. Founder decision recorded on the **training-crawler policy** (current: GPTBot, ClaudeBot, Google-Extended allowed; CCBot blocked). Not required for search activation; required before any change to that section.
+3. Training-crawler policy: **Founder decision recorded 2026-11-08 — retain existing permissions** (GPTBot, ClaudeBot, Google-Extended allowed; CCBot restricted). Nothing further needed unless the Founder changes it.
 4. Someone with account access is named for each service below.
 
 ## 3. Google Search Console ⛔
 1. Open the existing property (do not add a second one). Confirm ownership status = Verified; if not, verify with the existing HTML file (still served) — never delete it.
 2. **Sitemaps → submit** `https://www.nova.eredox.com/sitemap.xml`. Expect "Success" and 69 discovered URLs.
 3. **URL Inspection** (live test) for `/`, `/pricing`, `/frameworks/iso-27001`, `/industries`: confirm "URL is available to Google", user-declared canonical = Google-selected canonical, rendered HTML shows the content. This is the first *real* evidence of Googlebot access (the matrix in `NOVA_SEARCH_ENGINE_CRAWLER_READINESS.md` stays NOT VERIFIED until then).
+4a. **Search generative AI setting (Founder-required checkpoint).** In Search Console → Settings, locate the property-level **"Search generative AI"** control (Google introduced it in 2026 for AI Overviews, AI Mode and generative AI features in Discover; per press reports the default is *Include* and it is separate from `Google-Extended`, which governs training/grounding). Confirm it is set to **Include** for `https://www.nova.eredox.com/`, record the value with date and screenshot in the release record, and do not change it without a Founder decision. I could not open Search Console, so the setting's current value is **NOT VERIFIED**, and its exact label and availability should be re-checked in Google's current help pages.
 4. Request indexing only for a handful of key URLs (quota-limited); the sitemap does the rest.
 5. Pages report: expect `/status`, `/testimonials`, `/resources/product-updates`, `/resources/case-studies` as "Excluded by 'noindex' tag" (intentional). Previously reported soft 404s should clear as Google re-crawls.
 6. Record baseline: Pages (indexed / not indexed with reasons), Crawl stats (response codes, host status), Core Web Vitals (field data may be insufficient for weeks). **No ranking or traffic improvement is promised.**

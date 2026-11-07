@@ -1,6 +1,6 @@
 PASS  [robots] robots.txt returns 200 text/plain  — 200 text/plain; charset=utf-8
 PASS  [robots] robots.txt references the sitemap (absolute https)  — https://www.nova.eredox.com/sitemap.xml
-PASS  [robots] robots.txt < 500 KiB (Google limit)  — 1403 bytes
+PASS  [robots] robots.txt < 500 KiB (Google limit)  — 1554 bytes
 PASS  [sitemap] sitemap.xml 200 application/xml  — 200 application/xml; charset=utf-8
 PASS  [sitemap] XML well-formed, sitemaps.org namespace, balanced <url>
 PASS  [sitemap] entry count  — 69 URLs (RELEASE-002 expectation: 69)
@@ -58,7 +58,7 @@ PASS  [pages] server-rendered text names the product (NOVA Compliance) on every 
 PASS  [identity] About page states that NOVA is developed/operated by Eredox
 PASS  [pages] titles unique
 PASS  [pages] descriptions unique
-PASS  [jsonld] all JSON-LD blocks parse and pass structural validation  — {"Organization":69,"WebSite":69,"BreadcrumbList":68,"ContactPage":1,"SoftwareApplication":2,"AboutPage":1,"FAQPage":2,"BlogPosting":2}
+PASS  [jsonld] all JSON-LD blocks parse and pass structural validation  — {"Organization":69,"WebSite":69,"BreadcrumbList":68,"SoftwareApplication":2,"AboutPage":1,"ContactPage":1,"FAQPage":2,"BlogPosting":2}
 PASS  [jsonld] homepage declares Organization + WebSite + SoftwareApplication  — Organization,WebSite,SoftwareApplication
 PASS  [links] every sitemap URL reachable from / by following HTML <a href> only  — 69/69 reachable
 INFO  [links] pages with fewer than 2 inbound HTML links (informational)  — /solutions/executives /solutions/auditors /plans/free /plans/launch /plans/growth /plans/professional /plans/business /plans/enterprise

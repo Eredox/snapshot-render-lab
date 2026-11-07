@@ -34,7 +34,7 @@ describe("robots.txt discovery policy", () => {
     }
   });
 
-  it("keeps the model-training policy exactly as decided (changing it needs an explicit Founder decision)", () => {
+  it("keeps the model-training policy exactly as approved by the Founder (NOVA-WEB-RELEASE-003): GPTBot, ClaudeBot, Google-Extended allowed; CCBot restricted", () => {
     expect(g.get("gptbot")).toEqual(["allow:/"]);
     expect(g.get("claudebot")).toEqual(["allow:/"]);
     expect(g.get("google-extended")).toEqual(["allow:/"]);

@@ -1,6 +1,6 @@
 export function renderErrorPage(nonce?: string): string {
   return `<!doctype html>
-<html lang="en">
+<html lang="en-AU">
   <head>
     <meta charset="utf-8" />
     <title>This page didn't load</title>

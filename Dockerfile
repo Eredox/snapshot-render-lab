@@ -1,4 +1,5 @@
-FROM oven/bun:1 AS build
+# Base images are pinned by digest (tag kept for readability). Update both deliberately: docker buildx imagetools inspect <tag>.
+FROM oven/bun:1@sha256:1d22548f177f4ff38e0c15baa3c2c46c6c2060ba2d1bc573bb4720b407548f1d AS build
 
 WORKDIR /app
 
@@ -8,7 +9,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build
 
-FROM node:24-bookworm-slim
+FROM node:24-bookworm-slim@sha256:01d566e8d94d8c619591d78652babfccd3c6992a3dffa9ed5ab39e11cf6c70e9
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0

@@ -31,11 +31,11 @@ Date 2026-11-08 · Branch `remediate/nova-web-remediate-001` · Scope: robots.tx
 | OpenAI user-initiated | `ChatGPT-User` | Allow | Named group → Allow `/` | 200 | `chatgpt-user.json` IP list. OpenAI states robots.txt rules may not apply to user-initiated fetches | Policy **PASS** · NOT VERIFIED | None |
 | Anthropic user-initiated | `Claude-User` | Allow | **New explicit** group → Allow `/` | 200 | UA only (as above) | Policy **PASS** · NOT VERIFIED | Added explicit Allow |
 | Perplexity user-initiated | `Perplexity-User` | Allow | **New explicit** group → Allow `/` | 200 | `perplexity-user.json` IP list; Perplexity says this fetcher generally ignores robots.txt | Policy **PASS** · NOT VERIFIED | Added explicit Allow |
-| OpenAI training | `GPTBot` | **Founder decision** (current: Allow) | Named group → Allow `/` (**unchanged**) | n/a (reported only) | `gptbot.json` | Documented, not asserted | None without Founder decision |
-| Anthropic training | `ClaudeBot` | **Founder decision** (current: Allow) | Named group → Allow `/` (**unchanged**; moved under the "training" heading) | n/a | UA only | Documented | Same |
-| Google Gemini training/grounding control | `Google-Extended` | **Founder decision** (current: Allow) | Named group → Allow `/` (**unchanged**) | token only, no crawl of its own | Controlled by robots.txt only; does not affect Search indexing | Documented | Same |
-| Apple AI training control | `Applebot-Extended` | **Founder decision** (current: effectively Allow via `*`) | `*` → Allow | token only | robots.txt only | Documented | Same — not named in robots.txt today |
-| Common Crawl | `CCBot` | Blocked today | Named group → **Disallow `/`** (unchanged) | n/a | vendor IP list | Documented | Same |
+| OpenAI training | `GPTBot` | **Allow — Founder-approved 2026-11-08** | Named group → Allow `/` (**unchanged**) | n/a (reported only) | `gptbot.json` | Documented, not asserted | None without Founder decision |
+| Anthropic training | `ClaudeBot` | **Allow — Founder-approved 2026-11-08** | Named group → Allow `/` (**unchanged**; moved under the "training" heading) | n/a | UA only | Documented | Same |
+| Google Gemini training/grounding control | `Google-Extended` | **Allow — Founder-approved 2026-11-08** | Named group → Allow `/` (**unchanged**) | token only, no crawl of its own | Controlled by robots.txt only; does not affect Search indexing | Documented | Same |
+| Apple AI training control | `Applebot-Extended` | Not named; effectively Allow via `*` (not part of the Founder decision; no change) | `*` → Allow | token only | robots.txt only | Documented | Same — not named in robots.txt today |
+| Common Crawl | `CCBot` | Blocked — **restriction retained by Founder decision** | Named group → **Disallow `/`** (unchanged) | n/a | vendor IP list | Documented | Same |
 | X / Meta previews | `Twitterbot`, `facebookexternalhit` | Allow | Named groups → Allow | 200 | n/a | PASS (policy) | None |
 
 Other documented AI/training crawlers (for example Meta, ByteDance, Amazon, Cohere agents) are **not named**, so they fall under `*` (Allow). Whether to name and block any of them is part of the Founder training decision; nothing was added.

@@ -30,7 +30,8 @@ Allow: /
 User-agent: Perplexity-User
 Allow: /
 
-# 4. Generative-AI model training - existing policy, UNCHANGED. Any change needs an explicit Founder decision.
+# 4. Generative-AI model training - Founder decision (NOVA-WEB-RELEASE-003): APPROVED, existing permissions retained.
+#    GPTBot, ClaudeBot and Google-Extended may access public website content; CCBot stays restricted. Any change needs a new Founder decision.
 User-agent: GPTBot
 Allow: /
 

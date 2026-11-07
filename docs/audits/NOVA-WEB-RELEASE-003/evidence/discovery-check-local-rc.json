@@ -1,7 +1,7 @@
 {
-  "base": "http://127.0.0.1:5198",
+  "base": "http://127.0.0.1:5199",
   "live": false,
-  "generated": "2026-11-07T15:20:17.826Z",
+  "generated": "2026-11-07T16:25:44.877Z",
   "matrix": [
     {
       "token": "Googlebot",
@@ -192,7 +192,7 @@
       "area": "robots",
       "name": "robots.txt < 500 KiB (Google limit)",
       "status": "PASS",
-      "detail": "1403 bytes"
+      "detail": "1554 bytes"
     },
     {
       "area": "sitemap",
@@ -402,7 +402,7 @@
       "area": "jsonld",
       "name": "all JSON-LD blocks parse and pass structural validation",
       "status": "PASS",
-      "detail": "{\"Organization\":69,\"WebSite\":69,\"BreadcrumbList\":68,\"ContactPage\":1,\"SoftwareApplication\":2,\"AboutPage\":1,\"FAQPage\":2,\"BlogPosting\":2}"
+      "detail": "{\"Organization\":69,\"WebSite\":69,\"BreadcrumbList\":68,\"SoftwareApplication\":2,\"AboutPage\":1,\"ContactPage\":1,\"FAQPage\":2,\"BlogPosting\":2}"
     },
     {
       "area": "jsonld",
