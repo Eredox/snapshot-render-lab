@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { handleAssistantRequest } from "./lib/assistant-server";
 import { handleFormsRequest } from "./lib/forms-server";
 import { createNonce, nonceStore, withSecurityHeaders } from "./lib/security-headers";
 
@@ -52,6 +53,9 @@ export default {
     try {
       if (new URL(request.url).pathname === "/api/forms") {
         return withSecurityHeaders(await handleFormsRequest(request), nonce, request);
+      }
+      if (new URL(request.url).pathname === "/api/assistant") {
+        return withSecurityHeaders(await handleAssistantRequest(request), nonce, request);
       }
       const handler = await getServerEntry();
       // The nonce is visible to getRouter() (src/router.tsx) for the duration of this request only.

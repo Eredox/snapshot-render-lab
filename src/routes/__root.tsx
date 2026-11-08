@@ -16,6 +16,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ComplianceJourneyCta } from "@/components/site/ComplianceJourneyCta";
 import { CookieConsent } from "@/components/site/CookieConsent";
+import { NovaAssistant } from "@/components/site/NovaAssistant";
 import { site } from "@/config/site";
 import {
   normalizePathname,
@@ -164,6 +165,7 @@ function RootComponent() {
       {shouldRenderRootComplianceJourneyCta(pathname) ? (
         <ComplianceJourneyCta pathname={pathname} selfLink={pathname === "/compliance-journey"} />
       ) : null}
+      <NovaAssistant />
       <Footer />
     </QueryClientProvider>
   );
