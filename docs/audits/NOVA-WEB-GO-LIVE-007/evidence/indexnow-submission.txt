@@ -1,0 +1,26 @@
+IndexNow SUBMIT: 69 URL(s) to https://api.indexnow.org/indexnow
+  key file: https://www.nova.eredox.com/2695136d30af499e9ced4742ab0d9681.txt
+  https://www.nova.eredox.com/
+  https://www.nova.eredox.com/about
+  https://www.nova.eredox.com/book-demo
+  https://www.nova.eredox.com/compliance-journey
+  https://www.nova.eredox.com/compare
+  https://www.nova.eredox.com/contact
+  https://www.nova.eredox.com/customers
+  https://www.nova.eredox.com/features
+  https://www.nova.eredox.com/frameworks
+  https://www.nova.eredox.com/industries
+  https://www.nova.eredox.com/integrations
+  https://www.nova.eredox.com/legal
+  https://www.nova.eredox.com/partners
+  https://www.nova.eredox.com/platform
+  https://www.nova.eredox.com/pricing
+  https://www.nova.eredox.com/request-quote
+  https://www.nova.eredox.com/resources
+  https://www.nova.eredox.com/roadmap
+  https://www.nova.eredox.com/resources/blog
+  https://www.nova.eredox.com/resources/faq
+  ... +49
+  live key file check: OK (served as text/plain, content matches)
+Response: 202 (200/202 = accepted; 400 invalid; 403 key not verified; 422 URL/key mismatch; 429 too many)
+Sun Nov  8 23:39:42 UTC 2026

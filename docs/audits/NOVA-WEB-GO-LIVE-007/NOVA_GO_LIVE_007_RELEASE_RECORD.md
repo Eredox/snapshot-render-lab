@@ -41,3 +41,19 @@ Archive and diff copied to `~/release-c58d7de/` on Server1 and checksums verifie
 **G1 e-mail: PASS** — Founder verified the "NOVA website enquiry" message in Outlook with the marker above (screenshot held by the Founder; not seen by me).
 **G1 CRM record: pending Founder confirmation.** The session has no CRM access. Indirect evidence only: the handler runs the CRM call before the e-mail and returns 202 only if the CRM call did not throw, and the e-mail was sent after it.
 **Not yet done:** IndexNow submission, Search Console and Bing verification (held until G1 CRM confirmed).
+
+## Founder G1 acceptance (2026-11-09) — recorded
+Email: PASS (Outlook screenshot, compliance@eredox.com). CRM: PASS — Eredox CRM lead "NOVA Website — General Enquiry — Synthetic Test", contact NOVA SYNTHETIC TEST, company Synthetic Test, assigned to NOVA Website Intake, sales team Sales, identifier `NOVA-SYNTHETIC-TEST G1 20261108T230425Z`; visually verified by the Founder. **G1 ACCEPTED — PASS.** The synthetic lead may be removed through the approved test-data cleanup process; this record retains the evidence. Screenshots are held by the Founder, not in the repository.
+
+## Search activation
+| Item | Result |
+|---|---|
+| IndexNow | 69 URLs from the live sitemap submitted 2026-11-08 23:39 UTC; endpoint `api.indexnow.org`; response **202 Accepted** (accepted for processing, not indexing); key file verified live. Evidence: `indexnow-dry-run.txt`, `indexnow-submission.txt`, `indexnow-urls-all-69.txt` |
+| Google Search Console | **OPEN — not done.** The built-in browser is not signed in to Google and credentials may not be entered by the assistant. Account holder to: confirm ownership Verified, submit `https://www.nova.eredox.com/sitemap.xml` (expect 69), URL-inspect `/`, `/pricing`, `/frameworks/iso-27001`, `/industries`, confirm Settings → "Search generative AI" = Include |
+| Bing Webmaster Tools | **OPEN — not done.** Same reason. Account holder: confirm site present or import from GSC, submit the sitemap |
+| Indexing / AI-search inclusion | **Not claimed.** To be observed independently (runbook §9: re-verify crawler logs at +24 h, +7 d, +28 d) |
+
+## Final status: GO — website release deployed and accepted; two account-holder activation items open
+Mandatory gates passed: image identity, nginx validate/backup/apply/reload, health, production smoke (28/28), HTTP verify-release (48/48), browser journey (27/27), isolation of the NOVA app, login, registration and CRM, security-contact (Founder-verified), G1 e-mail and CRM, no data in logs.
+Rollback remains available until the old container is removed: `nova-public-website-rollback-20261108T230134Z`, `nginx.conf.bak-20261108T230134Z`.
+Remaining limitations: paid checkout incomplete (accepted, separate workstream); Celery worker crash loop (application owners; not touched); SPF absent on eredox.com; TLS renewal-hook check before 19 Nov 2026 (reminder scheduled); nothing pushed to the remote; booking form not submitted in production (covered by the synthetic harness).
