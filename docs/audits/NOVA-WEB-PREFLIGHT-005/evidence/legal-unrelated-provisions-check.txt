@@ -1,0 +1,19 @@
+documents: same set/order (5)
+
+## cookies: sections 14 -> 14; metadata changed: [version, effectiveDate, lastReviewed]
+  - "Cookies and similar technologies": CHANGED (description same; paragraphs old 2 -> new 3, old paragraphs kept verbatim: 2)
+  - "Third-party technologies": CHANGED (description same; paragraphs old 2 -> new 4, old paragraphs kept verbatim: 0)
+  sections changed: 2 of 14; unchanged: 12
+
+## dpa: sections 9 -> 9; metadata changed: []
+  sections changed: 0 of 9; unchanged: 9
+
+## ai-features: sections 7 -> 7; metadata changed: []
+  sections changed: 0 of 7; unchanged: 7
+
+## accessibility: sections 11 -> 11; metadata changed: [version, effectiveDate, lastReviewed]
+  - "Downloads, external and third-party content": CHANGED (description same; paragraphs old 1 -> new 1, old paragraphs kept verbatim: 0)
+  sections changed: 1 of 11; unchanged: 10
+
+## subprocessors: sections 3 -> 3; metadata changed: []
+  sections changed: 0 of 3; unchanged: 3

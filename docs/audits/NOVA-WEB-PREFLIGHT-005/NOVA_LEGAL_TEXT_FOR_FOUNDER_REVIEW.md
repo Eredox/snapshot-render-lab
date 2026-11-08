@@ -2,8 +2,8 @@
 
 Date 2026-11-08 · Branch `remediate/nova-web-remediate-001` · Founder decision: **Legal Path A**. The wording below is committed on the release branch (commit `f5b2cd3`, carried in the release commit `affb00c`) and is built into the new release image. **Nothing is published**: it goes live only with a separately instructed production release. The Founder is the recorded approver (`src/data/legal-inventory.ts`: Terms and Privacy "Founder-approved"); no other legal owner is named in any repository.
 
-## 1. Decision requested
-Approve (or amend) the text in §3, and confirm the **effective date**. The documents are set to version **1.1**, effective and reviewed **2026-11-08** (today). If go-live is on a later day, say so: it is a one-line change in `src/data/legal.ts` (two documents) and needs a rebuild (about 10 minutes plus gates) because the date is part of the image. All other provisions of both documents, the Terms and the Privacy Policy are unchanged.
+## 1. Decision requested and the effective-date rule
+**Founder direction received (2026-11-08):** Legal Path A; the Google Fonts, Brevo, CRM, booking-privacy and abuse-control corrections are accepted *in principle*; final approval is recorded only after this exact wording is presented and the absence of unrelated changes is confirmed (§2a). **Effective date rule:** 8 November 2026 is used only if the site is published on that date; otherwise the **actual publication date** is used. Nothing is being published on 8 November (no deployment is authorised), so the value currently in the source, `2026-11-08` for both documents (version 1.1), is a **placeholder that must be replaced with the real publication date** in `src/data/legal.ts` (the `effectiveDate` and `lastReviewed` of the Cookie Policy and of the Accessibility Statement — four strings) before the release image is built. Because the date is part of the image, the commit, image ID and archive checksum are re-recorded at that point; the runbook step D0 checks this and refuses to continue while the placeholder is unconfirmed. This is the only change the date requires.
 
 ## 2. What was checked against what actually runs
 | Statement in the text | Verified against | Result |
@@ -17,6 +17,17 @@ Approve (or amend) the text in §3, and confirm the **effective date**. The docu
 | "Where enquiry delivery is enabled" | Production's website container currently has **no** delivery configuration (see the form-delivery document); the wording is true whether or not delivery is enabled | Deliberately conditional |
 
 Not asserted because it cannot be verified from the repositories: where Brevo and the CRM host process data (country), Brevo's contracting entity, retention periods, and whether the Privacy Policy and the Subprocessors register should also name Brevo. **Those are Founder decisions** and do not block this release; the cookie-policy wording does not depend on them.
+
+## 2a. Confirmation: no unrelated legal provision was modified
+Programmatic comparison of every document, section and paragraph in `src/data/legal.ts` between the pre-change commit `82770c8` and the release commit (`evidence/legal-unrelated-provisions-check.txt`):
+| Document | Sections | Changed | Unchanged |
+|---|---|---|---|
+| Cookie and Similar Technologies Policy | 14 | 2 ("Cookies and similar technologies": +1 paragraph, the 2 existing paragraphs kept verbatim; "Third-party technologies": 2 paragraphs replaced by 4) | 12 |
+| Accessibility Statement | 11 | 1 ("Downloads, external and third-party content": the four words "the Google Fonts resource," removed) | 10 |
+| Data Processing Addendum | 9 | 0 | 9 |
+| AI Features | 7 | 0 | 7 |
+| Subprocessors | 3 | 0 | 3 |
+Document set and order are identical; titles, summaries, status and section headings are unchanged. Metadata changed only for the two edited documents (version, effective date, last reviewed). `src/data/legal-published.ts` (Terms of Service and Privacy Policy), the legal routes and `src/config` have **no** diff; `src/data/legal-inventory.ts` changes exactly two version labels (1.0 → 1.1). Nothing in pricing, registration, billing or subscription files changed.
 
 ## 3. Exact final text (generated from the source file, not retyped)
 Paragraph order is as published. Only the items marked below differ from the previous version; every other section of both documents is unchanged.
@@ -59,7 +70,8 @@ Paragraph order is as published. Only the items marked below differ from the pre
 ## 5. Approval record (to be completed by the Founder — not pre-filled)
 | Item | Value |
 |---|---|
-| Wording approved as is / amended (attach changes) | |
-| Effective date | |
+| Direction received | 2026-11-08: Legal Path A; corrections accepted in principle; final approval to be recorded after this presentation |
+| Wording approved as is / amended (attach changes) | *awaiting Founder's final approval* |
+| Effective date | actual publication date (8 Nov 2026 only if published that day) — *to be entered at publication* |
 | Approver and date | |
 | Decision on naming Brevo/CRM in the Privacy Policy and Subprocessors register | |

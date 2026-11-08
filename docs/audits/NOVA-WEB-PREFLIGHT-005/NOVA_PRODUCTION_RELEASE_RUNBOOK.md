@@ -30,9 +30,17 @@ Not covered by any gate: Rich Results Test / Schema.org validator (live URL need
 1. Written Founder go + window; a person with `sudo` on Server1 (the nginx file is `root:root 644`; `novaops` can run `docker`).
 2. Workstation access to the archive and `ssh Server1` through the Windows OpenSSH client (`C:\Windows\System32\OpenSSH\ssh.exe`; Git Bash `ssh` cannot reach the agent).
 3. Form-delivery variables (`NOVA_FORM_*`, `BREVO_API_KEY`, `NOVA_CRM_ENQUIRY_URL`, `NOVA_WEBSITE_INTAKE_KEY_*`): the running container has none, so enquiries cannot be delivered today. Step D3b prepares a restricted env file and D4 uses it. Without it the new container behaves exactly like today's (forms answer 503). Never paste values into chat or this repository.
-4. For gate G1 (§7a): a Founder-controlled address for the synthetic enquiry and someone able to see the `compliance@eredox.com` mailbox and the CRM.
+4. **Legal effective date (step D0):** the Cookie Policy and Accessibility Statement carry the placeholder `2026-11-08`. It stays only if the site is published on 8 Nov 2026; otherwise set the actual publication date (and record the Founder's final legal approval) **before** building, which supersedes the identity in §1.
+5. For gate G1 (§7a): a Founder-controlled address for the synthetic enquiry and someone able to see the `compliance@eredox.com` mailbox and the CRM.
 
 ## 4. Deployment commands
+**D0 — Legal date gate (workstation, before D1)**
+```bash
+grep -n -E 'effectiveDate|lastReviewed' src/data/legal.ts     # four lines; each must equal the intended publication date
+date -u +%F                                                    # publication date (UTC); AEST is UTC+10 — use the Founder-stated date
+```
+If a date changes: edit the four strings in `src/data/legal.ts`, update the matching expectations in `src/routes/__tests__/legal-publication.test.ts`, run typecheck and tests, commit, rebuild (`docker build -t nova-public-website:<new-sha> --label org.opencontainers.image.revision=<new-sha> .`), re-run the §2 gates, and replace the commit, image ID and archive checksum in §1 and in every command below. Do not deploy the old identity.
+
 Variables used throughout: `REL=affb00c4b8815de90b9f2a31546add7e40bffeac`, `STAMP=$(date -u +%Y%m%dT%H%M%SZ)`.
 
 **D1 — Verify and copy the artifact (workstation, PowerShell/Git Bash)**
