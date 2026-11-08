@@ -51,8 +51,8 @@ describe("published legal documents", () => {
     expect(publicLegalDocs.map((document) => document.slug)).toEqual(["cookies", "accessibility"]);
     for (const document of publicLegalDocs) {
       expect(document.version).toBe("1.1");
-      expect(document.effectiveDate).toBe("2026-11-10");
-      expect(document.lastReviewed).toBe("2026-11-10");
+      expect(document.effectiveDate).toBe("2026-11-09");
+      expect(document.lastReviewed).toBe("2026-11-09");
       expect(document.sections.length).toBeGreaterThan(5);
       expect(JSON.stringify(document)).not.toMatch(/Draft|Internal Review|Not yet effective/i);
     }
