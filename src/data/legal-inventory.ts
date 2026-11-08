@@ -34,7 +34,7 @@ export const legalInventory: LegalInventoryEntry[] = [
     documentName: "Cookie and Similar Technologies Policy",
     sourceLocation:
       "src/data/legal.ts, informed by application docs/legal/NOVA_COOKIE_AND_STORAGE_TECHNOLOGY_INVENTORY.md",
-    version: "1.0",
+    version: "1.1",
     approvalStatus: "Published public-site policy",
     operativeContentAvailable: true,
     publicRoute: "/legal/cookies",
@@ -43,7 +43,7 @@ export const legalInventory: LegalInventoryEntry[] = [
   {
     documentName: "Accessibility Statement",
     sourceLocation: "src/data/legal.ts and verified public-site implementation",
-    version: "1.0",
+    version: "1.1",
     approvalStatus: "Published public-site statement; WCAG 2.2 AA stated as an aim only",
     operativeContentAvailable: true,
     publicRoute: "/legal/accessibility",

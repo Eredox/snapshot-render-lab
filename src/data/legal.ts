@@ -20,9 +20,9 @@ export const legalDocs: LegalDoc[] = [
     navLabel: "Cookies",
     summary: "How the public website and NOVA application use cookies and similar technologies.",
     status: "Published",
-    version: "1.0",
-    effectiveDate: "2026-09-24",
-    lastReviewed: "2026-09-24",
+    version: "1.1",
+    effectiveDate: "2026-11-08",
+    lastReviewed: "2026-11-08",
     sections: [
       {
         heading: "Purpose and scope",
@@ -39,6 +39,7 @@ export const legalDocs: LegalDoc[] = [
         body: [
           "A cookie is a small value stored by a website in a browser and sent back with later requests. Similar technologies include browser local storage, session storage, pixels, scripts and other client-side mechanisms that remember a choice or recognise a browser.",
           "The public website currently uses browser local storage for its consent record. Repository inspection found no public-site session storage, tracking pixel, analytics tag, marketing tag or embedded third-party application.",
+          "After you submit a demo-booking request, the confirmation page shows the details you entered (name, e-mail, company, framework, team size and preferred slot). To do this without placing them in the page address, the website keeps them in your browser's history entry for that tab. They are not stored in a cookie, local storage or session storage, are not sent to the website's server with later page requests, and may remain available only for as long as your browser keeps that tab's history (for example across a page refresh or a restored tab). Closing the tab or clearing your browsing history removes them.",
         ],
       },
       {
@@ -101,8 +102,10 @@ export const legalDocs: LegalDoc[] = [
         heading: "Third-party technologies",
         description: "External resources and embedded services verified in the public site.",
         body: [
-          "The public website loads the Roboto font stylesheet from Google Fonts domains through a stylesheet and preconnect links. This is an external resource request, not an analytics or marketing provider configured by NOVA; this policy does not assert what cookies, if any, a visitor's browser or that provider may apply outside the NOVA website.",
-          "No third-party embedded forms, video players, social widgets, analytics provider or marketing provider is configured. Public forms submit to a same-origin server endpoint, which can forward enquiries to configured Eredox CRM/mail systems. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site.",
+          "The public website serves its fonts (Roboto) and all of its scripts, styles and images from its own domain, www.nova.eredox.com. Loading a page does not request resources from third-party domains, and no analytics or marketing provider is configured.",
+          "No third-party embedded forms, video players or social widgets are configured. The Sign in link opens the separate NOVA application; it is not an embedded application session on the public site. The booking confirmation page includes an optional \"Add to Google Calendar\" link that opens Google Calendar in a new tab only if you select it; it passes the event title (which includes the framework you chose), date, time and a short fixed description to Google, and does not include your name, e-mail address or company.",
+          "Where enquiry delivery is enabled, the public enquiry forms (contact, request a quote, framework and support enquiries) and the demo-booking form send what you enter (name, work e-mail, company and message and, for demo requests, framework, team size and preferred date and time), together with the page you sent it from, to a same-origin server endpoint. Eredox forwards the enquiry to its customer relationship management (CRM) system and sends a notification e-mail containing the same details to an Eredox mailbox through Brevo, a transactional e-mail service provider that processes that content on Eredox's behalf in order to deliver the message. Your e-mail address is also set as the reply address of that notification.",
+          "To protect the forms from abuse, the server temporarily keeps, in memory only, the network address of each request (to apply rate limits) and a one-way fingerprint of recent submissions (to ignore accidental duplicates). Operational logs record only a short non-reversible reference, never your name, e-mail address or message. The web server that hosts the site also keeps standard access logs that include the network address and browser user agent of each request.",
         ],
       },
       {
@@ -229,9 +232,9 @@ export const legalDocs: LegalDoc[] = [
     navLabel: "Accessibility",
     summary: "Our current approach to making the public website usable for everyone.",
     status: "Published",
-    version: "1.0",
-    effectiveDate: "2026-09-24",
-    lastReviewed: "2026-09-24",
+    version: "1.1",
+    effectiveDate: "2026-11-08",
+    lastReviewed: "2026-11-08",
     sections: [
       {
         heading: "Our commitment and scope",
@@ -295,7 +298,7 @@ export const legalDocs: LegalDoc[] = [
         heading: "Downloads, external and third-party content",
         description: "Content outside the public site's direct control.",
         body: [
-          "The public site does not claim accessibility conformance for external sites, the separate authenticated NOVA application, the Google Fonts resource, or any future third-party content. Any downloadable or linked material should be assessed for accessibility in its source format; the Legal Centre currently presents HTML documents on the public site.",
+          "The public site does not claim accessibility conformance for external sites, the separate authenticated NOVA application, or any future third-party content. Any downloadable or linked material should be assessed for accessibility in its source format; the Legal Centre currently presents HTML documents on the public site.",
         ],
       },
       {

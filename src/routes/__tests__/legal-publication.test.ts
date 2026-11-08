@@ -50,12 +50,20 @@ describe("published legal documents", () => {
   it("publishes complete supporting policies with current metadata", () => {
     expect(publicLegalDocs.map((document) => document.slug)).toEqual(["cookies", "accessibility"]);
     for (const document of publicLegalDocs) {
-      expect(document.version).toBe("1.0");
-      expect(document.effectiveDate).toBe("2026-09-24");
-      expect(document.lastReviewed).toBe("2026-09-24");
+      expect(document.version).toBe("1.1");
+      expect(document.effectiveDate).toBe("2026-11-08");
+      expect(document.lastReviewed).toBe("2026-11-08");
       expect(document.sections.length).toBeGreaterThan(5);
       expect(JSON.stringify(document)).not.toMatch(/Draft|Internal Review|Not yet effective/i);
     }
+  });
+
+  it("states the actual third-party processing: no Google Fonts request, Brevo disclosed, history-state booking details", () => {
+    const text = (slug: string) => JSON.stringify(publicLegalDocs.find((document) => document.slug === slug));
+    expect(text("cookies")).not.toMatch(/fonts\.(googleapis|gstatic)|Google Fonts domains/);
+    expect(text("cookies")).toMatch(/Brevo/);
+    expect(text("cookies")).toMatch(/history entry/);
+    expect(text("accessibility")).not.toMatch(/Google Fonts/);
   });
 
   it("keeps the published registry aligned with the Legal Centre, footer and sitemap", () => {
