@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-11-08):** replaced by `docs/audits/NOVA-WEB-GO-LIVE-006/NOVA_PRODUCTION_RELEASE_RUNBOOK.md` (new release identity `8d7c7d5`, publication date built in, smoke script). Do not deploy the identity below. Kept unchanged as the audit record.
+
 # NOVA-WEB-PREFLIGHT-005 — Production release runbook v2 (executable, NOT executed) — supersedes the PREFLIGHT-004 runbook
 
 **Do not run any step until the holds in `NOVA_PREFLIGHT_005_RELEASE_DECISION.md` are closed and the Founder has given a separate written production-release instruction naming a window.** Nothing in this package was merged, pushed, published or deployed. Server1 was only read. Changes from the PREFLIGHT-004 runbook: new release identity (Legal Path A and the booking-form fix are in the image), form configuration step D3b, delivery gate G1 (§7a), extra abort criteria. The PREFLIGHT-004 identity (`25aecf2` / `sha256:fdfbc406…`) is **superseded and must not be deployed**.
