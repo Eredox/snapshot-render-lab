@@ -21,3 +21,6 @@ Archive and diff copied to `~/release-c58d7de/` on Server1 and checksums verifie
 
 ## Execution log
 (appended at the window)
+
+### Security-contact verification — PASS (Founder statement, 2026-11-09)
+`compliance@eredox.com` received an external security-contact test e-mail on 9 November 2026. Evidence: Outlook inbox screenshot held by the Founder (not in the repository). Monitoring owner: Founder, Eredox Pty Ltd. Recorded as PASS on the Founder's confirmation; I did not see the screenshot.
