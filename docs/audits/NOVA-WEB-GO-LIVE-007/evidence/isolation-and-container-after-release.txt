@@ -1,0 +1,26 @@
+== containers
+nova-public-website nova-public-website:c58d7de85bcd16410d6e2a1505532c4720fdf62f Up 2 minutes (healthy)
+nova_compliance_celery_worker 5394c2c68f7e Up 12 hours
+nova_compliance_frontend 4fab0d63190e Up 5 days
+nova_compliance_celery_beat b9865fc65176 Up 9 seconds
+nova_compliance_backend b9865fc65176 Up 5 days (healthy)
+nova_compliance_nginx nginx:1.27-alpine Up 6 weeks
+nova_compliance_db_backup postgres:16-alpine Up 6 weeks
+nova_compliance_ofelia mcuadros/ofelia:0.3.13 Up 6 weeks
+nova_compliance_redis redis:7-alpine Up 6 weeks (healthy)
+nova_compliance_minio minio/minio:RELEASE.2025-04-08T15-41-24Z Up 6 weeks (healthy)
+nova_compliance_postgres pgvector/pgvector:pg16 Up 6 weeks (healthy)
+== endpoints
+https://nova.eredox.com/health 200
+https://nova.eredox.com/ 200
+https://nova.eredox.com/register?plan=growth&billing_cycle=annual 200
+https://nova.eredox.com/login 200
+https://crm.nova.eredox.com/ 303
+https://www.nova.eredox.com/ 200
+== nginx 5xx last 5m
+1
+== TLS
+subject=CN = www.nova.eredox.com
+notAfter=Dec 19 04:31:25 2026 GMT
+== website log lines
+➜ Listening on: http://localhost:3000/ (all interfaces)

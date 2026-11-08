@@ -1,0 +1,5 @@
+total log lines: 1
+leak grep (marker, synthetic address, name, API key prefix, secret names) -> 0
+➜ Listening on: http://localhost:3000/ (all interfaces)
+nginx access for the POST:
+<ip> - - [08/Nov/2026:23:04:26 +0000] "POST /api/forms HTTP/2.0" 202 43 "https://www.nova.eredox.com/contact" "curl/8.5.0" 0.937

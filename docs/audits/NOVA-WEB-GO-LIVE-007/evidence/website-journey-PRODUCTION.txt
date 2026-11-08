@@ -1,0 +1,29 @@
+PASS J1 direct load of /book-demo/confirmed shows generic page, no PII
+PASS J2 submit lands on /book-demo/confirmed with a clean URL :: /book-demo/confirmed
+PASS J2 details shown from history state
+PASS J2 history.state holds details; URL never does
+PASS J2 no PII in any resource URL requested by the page
+PASS J3 refresh keeps confirmation details (history.state survives reload in same tab) :: details present
+PASS J3 refresh never exposes details in URL
+PASS J4 back from /pricing restores confirmation details :: /book-demo/confirmed
+PASS J5 back to /book-demo works and form is usable
+PASS J6 failed delivery (502) keeps visitor on form with an error message
+PASS J6 entered values preserved after failure
+PASS J6 retry after failure succeeds
+PASS J7 hostile history.state is rendered as text only and bounded
+PASS J8 /contact loads
+PASS R desktop 1440px: no horizontal overflow and an H1 on 12 pages
+PASS R desktop desktop nav links visible :: {"hasToggle":false,"label":null,"desktopLinks":5}
+PASS R laptop 1280px: no horizontal overflow and an H1 on 12 pages
+PASS R laptop desktop nav links visible :: {"hasToggle":false,"label":null,"desktopLinks":5}
+PASS R tablet 820px: no horizontal overflow and an H1 on 12 pages
+PASS R tablet header menu toggle present :: {"hasToggle":true,"label":"Open menu","desktopLinks":1}
+PASS R tablet menu opens and shows primary links without overflow :: {"links":["/pricing","/book-demo","/platform","/book-demo"],"over":false}
+PASS R tablet-landscape 1024px: no horizontal overflow and an H1 on 12 pages
+PASS R tablet-landscape header menu toggle present :: {"hasToggle":true,"label":"Open menu","desktopLinks":1}
+PASS R tablet-landscape menu opens and shows primary links without overflow :: {"links":["/pricing","/book-demo"],"over":false}
+PASS R mobile 390px: no horizontal overflow and an H1 on 12 pages
+PASS R mobile header menu toggle present :: {"hasToggle":true,"label":"Open menu","desktopLinks":1}
+PASS R mobile menu opens and shows primary links without overflow :: {"links":["/pricing","/book-demo"],"over":false}
+DIAG consoleErrors=0 exceptions=0 failed=0
+RESULT PASS

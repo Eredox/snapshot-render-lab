@@ -1,0 +1,14 @@
+STAMP
+nova-public-website:69543cb1ea5811bee2fa89cf0c594a4aecd44f21 healthy
+660e4f8b6a29139dd3eb
+  Certificate Name: www.nova.eredox.com
+    Serial Number: 599f8984dc48f57849486fd1e9aa4419adf
+    Key Type: ECDSA
+    Identifiers: www.nova.eredox.com
+    Expiry Date: 2026-12-19 04:31:25+00:00 (VALID: 40 days)
+0
+https://nova.eredox.com/health 200
+https://nova.eredox.com/ 200
+https://nova.eredox.com/register?plan=growth&billing_cycle=annual 200
+https://nova.eredox.com/api/health 404
+https://crm.nova.eredox.com/ 303
