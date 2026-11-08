@@ -1,0 +1,23 @@
+PASS contact enquiry accepted (202) :: 202
+PASS CRM bridge: signature, key id, freshness, nonce, content-type all valid :: {"keyId":true,"signature":true,"fresh":true,"nonceUnique":true,"contentType":true}
+PASS CRM payload carries only allow-listed fields
+PASS CRM payload: type, source page and values
+PASS Brevo notification delivered once, api-key accepted, message complete :: {"apiKey":true,"sender":true,"to":true,"replyTo":true,"subject":true,"text":true,"html":true}
+PASS notification goes to the configured Eredox destination :: to=to-sink@example.test
+PASS notification sender is the fixed Eredox address; visitor is Reply-To only
+PASS notification text includes the message; HTML body escapes markup
+PASS demo booking accepted; second CRM record and second notification :: 202
+PASS booking WITHOUT optional notes is accepted; details reach CRM (framework, team size, date, time) and the notification
+PASS honeypot filled: answered like success but nothing delivered
+PASS immediate duplicate: acknowledged, not delivered twice
+PASS foreign Origin refused (403)
+PASS wrong content-type refused (415)
+PASS oversize body refused (413)
+PASS invalid e-mail refused (400)
+PASS unknown field refused (400)
+PASS none of the refused requests reached CRM or e-mail
+PASS CRM 500: bounded retry (2 attempts), visitor sees failure (502), NO e-mail sent :: crmAttempts=2
+PASS CRM 401: not retried, 502, NO e-mail sent
+PASS per-client delivery rate limit engages (429) :: first 429 at request 6
+
+ALL PASS

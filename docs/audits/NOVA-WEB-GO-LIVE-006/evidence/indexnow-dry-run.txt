@@ -1,0 +1,10 @@
+IndexNow DRY-RUN: 6 URL(s) to https://api.indexnow.org/indexnow
+  key file: https://www.nova.eredox.com/2695136d30af499e9ced4742ab0d9681.txt
+  https://www.nova.eredox.com/plans/free
+  https://www.nova.eredox.com/plans/launch
+  https://www.nova.eredox.com/plans/growth
+  https://www.nova.eredox.com/plans/professional
+  https://www.nova.eredox.com/plans/business
+  https://www.nova.eredox.com/plans/enterprise
+  live key file check: OK (served as text/plain, content matches)
+Dry-run only. Nothing sent.

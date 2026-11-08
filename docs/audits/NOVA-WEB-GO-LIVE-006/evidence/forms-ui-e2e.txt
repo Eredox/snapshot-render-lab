@@ -1,0 +1,7 @@
+PASS UI contact form: visitor sees confirmation
+PASS UI contact form: CRM record created (valid signature) and notification sent
+PASS UI booking form: lands on confirmation with a clean URL :: http://127.0.0.1:13000/book-demo/confirmed
+PASS UI booking form: CRM demo-booking record and notification delivered
+PASS UI failure path: visitor sees an error (no false success) and no e-mail is sent
+
+ALL PASS

@@ -1,0 +1,10 @@
+➜ Listening on: http://localhost:3000/ (all interfaces)
+{"scope":"nova-forms","event":"honeypot","status":202,"client":"0ed58113"}
+{"scope":"nova-forms","event":"duplicate","status":202,"client":"699b584f"}
+{"scope":"nova-forms","event":"rejected","status":403,"reason":"origin","client":"21876881"}
+{"scope":"nova-forms","event":"rejected","status":415,"reason":"content-type","client":"21876881"}
+{"scope":"nova-forms","event":"rejected","status":413,"reason":"too-large","client":"21876881"}
+{"scope":"nova-forms","event":"delivery-failed","status":502,"reason":"crm-500","client":"ab5f4cb2"}
+{"scope":"nova-forms","event":"delivery-failed","status":502,"reason":"crm-401","client":"2c34f147"}
+{"scope":"nova-forms","event":"rate-limited","status":429,"reason":"client","client":"5c70e585"}
+{"scope":"nova-forms","event":"delivery-failed","status":502,"reason":"crm-500","client":"e3e5879d"}
