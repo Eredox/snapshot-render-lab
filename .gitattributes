@@ -2,3 +2,4 @@
 # Patch/diff artifacts must stay LF so they apply on Linux hosts and with git apply.
 *.diff text eol=lf
 *.patch text eol=lf
+*.sh text eol=lf

@@ -42,6 +42,7 @@ type BrevoConfig = {
 const MAX_BODY_BYTES = 32_000;
 const REQUEST_TIMEOUT_MS = 15_000;
 const CRM_MAX_ATTEMPTS = 2;
+const BOOKING_DEFAULT_MESSAGE = "Demo booking request - no additional notes provided.";
 const CRM_CONTENT_TYPE = "application/json";
 const CRM_OPERATION = "enquiry.create";
 const CRM_PATH = "/nova_website_intake/v1/enquiries";
@@ -132,7 +133,8 @@ function normaliseSubmission(value: unknown): FormSubmission {
     name: text("name", true, 120),
     email: text("email", true, 254),
     company: text("company", false, 200),
-    message: text("message", true, 10_000),
+    // The booking form's notes box is optional, so a booking may arrive without one; every other form requires a message.
+    message: text("message", type !== "demo-booking", 10_000) || BOOKING_DEFAULT_MESSAGE,
   };
 
   if (!emailPattern.test(submission.email)) throw new Error("Invalid email");

@@ -225,6 +225,32 @@ describe("public form endpoint", () => {
     });
   });
 
+  it("accepts a demo booking whose optional notes box is empty, and still requires a message on enquiries", async () => {
+    configureCrm();
+    configureBrevo();
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(successfulCrmResponse())
+      .mockResolvedValueOnce(successfulBrevoResponse());
+    const booking = {
+      type: "demo-booking",
+      name: "Visitor Name",
+      email: "visitor@example.com",
+      company: "Example Pty Ltd",
+      framework: "ISO/IEC 27001",
+      teamSize: "11–50",
+      date: "2026-10-01",
+      timeSlot: "09:00",
+      message: "",
+    };
+    const result = await handleFormsRequest(request(booking));
+    expect(result.status).toBe(202);
+    const payload = JSON.parse(capturedRequest(fetchMock).body.toString("utf8"));
+    expect(payload.message).toBe("Demo booking request - no additional notes provided.");
+    const enquiry = await handleFormsRequest(request({ ...validContact(), message: "" }));
+    expect(enquiry.status).toBe(400);
+  });
+
   it("retains CRM-first semantics when Brevo fails", async () => {
     configureCrm();
     configureBrevo();
