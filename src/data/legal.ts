@@ -21,8 +21,8 @@ export const legalDocs: LegalDoc[] = [
     summary: "How the public website and NOVA application use cookies and similar technologies.",
     status: "Published",
     version: "1.1",
-    effectiveDate: "2026-11-08",
-    lastReviewed: "2026-11-08",
+    effectiveDate: "2026-11-10",
+    lastReviewed: "2026-11-10",
     sections: [
       {
         heading: "Purpose and scope",
@@ -233,8 +233,8 @@ export const legalDocs: LegalDoc[] = [
     summary: "Our current approach to making the public website usable for everyone.",
     status: "Published",
     version: "1.1",
-    effectiveDate: "2026-11-08",
-    lastReviewed: "2026-11-08",
+    effectiveDate: "2026-11-10",
+    lastReviewed: "2026-11-10",
     sections: [
       {
         heading: "Our commitment and scope",
