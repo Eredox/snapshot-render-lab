@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-11-08):** the release identity below (`25aecf2`, image `sha256:fdfbc406…`) was replaced by `docs/audits/NOVA-WEB-PREFLIGHT-005/NOVA_PRODUCTION_RELEASE_RUNBOOK.md` after Legal Path A and a booking-form fix. Do not deploy this one. Kept unchanged below as the audit record.
+
 # NOVA-WEB-PREFLIGHT-004 — Production release runbook (executable, NOT executed)
 
 **Do not run any step until the four hold items in `NOVA_PREFLIGHT_RELEASE_DECISION.md` are closed and the Founder has given written go for a window.** Nothing in this package merged, pushed, published or deployed. Server1 was only read.
