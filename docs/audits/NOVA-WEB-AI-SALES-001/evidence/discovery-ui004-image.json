@@ -1,0 +1,552 @@
+{
+  "base": "http://127.0.0.1:18521",
+  "live": false,
+  "generated": "2026-11-09T02:18:34.484Z",
+  "matrix": [
+    {
+      "token": "Googlebot",
+      "platform": "Google Search",
+      "category": "search",
+      "via": "googlebot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Bingbot",
+      "platform": "Microsoft Bing",
+      "category": "search",
+      "via": "bingbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "DuckDuckBot",
+      "platform": "DuckDuckGo",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Applebot",
+      "platform": "Apple (Spotlight/Siri search)",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "YandexBot",
+      "platform": "Yandex",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Baiduspider",
+      "platform": "Baidu",
+      "category": "search",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "OAI-SearchBot",
+      "platform": "OpenAI ChatGPT search",
+      "category": "ai-search",
+      "via": "oai-searchbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Claude-SearchBot",
+      "platform": "Anthropic Claude search",
+      "category": "ai-search",
+      "via": "claude-searchbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "PerplexityBot",
+      "platform": "Perplexity search index",
+      "category": "ai-search",
+      "via": "perplexitybot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "ChatGPT-User",
+      "platform": "OpenAI user-initiated fetch",
+      "category": "user-initiated",
+      "via": "chatgpt-user",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Claude-User",
+      "platform": "Anthropic user-initiated fetch",
+      "category": "user-initiated",
+      "via": "claude-user",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Perplexity-User",
+      "platform": "Perplexity user-initiated fetch",
+      "category": "user-initiated",
+      "via": "perplexity-user",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "GPTBot",
+      "platform": "OpenAI model training",
+      "category": "training",
+      "via": "gptbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "ClaudeBot",
+      "platform": "Anthropic model training",
+      "category": "training",
+      "via": "claudebot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Google-Extended",
+      "platform": "Google Gemini training/grounding control (robots token only; no separate UA)",
+      "category": "training",
+      "via": "google-extended",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "Applebot-Extended",
+      "platform": "Apple AI training control (robots token only)",
+      "category": "training",
+      "via": "*",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "CCBot",
+      "platform": "Common Crawl (training corpora)",
+      "category": "training",
+      "via": "ccbot",
+      "homeRule": "Disallow: /",
+      "blockedSitemapUrls": 69,
+      "allowedHome": false
+    },
+    {
+      "token": "Twitterbot",
+      "platform": "X link previews",
+      "category": "social",
+      "via": "twitterbot",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    },
+    {
+      "token": "facebookexternalhit",
+      "platform": "Meta link previews",
+      "category": "social",
+      "via": "facebookexternalhit",
+      "homeRule": "Allow: /",
+      "blockedSitemapUrls": 0,
+      "allowedHome": true
+    }
+  ],
+  "results": [
+    {
+      "area": "robots",
+      "name": "robots.txt returns 200 text/plain",
+      "status": "PASS",
+      "detail": "200 text/plain; charset=utf-8"
+    },
+    {
+      "area": "robots",
+      "name": "robots.txt references the sitemap (absolute https)",
+      "status": "PASS",
+      "detail": "https://www.nova.eredox.com/sitemap.xml"
+    },
+    {
+      "area": "robots",
+      "name": "robots.txt < 500 KiB (Google limit)",
+      "status": "PASS",
+      "detail": "1554 bytes"
+    },
+    {
+      "area": "sitemap",
+      "name": "sitemap.xml 200 application/xml",
+      "status": "PASS",
+      "detail": "200 application/xml; charset=utf-8"
+    },
+    {
+      "area": "sitemap",
+      "name": "XML well-formed, sitemaps.org namespace, balanced <url>",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "entry count",
+      "status": "PASS",
+      "detail": "69 URLs (RELEASE-002 expectation: 69)"
+    },
+    {
+      "area": "sitemap",
+      "name": "every <loc> is absolute https on the canonical host, no query/fragment, unique",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "≤ 50,000 URLs and ≤ 50 MiB",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "sitemap",
+      "name": "lastmod (where present) is valid W3C date, not in the future",
+      "status": "PASS",
+      "detail": "2 of 69 entries carry lastmod"
+    },
+    {
+      "area": "sitemap",
+      "name": "lastmod is not a single repeated build date",
+      "status": "PASS",
+      "detail": "2 distinct values"
+    },
+    {
+      "area": "robots-policy",
+      "name": "Googlebot (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Bingbot (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "DuckDuckBot (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Applebot (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "YandexBot (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Baiduspider (search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "OAI-SearchBot (ai-search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Claude-SearchBot (ai-search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "PerplexityBot (ai-search) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "ChatGPT-User (user-initiated) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Claude-User (user-initiated) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "robots-policy",
+      "name": "Perplexity-User (user-initiated) may crawl all 69 sitemap URLs",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "http-ua-sim",
+      "name": "no User-Agent-dependent status or content difference (simulation only — NOT proof of real crawler acceptance)",
+      "status": "PASS",
+      "detail": "34 requests identical"
+    },
+    {
+      "area": "http",
+      "name": "no X-Robots-Tag header on any response probed",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "HTTP 200, no redirect, text/html",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "self-referencing canonical, exactly one, absolute, equals sitemap <loc>",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "og:url equals canonical",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "robots meta absent or index,follow (never noindex)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "<html lang> set",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "title 20–60 chars, description 70–160 chars",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "exactly one <h1> and no skipped heading level",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "server-rendered body text ≥ 150 words without executing JavaScript",
+      "status": "PASS",
+      "detail": "min 332 words"
+    },
+    {
+      "area": "pages",
+      "name": "server-rendered text names the company (Eredox Pty Ltd) on every page",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "server-rendered text names the product (NOVA Compliance) on every page",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "identity",
+      "name": "About page states that NOVA is developed/operated by Eredox",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "titles unique",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "pages",
+      "name": "descriptions unique",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "jsonld",
+      "name": "all JSON-LD blocks parse and pass structural validation",
+      "status": "PASS",
+      "detail": "{\"Organization\":69,\"WebSite\":69,\"SoftwareApplication\":2,\"AboutPage\":1,\"BreadcrumbList\":68,\"ContactPage\":1,\"FAQPage\":2,\"BlogPosting\":2}"
+    },
+    {
+      "area": "jsonld",
+      "name": "homepage declares Organization + WebSite + SoftwareApplication",
+      "status": "PASS",
+      "detail": "Organization,WebSite,SoftwareApplication"
+    },
+    {
+      "area": "links",
+      "name": "every sitemap URL reachable from / by following HTML <a href> only",
+      "status": "PASS",
+      "detail": "69/69 reachable"
+    },
+    {
+      "area": "links",
+      "name": "pages with fewer than 2 inbound HTML links (informational)",
+      "status": "INFO",
+      "detail": "/solutions/executives /solutions/auditors /plans/free /plans/launch /plans/growth /plans/professional /plans/business /plans/enterprise"
+    },
+    {
+      "area": "exclusions",
+      "name": "/status: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex, follow"
+    },
+    {
+      "area": "exclusions",
+      "name": "/testimonials: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex, follow"
+    },
+    {
+      "area": "exclusions",
+      "name": "/resources/product-updates: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex, follow"
+    },
+    {
+      "area": "exclusions",
+      "name": "/resources/case-studies: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex, follow"
+    },
+    {
+      "area": "exclusions",
+      "name": "/resources/webinars: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex, follow"
+    },
+    {
+      "area": "exclusions",
+      "name": "/book-demo/confirmed: reachable, noindex, not in sitemap",
+      "status": "PASS",
+      "detail": "200 meta=noindex"
+    },
+    {
+      "area": "404",
+      "name": "unknown URL → real 404 with noindex",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "area": "private-routes",
+      "name": "/index.html not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/404 not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/assets/x.js.map not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/.env not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/.git/config not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/package.json not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/src/server.ts not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/node_modules/ not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/_serverFn/x not exposed (403)",
+      "status": "PASS",
+      "detail": "403 text/plain;charset=UTF-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/api/ not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/api/forms not exposed (405)",
+      "status": "PASS",
+      "detail": "405 application/json; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/server/index.mjs not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/.output/nitro.json not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "area": "private-routes",
+      "name": "/llms.txt not exposed (404)",
+      "status": "PASS",
+      "detail": "404 text/html; charset=utf-8"
+    }
+  ]
+}
