@@ -36,3 +36,16 @@
 3. Swap: `docker stop nova-public-website && docker rename nova-public-website nova-public-website-rollback-$STAMP`, then `docker run -d --name nova-public-website --restart unless-stopped --network nova_compliance_edge --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges --env-file /opt/nova/secrets/nova-public-website.env nova-public-website:8cb43ef06ac883956d7cb16ba65e1b86046ea3a7`; `docker exec nova_compliance_nginx nginx -s reload`. nginx.conf is unchanged.
 4. One live AI connectivity check (a single question through `/api/assistant`); then the smoke script (`LEGAL_DATE=2026-11-09`); then push and record.
 5. Rollback: stop and remove the new container, rename the `-rollback-$STAMP` container back, start it, reload nginx.
+
+## DEPLOYMENT RECORD — LIVE (2026-11-09)
+Founder authorisation: "NOVA-WEB-AI-SALES-002 — PRODUCTION GO-LIVE" (key installed by the Founder; disclosures including DeepSeek and overseas processing, including China, approved).
+| UTC | Step | Result |
+|---|---|---|
+| 01:10 | D0 and baseline | UTC and AEST date 2026-11-09 = legal strings; live image `c58d7de8…` healthy; nginx.conf `1f991770…` unchanged; `NOVA_ASSISTANT_API_KEY` one entry, file mode 600 owner novaops, other variables preserved |
+| 01:11:08 | Swap | previous container kept as `nova-public-website-rollback-20261109T011108Z` (image `c58d7de8…`); new container `nova-public-website:8cb43ef06ac883956d7cb16ba65e1b86046ea3a7` healthy in ~12 s; nginx reloaded (config unchanged) |
+| 01:11 | Live AI check (one) | POST /api/assistant from Server1 → HTTP 200 in 1.6 s; a grounded answer about NOVA Compliance and frameworks from DeepSeek `deepseek-flash` non-thinking; allowance counter 1 of 7; `GET /api/assistant` → `available: true` |
+| 01:1x | Smoke | `post-deploy-smoke.sh` ALL PASS (28), pricing/registration fingerprint `2361e1d2cade707f` unchanged; evidence/smoke-PRODUCTION-after-assistant-release.txt |
+| 01:1x | Visibility | heading "Need more information? Just ask NOVA." present on all 69 sitemap pages (and on the 404 page); evidence/assistant-visibility-all-sitemap-pages.txt (empty = none missing) |
+| 01:1x | Isolation | NOVA app `/health`, `/login`, `/register?plan=growth&billing_cycle=annual` 200; CRM 303; app containers unchanged (uptimes); 0 nginx 5xx in 15 min; security headers present once; nginx.conf not modified |
+Rollback (not needed): `docker stop nova-public-website && docker rm nova-public-website && docker rename nova-public-website-rollback-20261109T011108Z nova-public-website && docker start nova-public-website && docker exec nova_compliance_nginx nginx -s reload`.
+Not tested by me (Founder's functional test): the browser UI on the live site (suggestions per page, voice, history, seven-question stop), the booking/contact forms after this release, and DeepSeek behaviour across many topics.
