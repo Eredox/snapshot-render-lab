@@ -10,9 +10,9 @@ import {
   topicForPath,
 } from "@/lib/assistant-topics";
 
-type Item = { id: string; q: string; a: string; page: string; topic: string };
+type Item = { id: string; q: string; a: string; page: string; topic: string; n?: number; parts?: number };
 type Stored = { sid: string; used: number; items: Item[] };
-type Speech = "idle" | "playing" | "paused";
+type Speech = "idle" | "loading" | "playing" | "paused";
 
 const STORE_KEY = "nova.assistant.v1";
 
@@ -40,22 +40,7 @@ function save(s: Stored) {
   }
 }
 
-/**
- * Playback is offered ONLY when the device provides a natural/neural American male English voice (for example Microsoft "Online (Natural)"
- * voices in Edge, or Apple "Enhanced"/"Premium" voices). Classic robotic voices and pitch-shifted fallbacks are deliberately not used:
- * where no natural voice exists the controls are not shown at all.
- */
-const NATURAL = /(natural|neural|online|enhanced|premium)/i;
-const MALE_NAME = /\b(guy|andrew|brian|christopher|eric|roger|steffan|davis|jason|tony|aaron|evan|nathan|tom|ryan|william)\b/i;
-function pickNaturalMaleVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  const candidates = voices.filter((v) => /^en[-_]US$/i.test(v.lang) && NATURAL.test(v.name) && MALE_NAME.test(v.name));
-  return candidates.sort((a, b) => Number(/natural|neural/i.test(b.name)) - Number(/natural|neural/i.test(a.name)))[0] ?? null;
-}
-
-function sentences(text: string): string[] {
-  return (text.match(/[^.!?\n]+[.!?]*\s*/g) ?? [text]).map((s) => s.trim()).filter(Boolean);
-}
-
+/** Spoken audio is synthesised on our own server (neural American male voice) and played with the Web Audio API; nothing depends on the visitor's device voices. */
 const ghost = "inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium text-muted-foreground hover:bg-surface hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40";
 
 export function NovaAssistant() {
@@ -69,8 +54,12 @@ export function NovaAssistant() {
   const [error, setError] = useState("");
   const [activeId, setActiveId] = useState<string | null>(null);
   const [speech, setSpeech] = useState<Speech>("idle");
-  const [canSpeak, setCanSpeak] = useState(false);
-  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
+  const [speechOn, setSpeechOn] = useState(false);
+  const ctxRef = useRef<AudioContext | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const sourcesRef = useRef<AudioBufferSourceNode[]>([]);
+  const tokenRef = useRef(0);
+  const cacheRef = useRef(new Map<string, ArrayBuffer>());
 
   useEffect(() => {
     const stored = load();
@@ -79,29 +68,38 @@ export function NovaAssistant() {
     setActiveId(stored.items[0]?.id ?? null);
     setReady(true);
     fetch("/api/assistant", { headers: { accept: "application/json" } })
-      .then((r) => r.json() as Promise<{ available?: boolean }>)
-      .then((d) => setAvailable(d.available === true))
+      .then((r) => r.json() as Promise<{ available?: boolean; speech?: boolean }>)
+      .then((d) => {
+        setAvailable(d.available === true);
+        setSpeechOn(d.speech === true && typeof window !== "undefined" && ("AudioContext" in window || "webkitAudioContext" in window));
+      })
       .catch(() => setAvailable(false));
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      const refresh = () => {
-        voiceRef.current = pickNaturalMaleVoice(window.speechSynthesis.getVoices());
-        setCanSpeak(voiceRef.current !== null);
-      };
-      refresh();
-      window.speechSynthesis.addEventListener("voiceschanged", refresh);
-      const stop = () => window.speechSynthesis.cancel();
-      window.addEventListener("pagehide", stop);
-      return () => {
-        window.speechSynthesis.removeEventListener("voiceschanged", refresh);
-        window.removeEventListener("pagehide", stop);
-        window.speechSynthesis.cancel();
-      };
-    }
-    return undefined;
+    const stop = () => haltAudio();
+    window.addEventListener("pagehide", stop);
+    return () => {
+      window.removeEventListener("pagehide", stop);
+      haltAudio();
+    };
   }, []);
 
+  const haltAudio = () => {
+    tokenRef.current += 1;
+    abortRef.current?.abort();
+    abortRef.current = null;
+    for (const source of sourcesRef.current) {
+      try {
+        source.onended = null;
+        source.stop();
+      } catch {
+        /* already stopped */
+      }
+    }
+    sourcesRef.current = [];
+    void ctxRef.current?.close().catch(() => undefined);
+    ctxRef.current = null;
+  };
   const stopSpeech = useCallback(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+    haltAudio();
     setSpeech("idle");
   }, []);
 
@@ -127,9 +125,9 @@ export function NovaAssistant() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ sid: state.sid, question, path: pathname }),
       });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; answer?: string; used?: number; code?: string; message?: string };
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; answer?: string; n?: number; parts?: number; used?: number; code?: string; message?: string };
       if (res.ok && data.ok && data.answer) {
-        const item: Item = { id: `${Date.now()}`, q: question, a: data.answer, page: pathname, topic: topic.label };
+        const item: Item = { id: `${Date.now()}`, q: question, a: data.answer, page: pathname, topic: topic.label, ...(data.n ? { n: data.n } : {}), ...(data.parts ? { parts: data.parts } : {}) };
         const next = { ...state, used: data.used ?? state.used + 1, items: [item, ...state.items] };
         setState(next);
         save(next);
@@ -149,36 +147,70 @@ export function NovaAssistant() {
     }
   };
 
-  const speak = () => {
-    if (!active || !canSpeak) return;
-    const synth = window.speechSynthesis;
-    if (speech === "paused") {
-      synth.resume();
+  const speak = async () => {
+    if (!active?.n || !active.parts) return;
+    if (speech === "paused" && ctxRef.current) {
+      await ctxRef.current.resume();
       setSpeech("playing");
       return;
     }
-    synth.cancel();
-    const parts = sentences(active.a);
-    parts.forEach((part, index) => {
-      const u = new SpeechSynthesisUtterance(part);
-      u.lang = "en-US";
-      if (voiceRef.current) u.voice = voiceRef.current;
-      if (index === parts.length - 1) {
-        u.onend = () => setSpeech("idle");
-        u.onerror = () => setSpeech("idle");
+    haltAudio();
+    const token = tokenRef.current;
+    const AudioCtor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const ctx = new AudioCtor(); // created inside the click, so the browser allows playback
+    ctxRef.current = ctx;
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setSpeech("loading");
+    let startAt = 0;
+    try {
+      for (let i = 0; i < active.parts; i++) {
+        const key = `${state.sid}:${active.n}:${i}`;
+        let bytes = cacheRef.current.get(key);
+        if (!bytes) {
+          const res = await fetch("/api/assistant/speech", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ sid: state.sid, n: active.n, part: i }),
+            signal: controller.signal,
+          });
+          if (!res.ok) throw new Error("speech");
+          bytes = await res.arrayBuffer();
+          cacheRef.current.set(key, bytes);
+        }
+        if (token !== tokenRef.current) return;
+        const audio = await ctx.decodeAudioData(bytes.slice(0));
+        if (token !== tokenRef.current) return;
+        const source = ctx.createBufferSource();
+        source.buffer = audio;
+        source.connect(ctx.destination);
+        const when = Math.max(ctx.currentTime + 0.05, startAt);
+        source.start(when);
+        startAt = when + audio.duration;
+        sourcesRef.current.push(source);
+        if (i === 0) setSpeech("playing");
+        if (i === active.parts - 1) {
+          source.onended = () => {
+            if (token === tokenRef.current) setSpeech("idle");
+          };
+        }
       }
-      synth.speak(u);
-    });
-    setSpeech("playing");
+    } catch {
+      if (token === tokenRef.current) {
+        haltAudio();
+        setSpeech("idle");
+        setError("Audio is not available right now. The written answer is unchanged.");
+      }
+    }
   };
   const pause = () => {
-    if (speech !== "playing") return;
-    window.speechSynthesis.pause();
+    if (speech !== "playing" || !ctxRef.current) return;
+    void ctxRef.current.suspend();
     setSpeech("paused");
   };
   const replay = () => {
     stopSpeech();
-    window.setTimeout(speak, 50);
+    window.setTimeout(() => void speak(), 50);
   };
 
   const onSubmit = (event: FormEvent) => {
@@ -274,11 +306,11 @@ export function NovaAssistant() {
                       </p>
                     ))}
                   </div>
-                  {canSpeak ? (
+                  {speechOn && active.n && active.parts ? (
                     <div className="mt-4 flex flex-wrap items-center gap-1 border-t border-border pt-3" role="group" aria-label="Listen to this answer">
-                      <button type="button" className={ghost} onClick={speak} disabled={speech === "playing"}>
+                      <button type="button" className={ghost} onClick={() => void speak()} disabled={speech === "playing" || speech === "loading"}>
                         <Volume2 aria-hidden="true" className="h-4 w-4" />
-                        {speech === "paused" ? "Resume" : "Listen"}
+                        {speech === "loading" ? "Preparing audio…" : speech === "paused" ? "Resume" : "Listen"}
                       </button>
                       <button type="button" className={ghost} onClick={pause} disabled={speech !== "playing"}>
                         <Pause aria-hidden="true" className="h-4 w-4" />

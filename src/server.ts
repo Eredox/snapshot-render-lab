@@ -54,7 +54,8 @@ export default {
       if (new URL(request.url).pathname === "/api/forms") {
         return withSecurityHeaders(await handleFormsRequest(request), nonce, request);
       }
-      if (new URL(request.url).pathname === "/api/assistant") {
+      const assistantPath = new URL(request.url).pathname;
+      if (assistantPath === "/api/assistant" || assistantPath === "/api/assistant/speech") {
         return withSecurityHeaders(await handleAssistantRequest(request), nonce, request);
       }
       const handler = await getServerEntry();

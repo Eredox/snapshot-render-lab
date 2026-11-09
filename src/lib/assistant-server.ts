@@ -1,5 +1,6 @@
 import { SlidingWindowLimiter, clientKey, originAllowed, readBodyCapped } from "./form-guards";
 import { CORE_FACTS, retrieveKnowledge } from "./assistant-knowledge";
+import { speechConfigured, speechParts, synthesize } from "./assistant-speech";
 import { ASSISTANT_MAX_QUESTION_CHARS, ASSISTANT_QUESTION_LIMIT, normalisePath } from "./assistant-topics";
 
 /**
@@ -19,10 +20,16 @@ const attempts = new SlidingWindowLimiter(15, 10 * 60_000); // every POST per cl
 const dailyPerClient = new SlidingWindowLimiter(ASSISTANT_QUESTION_LIMIT * 3, 24 * 60 * 60_000); // accepted questions per client per day
 const hourlyGlobal = new SlidingWindowLimiter(400, 60 * 60_000, 1); // total accepted questions per hour
 
-const sessions = new Map<string, { used: number; touched: number }>();
+const speechAttempts = new SlidingWindowLimiter(60, 10 * 60_000); // audio chunk requests per client
+const speechDaily = new SlidingWindowLimiter(400, 24 * 60 * 60_000);
+
+type Session = { used: number; touched: number; answers: Record<number, string> };
+const sessions = new Map<string, Session>();
 
 export function resetAssistantGuardsForTests() {
   attempts.clear();
+  speechAttempts.clear();
+  speechDaily.clear();
   dailyPerClient.clear();
   hourlyGlobal.clear();
   sessions.clear();
@@ -91,9 +98,44 @@ async function askProvider(question: string, pagePath: string): Promise<string> 
   return answer;
 }
 
+/** POST /api/assistant/speech: spoken audio for an answer this same visit received (never arbitrary text). */
+async function handleSpeech(request: Request): Promise<Response> {
+  if (request.method !== "POST") return json(405, { ok: false, message: "Method not allowed" }, { allow: "POST" });
+  if (!originAllowed(request)) return json(403, { ok: false, message: "Request not permitted" });
+  if (!/^application\/json(\s*;|$)/i.test(request.headers.get("content-type") ?? "")) return json(415, { ok: false, message: "Unsupported content type" });
+  const client = clientKey(request);
+  if (!speechAttempts.take(client).allowed || !speechDaily.take(client).allowed) {
+    log("speech-rate-limited", 429);
+    return json(429, { ok: false, message: "Audio is busy. Please try again shortly." }, { "retry-after": "60" });
+  }
+  const raw = await readBodyCapped(request, 500);
+  let body: Record<string, unknown> = {};
+  try {
+    body = raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
+  } catch {
+    return json(400, { ok: false, message: "Invalid request" });
+  }
+  const sid = typeof body["sid"] === "string" ? body["sid"] : "";
+  const n = Number(body["n"]);
+  const part = Number(body["part"]);
+  const answer = /^[A-Za-z0-9-]{16,64}$/.test(sid) && Number.isInteger(n) ? sessions.get(sid)?.answers[n] : undefined;
+  const text = answer && Number.isInteger(part) && part >= 0 ? speechParts(answer)[part] : undefined;
+  if (!text) return json(404, { ok: false, message: "Audio is not available for this answer" });
+  if (!speechConfigured()) return json(503, { ok: false, message: "Audio is not available right now" });
+  try {
+    const audio = await synthesize(text);
+    if (!audio) return json(503, { ok: false, message: "Audio is busy. Please try again shortly." }, { "retry-after": "10" });
+    return new Response(new Uint8Array(audio), { status: 200, headers: { "content-type": "audio/wav", "cache-control": "private, no-store", "content-length": String(audio.length) } });
+  } catch (error) {
+    log("speech-failed", 502, error instanceof Error ? error.message : "unknown");
+    return json(502, { ok: false, message: "Audio is not available right now" });
+  }
+}
+
 export async function handleAssistantRequest(request: Request): Promise<Response> {
+  if (new URL(request.url).pathname === "/api/assistant/speech") return handleSpeech(request);
   if (request.method === "GET") {
-    return json(200, { available: providerConfig() !== null, limit: ASSISTANT_QUESTION_LIMIT });
+    return json(200, { available: providerConfig() !== null, limit: ASSISTANT_QUESTION_LIMIT, speech: speechConfigured() });
   }
   if (request.method !== "POST") return json(405, { ok: false, message: "Method not allowed" }, { allow: "GET, POST" });
   if (!originAllowed(request)) return json(403, { ok: false, message: "Request not permitted" });
@@ -127,7 +169,7 @@ export async function handleAssistantRequest(request: Request): Promise<Response
 
   const now = Date.now();
   for (const [key, s] of sessions) if (now - s.touched > SESSION_TTL_MS) sessions.delete(key);
-  const session = sessions.get(sid) ?? { used: 0, touched: now };
+  const session: Session = sessions.get(sid) ?? { used: 0, touched: now, answers: {} };
   if (session.used >= ASSISTANT_QUESTION_LIMIT) {
     return json(429, { ok: false, code: "limit", used: session.used, remaining: 0, limit: ASSISTANT_QUESTION_LIMIT });
   }
@@ -146,7 +188,9 @@ export async function handleAssistantRequest(request: Request): Promise<Response
 
   try {
     const answer = await askProvider(question, page);
-    return json(200, { ok: true, answer, used: session.used, remaining: ASSISTANT_QUESTION_LIMIT - session.used, limit: ASSISTANT_QUESTION_LIMIT });
+    const n = session.used;
+    session.answers[n] = answer;
+    return json(200, { ok: true, answer, n, parts: speechConfigured() ? speechParts(answer).length : 0, used: session.used, remaining: ASSISTANT_QUESTION_LIMIT - session.used, limit: ASSISTANT_QUESTION_LIMIT });
   } catch (error) {
     session.used -= 1; // a failed answer does not consume the visitor's allowance
     log("provider-failed", 502, error instanceof Error ? error.message : "unknown");
