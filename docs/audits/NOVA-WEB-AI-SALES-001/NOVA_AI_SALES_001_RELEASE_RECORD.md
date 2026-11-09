@@ -1,5 +1,7 @@
 # NOVA-WEB-AI-SALES-001 — NOVA AI Information Assistant (release record)
 
+**SUPERSEDED by NOVA-WEB-AI-SALES-002 (see NOVA_AI_SALES_002_AI_REUSE_CONCLUSION.md):** the Anthropic provider, the image `5176660…` and the `ANTHROPIC_API_KEY` activation below are no longer used. Current candidate: commit `a0a11cd19cbe2055df304dfa0f73dbc918c60642`, key variable `NOVA_ASSISTANT_API_KEY` (DeepSeek).
+
 **Status: BUILT, TESTED LOCALLY, IMAGE STAGED ON SERVER1. NOT YET LIVE — waiting for the AI provider key.**
 
 ## Identity
