@@ -1,0 +1,17 @@
+PASS heading text :: Need more information? Just ask NOVA.
+PASS no floating/overlay assistant (fixed-position elements)
+PASS pricing shows 3 pricing-specific suggestions :: ["What features does each plan include?","How do the plans compare?","How can I see a demonstration of NOVA?"]
+PASS next-step actions present
+PASS answer shown and count 1 of 7 :: 1 of 7 used.
+PASS page change gives new suggestions :: ["Which framework should I start with?","Which frameworks does NOVA support now?","Can NOVA reuse evidence across frameworks?"]
+PASS count persists across pages (1 of 7)
+PASS second answer, count 2
+PASS reopen earlier answer shows it, count unchanged, no API call
+PASS TTS controls present (Listen, Pause, Stop, Replay)
+PASS never autoplays
+PASS audio stops on navigation
+PASS reload keeps count (2 of 7) and history
+PASS Sales encouragement after five questions
+PASS after seven: input and suggestions disabled, Sales handoff shown
+PASS server refuses the 8th question (429) :: 429
+RESULT PASS

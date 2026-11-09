@@ -1,0 +1,87 @@
+PASS  [robots] robots.txt returns 200 text/plain  — 200 text/plain; charset=utf-8
+PASS  [robots] robots.txt references the sitemap (absolute https)  — https://www.nova.eredox.com/sitemap.xml
+PASS  [robots] robots.txt < 500 KiB (Google limit)  — 1554 bytes
+PASS  [sitemap] sitemap.xml 200 application/xml  — 200 application/xml; charset=utf-8
+PASS  [sitemap] XML well-formed, sitemaps.org namespace, balanced <url>
+PASS  [sitemap] entry count  — 69 URLs (RELEASE-002 expectation: 69)
+PASS  [sitemap] every <loc> is absolute https on the canonical host, no query/fragment, unique
+PASS  [sitemap] ≤ 50,000 URLs and ≤ 50 MiB
+PASS  [sitemap] lastmod (where present) is valid W3C date, not in the future  — 2 of 69 entries carry lastmod
+PASS  [sitemap] lastmod is not a single repeated build date  — 2 distinct values
+
+robots.txt policy by crawler (sitemap URLs allowed / total):
+  Googlebot            search          group=googlebot          ALLOW  blockedSitemapUrls=0
+  Bingbot              search          group=bingbot            ALLOW  blockedSitemapUrls=0
+  DuckDuckBot          search          group=*                  ALLOW  blockedSitemapUrls=0
+  Applebot             search          group=*                  ALLOW  blockedSitemapUrls=0
+  YandexBot            search          group=*                  ALLOW  blockedSitemapUrls=0
+  Baiduspider          search          group=*                  ALLOW  blockedSitemapUrls=0
+  OAI-SearchBot        ai-search       group=oai-searchbot      ALLOW  blockedSitemapUrls=0
+  Claude-SearchBot     ai-search       group=claude-searchbot   ALLOW  blockedSitemapUrls=0
+  PerplexityBot        ai-search       group=perplexitybot      ALLOW  blockedSitemapUrls=0
+  ChatGPT-User         user-initiated  group=chatgpt-user       ALLOW  blockedSitemapUrls=0
+  Claude-User          user-initiated  group=claude-user        ALLOW  blockedSitemapUrls=0
+  Perplexity-User      user-initiated  group=perplexity-user    ALLOW  blockedSitemapUrls=0
+  GPTBot               training        group=gptbot             ALLOW  blockedSitemapUrls=0
+  ClaudeBot            training        group=claudebot          ALLOW  blockedSitemapUrls=0
+  Google-Extended      training        group=google-extended    ALLOW  blockedSitemapUrls=0
+  Applebot-Extended    training        group=*                  ALLOW  blockedSitemapUrls=0
+  CCBot                training        group=ccbot              BLOCK  blockedSitemapUrls=69
+  Twitterbot           social          group=twitterbot         ALLOW  blockedSitemapUrls=0
+  facebookexternalhit  social          group=facebookexternalhit ALLOW  blockedSitemapUrls=0
+PASS  [robots-policy] Googlebot (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Bingbot (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] DuckDuckBot (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Applebot (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] YandexBot (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Baiduspider (search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] OAI-SearchBot (ai-search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Claude-SearchBot (ai-search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] PerplexityBot (ai-search) may crawl all 69 sitemap URLs
+PASS  [robots-policy] ChatGPT-User (user-initiated) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Claude-User (user-initiated) may crawl all 69 sitemap URLs
+PASS  [robots-policy] Perplexity-User (user-initiated) may crawl all 69 sitemap URLs
+(training/social crawlers are reported, not asserted: their permission is a Founder decision)
+
+PASS  [http-ua-sim] no User-Agent-dependent status or content difference (simulation only — NOT proof of real crawler acceptance)  — 34 requests identical
+PASS  [http] no X-Robots-Tag header on any response probed
+PASS  [pages] HTTP 200, no redirect, text/html
+PASS  [pages] self-referencing canonical, exactly one, absolute, equals sitemap <loc>
+PASS  [pages] og:url equals canonical
+PASS  [pages] robots meta absent or index,follow (never noindex)
+PASS  [pages] <html lang> set
+PASS  [pages] title 20–60 chars, description 70–160 chars
+PASS  [pages] exactly one <h1> and no skipped heading level
+PASS  [pages] server-rendered body text ≥ 150 words without executing JavaScript  — min 348 words
+PASS  [pages] server-rendered text names the company (Eredox Pty Ltd) on every page
+PASS  [pages] server-rendered text names the product (NOVA Compliance) on every page
+PASS  [identity] About page states that NOVA is developed/operated by Eredox
+PASS  [pages] titles unique
+PASS  [pages] descriptions unique
+PASS  [jsonld] all JSON-LD blocks parse and pass structural validation  — {"Organization":69,"WebSite":69,"BreadcrumbList":68,"AboutPage":1,"SoftwareApplication":2,"ContactPage":1,"FAQPage":2,"BlogPosting":2}
+PASS  [jsonld] homepage declares Organization + WebSite + SoftwareApplication  — Organization,WebSite,SoftwareApplication
+PASS  [links] every sitemap URL reachable from / by following HTML <a href> only  — 69/69 reachable
+INFO  [links] pages with fewer than 2 inbound HTML links (informational)  — /solutions/executives /solutions/auditors /plans/free /plans/launch /plans/growth /plans/professional /plans/business /plans/enterprise
+PASS  [exclusions] /status: reachable, noindex, not in sitemap  — 200 meta=noindex, follow
+PASS  [exclusions] /testimonials: reachable, noindex, not in sitemap  — 200 meta=noindex, follow
+PASS  [exclusions] /resources/product-updates: reachable, noindex, not in sitemap  — 200 meta=noindex, follow
+PASS  [exclusions] /resources/case-studies: reachable, noindex, not in sitemap  — 200 meta=noindex, follow
+PASS  [exclusions] /resources/webinars: reachable, noindex, not in sitemap  — 200 meta=noindex, follow
+PASS  [exclusions] /book-demo/confirmed: reachable, noindex, not in sitemap  — 200 meta=noindex
+PASS  [404] unknown URL → real 404 with noindex
+PASS  [private-routes] /index.html not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /404 not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /assets/x.js.map not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /.env not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /.git/config not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /package.json not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /src/server.ts not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /node_modules/ not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /_serverFn/x not exposed (403)  — 403 text/plain;charset=UTF-8
+PASS  [private-routes] /api/ not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /api/forms not exposed (405)  — 405 application/json; charset=utf-8
+PASS  [private-routes] /server/index.mjs not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /.output/nitro.json not exposed (404)  — 404 text/html; charset=utf-8
+PASS  [private-routes] /llms.txt not exposed (404)  — 404 text/html; charset=utf-8
+
+RESULT PASS

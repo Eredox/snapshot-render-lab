@@ -1,0 +1,105 @@
+PASS  sitemap lists URLs  — 69 URLs
+PASS  sitemap URLs are unique
+PASS  every sitemap URL: 200, self canonical, indexable, 1 h1, title 20-60, description 70-160
+PASS  titles unique  — []
+PASS  descriptions unique  — []
+PASS  404 for /zz-unknown-route  — got 404
+PASS  404 for /404  — got 404
+PASS  404 for /index.html  — got 404
+PASS  404 for /llms.txt  — got 404
+PASS  404 for /fonts/nope.woff2  — got 404
+PASS  404 for /assets/nope.js.map  — got 404
+PASS  404 for /resources/blog/nope  — got 404
+PASS  404 for /frameworks/nope  — got 404
+PASS  /pricing/ redirects (not 200)  — got 307
+PASS  /testimonials is noindex
+PASS  /testimonials not in sitemap
+PASS  /status is noindex
+PASS  /status not in sitemap
+PASS  /resources/product-updates is noindex
+PASS  /resources/product-updates not in sitemap
+PASS  /resources/case-studies is noindex
+PASS  /resources/case-studies not in sitemap
+PASS  /resources/webinars is noindex
+PASS  /resources/webinars not in sitemap
+PASS  robots.txt references sitemap
+PASS  robots.txt does not block everything for *
+PASS  security.txt served as text/plain
+PASS  security.txt has Contact and a future Expires < 1 year  — 2027-05-01T00:00:00.000Z
+PASS  hashed /assets are immutable  — /assets/styles-C8LWhjHP.css
+PASS  /media, /fonts, /og have cache headers
+PASS  preloaded Roboto is a real font file
+PASS  home preloads only fonts that exist (no cirqua)
+PASS  CSP present on HTML
+PASS  CSP has no unsafe-eval / wildcard / unsafe-inline script  — default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src 'none'; object-src 'none'; manifest-src 'self'; worker-src 'none'; script-src 'self' 'nonce-63jf9oTChfC0W+5kjOf7Ww=='; style-src 'self' 'nonce-63jf9oTChfC0W+5kjOf7Ww=='; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'
+PASS  CSP script-src uses a nonce and 'self'
+PASS  every executable inline <script> carries the request nonce  — 3 inline scripts
+PASS  no inline event handlers in HTML
+PASS  CSP differs per request
+PASS  COOP present
+PASS  no third-party hosts in HTML
+PASS  404 page carries CSP and is noindex
+PASS  /api/forms GET -> 405 with no-store and CSP
+PASS  no CORS headers
+PASS  internal links resolve  — 82 unique internal links checked; broken: none
+PASS  no sitemap page is orphaned
+PASS  external links go only to known NOVA/Eredox destinations  — 7 external URLs
+PASS  registration links carry only governed plan + billing interval  — 6 register links: https://nova.eredox.com/register | https://nova.eredox.com/register?plan=free&billing_cycle=monthly | https://nova.eredox.com/register?plan=launch&billing_cycle=monthly | https://nova.eredox.com/register?plan=growth&billing_cycle=monthly | https://nova.eredox.com/register?plan=professional&billing_cycle=monthly | https://nova.eredox.com/register?plan=business&billing_cycle=monthly
+PASS  footer links to terms, privacy and cookie policy
+PASS  browser mobile /: no console errors/CSP violations/failed requests
+PASS  browser mobile /: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /: no horizontal overflow
+PASS  browser mobile /pricing: no console errors/CSP violations/failed requests
+PASS  browser mobile /pricing: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /pricing: no horizontal overflow
+PASS  browser mobile /platform: no console errors/CSP violations/failed requests
+PASS  browser mobile /platform: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /platform: no horizontal overflow
+PASS  browser mobile /frameworks/iso-27001: no console errors/CSP violations/failed requests
+PASS  browser mobile /frameworks/iso-27001: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /frameworks/iso-27001: no horizontal overflow
+PASS  browser mobile /features/evidence: no console errors/CSP violations/failed requests
+PASS  browser mobile /features/evidence: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /features/evidence: no horizontal overflow
+PASS  browser mobile /resources/faq: no console errors/CSP violations/failed requests
+PASS  browser mobile /resources/faq: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /resources/faq: no horizontal overflow
+PASS  browser mobile /contact: no console errors/CSP violations/failed requests
+PASS  browser mobile /contact: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /contact: no horizontal overflow
+PASS  browser mobile /book-demo: no console errors/CSP violations/failed requests
+PASS  browser mobile /book-demo: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /book-demo: no horizontal overflow
+PASS  browser mobile /plans/launch: no console errors/CSP violations/failed requests
+PASS  browser mobile /plans/launch: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /plans/launch: no horizontal overflow
+PASS  browser mobile /start: no console errors/CSP violations/failed requests
+PASS  browser mobile /start: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /start: no horizontal overflow
+PASS  browser mobile /zz-unknown-route: no console errors/CSP violations/failed requests
+PASS  browser mobile /zz-unknown-route: same-origin only  — 127.0.0.1:18431
+PASS  browser mobile /zz-unknown-route: no horizontal overflow
+PASS  browser desktop /: no console errors/CSP violations/failed requests
+PASS  browser desktop /: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /pricing: no console errors/CSP violations/failed requests
+PASS  browser desktop /pricing: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /platform: no console errors/CSP violations/failed requests
+PASS  browser desktop /platform: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /frameworks/iso-27001: no console errors/CSP violations/failed requests
+PASS  browser desktop /frameworks/iso-27001: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /features/evidence: no console errors/CSP violations/failed requests
+PASS  browser desktop /features/evidence: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /resources/faq: no console errors/CSP violations/failed requests
+PASS  browser desktop /resources/faq: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /contact: no console errors/CSP violations/failed requests
+PASS  browser desktop /contact: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /book-demo: no console errors/CSP violations/failed requests
+PASS  browser desktop /book-demo: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /plans/launch: no console errors/CSP violations/failed requests
+PASS  browser desktop /plans/launch: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /start: no console errors/CSP violations/failed requests
+PASS  browser desktop /start: same-origin only  — 127.0.0.1:18431
+PASS  browser desktop /zz-unknown-route: no console errors/CSP violations/failed requests
+PASS  browser desktop /zz-unknown-route: same-origin only  — 127.0.0.1:18431
+
+All checks passed
