@@ -38,10 +38,19 @@ function log(event: string, status: number, reason?: string) {
   console.warn(JSON.stringify({ scope: "nova-assistant", event, status, ...(reason ? { reason } : {}) }));
 }
 
+/**
+ * AI connection: any OpenAI-compatible chat endpoint. Default is the DeepSeek API and deepseek-v4-flash, the provider and model the
+ * existing NOVA production agents already use (NOVA_LIVE_008). The website uses its OWN key (NOVA_ASSISTANT_API_KEY), never another
+ * application's credential, and only ever sends public NOVA knowledge plus the visitor's question.
+ */
 function providerConfig() {
-  const apiKey = process.env["ANTHROPIC_API_KEY"]?.trim();
+  const apiKey = process.env["NOVA_ASSISTANT_API_KEY"]?.trim();
   if (!apiKey) return null;
-  return { apiKey, model: process.env["NOVA_ASSISTANT_MODEL"]?.trim() || "claude-haiku-5-5" };
+  return {
+    apiKey,
+    baseUrl: (process.env["NOVA_ASSISTANT_BASE_URL"]?.trim() || "https://api.deepseek.com").replace(/\/+$/, ""),
+    model: process.env["NOVA_ASSISTANT_MODEL"]?.trim() || "deepseek-v4-flash",
+  };
 }
 
 const SYSTEM_PROMPT = `You are NOVA, the public information assistant on the Eredox NOVA Compliance website (www.nova.eredox.com).
@@ -59,15 +68,23 @@ async function askProvider(question: string, pagePath: string): Promise<string> 
   if (!cfg) throw new Error("not-configured");
   const { text } = retrieveKnowledge(question, pagePath);
   const system = `${SYSTEM_PROMPT}\n\nCore facts: ${CORE_FACTS}\n\nApproved public knowledge:\n${text || "(no specific page content matched this question)"}\n\nThe visitor is currently viewing: ${pagePath}`;
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch(`${cfg.baseUrl}/chat/completions`, {
     method: "POST",
-    headers: { "content-type": "application/json", "x-api-key": cfg.apiKey, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model: cfg.model, max_tokens: ANSWER_MAX_TOKENS, system, messages: [{ role: "user", content: question }] }),
+    headers: { "content-type": "application/json", authorization: `Bearer ${cfg.apiKey}` },
+    body: JSON.stringify({
+      model: cfg.model,
+      max_tokens: ANSWER_MAX_TOKENS,
+      temperature: 0.2,
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: question },
+      ],
+    }),
     signal: AbortSignal.timeout(PROVIDER_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`provider-${res.status}`);
-  const data = (await res.json()) as { content?: { type: string; text?: string }[] };
-  const answer = (data.content ?? []).filter((b) => b.type === "text").map((b) => b.text ?? "").join("\n").trim();
+  const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+  const answer = (data.choices?.[0]?.message?.content ?? "").trim();
   if (!answer) throw new Error("provider-empty");
   return answer;
 }

@@ -17,8 +17,8 @@ const post = (body: unknown, ip = "203.0.113.5") =>
 describe("assistant server", () => {
   beforeEach(() => {
     resetAssistantGuardsForTests();
-    vi.stubEnv("ANTHROPIC_API_KEY", "test-key");
-    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ content: [{ type: "text", text: "A grounded answer." }] }), { status: 200 })));
+    vi.stubEnv("NOVA_ASSISTANT_API_KEY", "test-key");
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ choices: [{ message: { content: "A grounded answer." } }] }), { status: 200 })));
   });
   afterEach(() => {
     vi.unstubAllEnvs();
@@ -45,7 +45,7 @@ describe("assistant server", () => {
   });
 
   it("is honestly unavailable (503, no simulated answer) without an API key", async () => {
-    vi.stubEnv("ANTHROPIC_API_KEY", "");
+    vi.stubEnv("NOVA_ASSISTANT_API_KEY", "");
     const res = await post({ sid: SID, question: "What is NOVA?", path: "/" });
     expect(res.status).toBe(503);
     expect(vi.mocked(fetch)).not.toHaveBeenCalled();

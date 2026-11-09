@@ -1,4 +1,4 @@
-// TEST-ONLY mock of the Anthropic Messages API. Never part of the production image.
+// TEST-ONLY mock of the OpenAI-compatible chat API (DeepSeek). Never part of the production image.
 import http from "node:http";
 let n = 0;
 http
@@ -8,7 +8,7 @@ http
     req.on("end", () => {
       n += 1;
       res.writeHead(200, { "content-type": "application/json" });
-      res.end(JSON.stringify({ content: [{ type: "text", text: `Mock answer ${n}. This is a test response from a local mock, not a real AI service.` }] }));
+      res.end(JSON.stringify({ choices: [{ message: { content: `Mock answer ${n}. This is a test response from a local mock, not a real AI service.` } }] }));
     });
   })
   .listen(Number(process.argv[2] || 18433), "127.0.0.1");

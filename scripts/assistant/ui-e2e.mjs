@@ -1,6 +1,6 @@
 // Browser check of the NOVA AI Information Assistant against a LOCAL build with a MOCK AI endpoint (nothing leaves the machine).
-//   1. node scripts/assistant/mock-anthropic.mjs 18433 &
-//   2. MOCK_ANTHROPIC_URL=http://127.0.0.1:18433 ANTHROPIC_API_KEY=test PORT=18432 node --import ./scripts/assistant/anthropic-redirect.mjs .output/server/index.mjs &
+//   1. node scripts/assistant/mock-ai.mjs 18433 &
+//   2. MOCK_AI_URL=http://127.0.0.1:18433 NOVA_ASSISTANT_API_KEY=test PORT=18432 node --import ./scripts/assistant/ai-redirect.mjs .output/server/index.mjs &
 //   3. SITE=http://127.0.0.1:18432 node scripts/assistant/ui-e2e.mjs
 import { openBrowser, pause } from "../journey/cdp-browser.mjs";
 import os from "node:os";
