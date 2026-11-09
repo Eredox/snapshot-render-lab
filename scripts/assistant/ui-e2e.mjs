@@ -52,18 +52,33 @@ try {
   await pause(300);
   step("reopen earlier answer shows it, allowance unchanged, no API call", (await answer()) === first && /5 of 7 questions remaining/.test(await count()) && (await b.evaluate("window.__calls")) === 0);
 
-  // voice: only offered with a natural voice; never a technical label; never autoplays
+  // voice: server-synthesised neural audio (self-hosted Piper) played with Web Audio; only shown when the server reports it
   const hasControls = await b.evaluate("!!document.querySelector('[aria-label=\"Listen to this answer\"]')");
-  const voices = await b.evaluate("window.speechSynthesis.getVoices().map(v=>v.name+'|'+v.lang)");
   step("never autoplays", (await b.evaluate("window.speechSynthesis.speaking")) === false);
+  step("no voice name or engine label anywhere", !/Voice:|Microsoft|David|Piper|English (United States)/i.test(await b.evaluate("document.body.innerText")));
   if (hasControls) {
-    step("playback controls present (Listen, Pause, Stop, Replay) only because a natural voice exists", (await b.evaluate("[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].map(x=>x.innerText.trim()).join()")).replace(/Resume/, "Listen") === "Listen,Pause,Stop,Replay");
-    await b.evaluate("window.speechSynthesis.speak(new SpeechSynthesisUtterance('test tone for navigation check. '.repeat(8)))");
+    const btn = (label) => "[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim().startsWith('" + label + "'))";
+    step("playback controls present (Listen, Pause, Stop, Replay)", (await b.evaluate("[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].map(x=>x.innerText.trim()).join()")).replace(/Resume/, "Listen") === "Listen,Pause,Stop,Replay");
+    await b.evaluate("window.__speechReq=0; const f2=window.fetch; window.fetch=(...a)=>{ if(String(a[0]).includes('/api/assistant/speech')) window.__speechReq++; return f2(...a); }");
+    await b.evaluate(btn("Listen") + ".click()");
+    await b.waitFor("playing", "(()=>{const p=[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim()==='Pause'); return p && !p.disabled})()", 60000);
+    step("Listen fetched neural audio from our server and is playing", (await b.evaluate("window.__speechReq")) >= 1);
+    await b.evaluate(btn("Pause") + ".click()");
+    await pause(300);
+    step("Pause suspends playback (button becomes Resume)", await b.evaluate("!!(" + btn("Resume") + ")"));
+    await b.evaluate(btn("Resume") + ".click()");
+    await pause(300);
+    step("Resume continues playback", await b.evaluate("!!(" + btn("Pause") + " && !" + btn("Pause") + ".disabled)"));
+    await b.evaluate(btn("Stop") + ".click()");
+    await pause(300);
+    step("Stop returns to idle", await b.evaluate("!!(" + btn("Listen") + ") && " + btn("Stop") + ".disabled"));
+    await b.evaluate(btn("Replay") + ".click()");
+    await b.waitFor("replaying", "(()=>{const p=[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim()==='Pause'); return p && !p.disabled})()", 60000);
     await spa("/pricing");
-    await pause(400);
-    step("audio stops on navigation", (await b.evaluate("window.speechSynthesis.speaking")) === false);
+    await pause(500);
+    step("audio stops on navigation", await b.evaluate("(()=>{const l=[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim()==='Listen'||x.innerText.trim()==='Resume'); return !l || !!l && [...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim()==='Stop').disabled})()"));
   } else {
-    step("no natural American male voice on this browser: playback controls are NOT shown (no robotic fallback)", !(await b.evaluate("document.body.innerText")).match(/Listen|Replay/), `voices: ${voices.length}`);
+    step("server reports no neural voice: playback controls are NOT shown (no robotic fallback)", !(await b.evaluate("document.body.innerText")).match(/Listen|Replay/));
     await spa("/pricing");
   }
 

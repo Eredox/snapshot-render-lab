@@ -150,8 +150,8 @@ export function NovaAssistant() {
   const speak = async () => {
     if (!active?.n || !active.parts) return;
     if (speech === "paused" && ctxRef.current) {
-      await ctxRef.current.resume();
       setSpeech("playing");
+      void ctxRef.current.resume().catch(() => setSpeech("paused"));
       return;
     }
     haltAudio();
