@@ -1,4 +1,4 @@
-import { useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
 import { CtaLink } from "@/components/site/cta";
@@ -16,7 +16,8 @@ type Stored = { sid: string; used: number; items: Item[] };
 type Speech = "idle" | "playing" | "paused";
 
 const STORE_KEY = "nova.assistant.v1";
-const MAX_FREE_COPY = "Answers come from NOVA's public information. Please do not enter personal or confidential details; questions are sent to our AI provider to produce the answer.";
+const MAX_FREE_COPY =
+  "This assistant is powered by DeepSeek, a third-party AI provider. Your question is sent to DeepSeek, which may process it outside Australia, including in China. Do not enter personal, confidential or customer information. Answers come from NOVA's public website information and may be incomplete; it cannot see any NOVA account.";
 
 const newSid = () =>
   (typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}-0000000000`).slice(0, 64);
@@ -236,7 +237,13 @@ export function NovaAssistant() {
             {busy ? "Asking…" : "Ask NOVA"}
           </button>
         </form>
-        <p className="mt-2 text-xs text-muted-foreground">{MAX_FREE_COPY}</p>
+        <p className="mt-2 text-xs text-muted-foreground">
+          {MAX_FREE_COPY}{" "}
+          <Link to="/legal/privacy" className="underline">
+            Privacy Policy (section 61)
+          </Link>
+          .
+        </p>
 
         <div aria-live="polite" className="mt-4">
           {unavailable ? <p className="rounded-lg border border-border bg-card p-4 text-sm">The NOVA assistant is not available right now. Our Sales team can answer your questions.</p> : null}

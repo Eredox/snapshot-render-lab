@@ -39,8 +39,8 @@ function log(event: string, status: number, reason?: string) {
 }
 
 /**
- * AI connection: any OpenAI-compatible chat endpoint. Default is the DeepSeek API and deepseek-v4-flash, the provider and model the
- * existing NOVA production agents already use (NOVA_LIVE_008). The website uses its OWN key (NOVA_ASSISTANT_API_KEY), never another
+ * AI connection: any OpenAI-compatible chat endpoint. Default is the DeepSeek API, model deepseek-flash in non-thinking mode, on
+ * Eredox's existing DeepSeek account (NOVA_LIVE_008). The website uses its OWN key (NOVA_ASSISTANT_API_KEY), never another
  * application's credential, and only ever sends public NOVA knowledge plus the visitor's question.
  */
 function providerConfig() {
@@ -49,7 +49,7 @@ function providerConfig() {
   return {
     apiKey,
     baseUrl: (process.env["NOVA_ASSISTANT_BASE_URL"]?.trim() || "https://api.deepseek.com").replace(/\/+$/, ""),
-    model: process.env["NOVA_ASSISTANT_MODEL"]?.trim() || "deepseek-v4-flash",
+    model: process.env["NOVA_ASSISTANT_MODEL"]?.trim() || "deepseek-flash",
   };
 }
 
@@ -75,6 +75,8 @@ async function askProvider(question: string, pagePath: string): Promise<string> 
       model: cfg.model,
       max_tokens: ANSWER_MAX_TOKENS,
       temperature: 0.2,
+      // Straightforward website information questions use non-thinking mode (DeepSeek: thinking is on by default).
+      ...(cfg.baseUrl.includes("deepseek.com") ? { thinking: { type: "disabled" } } : {}),
       messages: [
         { role: "system", content: system },
         { role: "user", content: question },

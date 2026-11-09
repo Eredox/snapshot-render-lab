@@ -25,7 +25,7 @@ describe("published legal documents", () => {
       expect(document.metadata.status).toBe("published_current");
       expect(document.metadata.publication_status).toBe("published");
       expect(document.metadata.effective_date).toBe("2026-09-24");
-      expect(document.metadata.updated_date).toBe("2026-09-24");
+      expect(document.metadata.updated_date).toBe("2026-11-09");
       expect(JSON.stringify(document)).toContain("Eredox Pty Ltd");
     }
   });
@@ -64,6 +64,24 @@ describe("published legal documents", () => {
     expect(text("cookies")).toMatch(/Brevo/);
     expect(text("cookies")).toMatch(/history entry/);
     expect(text("accessibility")).not.toMatch(/Google Fonts/);
+  });
+
+  it("discloses the DeepSeek-powered public assistant, overseas processing including China, and separates it from authenticated AI", () => {
+    const section = (document: typeof publishedTerms, prefix: string) => document.sections.find((s) => s.title.startsWith(prefix))?.body ?? "";
+    const privacy61 = section(publishedPrivacy, "61.");
+    expect(privacy61).toMatch(/Public website information assistant/);
+    expect(privacy61).toMatch(/DeepSeek/);
+    expect(privacy61).toMatch(/People's Republic of China/);
+    expect(privacy61).toMatch(/Do not enter personal information, confidential information/);
+    expect(privacy61).toMatch(/Authenticated NOVA AI features/);
+    expect(privacy61).not.toMatch(/does not hold a platform-level credential/);
+    const terms30 = section(publishedTerms, "30.");
+    expect(terms30).toMatch(/separate from the Services/);
+    expect(terms30).not.toMatch(/does not itself hold or supply credentials/);
+    const cookies = JSON.stringify(publicLegalDocs.find((d) => d.slug === "cookies"));
+    expect(cookies).toMatch(/nova\.assistant\.v1/);
+    expect(cookies).toMatch(/DeepSeek/);
+    expect(cookies).not.toMatch(/No public-site sessionStorage key was found/);
   });
 
   it("keeps the published registry aligned with the Legal Centre, footer and sitemap", () => {

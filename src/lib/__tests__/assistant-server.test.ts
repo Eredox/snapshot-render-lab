@@ -37,6 +37,16 @@ describe("assistant server", () => {
     expect(vi.mocked(fetch)).toHaveBeenCalledTimes(7);
   });
 
+  it("calls DeepSeek deepseek-flash in non-thinking mode with the website key", async () => {
+    await post({ sid: SID, question: "What is NOVA?", path: "/" });
+    const [url, init] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("https://api.deepseek.com/chat/completions");
+    const body = JSON.parse(String(init.body)) as { model: string; thinking: { type: string } };
+    expect(body.model).toBe("deepseek-flash");
+    expect(body.thinking).toEqual({ type: "disabled" });
+    expect((init.headers as Record<string, string>)["authorization"]).toBe("Bearer test-key");
+  });
+
   it("does not consume the allowance when the AI provider fails", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response("{}", { status: 500 })));
     const res = await post({ sid: SID, question: "What is NOVA?", path: "/" });
