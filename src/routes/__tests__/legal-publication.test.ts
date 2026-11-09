@@ -72,6 +72,7 @@ describe("published legal documents", () => {
     expect(privacy61).toMatch(/Public website information assistant/);
     expect(privacy61).toMatch(/DeepSeek/);
     expect(privacy61).toMatch(/People's Republic of China/);
+    expect(privacy61).toContain("Google (Gemini text-to-speech)");
     expect(privacy61).toMatch(/Do not enter personal information, confidential information/);
     expect(privacy61).toMatch(/Authenticated NOVA AI features/);
     expect(privacy61).not.toMatch(/does not hold a platform-level credential/);

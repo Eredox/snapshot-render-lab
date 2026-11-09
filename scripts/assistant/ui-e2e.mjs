@@ -1,6 +1,6 @@
 // Browser check of the NOVA AI Information Assistant against a LOCAL build with a MOCK AI endpoint (nothing leaves the machine).
 //   1. node scripts/assistant/mock-ai.mjs 18433 &
-//   2. MOCK_AI_URL=http://127.0.0.1:18433 NOVA_ASSISTANT_API_KEY=test PORT=18432 node --import ./scripts/assistant/ai-redirect.mjs .output/server/index.mjs &
+//   2. MOCK_AI_URL=http://127.0.0.1:18433 NOVA_ASSISTANT_API_KEY=test GEMINI_API_KEY=test PORT=18432 node --import ./scripts/assistant/ai-redirect.mjs .output/server/index.mjs &
 //   3. SITE=http://127.0.0.1:18432 [VIEWPORT=mobile|tablet] node scripts/assistant/ui-e2e.mjs
 import { openBrowser, pause } from "../journey/cdp-browser.mjs";
 import os from "node:os";
@@ -52,10 +52,10 @@ try {
   await pause(300);
   step("reopen earlier answer shows it, allowance unchanged, no API call", (await answer()) === first && /5 of 7 questions remaining/.test(await count()) && (await b.evaluate("window.__calls")) === 0);
 
-  // voice: server-synthesised neural audio (self-hosted Piper) played with Web Audio; only shown when the server reports it
+  // voice: server-synthesised neural audio (Gemini TTS, mocked here) played with Web Audio; only shown when the server reports it
   const hasControls = await b.evaluate("!!document.querySelector('[aria-label=\"Listen to this answer\"]')");
   step("never autoplays", (await b.evaluate("window.speechSynthesis.speaking")) === false);
-  step("no voice name or engine label anywhere", !/Voice:|Microsoft|David|Piper|English (United States)/i.test(await b.evaluate("document.body.innerText")));
+  step("no voice name or engine label anywhere", !/Voice:|Microsoft|David|Piper|Gemini|Puck|English (United States)/i.test(await b.evaluate("document.body.innerText")));
   if (hasControls) {
     const btn = (label) => "[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].find(x=>x.innerText.trim().startsWith('" + label + "'))";
     step("playback controls present (Listen, Pause, Stop, Replay)", (await b.evaluate("[...document.querySelectorAll('[aria-label=\"Listen to this answer\"] button')].map(x=>x.innerText.trim()).join()")).replace(/Resume/, "Listen") === "Listen,Pause,Stop,Replay");

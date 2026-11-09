@@ -83,7 +83,7 @@ describe("assistant server", () => {
   });
 });
 
-describe("assistant speech (self-hosted neural voice)", () => {
+describe("assistant speech (Gemini TTS, server side)", () => {
   const SID2 = "speechsession-0000001";
   const speechPost = (body: unknown, origin = "https://www.nova.eredox.com") =>
     handleAssistantRequest(
@@ -98,8 +98,7 @@ describe("assistant speech (self-hosted neural voice)", () => {
   beforeEach(() => {
     resetAssistantGuardsForTests();
     vi.stubEnv("NOVA_ASSISTANT_API_KEY", "test-key");
-    vi.stubEnv("NOVA_PIPER_BIN", "package.json"); // any existing file: only its presence is checked, synthesis is stubbed
-    vi.stubEnv("NOVA_PIPER_MODEL", "package.json");
+    vi.stubEnv("GEMINI_API_KEY", "gemini-test-key");
     vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ choices: [{ message: { content: ANSWER } }] }), { status: 200 })));
     setSynthesizerForTests(async (text) => Buffer.from(`RIFF-${text}`));
   });
@@ -112,7 +111,8 @@ describe("assistant speech (self-hosted neural voice)", () => {
   it("chunks answers deterministically into short plain-text parts", () => {
     const parts = speechParts(`**Bold** text. ${"Sentence number one is here. ".repeat(20)}\n- bullet one\n- bullet two`);
     expect(parts.length).toBeGreaterThan(1);
-    expect(parts.every((p) => p.length <= 260 && !p.includes("**") && !p.startsWith("- "))).toBe(true);
+    expect(parts[0]?.length).toBeLessThanOrEqual(230); // small first chunk so audio starts quickly
+    expect(parts.every((p) => p.length <= 480 && !p.includes("**") && !p.startsWith("- "))).toBe(true);
     expect(speechParts("Hello there. General Kenobi.")).toEqual(["Hello there. General Kenobi."]);
   });
 
@@ -127,6 +127,44 @@ describe("assistant speech (self-hosted neural voice)", () => {
     expect(await audio.text()).toMatch(/^RIFF-First sentence/);
     const status = await handleAssistantRequest(new Request("https://www.nova.eredox.com/api/assistant"));
     expect(((await status.json()) as { speech: boolean }).speech).toBe(true);
+  });
+
+  it("calls Gemini TTS server-side with the Puck voice, key in a header, and returns WAV audio", async () => {
+    setSynthesizerForTests(null);
+    const wavB64 = Buffer.from("RIFF....WAVEfmt fake-audio").toString("base64");
+    const calls: [string, RequestInit][] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string, init: RequestInit) => {
+        calls.push([url, init]);
+        if (String(url).includes("deepseek")) return new Response(JSON.stringify({ choices: [{ message: { content: "A short answer about NOVA." } }] }), { status: 200 });
+        return new Response(JSON.stringify({ steps: [{ type: "model_output", content: [{ type: "audio", data: wavB64 }] }] }), { status: 200 });
+      }),
+    );
+    await post({ sid: SID2, question: "What is NOVA?", path: "/" });
+    const audio = await speechPost({ sid: SID2, n: 1, part: 0 });
+    expect(audio.status).toBe(200);
+    expect(audio.headers.get("content-type")).toBe("audio/wav");
+    const [url, init] = calls.find(([u]) => String(u).includes("generativelanguage")) as [string, RequestInit];
+    expect(url).toBe("https://generativelanguage.googleapis.com/v1beta/interactions");
+    expect((init.headers as Record<string, string>)["x-goog-api-key"]).toBe("gemini-test-key");
+    const body = JSON.parse(String(init.body)) as { model: string; generation_config: { speech_config: { voice: string }[] }; response_format: { type: string } };
+    expect(body.model).toBe("gemini-3.8-flash-lite-tts");
+    expect(body.generation_config.speech_config[0]?.voice).toBe("Puck");
+    expect(body.response_format.type).toBe("audio");
+    expect(await audio.text()).not.toMatch(/gemini-test-key/);
+  });
+
+  it("is unavailable (no audio, no key exposure) without GEMINI_API_KEY and a provider error is a clean 502", async () => {
+    vi.stubEnv("GEMINI_API_KEY", "");
+    await post({ sid: SID2, question: "What is NOVA?", path: "/" });
+    expect((await speechPost({ sid: SID2, n: 1, part: 0 })).status).toBe(503);
+    expect(((await (await handleAssistantRequest(new Request("https://www.nova.eredox.com/api/assistant"))).json()) as { speech: boolean }).speech).toBe(false);
+    vi.stubEnv("GEMINI_API_KEY", "gemini-test-key");
+    setSynthesizerForTests(async () => {
+      throw new Error("gemini-500");
+    });
+    expect((await speechPost({ sid: SID2, n: 1, part: 0 })).status).toBe(502);
   });
 
   it("refuses arbitrary text, unknown sessions, unknown answers, cross-origin and out-of-range parts", async () => {

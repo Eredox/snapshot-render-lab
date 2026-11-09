@@ -21,7 +21,8 @@ const dailyPerClient = new SlidingWindowLimiter(ASSISTANT_QUESTION_LIMIT * 3, 24
 const hourlyGlobal = new SlidingWindowLimiter(400, 60 * 60_000, 1); // total accepted questions per hour
 
 const speechAttempts = new SlidingWindowLimiter(60, 10 * 60_000); // audio chunk requests per client
-const speechDaily = new SlidingWindowLimiter(400, 24 * 60 * 60_000);
+const speechDaily = new SlidingWindowLimiter(150, 24 * 60 * 60_000); // paid Gemini TTS: bound per client per day
+const speechGlobalHourly = new SlidingWindowLimiter(500, 60 * 60_000, 1); // and in total per hour, whatever the number of clients
 
 type Session = { used: number; touched: number; answers: Record<number, string> };
 const sessions = new Map<string, Session>();
@@ -30,6 +31,7 @@ export function resetAssistantGuardsForTests() {
   attempts.clear();
   speechAttempts.clear();
   speechDaily.clear();
+  speechGlobalHourly.clear();
   dailyPerClient.clear();
   hourlyGlobal.clear();
   sessions.clear();
@@ -104,7 +106,7 @@ async function handleSpeech(request: Request): Promise<Response> {
   if (!originAllowed(request)) return json(403, { ok: false, message: "Request not permitted" });
   if (!/^application\/json(\s*;|$)/i.test(request.headers.get("content-type") ?? "")) return json(415, { ok: false, message: "Unsupported content type" });
   const client = clientKey(request);
-  if (!speechAttempts.take(client).allowed || !speechDaily.take(client).allowed) {
+  if (!speechAttempts.take(client).allowed || !speechDaily.take(client).allowed || !speechGlobalHourly.take("all").allowed) {
     log("speech-rate-limited", 429);
     return json(429, { ok: false, message: "Audio is busy. Please try again shortly." }, { "retry-after": "60" });
   }

@@ -1,34 +1,30 @@
-import { spawn } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import path from "node:path";
-
 /**
- * Self-hosted neural text-to-speech for the public assistant: Piper (MIT) with the en_US "john" male voice (public-domain LibriVox
- * training data). It only ever speaks answers this server itself produced for the same visit, never arbitrary text, runs one
- * synthesis at a time at the lowest CPU priority, and has hard time and size limits so it cannot starve the NOVA application.
+ * Server-side text-to-speech for the public assistant using Google Gemini TTS (Interactions API, prebuilt voice "Puck").
+ * It only ever speaks answers this server itself produced for the same visit, never arbitrary text. The API key
+ * (GEMINI_API_KEY) lives only in the server environment: it is sent as a request header to Google, never to the browser,
+ * never logged. Cost controls: short chunks, per-client and global ceilings (see assistant-server.ts), a small in-memory cache so a
+ * replay or reload does not pay twice, bounded concurrency and a hard timeout.
  */
 
-const piperBin = () => process.env["NOVA_PIPER_BIN"] || "/opt/piper/piper";
-const piperModel = () => process.env["NOVA_PIPER_MODEL"] || "/opt/piper/voices/en_US-john-medium.onnx";
-const SYNTH_TIMEOUT_MS = 40_000;
-const MAX_PCM_BYTES = 12_000_000;
-const MAX_QUEUE = 3;
-const CHUNK_CHARS = 180;
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/interactions";
+const SYNTH_TIMEOUT_MS = 30_000;
+const MAX_AUDIO_BYTES = 6_000_000;
+const MAX_CONCURRENT = 2;
+const MAX_QUEUE = 6;
+const FIRST_CHUNK_CHARS = 200; // small first chunk so playback starts quickly
+const CHUNK_CHARS = 450;
+const CACHE_ENTRIES = 40;
+const STYLE = "Speak in natural, warm, conversational American English, like a friendly and knowledgeable product specialist. Steady, unhurried pace.";
+
+const geminiKey = () => process.env["GEMINI_API_KEY"]?.trim() || "";
+const geminiModel = () => process.env["GEMINI_TTS_MODEL"]?.trim() || "gemini-3.8-flash-lite-tts";
+const geminiVoice = () => process.env["GEMINI_TTS_VOICE"]?.trim() || "Puck";
 
 export function speechConfigured(): boolean {
-  return existsSync(piperBin()) && existsSync(piperModel());
+  return geminiKey() !== "";
 }
 
-function sampleRate(): number {
-  try {
-    const cfg = JSON.parse(readFileSync(`${piperModel()}.json`, "utf8")) as { audio?: { sample_rate?: number } };
-    return cfg.audio?.sample_rate ?? 22_050;
-  } catch {
-    return 22_050;
-  }
-}
-
-/** Deterministic plain-text chunks (about two sentences) so playback can start after the first one is ready. */
+/** Deterministic plain-text chunks (a few sentences) so playback can start after the first one is ready. */
 export function speechParts(answer: string): string[] {
   const text = answer
     .replace(/\*\*|__|`/g, "")
@@ -41,7 +37,8 @@ export function speechParts(answer: string): string[] {
   const parts: string[] = [];
   let current = "";
   for (const sentence of sentences) {
-    if (current && current.length + sentence.length + 1 > CHUNK_CHARS) {
+    const limit = parts.length === 0 ? FIRST_CHUNK_CHARS : CHUNK_CHARS;
+    if (current && current.length + sentence.length + 1 > limit) {
       parts.push(current);
       current = sentence;
     } else {
@@ -49,17 +46,19 @@ export function speechParts(answer: string): string[] {
     }
   }
   if (current) parts.push(current);
-  return parts.slice(0, 12);
+  return parts.slice(0, 8);
 }
 
-function wav(pcm: Buffer, rate: number): Buffer {
+/** Wraps headerless 24 kHz mono 16-bit PCM in a WAV header (only used if Google returns raw PCM). */
+function wavFromPcm(pcm: Buffer): Buffer {
+  const rate = 24_000;
   const header = Buffer.alloc(44);
   header.write("RIFF", 0);
   header.writeUInt32LE(36 + pcm.length, 4);
   header.write("WAVEfmt ", 8);
   header.writeUInt32LE(16, 16);
-  header.writeUInt16LE(1, 20); // PCM
-  header.writeUInt16LE(1, 22); // mono
+  header.writeUInt16LE(1, 20);
+  header.writeUInt16LE(1, 22);
   header.writeUInt32LE(rate, 24);
   header.writeUInt32LE(rate * 2, 28);
   header.writeUInt16LE(2, 32);
@@ -69,56 +68,64 @@ function wav(pcm: Buffer, rate: number): Buffer {
   return Buffer.concat([header, pcm]);
 }
 
-function runPiper(text: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const child = spawn("nice", ["-n", "15", piperBin(), "--model", piperModel(), "--output_raw", "--quiet"], {
-      cwd: path.dirname(piperBin()),
-      env: { ...process.env, LD_LIBRARY_PATH: path.dirname(piperBin()) },
-      stdio: ["pipe", "pipe", "ignore"],
-    });
-    const chunks: Buffer[] = [];
-    let size = 0;
-    const timer = setTimeout(() => child.kill("SIGKILL"), SYNTH_TIMEOUT_MS);
-    child.stdout.on("data", (c: Buffer) => {
-      size += c.length;
-      if (size > MAX_PCM_BYTES) child.kill("SIGKILL");
-      else chunks.push(c);
-    });
-    child.on("error", (e) => {
-      clearTimeout(timer);
-      reject(e);
-    });
-    child.on("close", (code) => {
-      clearTimeout(timer);
-      if (code === 0 && size > 0 && size <= MAX_PCM_BYTES) resolve(wav(Buffer.concat(chunks), sampleRate()));
-      else reject(new Error(`piper-exit-${code}`));
-    });
-    child.stdin.on("error", () => undefined);
-    child.stdin.end(text.replace(/\s+/g, " ").trim());
+type GeminiResponse = { steps?: { type?: string; content?: { type?: string; data?: string }[] }[] };
+
+async function callGemini(text: string): Promise<Buffer> {
+  const res = await fetch(GEMINI_ENDPOINT, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-goog-api-key": geminiKey() },
+    body: JSON.stringify({
+      model: geminiModel(),
+      input: [{ type: "user_input", content: [{ type: "text", text, annotations: [{ type: "speech_metadata", style: STYLE }] }] }],
+      response_format: { type: "audio" },
+      generation_config: { speech_config: [{ voice: geminiVoice() }] },
+    }),
+    signal: AbortSignal.timeout(SYNTH_TIMEOUT_MS),
   });
+  if (!res.ok) throw new Error(`gemini-${res.status}`); // status only: the response body is never logged
+  const data = (await res.json()) as GeminiResponse;
+  const audio = (data.steps ?? [])
+    .filter((s) => s.type === "model_output")
+    .flatMap((s) => s.content ?? [])
+    .filter((c) => c.type === "audio" && typeof c.data === "string")
+    .pop();
+  if (!audio?.data) throw new Error("gemini-no-audio");
+  const bytes = Buffer.from(audio.data, "base64");
+  if (bytes.length === 0 || bytes.length > MAX_AUDIO_BYTES) throw new Error("gemini-bad-size");
+  return bytes.subarray(0, 4).toString("ascii") === "RIFF" ? bytes : wavFromPcm(bytes);
 }
 
-let synthesizer: (text: string) => Promise<Buffer> = runPiper;
+let synthesizer: (text: string) => Promise<Buffer> = callGemini;
 export function setSynthesizerForTests(fn: ((text: string) => Promise<Buffer>) | null) {
-  synthesizer = fn ?? runPiper;
+  synthesizer = fn ?? callGemini;
+  cache.clear();
 }
 
-let running = false;
+const cache = new Map<string, Buffer>();
+let running = 0;
 const waiting: (() => void)[] = [];
 
-/** One synthesis at a time; at most MAX_QUEUE waiting. Returns null when the queue is full. */
+/** Bounded concurrency with a short queue (null = queue full) and a small cache keyed by the exact chunk text. */
 export async function synthesize(text: string): Promise<Buffer | null> {
-  if (running) {
+  const hit = cache.get(text);
+  if (hit) return hit;
+  if (running >= MAX_CONCURRENT) {
     if (waiting.length >= MAX_QUEUE) return null;
-    await new Promise<void>((resolve) => waiting.push(resolve)); // the slot is handed over, `running` stays true
+    await new Promise<void>((resolve) => waiting.push(resolve)); // a finishing synthesis hands its slot over
   } else {
-    running = true;
+    running += 1;
   }
   try {
-    return await synthesizer(text);
+    const audio = await synthesizer(text);
+    cache.set(text, audio);
+    if (cache.size > CACHE_ENTRIES) {
+      const oldest = cache.keys().next().value;
+      if (oldest !== undefined) cache.delete(oldest);
+    }
+    return audio;
   } finally {
     const next = waiting.shift();
     if (next) next();
-    else running = false;
+    else running -= 1;
   }
 }
