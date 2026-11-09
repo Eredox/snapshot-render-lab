@@ -1,0 +1,31 @@
+PASS 8 security/cache headers, each exactly once
+PASS Server header discloses no version
+PASS / returns 200
+PASS html lang=en-AU
+PASS canonical of / is https://www.nova.eredox.com/
+PASS Organization JSON-LD on /
+PASS AboutPage JSON-LD on /about
+PASS ContactPage JSON-LD on /contact
+PASS /pricing/ -> 301 with Location ending /pricing
+PASS /zz-nope -> 404
+PASS /.env -> 404
+PASS /index.html -> 404
+PASS /llms.txt -> 404
+PASS security.txt 200 text/plain with Contact and Expires
+PASS security.txt not expired (Expires 2027-05-01)
+PASS robots: Claude-SearchBot, Claude-User, Perplexity-User, OAI-SearchBot present
+PASS robots: Founder AI-crawler policy (GPTBot/ClaudeBot/Google-Extended allowed, CCBot disallowed)
+PASS robots: Sitemap line
+PASS sitemap lists 69 URLs
+PASS all 69 sitemap URLs return 200
+PASS noindex pages absent from sitemap (/status, /testimonials, product-updates, case-studies)
+PASS Cookie Policy: Brevo disclosed, no Google Fonts request statement
+PASS Cookie Policy and Accessibility Statement carry effective date 2026-11-09
+PASS /api/forms rejects GET (405)
+INFO pricing-links fingerprint: 2361e1d2cade707f (6 distinct registration links on / and /pricing)
+PASS pricing/registration links equal the value verified on the release image (2361e1d2cade707f)
+PASS application host /health -> 200
+PASS application /register?plan=growth&billing_cycle=annual -> 200
+PASS application root -> 200/30x
+
+SMOKE: ALL PASS

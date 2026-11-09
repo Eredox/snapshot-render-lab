@@ -1,0 +1,27 @@
+PASS heading text :: Need more information? Just ask me below.
+PASS introduction line and NOVA logo
+PASS no large disclaimer paragraph and no voice label
+PASS no floating/overlay assistant (fixed-position elements)
+PASS layout: chips below input, count below chips, next-step panel last, no horizontal overflow :: {"chipsBelowInput":true,"countBelowChips":true,"nextStepBottom":true,"inputFull":true,"overflowX":false}
+PASS send button is circular and inside the input row
+PASS pricing shows 3 pricing-specific suggestions :: ["What features does each plan include?","How do the plans compare?","How can I see a demonstration of NOVA?"]
+PASS next-step actions present (right-aligned)
+PASS answer shown beneath controls and 6 of 7 remaining :: 6 of 7 questions remaining
+PASS answer sits below the count row
+PASS page change gives new suggestions :: ["Which framework should I start with?","Which frameworks does NOVA support now?","Can NOVA reuse evidence across frameworks?"]
+PASS allowance persists across pages (6 of 7 remaining)
+PASS second answer, 5 of 7 remaining
+PASS reopen earlier answer shows it, allowance unchanged, no API call
+PASS never autoplays
+PASS no voice name or engine label anywhere
+PASS playback controls present (Listen, Pause, Stop, Replay)
+PASS Listen fetched neural audio from our server and is playing
+PASS Pause suspends playback (button becomes Resume)
+PASS Resume continues playback
+PASS Stop returns to idle
+PASS audio stops on navigation
+PASS reload keeps allowance (5 of 7) and earlier-answers list
+PASS Sales encouragement after five questions
+PASS after seven: input and suggestions disabled, Sales handoff shown
+PASS server refuses the 8th question (429) :: 429
+RESULT PASS
