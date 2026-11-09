@@ -1,8 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import { ArrowRight, ArrowUp, Pause, RotateCcw, Sparkles, Square, Volume2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
-import { CtaLink } from "@/components/site/cta";
-import { Section } from "@/components/site/primitives";
 import {
   ASSISTANT_MAX_QUESTION_CHARS,
   ASSISTANT_NUDGE_AFTER,
@@ -16,8 +15,6 @@ type Stored = { sid: string; used: number; items: Item[] };
 type Speech = "idle" | "playing" | "paused";
 
 const STORE_KEY = "nova.assistant.v1";
-const MAX_FREE_COPY =
-  "This assistant is powered by DeepSeek, a third-party AI provider. Your question is sent to DeepSeek, which may process it outside Australia, including in China. Do not enter personal, confidential or customer information. Answers come from NOVA's public website information and may be incomplete; it cannot see any NOVA account.";
 
 const newSid = () =>
   (typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}-0000000000`).slice(0, 64);
@@ -43,22 +40,23 @@ function save(s: Stored) {
   }
 }
 
-const FEMALE = /(zira|jenny|aria|samantha|susan|hazel|karen|victoria|allison|ava|joanna|kendra|kimberly|salli|female|siri)/i;
-const MALE = /(guy|david|mark|aaron|tom|alex|fred|evan|reed|eddy|matthew|joey|justin|ryan|male|davis|andrew|brian|christopher|roger|steffan)/i;
-
-/** Best available American male English voice, with graceful fallbacks. */
-function pickVoice(voices: SpeechSynthesisVoice[]): { voice: SpeechSynthesisVoice | null; male: boolean } {
-  const us = voices.filter((v) => /^en[-_]US$/i.test(v.lang));
-  const rank = (v: SpeechSynthesisVoice) => (/natural|online/i.test(v.name) ? 2 : 0) + (v.localService ? 0 : 1);
-  const male = us.filter((v) => MALE.test(v.name) && !FEMALE.test(v.name)).sort((a, b) => rank(b) - rank(a))[0];
-  if (male) return { voice: male, male: true };
-  const neutral = us.filter((v) => !FEMALE.test(v.name))[0] ?? us[0] ?? voices.find((v) => /^en/i.test(v.lang)) ?? null;
-  return { voice: neutral ?? null, male: false };
+/**
+ * Playback is offered ONLY when the device provides a natural/neural American male English voice (for example Microsoft "Online (Natural)"
+ * voices in Edge, or Apple "Enhanced"/"Premium" voices). Classic robotic voices and pitch-shifted fallbacks are deliberately not used:
+ * where no natural voice exists the controls are not shown at all.
+ */
+const NATURAL = /(natural|neural|online|enhanced|premium)/i;
+const MALE_NAME = /\b(guy|andrew|brian|christopher|eric|roger|steffan|davis|jason|tony|aaron|evan|nathan|tom|ryan|william)\b/i;
+function pickNaturalMaleVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
+  const candidates = voices.filter((v) => /^en[-_]US$/i.test(v.lang) && NATURAL.test(v.name) && MALE_NAME.test(v.name));
+  return candidates.sort((a, b) => Number(/natural|neural/i.test(b.name)) - Number(/natural|neural/i.test(a.name)))[0] ?? null;
 }
 
 function sentences(text: string): string[] {
   return (text.match(/[^.!?\n]+[.!?]*\s*/g) ?? [text]).map((s) => s.trim()).filter(Boolean);
 }
+
+const ghost = "inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium text-muted-foreground hover:bg-surface hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40";
 
 export function NovaAssistant() {
   const pathname = normalisePath(useLocation().pathname);
@@ -71,10 +69,8 @@ export function NovaAssistant() {
   const [error, setError] = useState("");
   const [activeId, setActiveId] = useState<string | null>(null);
   const [speech, setSpeech] = useState<Speech>("idle");
-  const [voiceNote, setVoiceNote] = useState("");
   const [canSpeak, setCanSpeak] = useState(false);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
-  const maleRef = useRef(false);
 
   useEffect(() => {
     const stored = load();
@@ -87,12 +83,9 @@ export function NovaAssistant() {
       .then((d) => setAvailable(d.available === true))
       .catch(() => setAvailable(false));
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      setCanSpeak(true);
       const refresh = () => {
-        const { voice, male } = pickVoice(window.speechSynthesis.getVoices());
-        voiceRef.current = voice;
-        maleRef.current = male;
-        setVoiceNote(voice ? (male ? `Voice: ${voice.name}` : `An American male voice is not available on this device; using ${voice.name}.`) : "Using your device's default voice.");
+        voiceRef.current = pickNaturalMaleVoice(window.speechSynthesis.getVoices());
+        setCanSpeak(voiceRef.current !== null);
       };
       refresh();
       window.speechSynthesis.addEventListener("voiceschanged", refresh);
@@ -118,12 +111,14 @@ export function NovaAssistant() {
   }, [pathname, activeId, stopSpeech]);
 
   const active = state.items.find((i) => i.id === activeId) ?? null;
-  const exhausted = state.used >= ASSISTANT_QUESTION_LIMIT;
+  const remaining = Math.max(0, ASSISTANT_QUESTION_LIMIT - state.used);
+  const exhausted = remaining === 0;
   const unavailable = available === false;
+  const locked = busy || exhausted || unavailable || !ready;
 
   const ask = async (raw: string) => {
     const question = raw.replace(/\s+/g, " ").trim();
-    if (!question || busy || exhausted || !ready || unavailable) return;
+    if (!question || locked) return;
     setBusy(true);
     setError("");
     try {
@@ -145,10 +140,10 @@ export function NovaAssistant() {
         setState(next);
         save(next);
       } else {
-        setError(data.message ?? "The NOVA assistant could not answer just now. This did not use one of your questions.");
+        setError(data.message ?? "NOVA could not answer just now. This did not use one of your questions.");
       }
     } catch {
-      setError("The NOVA assistant could not be reached. This did not use one of your questions.");
+      setError("NOVA could not be reached. This did not use one of your questions.");
     } finally {
       setBusy(false);
     }
@@ -168,8 +163,6 @@ export function NovaAssistant() {
       const u = new SpeechSynthesisUtterance(part);
       u.lang = "en-US";
       if (voiceRef.current) u.voice = voiceRef.current;
-      if (!maleRef.current) u.pitch = 0.8; // lower pitch when no male voice exists on the device
-      u.rate = 1;
       if (index === parts.length - 1) {
         u.onend = () => setSpeech("idle");
         u.onerror = () => setSpeech("idle");
@@ -193,111 +186,163 @@ export function NovaAssistant() {
     void ask(input);
   };
 
-  const btn = "inline-flex min-h-11 items-center justify-center rounded-lg border border-border-strong bg-background px-4 text-sm font-medium hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50";
+  const earlier = state.items.filter((i) => i.id !== activeId);
 
   return (
-    <Section tone="surface" id="nova-assistant">
-      <div className="mx-auto max-w-4xl">
-        <p className="eyebrow">NOVA AI Information Assistant</p>
-        <h2 id="nova-assistant-title" className="mt-2 text-2xl font-semibold md:text-3xl">
-          Need more information? Just ask NOVA.
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Ask about {topic.label}. You can ask up to {ASSISTANT_QUESTION_LIMIT} questions across this website visit.{" "}
-          <span data-testid="assistant-count">{state.used} of {ASSISTANT_QUESTION_LIMIT} used.</span>
-        </p>
+    <section id="nova-assistant" aria-labelledby="nova-assistant-title" className="border-b border-border bg-background py-10 md:py-14">
+      <div className="container-page">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+          {/* Upper section */}
+          <div className="border-b border-border bg-surface px-6 py-8 md:px-10 md:py-10">
+            <div className="flex items-center gap-3">
+              <img src="/media/brand/nova-shield.png" alt="NOVA Compliance" width="36" height="36" decoding="async" className="h-9 w-9 shrink-0 object-contain" />
+              <p className="text-sm font-semibold text-primary">Hi, I&rsquo;m NOVA &mdash; NOVA Compliance&rsquo;s AI Information Assistant.</p>
+            </div>
+            <h2 id="nova-assistant-title" className="mt-5 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              Need more information? Just ask me below.
+            </h2>
+            <p className="mt-3 max-w-2xl text-base text-muted-foreground">{topic.blurb}</p>
+          </div>
 
-        <div className="mt-5" role="group" aria-label="Suggested questions">
-          <p className="text-sm font-medium">Suggested questions</p>
-          <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
-            {topic.questions.map((q) => (
-              <button key={q} type="button" className={btn} disabled={busy || exhausted || unavailable || !ready} onClick={() => void ask(q)}>
-                {q}
+          {/* Lower section */}
+          <div className="bg-background px-6 py-8 md:px-10">
+            <form onSubmit={onSubmit} className="relative">
+              <label htmlFor="nova-assistant-input" className="sr-only">
+                Ask NOVA a question
+              </label>
+              <input
+                id="nova-assistant-input"
+                type="text"
+                value={input}
+                maxLength={ASSISTANT_MAX_QUESTION_CHARS}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={locked}
+                placeholder={exhausted ? "You have used all your questions" : "Ask your compliance question..."}
+                autoComplete="off"
+                className="h-14 w-full rounded-full border border-border bg-surface pl-6 pr-16 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                aria-label="Send question"
+                disabled={locked || !input.trim()}
+                className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:bg-primary/90 disabled:opacity-40"
+              >
+                <ArrowUp aria-hidden="true" className="h-5 w-5" />
               </button>
-            ))}
-          </div>
-        </div>
+            </form>
 
-        <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <label htmlFor="nova-assistant-input" className="sr-only">
-            Ask your own question about NOVA
-          </label>
-          <input
-            id="nova-assistant-input"
-            type="text"
-            value={input}
-            maxLength={ASSISTANT_MAX_QUESTION_CHARS}
-            onChange={(e) => setInput(e.target.value)}
-            disabled={busy || exhausted || unavailable || !ready}
-            placeholder={exhausted ? "Question allowance used" : "Or type your own question"}
-            autoComplete="off"
-            className="min-h-11 flex-1 rounded-lg border border-border-strong bg-background px-3 text-sm disabled:opacity-50"
-          />
-          <button type="submit" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50" disabled={busy || exhausted || unavailable || !ready || !input.trim()}>
-            {busy ? "Asking…" : "Ask NOVA"}
-          </button>
-        </form>
-        <p className="mt-2 text-xs text-muted-foreground">
-          {MAX_FREE_COPY}{" "}
-          <Link to="/legal/privacy" className="underline">
-            Privacy Policy (section 61)
-          </Link>
-          .
-        </p>
-
-        <div aria-live="polite" className="mt-4">
-          {unavailable ? <p className="rounded-lg border border-border bg-card p-4 text-sm">The NOVA assistant is not available right now. Our Sales team can answer your questions.</p> : null}
-          {error ? <p role="alert" className="rounded-lg border border-border bg-card p-4 text-sm">{error}</p> : null}
-          {active ? (
-            <article className="rounded-lg border border-border bg-card p-4 md:p-5" data-testid="assistant-answer">
-              <p className="text-sm font-medium">{active.q}</p>
-              <p className="mt-2 whitespace-pre-line text-sm leading-relaxed">{active.a}</p>
-              {canSpeak ? (
-                <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Listen to this answer">
-                  <button type="button" className={btn} onClick={speak} disabled={speech === "playing"}>{speech === "paused" ? "Resume" : "Listen"}</button>
-                  <button type="button" className={btn} onClick={pause} disabled={speech !== "playing"}>Pause</button>
-                  <button type="button" className={btn} onClick={stopSpeech} disabled={speech === "idle"}>Stop</button>
-                  <button type="button" className={btn} onClick={replay}>Replay</button>
-                  <span className="text-xs text-muted-foreground">{voiceNote}</span>
-                </div>
-              ) : (
-                <p className="mt-3 text-xs text-muted-foreground">Audio playback is not supported in this browser. The written answer stays available.</p>
-              )}
-            </article>
-          ) : null}
-        </div>
-
-        {state.items.length > 1 || (state.items.length === 1 && state.items[0]?.id !== activeId) ? (
-          <div className="mt-5">
-            <p className="text-sm font-medium">Your earlier answers (reopening does not use a question)</p>
-            <ul className="mt-2 flex flex-col gap-2">
-              {state.items.map((item) => (
-                <li key={item.id}>
-                  <button type="button" className={`${btn} w-full justify-start text-left ${item.id === activeId ? "bg-surface" : ""}`} aria-pressed={item.id === activeId} onClick={() => setActiveId(item.id)}>
-                    <span className="mr-2 text-xs text-muted-foreground">{item.topic}</span>
-                    {item.q}
-                  </button>
-                </li>
+            <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Suggested questions">
+              {topic.questions.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  disabled={locked}
+                  onClick={() => void ask(q)}
+                  className="rounded-full border border-border bg-background px-4 py-2 text-left text-xs font-medium text-foreground shadow-sm transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {q}
+                </button>
               ))}
-            </ul>
-          </div>
-        ) : null}
+            </div>
 
-        <div className="mt-8 rounded-2xl border border-border bg-card p-5" id="nova-assistant-next-step">
-          <h3 className="text-lg font-semibold">Suggested next step</h3>
-          {exhausted ? (
-            <p className="mt-2 text-sm">You have used all {ASSISTANT_QUESTION_LIMIT} questions for this visit. Our Sales team can answer anything else and show you NOVA in action.</p>
-          ) : state.used >= ASSISTANT_NUDGE_AFTER ? (
-            <p className="mt-2 text-sm">You have asked {state.used} of {ASSISTANT_QUESTION_LIMIT} questions. For tailored answers, contact our Sales team.</p>
-          ) : (
-            <p className="mt-2 text-sm text-muted-foreground">See NOVA working on your own obligations, or speak with the team.</p>
-          )}
-          <div className="mt-4 flex flex-wrap gap-3">
-            <CtaLink to="/book-demo">See NOVA in Action</CtaLink>
-            <CtaLink to="/contact" variant="outline">Talk to Sales</CtaLink>
+            <div className="mt-4 flex flex-col gap-1 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+              <p data-testid="assistant-count" className="shrink-0 whitespace-nowrap">
+                {remaining} of {ASSISTANT_QUESTION_LIMIT} questions remaining
+              </p>
+              <p className="max-w-xl sm:text-right">
+                Answers are generated by DeepSeek and may be processed overseas, including in China. Please don&rsquo;t share confidential details.{" "}
+                <Link to="/legal/privacy" className="underline hover:text-foreground">
+                  Privacy
+                </Link>
+              </p>
+            </div>
+
+            <div aria-live="polite">
+              {unavailable ? <p className="mt-5 rounded-2xl border border-border bg-surface p-4 text-sm">NOVA is not available right now. Our Sales team can answer your questions.</p> : null}
+              {error ? (
+                <p role="alert" className="mt-5 rounded-2xl border border-border bg-surface p-4 text-sm">
+                  {error}
+                </p>
+              ) : null}
+              {active ? (
+                <article className="mt-6 rounded-2xl border border-border bg-surface/60 p-5 md:p-6" data-testid="assistant-answer">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{active.q}</p>
+                  <div className="mt-3 space-y-3 text-base leading-relaxed text-foreground">
+                    {active.a.split(/\n{2,}/).map((para, i) => (
+                      <p key={i} className="whitespace-pre-line">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                  {canSpeak ? (
+                    <div className="mt-4 flex flex-wrap items-center gap-1 border-t border-border pt-3" role="group" aria-label="Listen to this answer">
+                      <button type="button" className={ghost} onClick={speak} disabled={speech === "playing"}>
+                        <Volume2 aria-hidden="true" className="h-4 w-4" />
+                        {speech === "paused" ? "Resume" : "Listen"}
+                      </button>
+                      <button type="button" className={ghost} onClick={pause} disabled={speech !== "playing"}>
+                        <Pause aria-hidden="true" className="h-4 w-4" />
+                        Pause
+                      </button>
+                      <button type="button" className={ghost} onClick={stopSpeech} disabled={speech === "idle"}>
+                        <Square aria-hidden="true" className="h-4 w-4" />
+                        Stop
+                      </button>
+                      <button type="button" className={ghost} onClick={replay}>
+                        <RotateCcw aria-hidden="true" className="h-4 w-4" />
+                        Replay
+                      </button>
+                    </div>
+                  ) : null}
+                </article>
+              ) : null}
+            </div>
+
+            {earlier.length > 0 ? (
+              <div className="mt-5">
+                <p className="text-xs font-medium text-muted-foreground">Earlier answers &mdash; reopening them does not use a question</p>
+                <ul className="mt-2 flex flex-wrap gap-2">
+                  {earlier.map((item) => (
+                    <li key={item.id}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveId(item.id)}
+                        className="rounded-full border border-border bg-background px-3 py-1.5 text-left text-xs text-foreground transition-colors hover:border-primary hover:text-primary"
+                      >
+                        {item.q}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            <div id="nova-assistant-next-step" className="mt-6 flex flex-col gap-3 rounded-2xl border border-border bg-surface px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-3">
+                <Sparkles aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Suggested next step</p>
+                  {exhausted ? (
+                    <p className="mt-0.5 text-xs text-muted-foreground">You have used all {ASSISTANT_QUESTION_LIMIT} questions. Our Sales team can answer anything else and show you NOVA in action.</p>
+                  ) : state.used >= ASSISTANT_NUDGE_AFTER ? (
+                    <p className="mt-0.5 text-xs text-muted-foreground">For tailored answers, contact our Sales team.</p>
+                  ) : null}
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 sm:justify-end">
+                <Link to={topic.explore.to} className="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+                  {topic.explore.label}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+                <Link to="/contact" className="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-foreground hover:underline">
+                  Talk to Sales
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
